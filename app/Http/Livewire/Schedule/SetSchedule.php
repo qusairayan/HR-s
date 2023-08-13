@@ -88,9 +88,6 @@ class SetSchedule extends Component
     {
 
 
-if(!auth()->user()->hasPermissionTo('setSchedule') ){
-    $this->department=auth()->user()->department_id;
-}
 
         $preSchedule = Schedules::where('user_id', '=', $this->user)
         ->whereDate('date', '>', date('Y-m-d'))
@@ -115,7 +112,6 @@ if(!auth()->user()->hasPermissionTo('setSchedule') ){
         $this->shiftsHTML .= '<option value="off">Off Day</option>';
 
         if (auth()->user()->hasPermissionTo('setSchedule')) {
-
             $departments = Department::all();
 
             $users = User::leftJoin('department', 'department.id', '=', 'users.department_id')
@@ -135,5 +131,6 @@ if(!auth()->user()->hasPermissionTo('setSchedule') ){
                 ->where('users.name', 'LIKE', '%' . $this->search . '%')->get();
             return view('livewire.schedule.setSchedule', compact('users'));
         }
+        
     }
 }

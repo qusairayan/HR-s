@@ -31,6 +31,10 @@ use App\Http\Livewire\Deductions\DeductionsController;
 
 use App\Http\Livewire\Allownces\AllowncesController;
 
+use App\Http\Livewire\Salaries\Salaries;
+use App\Http\Livewire\Salaries\AddSalaries;
+
+
 
 
 
@@ -180,8 +184,9 @@ Route::middleware('auth')->group(function () {
     });
 
 
-    // Route::prefix('salries')->group(function () {
-    //     Route::get('/', Salries::class)->name('salries'); //->middleware('role:viewroles')
-    // });
+    Route::prefix('payroll')->group(function () {
+        Route::get('/salaries', Salaries::class)->name('payroll.salaries'); //->middleware('role:viewroles')
+        Route::get('/addSalary', AddSalaries::class)->name('payroll.addSalary'); //->middleware('role:viewroles')
+    });
 
 });

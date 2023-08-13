@@ -59,7 +59,8 @@
 
 
 
-            @if (auth()->user()->hasPermissionTo('viewAllEmployees') || auth()->user()->hasPermissionTo('viewDepEmployees'))
+            @if (auth()->user()->hasPermissionTo('viewAllEmployees') ||
+                    auth()->user()->hasPermissionTo('viewDepEmployees'))
                 <li class="nav-item">
                     <span class="nav-link collapsed d-flex justify-content-between align-items-center"
                         data-bs-toggle="collapse" data-bs-target="#submenu-Employees" aria-expanded="true">
@@ -80,17 +81,17 @@
                         role="list" id="submenu-Employees" aria-expanded="false">
                         <ul class="flex-column nav">
                             <li
-                            
                                 class="nav-item {{ Route::currentRouteName() == 'employees' || Route::currentRouteName() == 'employees.edit' ? 'active' : '' }}">
                                 <a href="/employees" class="nav-link">
                                     <span class="sidebar-text">Employees</span>
                                 </a>
                             </li>
-                          
-                            
 
-                            {{-- @if(auth()->user()->hasPermissionTo('viewDeduction') ) --}}
-                            <li class="nav-item {{ Route::currentRouteName() == 'employees.lateness' ? 'active' : '' }}">
+
+
+                            {{-- @if (auth()->user()->hasPermissionTo('viewDeduction')) --}}
+                            <li
+                                class="nav-item {{ Route::currentRouteName() == 'employees.lateness' ? 'active' : '' }}">
                                 <a href="/employees/lateness" class="nav-link">
                                     <span class="sidebar-text">Lateness</span>
                                 </a>
@@ -99,8 +100,9 @@
 
 
 
-                            {{-- @if(auth()->user()->hasPermissionTo('viewDeduction') ) --}}
-                            <li class="nav-item {{ Route::currentRouteName() == 'employees.overtime' ? 'active' : '' }}">
+                            {{-- @if (auth()->user()->hasPermissionTo('viewDeduction')) --}}
+                            <li
+                                class="nav-item {{ Route::currentRouteName() == 'employees.overtime' ? 'active' : '' }}">
                                 <a href="/employees/overtime" class="nav-link">
                                     <span class="sidebar-text">Overtime</span>
                                 </a>
@@ -108,7 +110,7 @@
                             {{-- @endif --}}
 
 
-                           
+
                         </ul>
                     </div>
                 </li>
@@ -262,14 +264,14 @@
                 <div class="multi-level collapse {{ in_array(Request::segment(1), ['schedule', 'schedule.report']) ? 'show' : '' }}"
                     role="list" id="submenu-schedule" aria-expanded="false">
                     <ul class="flex-column nav">
-                        <li class="nav-item {{ request()->route()->getName() == 'schedule' ? 'active' : '' }}">
+                        <li class="nav-item {{ request()->route()->getName() == 'schedule'? 'active': '' }}">
                             <a href="/schedule" class="nav-link">
                                 <span class="sidebar-text">Schedule</span>
                             </a>
                         </li>
 
-                        <li class="nav-item {{ request()->route()->getName() == 'schedule.set' ? 'active' : '' }}">
-                            <a href="{{route('schedule.set')}}" class="nav-link">
+                        <li class="nav-item {{ request()->route()->getName() == 'schedule.set'? 'active': '' }}">
+                            <a href="{{ route('schedule.set') }}" class="nav-link">
                                 <span class="sidebar-text">Set Schedule </span>
                             </a>
                         </li>
@@ -311,13 +313,13 @@
                 <div class="multi-level collapse {{ in_array(Request::segment(1), ['deductions', 'deductions.report']) ? 'show' : '' }}"
                     role="list" id="submenu-deductions" aria-expanded="false">
                     <ul class="flex-column nav">
-                        <li class="nav-item {{ request()->route()->getName() == 'deductions' ? 'active' : '' }}">
+                        <li class="nav-item {{ request()->route()->getName() == 'deductions'? 'active': '' }}">
                             <a href="/deductions" class="nav-link">
                                 <span class="sidebar-text">Deductions</span>
                             </a>
                         </li>
 
-                        
+
 
 
                     </ul>
@@ -326,13 +328,13 @@
 
 
 
-             <li class="nav-item">
+            <li class="nav-item">
                 <span class="nav-link collapsed d-flex justify-content-between align-items-center"
                     data-bs-toggle="collapse" data-bs-target="#submenu-allownces" aria-expanded="true">
                     <span>
                         <span class="sidebar-icon"
                             style="{{ in_array(Request::segment(1), ['allownces', 'allownces.report']) ? 'color: #fb503b !important' : '' }} ">
-                            <i class="fas fa-money-bill-wave"></i>                                                </span>
+                            <i class="fas fa-money-bill-wave"></i> </span>
                         <span class="sidebar-text">Allownces</span>
                     </span>
                     <span class="link-arrow"><svg class="icon icon-sm" fill="currentColor" viewBox="0 0 20 20"
@@ -345,18 +347,53 @@
                 <div class="multi-level collapse {{ in_array(Request::segment(1), ['allownces', 'allownces.report']) ? 'show' : '' }}"
                     role="list" id="submenu-allownces" aria-expanded="false">
                     <ul class="flex-column nav">
-                        <li class="nav-item {{ request()->route()->getName() == 'allownces' ? 'active' : '' }}">
+                        <li class="nav-item {{ request()->route()->getName() == 'allownces'? 'active': '' }}">
                             <a href="/allownces" class="nav-link">
                                 <span class="sidebar-text">Allownces</span>
                             </a>
                         </li>
 
-                        
+
 
 
                     </ul>
                 </div>
             </li>
+
+
+
+            <li class="nav-item">
+                <span class="nav-link collapsed d-flex justify-content-between align-items-center"
+                    data-bs-toggle="collapse" data-bs-target="#submenu-payroll" aria-expanded="true">
+                    <span>
+                        <span class="sidebar-icon"
+                            style="{{ in_array(Request::segment(1), ['payroll', 'payroll.salaries']) ? 'color: #fb503b !important' : '' }} ">
+                            <i class="fas fa-file-invoice-dollar"></i>
+                         </span>
+                        <span class="sidebar-text">payroll</span>
+                    </span>
+                    <span class="link-arrow"><svg class="icon icon-sm" fill="currentColor" viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                                clip-rule="evenodd"></path>
+                        </svg></span>
+                </span>
+                <div class="multi-level collapse {{ in_array(Request::segment(1), ['payroll', 'payroll.salaries','payroll.addSalaries']) ? 'show' : '' }}"
+                    role="list" id="submenu-payroll" aria-expanded="false">
+                    <ul class="flex-column nav">
+                      
+                        <li class="nav-item {{ in_array(Request::segment(1), ['payroll', 'payroll.salaries','payroll.addSalary']) ? 'active' : '' }}">
+                            <a href="/payroll/salaries" class="nav-link">
+                                <span class="sidebar-text">Salaries</span>
+                            </a>
+                        </li>
+
+                    </ul>
+                    
+                </div>
+            </li>
+
 
 
 
@@ -381,20 +418,22 @@
                 <div class="multi-level collapse {{ in_array(Request::segment(1), ['permissions', 'permissions.report']) ? 'show' : '' }}"
                     role="list" id="submenu-permission" aria-expanded="false">
                     <ul class="flex-column nav">
-                        <li class="nav-item {{ request()->route()->getName() == 'permissions' ? 'active' : '' }} {{ request()->route()->getName() == 'permissions.edit' ? 'active' : ''}}">
-                            <a href="{{route('permissions')}}" class="nav-link">
+                        <li
+                            class="nav-item {{ request()->route()->getName() == 'permissions'? 'active': '' }} {{ request()->route()->getName() == 'permissions.edit'? 'active': '' }}">
+                            <a href="{{ route('permissions') }}" class="nav-link">
                                 <span class="sidebar-text">Users Permissions</span>
                             </a>
                         </li>
 
-                        <li class="nav-item {{ request()->route()->getName() == 'permissions.roles' ? 'active' : '' }} {{ request()->route()->getName() == 'permissions.role.edit' ? 'active' : ''}}">
-                            <a href="{{route('permissions.roles')}}" class="nav-link">
+                        <li
+                            class="nav-item {{ request()->route()->getName() == 'permissions.roles'? 'active': '' }} {{ request()->route()->getName() == 'permissions.role.edit'? 'active': '' }}">
+                            <a href="{{ route('permissions.roles') }}" class="nav-link">
                                 <span class="sidebar-text">Roles Permissions</span>
                             </a>
                         </li>
 
 
-                       
+
 
 
 
@@ -405,7 +444,7 @@
 
 
 
-            
+
             <li class="nav-item">
                 <span class="nav-link collapsed d-flex justify-content-between align-items-center"
                     data-bs-toggle="collapse" data-bs-target="#submenu-role" aria-expanded="true">
@@ -425,15 +464,16 @@
                 <div class="multi-level collapse {{ in_array(Request::segment(1), ['roles', 'roles.report']) ? 'show' : '' }}"
                     role="list" id="submenu-role" aria-expanded="false">
                     <ul class="flex-column nav">
-                        <li class="nav-item {{ request()->route()->getName() == 'roles' ? 'active' : '' }} {{ request()->route()->getName() == 'roles.edit' ? 'active' : ''}}">
-                            <a href="{{route('roles')}}" class="nav-link">
+                        <li
+                            class="nav-item {{ request()->route()->getName() == 'roles'? 'active': '' }} {{ request()->route()->getName() == 'roles.edit'? 'active': '' }}">
+                            <a href="{{ route('roles') }}" class="nav-link">
                                 <span class="sidebar-text"> roles</span>
                             </a>
                         </li>
 
-                        
 
-                       
+
+
 
 
 

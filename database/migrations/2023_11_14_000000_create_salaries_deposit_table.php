@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAllowncesTable extends Migration
+class CreateSalariesDepositTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,23 +13,23 @@ class CreateAllowncesTable extends Migration
      */
     public function up()
     {
-        Schema::create('allownces', function (Blueprint $table) {
+        Schema::create('salaries_deposit', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('salary_id');
 
-            $table->integer('type')->nullable();
             $table->integer('amount');
 
+            $table->unsignedBigInteger('deposit_by');
             $table->date('date');
-            $table->integer('status')->default(0);
+            $table->time('time');
 
+            $table->string('transaction')->nullable();
             $table->text('detail')->nullable();
-            $table->unsignedBigInteger('overtime')->nullable();
 
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('overtime')->references('id')->on('overtime')->onDelete('cascade');
+            $table->foreign('deposit_by')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('salary_id')->references('id')->on('salaries')->onDelete('cascade');
             
         });
     }
@@ -41,6 +41,6 @@ class CreateAllowncesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('allownces');
+        Schema::dropIfExists('salaries_deposit');
     }
 }

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('attendence_id');
             $table->double('amount');
-            $table->int('allownce')->default(0);
+            $table->integer('allownce')->default(0);
 
 
             $table->timestamps();
