@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Schedule;
 
+use App\Http\Livewire\Users;
 use App\Models\User;
 use App\Models\Department;
 use App\Models\Shift;
@@ -15,7 +16,7 @@ class SetSchedule extends Component
 {
     use WithPagination;
 
-    public $user=1;
+    public $user;
 
     public $department = 1;
     public $week = 1;
@@ -87,8 +88,7 @@ class SetSchedule extends Component
     public function render()
     {
 
-
-
+if($this->user != null){
         $preSchedule = Schedules::where('user_id', '=', $this->user)
         ->whereDate('date', '>', date('Y-m-d'))
         ->latest('id') // Order the records by date in descending order
@@ -131,6 +131,42 @@ class SetSchedule extends Component
                 ->where('users.name', 'LIKE', '%' . $this->search . '%')->get();
             return view('livewire.schedule.setSchedule', compact('users'));
         }
-        
+        else{
+            return view('404');
+
+        }
+    }
+
+    else{
+        if (auth()->user()->hasPermissionTo('setSchedule')) {
+            $departments = Department::all();
+
+            $users = User::leftJoin('department', 'department.id', '=', 'users.department_id')
+                ->select('users.*', 'users.name as user_name', 'department.name as department_name')
+                ->where('users.department_id', '=', $this->department)
+                ->where('users.name', 'LIKE', '%' . $this->search . '%')->get();
+
+            return view('livewire.schedule.setSchedule', compact('users','departments'));
+        } else if (auth()->user()->hasPermissionTo('setDepSchedule')) {
+
+                $this->department = auth()->user()->department_id;
+            
+    
+            $users = User::leftJoin('department', 'department.id', '=', 'users.department_id')
+                ->select('users.*', 'users.name as user_name', 'department.name as department_name')
+                ->where('users.department_id', '=', $this->department)
+                ->where('users.name', 'LIKE', '%' . $this->search . '%')->get();
+            return view('livewire.schedule.setSchedule', compact('users'));
+        }
+        else{
+            return view('404');
+        }
+    }
+
+
+    
+
+
+
     }
 }

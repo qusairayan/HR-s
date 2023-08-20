@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User;
-use App\Models\VacationReq;
+use App\Models\Vacation;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
 
@@ -55,7 +55,7 @@ class VacationReqController extends Controller
 
 
 
-                $vacationReq = new VacationReq();
+                $vacationReq = new Vacation();
                 $vacationReq->user_id = $user_id;
                 $vacationReq->period = $period;
                 $vacationReq->type = $type;

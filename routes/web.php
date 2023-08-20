@@ -120,7 +120,7 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('employees')->group(function () {
         Route::get('/', Employees::class)->name('employees')->middleware('permission:viewAllEmployees');
-        Route::get('/addEmployee', AddNewEmployee::class)->name('employees.addNew')->middleware('permission:addEmployees');
+        Route::get('/addEmployee', AddNewEmployee::class)->name('employees.addNew');#->middleware('permission:addEmployees');
         Route::get('/{user}/edit', Edit::class)->name('employees.edit');
         Route::get('/remove/{user}', [Employees::class, 'Remove'])->name('employees.remove')->middleware('permission:deleteEmployee');
         Route::get('/lateness', Latenesses::class)->name('employees.lateness'); //->middleware('permission:viewAllEmployees');

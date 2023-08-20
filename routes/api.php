@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\api\login\LoginController;
+use App\Http\Controllers\api\login\ForgetPasswordController;
 use App\Http\Controllers\api\attendence\AttendanceController;
 
 use App\Http\Controllers\api\leaves\LeaveReqController;
@@ -55,12 +56,18 @@ Route::post('/getLeave', [GetLeaveController::class, 'getLeaves']);
 
 Route::post('/getProfile', [ProfileController::class, 'getProfile']);
 Route::post('/profileOTP', [ProfileController::class, 'profileOTP']);
-Route::post('/profilePassword', [ProfileController::class, 'profilePassword']);
 Route::post('/updateProfile', [ProfileController::class, 'updateProfile']);
+Route::post('/profilePassword', [ProfileController::class, 'profilePassword']);
 
 Route::post('/profileIMG/{filename}', [showProfileImageController::class, 'showProfileImage']);
 
 
+
+
+
+Route::post('forget-password', [ForgetPasswordController::class, 'forget']);
+Route::post('forget-password-otp', [ForgetPasswordController::class, 'verifyOtp']);
+Route::post('reset-password', [ForgetPasswordController::class, 'resetPassword']);
 
 
 

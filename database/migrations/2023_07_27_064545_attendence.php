@@ -13,7 +13,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->date('date');
             $table->time('check_in');
-            $table->time('check_out');
+            $table->time('check_out')->null;
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');

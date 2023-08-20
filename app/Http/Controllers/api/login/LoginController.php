@@ -31,24 +31,30 @@ class LoginController extends Controller
 
         if ($request->has('password') && $request->has('username')) {
             $username = $request->input('username');
-            $password = $request->input('password');
+            $password = Hash::make($request->input('password'));
+            if (auth()->attempt(['username' => $username, 'password' => $password])) {
 
-            $user = User::where('username', $username)->where('password', $password)->first();
+                $user = User::where('username', $username)->where('password', $password)->first();
 
-            if (!$user) {
+
                 return response()->json([
                     'message' => "The password or username doesn't match.",
                     'status' => 201
                 ]);
             } else {
+                $user = User::where(['username' => $username])->first();
+
                 $id = $user->id;
                 $name = $user->name;
+                $email = $user->email;
+                $department =  $user->department->name;
+                $position = $user->position;
+
                 $status = $user->status;
                 $company_id = $user->company_id;
                 $company = Company::where('id', $company_id)->first();
 
                 if ($company) {
-
                     $company_name = $company->name;
                     $company_lat = $company->latitude;
                     $company_long = $company->longitude;
@@ -57,12 +63,16 @@ class LoginController extends Controller
 
                 $img = '';
                 if ($user->image != '') {
-                    $img = request()->getHttpHost().'/profileIMG/'.$user->image;
+                    $img = 'https://'.request()->getHttpHost().'/storage/profile/'.$user->image;
                 }
                 return response()->json([
                     // 'token' => $token,
                     'message' => 'Login successful', "status" => 200, "ID" => $id, "name" => $name,
-                    "image"=>$img ,
+                    "username" => $username,
+                    "email" => $email,
+                    "department" => $department,
+                    "department" => $department,
+                    "image" => $img,
                     "UserStatus" => $status, "company_name" => $company_name,
                     "latitude" => $company_lat, "longitude" => $company_long,
                     'max_distance' => $max_distance

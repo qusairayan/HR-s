@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\api\vacations;
 
 use App\Http\Controllers\Controller;
-use App\Models\leaveReq;
+use App\Models\Leave;
 use Illuminate\Http\Request;
-use App\Models\VacationReq;
+use App\Models\Vacation;
 use App\Models\User;
 use Carbon\Carbon;
 
@@ -37,10 +37,10 @@ class GetVacationController extends Controller
 
 
             $user_id=request()->input('user_id');
-            $Vacation = VacationReq::where('user_id',$user_id)->orderBy('id','DESC')->get();
-            $VacationSum = VacationReq::where('user_id',$user_id)->where('status',1)->sum('period');
+            $Vacation = Vacation::where('user_id',$user_id)->orderBy('id','ASC')->get();
+            $VacationSum = Vacation::where('user_id',$user_id)->where('status',1)->sum('period');
 
-            $leaveSum = intval(leaveReq::where('user_id',$user_id)->where('status',1)->count()/3);
+            $leaveSum = intval(Leave::where('user_id',$user_id)->where('status',1)->count()/3);
 
       
                 $VacationSum+= $leaveSum;

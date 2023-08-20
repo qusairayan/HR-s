@@ -4,7 +4,7 @@ namespace App\Http\Controllers\api\leaves;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\leaveReq;
+use App\Models\Leave;
 use Carbon\Carbon;
 
 class GetLeaveController extends Controller
@@ -16,7 +16,7 @@ class GetLeaveController extends Controller
             $user_id = request()->input('user_id');
             $currentDateTime = Carbon::now();
 
-            $lastLeave = LeaveReq::where('user_id', $user_id)->where('date', '>', $currentDateTime)
+            $lastLeave = Leave::where('user_id', $user_id)->where('date', '>', $currentDateTime)
                 ->where('time', '>', $currentDateTime->format('H:i:s'))->latest()->first();
 
 
@@ -38,11 +38,11 @@ class GetLeaveController extends Controller
                 ], 200);
         } else  if (request()->has('user_id')) {
 
-            $user_id = request()->has('user_id');
+            $user_id = request()->input('user_id');
 
-            $allLeaves = LeaveReq::where('user_id', $user_id)->orderBy('id', 'desc')->get();
-
+            $allLeaves = Leave::where('user_id', $user_id)->orderBy('id', 'ASC')->get();
             $allLeavesArray = $allLeaves->toArray(); // Assign the result to a variable
+ 
             
             foreach ($allLeavesArray as &$leave) {
                 $carbon = Carbon::createFromFormat('H:i:s', $leave['period']);

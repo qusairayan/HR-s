@@ -57,7 +57,7 @@ class AttendanceController extends Controller
 
 
 
-                $attendence = new attendence();
+                $attendence = new Attendence();
                 $attendence->user_id = $id;
                 $attendence->type = $type;
                 $attendence->check_in  = $currentTime;

@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Spatie\FlareClient\Http\Exceptions\InvalidData;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Hash;
 
 
 class ProfileController extends Controller
@@ -27,7 +28,7 @@ class ProfileController extends Controller
 
             $validator = Validator::make($request->all(), [
                 'name' => 'required|string',
-                'email' => 'required',
+                'email' => 'required|email',
             ]);
 
             if ($validator->fails()) {
@@ -42,7 +43,17 @@ class ProfileController extends Controller
             $name = $request->input('name');
             $email = $request->input('email');
 
+            
             if ($email != $user->email) {
+                $userEmail = User::where('email', $email)->exists();
+            if($userEmail){
+                return response()->json([
+                    'success' => false,
+                    
+                    'message' => 'Email Already Exist',
+                ], 200);
+            }
+
                 $otp = rand(100000, 999999);
 
                 Mail::raw("Your OTP is: $otp", function ($message) use ($email) {
@@ -69,11 +80,12 @@ class ProfileController extends Controller
                     }
                 }
                 $user->name = $name;
-                $user->save();
-
-                Session::put('verify_email_' . strval($id), $email);
                 $user->otp = $otp;
                 $user->save();
+                
+
+
+          
                 return response()->json([
                     'success' => true,
                     'otpSent' => true,
@@ -125,15 +137,16 @@ class ProfileController extends Controller
 
     public function profileOTP(Request $request)
     {
+     
 
-
-        if (request()->has('id') && request()->has('otp')) {
+        if (request()->has('id') && request()->has('otp') && request()->has('email')) {
             $id = request()->input('id');
             $otp = request()->input('otp');
+            $email = request()->input('email');
             $user = User::where('id', $id)->first();
 
             if ($user->otp == $otp) {
-                $user->email = Session::get('verify_email_' . strval($id));
+                $user->email = $email;
                 $user->save();
 
                 return response()->json([
@@ -168,7 +181,7 @@ class ProfileController extends Controller
             if ($validator->fails()) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Invalid data'
+                    'message' => 'Invalid password'
                 ]);
             }
             $id = request()->input('id');
@@ -176,8 +189,8 @@ class ProfileController extends Controller
             $user = User::where('id', $id)->first();
 
             $password = request()->input('password');
-            $newPassword = request()->input('newPassword');
-            if ($user->password == $password) {
+            $newPassword = Hash::make(request()->input('newPassword'));
+            if (Hash::check($password, $user->password)) {
                 $user->password = $newPassword;
                 $user->save();
                 return response()->json([
@@ -186,10 +199,15 @@ class ProfileController extends Controller
                 ]);
             
             }
+            return response()->json([
+                'success' => false,
+                'message' => 'Old password isn`t correct'
+            ],201);
+        
         } else {
             return response()->json([
                 'success' => false,
-                'message' => 'Error: No data provided'
+                'message' => 'Please, fill required fields'
             ], 201);
         }
     }
@@ -201,9 +219,10 @@ class ProfileController extends Controller
             $user = User::where('id', $id)->first();
             if ($user) {
 
-                $image= request()->getHttpHost().'/profileIMG/'.$user->image;
+                if ($user->image != ''){
+                $user->image='https://'.request()->getHttpHost().'/storage/profile/'.$user->image;
+                }
                 return response()->json([
-                    'image' =>  $image,
                     'success' => true,
                     'data' => $user,
                 ], 200);
@@ -222,4 +241,8 @@ class ProfileController extends Controller
             ], 201);
         }
     }
+
+
+
+
 }
