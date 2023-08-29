@@ -159,6 +159,6 @@ class AddNewEmployee extends Component
         $roles = Role::all()->where('name', '!=', 'admin');
 
 
-        return view('Livewire.employees.addNewEmployee', compact('departments', 'companies', 'roles'));
+        return view('livewire.employees.addNewEmployee', compact('departments', 'companies', 'roles'));
     }
 }

@@ -32,9 +32,8 @@ class ForgetPasswordController extends Controller
                 return response()->json([
                     'success' => false,
                     'message' => 'Invalid email address.',
-                ],);
+                ],201);
             }
-            201;
 
 
             $user = User::where('email', 'LIKE', $email)->first();;
@@ -61,15 +60,13 @@ class ForgetPasswordController extends Controller
                 return response()->json([
                     'success' => false,
                     'message' => "Undefined Email",
-                    'status' => 201
-                ]);
+                ], 201);
             }
         } else {
             return response()->json([
                 'success' => false,
                 'message' => "Missed Email",
-                'status' => 201
-            ]);
+            ],201);
         }
     }
 
@@ -92,7 +89,7 @@ class ForgetPasswordController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Invalid OTP.',
-            ], 400);
+            ], 201);
         }
 
         // Verify the OTP

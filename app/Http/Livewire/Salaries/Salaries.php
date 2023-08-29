@@ -22,7 +22,6 @@ public $paginator=10;
 public $search ='';
 
 public function edit($id){
-    dd($id);
     $salary = Salary::leftJoin('users', 'salaries.user_id', '=', 'users.id')
             ->select('salaries.*', 'users.name as user_name', )          
             ->where('salaries.id', '=', $id)
@@ -45,8 +44,18 @@ public function render(){
             ->where('users.name', 'LIKE', '%' . $this->search . '%')
             ->where('department.name', 'LIKE', '%' . $this->search . '%')
             ->paginate($this->paginator ); 
+
+    
     return view('livewire.salaries.salaries',compact('salaries'));
 
+}
+
+
+public function view($id){
+    
+$salary = Salary::where($id)->first();
+
+return view('livewire.salaries.view',compact('salary'));
 }
 
 

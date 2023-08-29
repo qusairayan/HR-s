@@ -49,6 +49,13 @@ use App\Http\Livewire\Role\Roles;
 use App\Http\Livewire\Role\AddnewRole;
 
 
+use App\Http\Controllers\TransferController;
+
+
+
+use App\Http\Controllers\PrivacyPolicyController;
+
+
 
 
 
@@ -105,7 +112,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/register-example', RegisterExample::class)->name('register-example');
     Route::get('/forgot-password-example', ForgotPasswordExample::class)->name('forgot-password-example');
     Route::get('/reset-password-example', ResetPasswordExample::class)->name('reset-password-example');
-    Route::get('/dashboard', Dashboard::class)->name('dashboard');
+    // Route::get('/dashboard', Dashboard::class)->name('dashboard');
+    Route::get('/dashboard', Employees::class)->name('dashboard');
+
+
     Route::get('/transactions', Transactions::class)->name('transactions');
     Route::get('/bootstrap-tables', BootstrapTables::class)->name('bootstrap-tables');
     Route::get('/lock', Lock::class)->name('lock');
@@ -119,10 +129,10 @@ Route::middleware('auth')->group(function () {
 
 
     Route::prefix('employees')->group(function () {
-        Route::get('/', Employees::class)->name('employees')->middleware('permission:viewAllEmployees');
-        Route::get('/addEmployee', AddNewEmployee::class)->name('employees.addNew');#->middleware('permission:addEmployees');
+        Route::get('/', Employees::class)->name('employees'); //->middleware('permission:viewAllEmployees');
+        Route::get('/addEmployee', AddNewEmployee::class)->name('employees.addNew'); //->middleware('permission:addEmployees');
         Route::get('/{user}/edit', Edit::class)->name('employees.edit');
-        Route::get('/remove/{user}', [Employees::class, 'Remove'])->name('employees.remove')->middleware('permission:deleteEmployee');
+        Route::get('/remove/{user}', [Employees::class, 'Remove'])->name('employees.remove'); //->middleware('permission:deleteEmployee');
         Route::get('/lateness', Latenesses::class)->name('employees.lateness'); //->middleware('permission:viewAllEmployees');
         Route::get('/overtime', Overtimes::class)->name('employees.overtime'); //->middleware('permission:viewAllEmployees');
 
@@ -131,20 +141,20 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('leaves')->group(function () {
         Route::get('/', Leaves::class)->name('leaves');
-        Route::get('/{leave}/approve', [Leaves::class, 'approve'])->name('leaves.approve')->middleware('permission:leaveReqAction');
-        Route::get('/{leave}/reject', [Leaves::class, 'reject'])->name('leaves.reject')->middleware('permission:leaveReqAction');
+        Route::get('/{leave}/approve', [Leaves::class, 'approve'])->name('leaves.approve'); //->middleware('permission:leaveReqAction');
+        Route::get('/{leave}/reject', [Leaves::class, 'reject'])->name('leaves.reject'); //->middleware('permission:leaveReqAction');
     });
 
 
     Route::prefix('vacations')->group(function () {
         Route::get('/', Vacations::class)->name('vacations');
-        Route::get('/{vacation}/approve', [Vacations::class, 'approve'])->name('vacations.approve')->middleware('permission:vactionReqAction');
-        Route::get('/{vacation}/reject', [Vacations::class, 'reject'])->name('vacations.reject')->middleware('permission:vactionReqAction');
+        Route::get('/{vacation}/approve', [Vacations::class, 'approve'])->name('vacations.approve'); //->middleware('permission:vactionReqAction');
+        Route::get('/{vacation}/reject', [Vacations::class, 'reject'])->name('vacations.reject'); //->middleware('permission:vactionReqAction');
     });
 
 
     Route::prefix('attendence')->group(function () {
-        Route::get('/', Attendences::class)->name('attendences')->middleware('permission:viewAttendence');
+        Route::get('/', Attendences::class)->name('attendences'); //->middleware('permission:viewAttendence');
     });
 
 
@@ -190,3 +200,15 @@ Route::middleware('auth')->group(function () {
     });
 
 });
+
+
+
+
+Route::get('/transfer', [TransferController::class,'transfer'])->name('transfer'); //->middleware('role:viewroles')
+
+
+
+
+
+Route::get('/privay_policy', [PrivacyPolicyController::class,'privacy'])->name('privacy_policy'); 
+Route::get('/description', [PrivacyPolicyController::class,'description'])->name('description'); 

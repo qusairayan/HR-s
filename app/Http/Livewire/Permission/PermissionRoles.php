@@ -29,7 +29,7 @@ class PermissionRoles extends Component
 
        
         $roles = Role::all();
-        return view('Livewire.permission.roles', compact('roles'));
+        return view('livewire.permission.roles', compact('roles'));
     }
 
     

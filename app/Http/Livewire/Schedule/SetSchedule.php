@@ -138,6 +138,16 @@ if($this->user != null){
     }
 
     else{
+
+        $this->today = new \DateTime();
+    
+           $this->today->modify('+1 day');
+
+           $this->endOfWeek = clone $this->today; 
+           $this->endOfWeek->modify('next Saturday');
+
+
+
         if (auth()->user()->hasPermissionTo('setSchedule')) {
             $departments = Department::all();
 

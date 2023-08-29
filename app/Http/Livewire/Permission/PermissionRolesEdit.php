@@ -107,6 +107,6 @@ public function removePermission($name){
 
 
 
-        return view('Livewire.permission.roleEdit', compact( 'roles'));
+        return view('livewire.permission.roleEdit', compact( 'roles'));
     }
 }

@@ -13,7 +13,7 @@ class Remove extends Component
     {
         $id= $request->input('id');
         $user = User::where('id',$id);
-        return view('Livewire.employees.edit', compact('user'));
+        return view('livewire.employees.edit', compact('user'));
     }
 
 

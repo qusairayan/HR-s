@@ -7,7 +7,7 @@ use App\Models\Schedules;
 use App\Models\Lateness;
 use App\Models\Leave;
 use App\Models\Overtime;
-use App\Models\attendence;
+use App\Models\Attendence;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User;
@@ -18,7 +18,7 @@ class AttendanceController extends Controller
 {
     public function attendence(Request $request)
     {
-                        date_default_timezone_set('Asia/Amman');
+        date_default_timezone_set('Asia/Amman');
 
 
         $validator = Validator::make($request->all(), [
@@ -36,7 +36,6 @@ class AttendanceController extends Controller
                 'message' => 'Invalid Values.',
 
             ], 400);
-            
         }
 
 
@@ -54,6 +53,17 @@ class AttendanceController extends Controller
 
 
             if ($type == 0) {
+
+
+                $isChecked = Attendence::where('user_id', '=', $id)->whereDate('date', '=', Carbon::now()->toDateString())->first();
+
+                if ($isChecked) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'User has attendence for today',
+
+                    ], 400);
+                }
 
 
 
@@ -82,7 +92,7 @@ class AttendanceController extends Controller
 
 
 
-                    if ($fromDateTime < $currentTime ) {
+                    if ($fromDateTime < $currentTime) {
 
                         $diff = $fromDateTime->diff($currentTime);
                         $totalMinutes = $diff->h * 60 + $diff->i;
@@ -117,8 +127,8 @@ class AttendanceController extends Controller
                     ], 400);
                 }
             } else if ($type == 1) {
-             
-                $attendence = attendence::Where('user_id', '=', $id)->where('date', '=', $currentDate)->whereNotNull('check_in')->first();
+
+                $attendence = attendence::Where('user_id', '=', $id)->where('date', '=', $currentDate)->whereNotNull('check_in')->whereNull('check_out')->first();
 
                 if ($attendence) {
 
@@ -135,7 +145,7 @@ class AttendanceController extends Controller
                         ->first();
 
                     $latenessTxt = '';
-                
+
                     if ($scheduale) {
                         $to = strtotime($scheduale->shiftTo);
 
@@ -145,8 +155,8 @@ class AttendanceController extends Controller
                         $diff = $currentTime->diff($toDateTime);
                         $totalMinutes = $diff->h * 60 + $diff->i;
                         $leaveMinDiff = 0;
-                        
-                       
+
+
                         if ($currentTime <= $toDateTime) {
 
 
@@ -157,69 +167,61 @@ class AttendanceController extends Controller
                                 $leave = Leave::where('user_id', '=', $id)->where('date', '=', $currentDate)->where('status', '=', 1)->where('period', '>=', $totalMinutes)->first();
                                 $isLeave = false;
 
-                               
+
 
                                 if ($leave) {
-                                    
+
                                     $leaveFromTemp = strtotime($leave->time);
                                     $leaveToTemp = strtotime($leave->period);
 
                                     $leaveFrom = \DateTime::createFromFormat('H:i', date('H:i', $leaveFromTemp));
-                              
+
 
                                     $hours = $leaveFrom->format('H');
                                     $minutes = $leaveFrom->format('i');
 
                                     $leaveToTemp = strtotime("+$hours hours", $leaveToTemp);
                                     $leaveToTemp = strtotime("+$minutes minutes", $leaveToTemp);
-                                  
+
 
                                     $leaveTo = \DateTime::createFromFormat('H:i', date('H:i', $leaveToTemp));
-                                 
+
                                     if ($leaveFrom <= $currentTime && $leaveTo >= $toDateTime) {
                                         $isLeave = true;
                                     } else {
-                                       
-                                        if ($leaveFrom >= $currentTime) {
-                                        
-                                        
-                                            $diffLeave = $leaveFrom->diff($currentTime);
-                                            if($diffLeave->h * 60 + $diffLeave->i > 10){
-                                            $leaveMinDiff += $diffLeave->h * 60 + $diffLeave->i;
-                                        }
-                                            else{
-                                                $isLeave=true;
-                                            }
 
-                                       
+                                        if ($leaveFrom >= $currentTime) {
+
+
+                                            $diffLeave = $leaveFrom->diff($currentTime);
+                                            if ($diffLeave->h * 60 + $diffLeave->i > 10) {
+                                                $leaveMinDiff += $diffLeave->h * 60 + $diffLeave->i;
+                                            } else {
+                                                $isLeave = true;
+                                            }
                                         }
                                         if ($leaveTo <= $toDateTime) {
 
-                                            
+
                                             $diffLeave = $leaveTo->diff($toDateTime);
-                                            if( ($diffLeave->h * 60 + $diffLeave->i ) > 10){
-                                            $leaveMinDiff += $diffLeave->h * 60 + $diffLeave->i;
-                                        }
-                                            else{
-                                                $isLeave=true;
+                                            if (($diffLeave->h * 60 + $diffLeave->i) > 10) {
+                                                $leaveMinDiff += $diffLeave->h * 60 + $diffLeave->i;
+                                            } else {
+                                                $isLeave = true;
                                             }
-
-
-                                            
-                                          
                                         }
                                     }
                                 }
 
 
                                 if ($isLeave) {
-                                 
-                                
+
+
                                     $attendence->type = 10;
                                     $success = $attendence->save();
                                 } else {
 
-                                    
+
                                     $lateness = new Lateness();
                                     $lateness->user_id = $id;
                                     $lateness->attendence_id = $attendence->id;
@@ -239,17 +241,17 @@ class AttendanceController extends Controller
                             }
                         }
 
-                        if($currentTime > $toDateTime){
-                            if($totalMinutes >10){
-                                
-                              $overtime=new Overtime();
-                              $overtime->user_id=$id;
-                              $overtime->attendence_id=$attendence->id;
-                              $overtime->amount=$totalMinutes;
+                        if ($currentTime > $toDateTime) {
+                            if ($totalMinutes > 10) {
 
-                              if($overtime->save()){
-                                $latenessTxt=', Overtime Added';
-                              }
+                                $overtime = new Overtime();
+                                $overtime->user_id = $id;
+                                $overtime->attendence_id = $attendence->id;
+                                $overtime->amount = $totalMinutes;
+
+                                if ($overtime->save()) {
+                                    $latenessTxt = ', Overtime Added';
+                                }
                             }
                         }
                     }

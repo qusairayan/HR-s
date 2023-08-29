@@ -72,6 +72,6 @@ class AddnewRole extends Component
             });
        
               
-            return view('Livewire.role.addNewRole');
+            return view('livewire.role.addNewRole');
     }
 }

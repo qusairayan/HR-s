@@ -23,12 +23,6 @@ class LoginController extends Controller
 
 
 
-
-
-        // $credentials = $request->only('username', 'password');
-
-
-
         if ($request->has('password') && $request->has('username')) {
             $username = $request->input('username');
             $password = Hash::make($request->input('password'));

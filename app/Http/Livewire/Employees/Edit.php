@@ -178,6 +178,6 @@ class Edit extends Component
         $companies = Company::all();
         $roles= Role::all();
 
-        return view('Livewire.employees.edit', compact('departments','companies','roles'));
+        return view('livewire.employees.edit', compact('departments','companies','roles'));
     }
 }
