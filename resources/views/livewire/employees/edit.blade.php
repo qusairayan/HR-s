@@ -89,9 +89,22 @@
                             <label for="position">Position</label>
                             <div class="input-group">
 
-                                <input class="form-control datepicker-input" type="text" id="position"
-                                    value="{{ $user->position }}" placeholder="Enter Employee's Position"
+                                
+
+                                    <select class="form-select mb-0" id="position" aria-label="position select example"
                                     wire:model="position" autofocus required>
+                                    <option value="" disabled selected hidden>Select Employee's Postion
+
+                                    <option value="employee">
+                                        Employee</option>
+                                    <option value="manager">
+                                        Manager</option>
+
+                                    </option>
+
+                                </select>
+
+
                                 @error('position')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
