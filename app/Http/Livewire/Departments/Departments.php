@@ -36,7 +36,7 @@ class Departments extends Component
             \DB::raw('(SELECT COUNT(*) FROM users WHERE users.department_id = department.id) as user_count')
         )
         ->leftJoin('company', 'company.id', '=', 'department.company_id')
-        // ->where('department.name','LIKE',$this->search)
+        ->where('department.name','LIKE','%'.$this->search.'%')
         ->paginate($this->paginate);
          
     

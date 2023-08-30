@@ -93,14 +93,14 @@
 
                                     <select class="form-select mb-0" id="position" aria-label="position select example"
                                     wire:model="position" autofocus required>
-                                    <option value="" disabled selected hidden>Select Employee's Postion
+                                    <option hidden selected >Select Employee's Postion</option>
+
 
                                     <option value="employee" {{ $user->position == "employee" ? 'selected' : '' }}>
                                         Employee</option>
                                     <option value="manager" {{ $user->position == "manager" ? 'selected' : '' }}>
                                         Manager</option>
 
-                                    </option>
 
                                 </select>
 
@@ -122,7 +122,7 @@
 
                                 <select class="form-select mb-0" id="type" aria-label="type select example"
                                     wire:model="type" autofocus required>
-                                    <option value="" disabled selected hidden>Select Employee's Type
+                                    <option hidden selected>Select Employee's Type</option>
 
                                     <option value="full-time" {{ $user->type == "full-time" ? 'selected' : '' }}>Full-time</option>
                                     <option value="part-time" {{ $user->type == "part-time" ? 'selected' : '' }}>Part-time</option>
