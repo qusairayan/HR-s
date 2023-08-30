@@ -34,7 +34,8 @@ class Edit extends Component
     public $image;
     public $status ;
     public $salary ;
-    public $type = 1;
+    public $start_date ;
+
     public $company_id ;
     public $department_id ;
     public $position ;
@@ -55,7 +56,6 @@ class Edit extends Component
         'position' => 'required',
         'role' => 'required',
         'salary' => 'required|integer',
-        'type' => 'required|integer',
         'birthday' => 'date',
         'ID_no' => 'required|integer|digits:10', 
 
@@ -75,7 +75,7 @@ class Edit extends Component
         $this->department_id = $user->department_id;
         $this->position = $user->position;
         $this->salary = $user->salary;
-        $this->type = $user->type;
+        $this->start_date = $user->start_date;
         $this->birthday = $user->birthday;
         $this->ID_no = $user->ID_no;
         $this->status = $user->status;
@@ -157,7 +157,7 @@ class Edit extends Component
         'department_id' => $this->department_id,
         'position' => $this->position,
         'salary' => $this->salary,
-        'type' => $this->type,
+        'start_date' => $this->start_date,
         'birthday' => $this->birthday,
         'ID_no' => $this->ID_no,
         'status' => $this->status,

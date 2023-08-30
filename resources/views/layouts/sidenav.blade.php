@@ -397,6 +397,12 @@
 
 
 
+            <li class="nav-item {{ in_array(Request::segment(1), ['departments']) ? 'active' : '' }}">
+                <a href="/departments" class="nav-link">
+                    <i class="fas fa-users me-2"></i>
+                    <span class="sidebar-text">Departments</span>
+                </a>
+            </li>
 
 
             <li class="nav-item">
@@ -442,6 +448,11 @@
             </li>
 
 
+
+
+
+
+           
 
 
 

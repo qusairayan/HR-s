@@ -39,7 +39,6 @@ class AddNewEmployee extends Component
     public $status = 0;
 
     public $salary = '';
-    public $type = 1;
     public $company = '';
     public $department = '';
     public $departmentName = '';
@@ -62,7 +61,6 @@ class AddNewEmployee extends Component
         'position' => 'required',
         'role' => 'required',
         'salary' => 'required|integer',
-        'type' => 'required|integer',
         'start_date' => 'required|date',
         'ID_no' => 'required|int|digits:10',
         'image' => 'nullable|mimes:jpg,png,jpeg',
@@ -103,7 +101,6 @@ class AddNewEmployee extends Component
             'position' => 'required',
             'role' => 'required',
             'salary' => 'required|integer',
-            'type' => 'required|integer',
             'start_date' => 'required|date',
             'ID_no' => 'required|integer|digits:10',
             'image' => 'nullable|mimes:jpg,png,jpeg',
@@ -127,7 +124,6 @@ class AddNewEmployee extends Component
             'gender' => $this->gender,
             'position' => $this->position,
             'salary' => $this->salary,
-            'type' => $this->type,
             'start_date' => $this->start_date,
             'ID_no' => $this->ID_no,
             'birthday' => $this->birth,

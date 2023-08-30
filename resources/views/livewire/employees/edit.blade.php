@@ -126,15 +126,15 @@
 
 
 
-                        <div class="col-md-6 mb-3">
-                            <label for="type">Employement Type</label>
+                       
+                        <div class="col-md-5 mb-3">
+                            <label for="start_date">Start Date</label>
                             <div class="input-group">
-                                <select class="form-select mb-0" id="type"
-                                aria-label="type select example" wire:model="type">
-                               <option {{$this->type=='1'? 'selected':''}} value="1" >Full-Time</option>
-                               <option {{$this->type=='2'? 'selected':''}} value="2" >Part-Time</option>
-                                </select>
-                                @error('type')
+
+                                <input class="form-control datepicker-input" type="date" id="start_date"
+                                    placeholder="Enter Employee's start_date" wire:model="start_date" autofocus
+                                    required>
+                                @error('start_date')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
 

@@ -132,18 +132,7 @@
                         </div>
 
 
-                        <div class="col-md-5 mb-3">
-                            <label for="type">Employoment Type</label>
-                            <div class="input-group">
-
-                                <input class="form-control datepicker-input" type="text" id="type"
-                                    placeholder="Enter Employee's type" wire:model="type" autofocus required>
-                                @error('type')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-
-                            </div>
-                        </div>
+                       
 
                     </div>
                     <div class="row">

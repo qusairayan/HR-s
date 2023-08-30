@@ -118,7 +118,9 @@
                 </td>
                     <td>
                         <a href="#" class="d-flex align-items-center">
+                            @if(isset($user->image)) 
                             <img src="/storage/profile/{{ $user->image }}" class="avatar rounded-circle me-3" alt="Avatar">
+                            @endif
                             <div class="d-block">
                                 <span class="fw-bold">{{$user->name}}</span>
                                 <div class="small text-gray">{{$user->email}}</div>

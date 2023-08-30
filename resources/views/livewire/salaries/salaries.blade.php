@@ -131,8 +131,7 @@
                         </td>
                         <td>
                             <a href="#" class="d-flex align-items-center">
-                                <img src="/storage/profile/{{ $salary->image }}" class="avatar rounded-circle me-3"
-                                    alt="Avatar">
+
                                 <div class="d-block">
                                     <span class="fw-bold">{{ $salary->name }}</span>
                                     <div class="small text-gray">{{ $salary->email }}</div>

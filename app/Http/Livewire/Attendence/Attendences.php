@@ -26,7 +26,7 @@ class Attendences extends Component
             ->select('attendence.*', 'department.name as department_name', 'users.name as user_name')
             ->where('users.name', 'LIKE', '%' . $this->search . '%')
             ->paginate(10); 
-            return view('livewire.Attendence.Attendence', compact('attendances'));
+            return view('livewire.attendence.attendence', compact('attendances'));
 
         }
 
@@ -37,7 +37,7 @@ class Attendences extends Component
             ->where('users.department_id', '=', auth()->user->department_id)
             ->where('users.name', 'LIKE', '%' . $this->search . '%')
             ->paginate(10);
-            return view('livewire.Attendence.Attendence', compact('attendances'));
+            return view('livewire.attendence.attendence', compact('attendances'));
         }
         
     }

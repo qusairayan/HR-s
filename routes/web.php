@@ -48,10 +48,14 @@ use App\Http\Livewire\Permission\PermissionRolesEdit;
 use App\Http\Livewire\Role\Roles;
 use App\Http\Livewire\Role\AddnewRole;
 
+use App\Http\Livewire\Departments\Departments;
+
+
+
+
+
 
 use App\Http\Controllers\TransferController;
-
-
 
 use App\Http\Controllers\PrivacyPolicyController;
 
@@ -197,6 +201,12 @@ Route::middleware('auth')->group(function () {
     Route::prefix('payroll')->group(function () {
         Route::get('/salaries', Salaries::class)->name('payroll.salaries'); //->middleware('role:viewroles')
         Route::get('/addSalary', AddSalaries::class)->name('payroll.addSalary'); //->middleware('role:viewroles')
+    });
+
+
+    Route::prefix('departments')->group(function () {
+        Route::get('/', Departments::class)->name('departments'); //->middleware('role:viewroles')
+
     });
 
 });

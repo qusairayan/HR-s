@@ -4,6 +4,7 @@
     @if (in_array(request()->route()->getName(),
             [
                 'dashboard',
+                'departments',
                 'employees',
                 'employees.edit',
                 'employees.addNew',
@@ -45,7 +46,7 @@
             @include('layouts.topbar')
             {{ $slot }}
             {{-- Footer --}}
-            @include('layouts.footer')
+            {{-- @include('layouts.footer') --}}
         </main>
     @elseif(in_array(request()->route()->getName(),
             [

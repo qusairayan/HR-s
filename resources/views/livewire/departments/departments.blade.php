@@ -1,27 +1,22 @@
 <div>
-    <title>Employees - Overtime- </title>
 
-    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
-        <div class="d-block mb-4 mb-md-0">
-            <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
-                <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
-                    <li class="breadcrumb-item">
-                        <a href="#">
-                            <svg class="icon icon-xxs" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6">
-                                </path>
-                            </svg>
-                        </a>
-                    </li>
-                    <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Overtime</li>
-                </ol>
-            </nav>
-            <h2 class="h4">All Overtimes</h2>
+    <title>Departments </title>
+
+    <div class="d-flex justify-content-end flex-wrap flex-md-nowrap align-items-center py-4" >
+        
+        <div class="btn-toolbar mb-2 mb-md-0" >
+            <a data-bs-toggle="modal" data-bs-target="#modal-notification"
+                class="btn btn-sm btn-gray-800 d-inline-flex align-items-center">
+                <svg class="icon icon-xs me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 6v6m0 0v6m0-6h6m-6 0H6">
+                    </path>
+                </svg>
+                New Department
+            </a>
+
         </div>
-
     </div>
     <div class="table-settings mb-4">
         <div class="row align-items-center justify-content-between">
@@ -70,6 +65,8 @@
     </div>
 
 
+
+
     <div wire:ignore.self class="modal fade" id="modal-notification" tabindex="-1" role="dialog"
         aria-labelledby="modal-notification" aria-hidden="true" wire:ignore>
         <div class="modal-dialog modal-info modal-dialog-centered" role="document">
@@ -78,90 +75,62 @@
                     aria-label="Close"></button>
                 <div class="modal-header">
                     <p class="modal-title text-gray-200" id="modal-title-notification">
-                        Add Allownces
+                        Add Department
                     </p>
                 </div>
 
 
 
 
-                <form wire:submit.prevent="addAllownce">
+                <form wire:submit.prevent="addDepartment">
+
                     <div class="row p-md text-white">
-                        <div class="row align-items-center ">
-
-                            <h2 class="col-8 p-sm d-flex align-items-center  h2 px-md-1">
-                                {{ $username }}
-                            </h2>
-
-
-                            <small class="col-4 d-flex align-items-center ">
-                                <svg class="icon icon-xxs text-gray-400 me-1" fill="currentColor" viewBox="0 0 20 20"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd"
-                                        d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
-                                        clip-rule="evenodd"></path>
-                                </svg>
-                                {{ $date }}
-                            </small>
-                        </div>
-                        <div class=" col-6 p-sm d-flex align-items-center">
-                            <div class="row">
-                                <span class="col-4 p-sm d-flex align-items-center ">In:</span>
-                                <div class="col-6 p-sm d-flex align-items-center">
-                                    <i class="fas fa-door-closed"></i>
-                                    <span class="text-white p-md-2">{{ $checkIn }}</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class=" col-6 p-sm d-flex align-items-center">
-                            <div class="row">
-                                <span class="col-4 p-sm d-flex align-items-center ">Out:</span>
-                                <div class="col-6 p-sm d-flex align-items-center">
-                                    <i class="fas fa-door-open"></i>
-                                    <span class="text-white p-md-2 ">{{ $checkOut }}</span>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div class="row  align-items-center ">
-
-                            <div class="col-6 p-sm">
-
-                                <span class="px-md-1">Overtime:</span>
-                                <span class="badge text-white bg-danger">{{ $amount }} Minutes</span>
-                            </div>
-
-                        </div>
-
-
-
 
                     </div>
-
-
-
-
-
 
                     <div class="modal-body text-white">
                         <div class="py-3 text-center">
 
-                            <h4 class="h5 py-2">Allownce Amount:</h4>
+                            <h4 class="h5 py-2">Name:</h4>
 
                             <div class="input-group mt-1">
-                                <input type="text" class="form-control" wire:model="allownce">
+                                <input type="text" class="form-control" placeholder="Department name"
+                                    wire:model="name">
 
 
-                                @error('allownce')
+                                @error('name')
                                     <div class="invalid-feedback py-2"> {{ $message }} </div>
                                 @enderror
-
-                                
 
                             </div>
 
                         </div>
+
+
+                        <div class="py-3 text-center">
+
+                            <h4 class="h5 py-2">Company:</h4>
+
+                            <div class="input-group mt-1">
+                                <select class="form-control" wire:model="company">
+
+                                    <option value="" selected disabled> Select Company </option>
+
+                                    @foreach ($companies as $comp)
+                                        <option value="{{ $comp->id }}">{{ $comp->name }}</option>
+                                    @endforeach
+                                </select>
+
+
+                                @error('company')
+                                    <div class="invalid-feedback py-2"> {{ $message }} </div>
+                                @enderror
+
+                            </div>
+
+                        </div>
+
+
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-sm btn-success">Add</button>
@@ -172,15 +141,100 @@
     </div>
 
 
+
+
+
+
+
+
+
+
+    <div wire:ignore.self class="modal fade" id="modal-edit" tabindex="-1" role="dialog"
+        aria-labelledby="modal-edit" aria-hidden="true" wire:ignore>
+        <div class="modal-dialog modal-info modal-dialog-centered" role="document">
+            <div class="modal-content bg-gradient-secondary" style="background: #13223d">
+                <button type="button" class="btn-close theme-settings-close fs-6 ms-auto" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+                <div class="modal-header">
+                    <p class="modal-title text-gray-200" id="modal-title-edit">
+                        Edit Department
+                    </p>
+                </div>
+
+
+
+
+                <form wire:submit.prevent="saveEdit">
+
+                    <div class="row p-md text-white">
+
+                    </div>
+
+                    <div class="modal-body text-white">
+                        <div class="py-3 text-center">
+
+                            <h4 class="h5 py-2">Name:</h4>
+
+                            <div class="input-group mt-1">
+                                <input type="text" class="form-control" placeholder="Department name"
+                                    wire:model="nameEdit">
+
+
+                                @error('name')
+                                    <div class="invalid-feedback py-2"> {{ $message }} </div>
+                                @enderror
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="py-3 text-center">
+
+                            <h4 class="h5 py-2">Company:</h4>
+
+                            <div class="input-group mt-1">
+                                <select class="form-control" wire:model="companyEdit">
+
+                                    <option value="" selected disabled> Select Company </option>
+
+                                    @foreach ($companies as $comp)
+                                        <option value="{{ $comp->id }}"
+                                            @if ($comp->id == $this->companyEdit) selected @endif>{{ $comp->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+
+
+                                @error('company')
+                                    <div class="invalid-feedback py-2"> {{ $message }} </div>
+                                @enderror
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-sm btn-success">Edit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
     <div class="card card-body border-0 shadow table-wrapper table-responsive">
         <table class="table table-hover">
             <thead>
                 <tr>
 
+                    <th class="border-gray-200">#</th>
                     <th class="border-gray-200">Name</th>
-                    <th class="border-gray-200">Department</th>
-                    <th class="border-gray-200">date</th>
-                    <th class="border-gray-200">Late</th>
+                    <th class="border-gray-200">company</th>
+                    <th class="border-gray-200">Count Of employee</th>
                     <th class="border-gray-200">Action</th>
                 </tr>
             </thead>
@@ -188,21 +242,18 @@
 
 
 
-                @foreach ($overtimes as $over)
+                @foreach ($departments as $department)
                     <tr>
 
 
 
 
-                        <td>
-                            <a href="#" class="d-flex align-items-center">
-                                <img src="/storage/profile/{{ $over->user_image }}" class="avatar rounded-circle me-3"
-                                    alt="Avatar">
-                                <div class="d-block">
-                                    <span class="fw-bold">{{ $over->user_name }}</span>
-                                </div>
-                            </a>
+                        <td class="border-0 fw-bold">
+                            <span class="fw-normal">
+                                {{ $department->dep_id }}
+                            </span>
                         </td>
+
 
 
 
@@ -211,36 +262,31 @@
 
                         <td class="border-0 fw-bold">
                             <span class="fw-normal">
-                                {{ $over->department_name }}
+                                {{ $department->dep_name }}
                             </span>
                         </td>
 
                         <td class="border-0 fw-bold">
                             <span class="fw-normal">
-                                {{ $over->date }}
+                                {{ $department->company_name }}
                             </span>
                         </td>
-
-
 
                         <td class="border-0 fw-bold">
                             <span class="fw-normal">
-                                {{ $over->amount }}
+                                {{ $department->user_count }}
+
                             </span>
                         </td>
 
                         <td class="border-0 fw-bold">
-                            @if ($over->allownce == 0)
-                                <div class="btn-group">
-                                    <button class="btn btn-success" data-bs-toggle="modal"
-                                        data-bs-target="#modal-notification"
-                                        wire:click="viewAllownce({{ $over->id }})" type="button">Add
-                                        Allownce</button>
-                                </div>
-                            @else
-                                <span class="badge text-white bg-success">Allownce Added</span>
-                            @endif
 
+                            <div class="btn-group">
+
+                                <a class="dropdown-item" wire:click="editShow({{ $department->dep_id }})"
+                                    data-bs-toggle="modal" data-bs-target="#modal-edit"><span
+                                        class="fas fa-edit me-2"></span>Edit</a>
+                            </div>
                         </td>
 
 
@@ -250,7 +296,7 @@
             </tbody>
         </table>
         <div>
-            {{-- {{ $overtimes->links('vendor.pagination.custom') }} --}}
+            {{ $departments->links('vendor.pagination.custom') }}
         </div>
     </div>
 </div>
