@@ -95,9 +95,9 @@
                                     wire:model="position" autofocus required>
                                     <option value="" disabled selected hidden>Select Employee's Postion
 
-                                    <option value="employee">
+                                    <option value="employee" {{ $user->position == "employee" ? 'selected' : '' }}>
                                         Employee</option>
-                                    <option value="manager">
+                                    <option value="manager" {{ $user->position == "manager" ? 'selected' : '' }}>
                                         Manager</option>
 
                                     </option>
@@ -112,6 +112,30 @@
                             </div>
                         </div>
 
+
+
+
+                        <div class="col-md-5 mb-3">
+                            <label for="position">Employee Type</label>
+                            <div class="input-group">
+
+
+                                <select class="form-select mb-0" id="type" aria-label="type select example"
+                                    wire:model="type" autofocus required>
+                                    <option value="" disabled selected hidden>Select Employee's Type
+
+                                    <option value="full-time" {{ $user->type == "full-time" ? 'selected' : '' }}>Full-time</option>
+                                    <option value="part-time" {{ $user->type == "part-time" ? 'selected' : '' }}>Part-time</option>
+
+                                </select>
+
+
+                                @error('type')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+
+                            </div>
+                        </div>
 
 
                         <div class="col-md-6 mb-3">
@@ -285,7 +309,6 @@
 
                                 <h4 class="h3">{{ $user->name }}</h4>
                                 <h5 class="fw-normal">{{ $user->position }}</h5>
-                                <p class="text-gray mb-4">@if(isset( $dept->name) ) {{ $dept->name }} @endif</p>
                                 <p class="text-gray mb-4">Start Date: {{ $user->start_date }}</p>
                                 <div class="col-sm-10 mb-3 ">
                                     <label for="formFile" class="form-label">upload Employee's image</label>
@@ -297,6 +320,72 @@
                                 </div>
 
                             </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="col-12 mb-3">
+                        <div class="align-items-center card shadow border-0 text-center p-0">
+
+                            <div class="card-body pb-5">
+
+                                @if ($newID_image)
+                                <img src="{{ $newID_image }}" class="avatar-xxl  mx-auto mb-4"
+                                    alt="ID Image">
+                            @elseif($user->ID_image)
+                                <img src="/storage/profile/{{ $user->ID_image }}"
+                                    class="avatar-xxl mx-auto mb-4"
+                                    alt="ID Image">
+                            @endif
+
+
+
+                                <h4 class="h3">Employee's ID card image</h4>
+
+                            </div>
+                            <div class="col-sm-10 mb-3 ">
+                                <label for="formFile" class="form-label">upload Employee's ID card image</label>
+                                <input class="form-control" type="file" id="ID_image" wire:model="ID_image" >
+                                @error('ID_image')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+
+                            </div>
+                            
+                            <!-- End of Form -->
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="col-12 mb-3">
+                        <div class="align-items-center card shadow border-0 text-center p-0">
+
+                            <div class="card-body pb-5">
+
+                                @if ($newLicense_image)
+                                <img src="{{ $newLicense_image }}" class="avatar-xxl  mx-auto mb-4"
+                                    alt="ID Image">
+                            @elseif($user->license_image)
+                                <img src="/storage/profile/{{ $user->license_image }}"
+                                    class="avatar-xxl mx-auto mb-4"
+                                    alt="License Image">
+                            @endif
+
+                                <h4 class="h3">Employee's License image</h4>
+
+                            </div>
+                            <div class="col-sm-10 mb-3 ">
+                                <label for="formFile" class="form-label">upload Employee's License image</label>
+                                <input class="form-control" type="file" id="license_image" wire:model="license_image" >
+                                @error('ID_image')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+
+                            </div>
+                            <!-- End of Form -->
                         </div>
                     </div>
 

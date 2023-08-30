@@ -32,6 +32,8 @@ class AddNewEmployee extends Component
     public $address = '';
 
     public $image;
+    public $ID_image;
+    public $license_image;
 
     public $password = '';
     public $passwordConfirmation = '';
@@ -45,6 +47,7 @@ class AddNewEmployee extends Component
 
 
     public $position = '';
+    public $type= ''; 
     public $role = '';
     public $start_date = '';
 
@@ -59,11 +62,14 @@ class AddNewEmployee extends Component
         'company' => 'required',
         'department' => 'required',
         'position' => 'required',
+        'type' => 'required',
         'role' => 'required',
         'salary' => 'required|integer',
         'start_date' => 'required|date',
         'ID_no' => 'required|int|digits:10',
         'image' => 'nullable|mimes:jpg,png,jpeg',
+        'ID_image' => 'nullable|mimes:jpg,png,jpeg',
+        'license_image' => 'nullable|mimes:jpg,png,jpeg',
 
     ];
 
@@ -99,11 +105,14 @@ class AddNewEmployee extends Component
             'company' => 'required',
             'department' => 'required',
             'position' => 'required',
+            'type' => 'required',
             'role' => 'required',
             'salary' => 'required|integer',
             'start_date' => 'required|date',
             'ID_no' => 'required|integer|digits:10',
             'image' => 'nullable|mimes:jpg,png,jpeg',
+            'ID_image' => 'nullable|mimes:jpg,png,jpeg',
+            'license_image' => 'nullable|mimes:jpg,png,jpeg',
 
         ]);
 
@@ -123,6 +132,7 @@ class AddNewEmployee extends Component
             'address' => $this->address,
             'gender' => $this->gender,
             'position' => $this->position,
+            'type' => $this->type,
             'salary' => $this->salary,
             'start_date' => $this->start_date,
             'ID_no' => $this->ID_no,
@@ -140,6 +150,21 @@ class AddNewEmployee extends Component
             $user->image = $user->id . '.' . $this->image->getClientOriginalExtension();
             $user->save();
         }
+
+        if ($this->ID_image) {
+            $imagePath = $this->ID_image->storeAs('public/profile/', 'ID_'.$user->id . '.' . $this->ID_image->getClientOriginalExtension());
+
+            $user->ID_image = 'ID_'.$user->id . '.' . $this->ID_image->getClientOriginalExtension();
+            $user->save();
+        }
+
+        if ($this->license_image) {
+            $imagePath = $this->license_image->storeAs('public/profile/', 'license_'.$user->id . '.' . $this->license_image->getClientOriginalExtension());
+
+            $user->license_image ='license_'.$user->id . '.' . $this->license_image->getClientOriginalExtension();
+            $user->save();
+        }
+
 
         return redirect('/employees');
     }

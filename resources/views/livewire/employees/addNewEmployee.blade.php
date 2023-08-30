@@ -90,12 +90,10 @@
                                     wire:model="position" autofocus required>
                                     <option value="" disabled selected hidden>Select Employee's Postion
 
-                                    <option value="employee">
-                                        Employee</option>
-                                    <option value="manager">
-                                        Manager</option>
+                                    <option value="employee">Employee</option>
+                                    <option value="manager">Manager</option>
 
-                                    </option>
+                                    
 
                                 </select>
 
@@ -106,6 +104,33 @@
 
                             </div>
                         </div>
+
+
+
+                        <div class="col-md-5 mb-3">
+                            <label for="position">Employee Type</label>
+                            <div class="input-group">
+
+
+                                <select class="form-select mb-0" id="type" aria-label="type select example"
+                                    wire:model="type" autofocus required>
+                                    <option value="" disabled selected hidden>Select Employee's Type
+
+                                    <option value="full-time">Full-time</option>
+                                    <option value="part-time">Part-time</option>
+
+                                </select>
+
+
+                                @error('type')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+
+                            </div>
+                        </div>
+
+
+
 
                         <div class="col-md-5 mb-3">
                             <label for="role">Role</label>
@@ -132,7 +157,7 @@
                         </div>
 
 
-                       
+
 
                     </div>
                     <div class="row">
@@ -315,7 +340,11 @@
                         </div>
                     </div>
 
-                    <div class="col-12">
+
+
+
+
+                    <div class="col-12 mb-3">
                         <div class="card card-body border-0 shadow mb-4 mb-xl-0">
                             <h2 class="h5 mb-4">Activities</h2>
                             <ul class="list-group list-group-flush">
@@ -351,6 +380,56 @@
                             </ul>
                         </div>
                     </div>
+
+
+
+
+
+                    <div class="col-12 mb-3">
+                        <div class="align-items-center card shadow border-0 text-center p-0">
+
+                            <div class="card-body pb-5">
+                                <h4 class="h3">Employee's ID card image</h4>
+
+                            </div>
+                            <div class="col-sm-10 mb-3 ">
+                                <label for="formFile" class="form-label">upload Employee's ID card image</label>
+                                <input class="form-control" type="file" id="ID_image" wire:model="ID_image">
+                                @error('ID_image')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+
+                            </div>
+                            <!-- End of Form -->
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="col-12 mb-3">
+                        <div class="align-items-center card shadow border-0 text-center p-0">
+
+                            <div class="card-body pb-5">
+                                <h4 class="h3">Employee's License image</h4>
+
+                            </div>
+                            <div class="col-sm-10 mb-3 ">
+                                <label for="formFile" class="form-label">upload Employee's License image</label>
+                                <input class="form-control" type="file" id="license_image"
+                                    wire:model="license_image">
+                                @error('ID_image')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+
+                            </div>
+                            <!-- End of Form -->
+                        </div>
+                    </div>
+
+
+
+
                 </div>
             </div>
             @if ($showSavedAlert)

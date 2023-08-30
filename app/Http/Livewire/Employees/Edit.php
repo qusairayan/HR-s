@@ -32,6 +32,8 @@ class Edit extends Component
     public $birthday ;
     public $address ;
     public $image;
+    public $ID_image;
+    public $license_image;
     public $status ;
     public $salary ;
     public $start_date ;
@@ -39,10 +41,13 @@ class Edit extends Component
     public $company_id ;
     public $department_id ;
     public $position ;
+    public $type ;
     public $role ;
 
 
     public $newImage;
+    public $newID_image;
+    public $newLicense_image;
 
 
     public $rules = [
@@ -54,6 +59,7 @@ class Edit extends Component
         'company_id' => 'required',
         'department_id' => 'required',
         'position' => 'required',
+        'type' => 'required',
         'role' => 'required',
         'salary' => 'required|integer',
         'birthday' => 'date',
@@ -76,6 +82,7 @@ class Edit extends Component
         $this->company_id = $user->company_id;
         $this->department_id = $user->department_id;
         $this->position = $user->position;
+        $this->type = $user->type;
         $this->salary = $user->salary;
         $this->start_date = $user->start_date;
         $this->birthday = $user->birthday;
@@ -84,6 +91,8 @@ class Edit extends Component
         $this->ID_no = $user->ID_no;
         $this->status = $user->status;
         $this->image = $user->image;
+        $this->ID_image = $user->ID_image;
+        $this->license_image = $user->license_image;
 
         $this->role = $user->getRoleNames();
 
@@ -138,6 +147,74 @@ class Edit extends Component
     
             $this->newImage = asset('storage/profile/' . $this->user->image);
         }
+
+
+    }
+
+    public function updatedIDImage()
+    {
+        if ($this->ID_image) {
+            
+            $validExtensions = ['jpg', 'jpeg', 'png'];
+            $extension = strtolower($this->ID_image->getClientOriginalExtension());
+    
+            if (!in_array($extension, $validExtensions)) {
+                $this->reset('ID_image');
+                $this->addError('ID_image', 'Invalid image format. Only JPG, JPEG, and PNG images are allowed.');
+                return;
+            }
+    
+            $imageName = 'ID_'.$this->user->id . '.' . $extension;
+            $imagePath = 'public/profile/' .  $imageName;
+    
+            if ($this->user->ID_image && Storage::exists('public/profile/' . $this->user->ID_image)) {
+                Storage::delete($imagePath);
+            }
+    
+            // Save the new image with the unique name
+            $this->ID_image->storeAs('public/profile/', $imageName);
+    
+            $this->user->ID_image = $imageName;
+
+            $this->user->save();
+    
+            $this->newID_image = asset('storage/profile/' . $this->user->ID_image);
+        }
+
+
+}
+
+public function updatedLicenseImage()
+{
+
+
+    if ($this->license_image) {
+        
+        $validExtensions = ['jpg', 'jpeg', 'png'];
+        $extension = strtolower($this->license_image->getClientOriginalExtension());
+
+        if (!in_array($extension, $validExtensions)) {
+            $this->reset('license_image');
+            $this->addError('license_image', 'Invalid image format. Only JPG, JPEG, and PNG images are allowed.');
+            return;
+        }
+
+        $imageName = 'license_'.$this->user->id . '.' . $extension;
+        $imagePath = 'public/profile/' .  $imageName;
+
+        if ($this->user->license_image && Storage::exists('public/profile/' . $this->user->license_image)) {
+            Storage::delete($imagePath);
+        }
+
+        // Save the new image with the unique name
+        $this->license_image->storeAs('public/profile/', $imageName);
+
+        $this->user->license_image = $imageName;
+
+        $this->user->save();
+
+        $this->newLicense_image = asset('storage/profile/' . $this->user->license_image);
+    }
     }
     
 
@@ -160,6 +237,7 @@ class Edit extends Component
         'company_id' => $this->company_id,
         'department_id' => $this->department_id,
         'position' => $this->position,
+        'type' => $this->type,
         'salary' => $this->salary,
         'start_date' => $this->start_date,
         'birthday' => $this->birthday,

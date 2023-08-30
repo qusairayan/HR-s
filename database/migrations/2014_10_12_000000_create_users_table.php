@@ -23,7 +23,7 @@ class CreateUsersTable extends Migration
             $table->integer('vacation_balance')->default(0);
             
 
-            $table->integer('type');
+            $table->string('type');
 
             
 
