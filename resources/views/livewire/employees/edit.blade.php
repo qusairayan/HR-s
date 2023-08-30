@@ -272,7 +272,7 @@
 
                                 <h4 class="h3">{{ $user->name }}</h4>
                                 <h5 class="fw-normal">{{ $user->position }}</h5>
-                                <p class="text-gray mb-4">{{ $dept->name }}</p>
+                                <p class="text-gray mb-4">@if(isset( $dept->name) ) {{ $dept->name }} @endif</p>
                                 <p class="text-gray mb-4">Start Date: {{ $user->start_date }}</p>
                                 <div class="col-sm-10 mb-3 ">
                                     <label for="formFile" class="form-label">upload Employee's image</label>

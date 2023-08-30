@@ -146,11 +146,18 @@ class AddNewEmployee extends Component
 
     public function render()
     {
+$companies = Company::all();
+
         $departments = Department::leftJoin('company', 'company.id', '=', 'department.company_id')
             ->select('department.*', 'company.name as company_name')
             ->get();
 
-        $companies = Company::all();
+        if($this->company !=''){
+            $departments = Department::leftJoin('company', 'company.id', '=', 'department.company_id')
+            ->select('department.*', 'company.name as company_name')->
+            where('company_id','=',$this->company)
+            ->get();
+        }
 
         $roles = Role::all()->where('name', '!=', 'admin');
 

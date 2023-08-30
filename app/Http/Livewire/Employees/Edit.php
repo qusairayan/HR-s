@@ -57,6 +57,8 @@ class Edit extends Component
         'role' => 'required',
         'salary' => 'required|integer',
         'birthday' => 'date',
+        'phone' => 'required',
+        'address' => 'required',
         'ID_no' => 'required|integer|digits:10', 
 
     ];
@@ -77,6 +79,8 @@ class Edit extends Component
         $this->salary = $user->salary;
         $this->start_date = $user->start_date;
         $this->birthday = $user->birthday;
+        $this->phone = $user->phone;
+        $this->address = $user->address;
         $this->ID_no = $user->ID_no;
         $this->status = $user->status;
         $this->image = $user->image;
@@ -159,6 +163,8 @@ class Edit extends Component
         'salary' => $this->salary,
         'start_date' => $this->start_date,
         'birthday' => $this->birthday,
+        'phone' => $this->phone,
+        'address' => $this->address,
         'ID_no' => $this->ID_no,
         'status' => $this->status,
     ]);
@@ -175,6 +181,9 @@ class Edit extends Component
     public function render()
     {
         $departments = Department::all();
+        if($this->company_id !=''){
+            $departments = Department::where('company_id','=',$this->company_id)->get();
+        }
         $companies = Company::all();
         $roles= Role::all();
 

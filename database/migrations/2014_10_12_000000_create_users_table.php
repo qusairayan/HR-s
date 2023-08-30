@@ -51,7 +51,9 @@ class CreateUsersTable extends Migration
             $table->unsignedBigInteger('company_id');
             $table->string('position');
 
-            $table->string('image')->default('');
+            $table->string('image')->nullable();
+            $table->string('ID_image')->nullable();
+            $table->string('license_image')->nullable();
 
             $table->string('otp')->nullable();
 
