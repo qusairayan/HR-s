@@ -75,16 +75,16 @@ class AddNewEmployee extends Component
 
 
 
-    public function updatedDepartment($value)
+    public function updatedDepartment()
     {
-        $this->department = explode('|', $value)[0];
-        $this->departmentName = explode('|', $value)[1];
+
+        $this->departmentName = Department::find($this->department)->name;
     }
 
 
     public function updated($propertyName)
     {
-        $this->validateOnly($propertyName);
+        // $this->validateOnly($propertyName);
     }
 
 

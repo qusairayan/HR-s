@@ -66,7 +66,7 @@
                                 <select class="form-select mb-0" id="department" aria-label="department select example"
                                     wire:model="department" autofocus required>
                                     @foreach ($departments as $dept)
-                                        <option value="{{ $dept->id . '|' . $dept->name }}">
+                                        <option value="{{ $dept->id }}">
                                             {{ $dept->name }} - {{ $dept->company_name }}</option>
                                     @endforeach
                                     <option value="" disabled selected hidden>Select Employee's Department
