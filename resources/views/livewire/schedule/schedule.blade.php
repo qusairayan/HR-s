@@ -32,9 +32,12 @@
 
                 <div class="col-md-5 mb-4">
                     <label class="my-1 me-2" for="department">Department</label>
-                    <select class="form-select" id="department" aria-label="Default select example" wire:model="department">
-                        @foreach($departments as $department)
-                        <option selected value="{{$department->id}}" {{$department->id== auth()->user()->department_id ? 'selected':''}}>{{ $department->name }}</option>
+                    <select class="form-select" id="department" aria-label="Default select example"
+                        wire:model="department">
+                        @foreach ($departments as $department)
+                            <option selected value="{{ $department->id }}"
+                                {{ $department->id == auth()->user()->department_id ? 'selected' : '' }}>
+                                {{ $department->name }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -73,8 +76,7 @@
                                     clip-rule="evenodd"></path>
                             </svg>
                         </span>
-                        <input class="form-control" id="dateFrom" type="date"
-                            wire:model="dateFrom">
+                        <input class="form-control" id="dateFrom" type="date" wire:model="dateFrom">
                     </div>
                 </div>
             </div>
@@ -90,8 +92,8 @@
                                     clip-rule="evenodd"></path>
                             </svg>
                         </span>
-                        <input  class="form-control" id="dateTo" type="date"
-                            placeholder="dd/mm/yyyy" wire:model="dateTo">
+                        <input class="form-control" id="dateTo" type="date" placeholder="dd/mm/yyyy"
+                            wire:model="dateTo">
                     </div>
                 </div>
 
@@ -104,45 +106,58 @@
             </div>
 
             <div class="row">
-                
-                        <div class="table-responsive">
-                            <table class="table table-centered table-nowrap mb-0 rounded">
-                                <thead class="thead-light">
-                                    <tr>
-                                        <th class="border-0 rounded-start">Day</th>
-                                        <th class="border-0">Date</th>
-                                        <th class="border-0">Shift </th>
-                                        
-                                    </tr>
-                                </thead>
-                                <tbody>
+
+                <div class="table-responsive">
+                    <table class="table table-centered table-nowrap mb-0 rounded">
+                        <thead class="thead-light">
+                            <tr>
+                                <th class="border-0 rounded-start">Day</th>
+                                <th class="border-0">Date</th>
+                                <th class="border-0">From </th>
+                                <th class="border-0">To </th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
 
 
-                                    <!-- Item -->.
-                                    @foreach ($schdules as $schdule)
-                                        <tr>
-                                            <td class="fw-bold align-items-center">{{$schdule->day}} </td>
-                                            <td class="fw-bold align-items-center">
-                                                {{$schdule->date}}
-                                            </td>
-                                             <td class="fw-bold align-items-center {{$schdule->shift == null ? 'text-danger':''}}">
-                                                {{
-                                                    $schdule->shift == null ? 'Off':$schdule->shifts_name
-                                                    
-                                                    }}
-                                            </td>
-                                           
-                                        </tr>
-                                        <!-- End of Item -->
-                                    @endforeach
-                                </tbody>
-                            </table>
+                            <!-- Item -->.
+                            @foreach ($schdules as $schdule)
+                                <tr>
+                                    <td class="fw-bold align-items-center">{{ $schdule->day }} </td>
+                                    <td class="fw-bold align-items-center">
+                                        {{ $schdule->date }}
+                                    </td>
+                                    @if ($schdule->from == null)
+                                        <td colspan="2" class="fw-bold align-items-center text-danger">
+                                            Off
+                                        </td>
+                                    @else
+                                        <td class="fw-bold align-items-center ">
 
-                            <div>
-                                {{ $schdules->links('vendor.pagination.custom')}}
-                            </div>
-                        </div>
-                    
+                                            {{ \Carbon\Carbon::parse($schdule->from)->format('h:i A') }}
+
+
+                                        </td>
+                                        <td class="fw-bold align-items-center ">
+
+                                            {{ \Carbon\Carbon::parse($schdule->to)->format('h:i A') }}
+
+
+                                        </td>
+                                    @endif
+
+                                </tr>
+                                <!-- End of Item -->
+                            @endforeach
+                        </tbody>
+                    </table>
+
+                    <div>
+                        {{ $schdules->links('vendor.pagination.custom')}}
+                    </div>
+                </div>
+
             </div>
             <!-- End of Form -->
 
@@ -160,5 +175,3 @@
 </div>
 
 
-
-</div>

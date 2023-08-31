@@ -16,7 +16,7 @@ class Schedule extends Component
     use WithPagination;
 
     public $search = '';
-    public $perPage = 10;
+    public $perPage = 100000;
     public $paginationView = 'vendor.pagination.custom';
 
     public $user ;
@@ -37,12 +37,11 @@ class Schedule extends Component
         }
 
 
-        $schdules = Schedules::leftJoin('shifts', 'shifts.id', '=', 'schedule.shift')
-        ->select('schedule.*', 'shifts.name as shifts_name','shifts.from as shifts_from','shifts.to as shifts_to')->
+        $schdules = Schedules::select('*')->
         where('user_id', $this->user)
         ->whereBetween('date', [$this->dateFrom, $this->dateTo])
         ->paginate($this->perPage);
-
+       
         $departments=Department::all();
         $users = User::where('department_id', '=', $this->department)
             ->where('name', 'LIKE', '%' . $this->search . '%')->get();
