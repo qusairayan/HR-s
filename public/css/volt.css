@@ -19119,3 +19119,8 @@ article .h1, article .h2, article .h3, article .h4, article .h5, article .h6 {
   color: #fb503b;
   margin-bottom: 1.8rem;
 }
+
+
+.vertical-allign-middle{
+  vertical-align: middle;
+}

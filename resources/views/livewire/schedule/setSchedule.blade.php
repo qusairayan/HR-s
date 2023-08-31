@@ -87,7 +87,6 @@
 
                     @php
                         $currentDate = clone $this->today;
-                        $tempThHTML = '';
                         $tempTdHTML = '';
                         
                     @endphp
@@ -98,27 +97,42 @@
                             
                             $this->today = $currentDate;
                             
-                            $tempThHTML .=
-                                ' <th>' .
+                            $tempTdHTML .=
+                                ' <tr class="vertical-allign-middle">
+                                    
+                                <td>' .
                                 $currentDate->format('l') .
                                 '<br>
                                             <small>' .
                                 $currentDate->format('Y-m-d') .
                                 '</small>
-                                        </th>';
+                                        </td>';
+                                        $disabled="";
+                                        if(isset($this->offs[$currentDate->format('Y-m-d')]) )
+                                         $disabled= 'disabled'; 
+                            $tempTdHTML .=
+                                ' <td>
+                                    <div class="container" ">
+        <div style="position: relative">
+                          <input type="time" class="form-control timePicker" id="from' .
+                                $currentDate->format('Y-m-d') .
+                                '" wire:model="shift.'.$currentDate->format('Y-m-d') .'.from" '.$disabled.'>
+                                                ' .
+                                '</div></div></td>';
                             
                             $tempTdHTML .=
                                 ' <td>
-                          <select class="form-select" id="shift_' .
+                                    <div class="container">
+        <div style="position: relative">
+                          <input type="time" class="form-control timePicker" id="to' .
                                 $currentDate->format('Y-m-d') .
-                                '" wire:model="shift.' .
-                                $currentDate->format('Y-m-d') .
-                                '" aria-label="Default select example" >
-                                                ' .
-                                $this->shiftsHTML .
-                                '
-                       </select>
-                                        </td>';
+                                '" wire:model="shift.'.$currentDate->format('Y-m-d') .'.to" '.$disabled.'>
+                                                ' .'</div></div></td>';
+                            
+                            $tempTdHTML .= ' <td><div class="container py-4" >
+                          <input type="checkbox"   wire:model.lazy="shift.'.$currentDate->format('Y-m-d') .'.off" class="form-check-input"/>
+                                        </div></td></tr>';
+                            
                             $currentDate->modify('+1 day');
                             $this->totalDays += 1;
                         @endphp
@@ -130,17 +144,15 @@
                     <div class="card card-body border-0 shadow table-wrapper table-responsive">
                         <table class="table table-hover">
                             <thead>
-                                <tr>
-                                    <th class="tranformedTH">Days</th>
-                                    {!! $tempThHTML !!}
-                                </tr>
+                                <th>Days</th>
+                                <th>From</th>
+                                <th>To</th>
+                                <th>Off</th>
 
-                                <tr class="trWithoutHover">
-                                    <th class="tranformedTH">Shifts</th>
-
-                                    {!! $tempTdHTML !!}
-                                </tr>
                             </thead>
+                            <tbody>
+                                {!! $tempTdHTML !!}
+                            </tbody>
                         </table>
                     </div>
 
@@ -155,6 +167,7 @@
             @error('shift')
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
+
 
             @if ($this->showSavedAlert)
                 <div class="alert alert-success" role="alert">
@@ -179,3 +192,38 @@
 
 
 </div>
+
+
+
+<script>
+    // Get all the checkboxes
+    // const checkboxes = document.querySelectorAll('.form-check-input');
+
+    // // Loop through each checkbox
+    // checkboxes.forEach(checkbox => {
+
+
+
+    //     // Add a change event listener to each checkbox
+    //     checkbox.addEventListener('change', function() {
+    //         // Get the parent row of the checkbox
+    //         const row = this.closest('tr');
+    //         // Get the input fields in the row
+    //         const inputFields = row.querySelectorAll('.timePicker');
+
+    //         // Disable/enable input fields based on checkbox state
+    //         inputFields.forEach(inputField => {
+    //               if(this.checked){
+    //                 inputField.style.display="none";
+    //             }     
+    //             else     {
+    //                 inputField.style.display="block";
+    //             }  
+    //         });
+    //     });
+    // });
+
+
+
+    
+</script>

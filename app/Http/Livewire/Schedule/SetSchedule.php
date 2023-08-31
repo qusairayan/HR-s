@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Department;
 use App\Models\Shift;
 use App\Models\Schedules;
+use DateTime;
 use Illuminate\Support\Facades\Redirect;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -24,8 +25,8 @@ class SetSchedule extends Component
     public $dateSelects = [];
 
     public $shift = [];
-    public $shifts = [];
-    public $shiftsHTML;
+    public $offs = [];
+
 
 
     public $today;
@@ -35,44 +36,86 @@ class SetSchedule extends Component
 
     public $search;
 
-    protected $rules = ['user' => 'required'];
-
+    protected $rules = ['user' => 'required',
+    'shift.*.from' => 'required|date_format:H:i',
+    'shift.*.to' => 'required|date_format:H:i|after:shift.*.from',];
+    protected $messages = [
+        'shift.*.from.required' => 'Please enter a from time for :attribute',
+        'shift.*.from.date_format' => 'The :attribute must be in the format HH:MM',
+        'shift.*.to.required' => 'Please enter a to time for :attribute',
+        'shift.*.to.date_format' => 'The :attribute must be in the format HH:MM',
+        'shift.*.to.after' => 'The :attribute must be after from time',
+    ];
     public $showSavedAlert = false;
 
 
     public function updated()
 {
+
     $this->showSavedAlert = false;
 
 }
 
-    public function save()
-    {
- $this->validate([
-            'user' => 'required'
-        ]);
-        if (count($this->shift) < $this->totalDays) {
-            $this->addError('shift', 'All shift selections must be filled.');
-            return;
+public function updatedUser()
+{
+
+    $this->week = 1;
+
+}
+
+    public function updatedShift()
+{
+    foreach ($this->shift as $date => $shiftId) {
+        if(isset($shiftId['off'])){
+            $this->offs[$date]=true;
+        }else{
+            if(isset( $this->offs[$date])){
+                unset($this->offs[$date]);
+            }
         }
+    }
+}
+    public function save()
+    {        
+        $this->resetErrorBag('user');
+        $this->resetErrorBag('shift');
+        session()->forget("success");
+
+        if(!$this->user){ $this->addError('user', 'Select the user');
+            return;}
        
-        
+        if (count($this->shift) == $this->totalDays) {
+
+            foreach ($this->shift as $date => $shiftId) {
+            if(!isset($shiftId["off"])){
+                
+                    if(!isset($shiftId["from"]) || !isset($shiftId["to"])){
+
+            $this->addError('shift', 'From and To selections must be filled.');
+            return;
+
+                    }
+                }
+            }
+
+        }
+
+        else{
+            $this->addError('shift', 'Set one week schedule at least');
+            return; 
+        }
         foreach ($this->shift as $date => $shiftId) {
 
-            $dateD = new \DateTime($date);
-            $day = $dateD->format('l');
-           $off_day='';
-            if ($shiftId == 'off') {
-                $off_day=$date;
-                $shiftId=null;
-            }
+            $dateTem = new DateTime($date); 
+            $dayName = $dateTem->format('l'); 
 
             Schedules::create([
                 'user_id' => $this->user,
                 'date' => $date,
-                'shift' => $shiftId,
-                'day' => $day,
-                'off-day' => $off_day,
+                'day' => $dayName,
+                'from' => $shiftId['from'] ?? null,
+                'to' => $shiftId['to'] ?? null,
+                'off-day' => $shiftId['off'] ?? null,
             ]);
             $this->showSavedAlert = true;
             session()->flash("success", "Shift schedule created successfully.");
@@ -104,13 +147,7 @@ if($this->user != null){
            $this->endOfWeek = clone $this->today; 
            $this->endOfWeek->modify('next Saturday');
 
-        $this->shifts = Shift::all();
-        $this->shiftsHTML = '<option selected hidden value="">Shift</option>';
-        foreach ($this->shifts as $shift) {
-            $this->shiftsHTML .= '<option value="' . $shift['id'] . '">' . $shift['name'] . '</option>';
-        }
-        $this->shiftsHTML .= '<option value="off">Off Day</option>';
-
+      
         if (auth()->user()->hasPermissionTo('setSchedule')) {
             $departments = Department::all();
 

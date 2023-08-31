@@ -22,14 +22,14 @@ class CreateScheduleTable extends Migration
             $table->string('off-day')->nullable();
 
             
-            $table->unsignedBigInteger('shift')->nullable();
+            $table->time('from')->nullable();
+            $table->time('to')->nullable();
            
 
             
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('shift')->references('id')->on('shifts')->onDelete('cascade');
             
         });
     }
