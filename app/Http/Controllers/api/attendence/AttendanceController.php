@@ -72,7 +72,7 @@ class AttendanceController extends Controller
                 $attendence->type = $type;
                 $attendence->check_in  = $currentTime;
                 $attendence->date = $currentDate;
-                // $success = $attendence->save();
+                $success = $attendence->save();
 
 
 
