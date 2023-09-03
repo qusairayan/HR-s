@@ -95,8 +95,7 @@ class AttendanceController extends Controller
 
                         $diff = $fromDateTime->diff($currentTime);
                         $totalMinutes = $diff->h * 60 + $diff->i;
-                        var_dump($totalMinutes);
-                        die();
+            
                         if ($totalMinutes > 5) {
                             $lateness = new Lateness();
                             $lateness->user_id = $id;
