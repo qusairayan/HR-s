@@ -17,7 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('attendence_id');
             $table->integer('amount');            
             $table->string('on'); 
-            $table->integer('deduFction')->default(0);
+            $table->integer('deduction')->default(0);
             
             
             $table->timestamps();

@@ -72,12 +72,11 @@ class AttendanceController extends Controller
                 $attendence->type = $type;
                 $attendence->check_in  = $currentTime;
                 $attendence->date = $currentDate;
-                $success = $attendence->save();
+                // $success = $attendence->save();
 
 
 
-                $scheduale = Schedules::leftJoin('shifts', 'shifts.id', '=', 'schedule.shift')
-                    ->select('schedule.*', 'shifts.from as shiftFrom', 'shifts.to as shiftTo')
+                $scheduale = Schedules::select('*')
                     ->where('user_id', '=', $id)
                     ->where('date', '=', $currentDate)
                     ->first();
@@ -85,7 +84,7 @@ class AttendanceController extends Controller
                 $latenessTxt = '';
 
                 if ($scheduale) {
-                    $from = strtotime($scheduale->shiftFrom);
+                    $from = strtotime($scheduale->from);
 
                     $fromDateTime = \DateTime::createFromFormat('H:i', date('H:i', $from));
                     $currentTime = \DateTime::createFromFormat('H:i', $currentTime);
@@ -96,7 +95,8 @@ class AttendanceController extends Controller
 
                         $diff = $fromDateTime->diff($currentTime);
                         $totalMinutes = $diff->h * 60 + $diff->i;
-
+                        var_dump($totalMinutes);
+                        die();
                         if ($totalMinutes > 5) {
                             $lateness = new Lateness();
                             $lateness->user_id = $id;
@@ -138,8 +138,7 @@ class AttendanceController extends Controller
 
 
 
-                    $scheduale = Schedules::leftJoin('shifts', 'shifts.id', '=', 'schedule.shift')
-                        ->select('schedule.*',  'shifts.to as shiftTo')
+                    $scheduale = Schedules::select('*')
                         ->where('user_id', '=', $id)
                         ->where('date', '=', $currentDate)
                         ->first();
@@ -147,7 +146,7 @@ class AttendanceController extends Controller
                     $latenessTxt = '';
 
                     if ($scheduale) {
-                        $to = strtotime($scheduale->shiftTo);
+                        $to = strtotime($scheduale->to);
 
                         $toDateTime = \DateTime::createFromFormat('H:i', date('H:i', $to));
                         $currentTime = \DateTime::createFromFormat('H:i', $currentTime);
