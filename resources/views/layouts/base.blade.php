@@ -35,7 +35,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
     
     <!-- Apex Charts -->
-    <link type="text/css" href="/vendor/apexcharts/apexcharts.css" rel="stylesheet">
+    {{-- <link type="text/css" href="/vendor/apexcharts/apexcharts.css" rel="stylesheet"> --}}
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     <!-- Datepicker -->
@@ -52,7 +52,7 @@
     <link type="text/css" href="/vendor/notyf/notyf.min.css" rel="stylesheet">
     
     <!-- Volt CSS -->
-    <link type="text/css" href="/css/volt.css" rel="stylesheet">
+    <link type="text/css" href="/css/volt.css?v=1" rel="stylesheet">
 
     @livewireStyles
 
