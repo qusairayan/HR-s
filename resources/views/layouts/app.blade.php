@@ -36,6 +36,9 @@
                 'notifications',
                 'typography',
                 'upgrade-to-pro',
+                'promotions',
+                'promotions.add',
+                'promotions.edit'
             ]))
         {{-- Nav --}}
         @include('layouts.nav')

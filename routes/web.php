@@ -9,6 +9,8 @@ use App\Http\Livewire\Components\Typography;
 use App\Http\Livewire\Dashboard;
 
 use App\Http\Livewire\Employees\Employees;
+use App\Http\Livewire\Employees\Promotions;
+use App\Http\Livewire\Employees\AddPromotions;
 use App\Http\Livewire\Employees\AddNewEmployee;
 use App\Http\Livewire\Employees\Edit;
 use App\Http\Livewire\Employees\Latenesses;
@@ -139,6 +141,10 @@ Route::middleware('auth')->group(function () {
         Route::get('/remove/{user}', [Employees::class, 'Remove'])->name('employees.remove'); //->middleware('permission:deleteEmployee');
         Route::get('/lateness', Latenesses::class)->name('employees.lateness'); //->middleware('permission:viewAllEmployees');
         Route::get('/overtime', Overtimes::class)->name('employees.overtime'); //->middleware('permission:viewAllEmployees');
+
+        Route::get('/promotions', Promotions::class)->name('promotions'); //->middleware('permission:viewAllEmployees');
+        Route::get('/promotions.add', AddPromotions::class)->name('promotions.add'); //->middleware('permission:viewAllEmployees');
+        Route::get('/promotions.edit', Promotions::class)->name('promotions.edit'); //->middleware('permission:viewAllEmployees');
 
     });
 

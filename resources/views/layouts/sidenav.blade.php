@@ -89,25 +89,15 @@
 
 
 
-                            {{-- @if (auth()->user()->hasPermissionTo('viewDeduction')) --}}
                             <li
-                                class="nav-item {{ Route::currentRouteName() == 'employees.lateness' ? 'active' : '' }}">
-                                <a href="/employees/lateness" class="nav-link">
-                                    <span class="sidebar-text">Lateness</span>
-                                </a>
-                            </li>
-                            {{-- @endif --}}
+                            class="nav-item {{ Route::currentRouteName() == 'promotions' || Route::currentRouteName() == 'promotions.edit' ? 'active' : '' }}">
+                            <a href="/employees/promotions" class="nav-link">
+                                <span class="sidebar-text">Promtions</span>
+                            </a>
+                        </li>
 
 
 
-                            {{-- @if (auth()->user()->hasPermissionTo('viewDeduction')) --}}
-                            <li
-                                class="nav-item {{ Route::currentRouteName() == 'employees.overtime' ? 'active' : '' }}">
-                                <a href="/employees/overtime" class="nav-link">
-                                    <span class="sidebar-text">Overtime</span>
-                                </a>
-                            </li>
-                            {{-- @endif --}}
 
 
 
@@ -153,6 +143,25 @@
                         </li>
 
 
+                            {{-- @if (auth()->user()->hasPermissionTo('viewDeduction')) --}}
+                            <li
+                                class="nav-item {{ Route::currentRouteName() == 'employees.lateness' ? 'active' : '' }}">
+                                <a href="/employees/lateness" class="nav-link">
+                                    <span class="sidebar-text">Lateness</span>
+                                </a>
+                            </li>
+                            {{-- @endif --}}
+
+
+
+                            {{-- @if (auth()->user()->hasPermissionTo('viewDeduction')) --}}
+                            <li
+                                class="nav-item {{ Route::currentRouteName() == 'employees.overtime' ? 'active' : '' }}">
+                                <a href="/employees/overtime" class="nav-link">
+                                    <span class="sidebar-text">Overtime</span>
+                                </a>
+                            </li>
+                            {{-- @endif --}}
 
 
 
