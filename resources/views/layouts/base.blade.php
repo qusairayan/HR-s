@@ -52,7 +52,8 @@
     <link type="text/css" href="/vendor/notyf/notyf.min.css" rel="stylesheet">
     
     <!-- Volt CSS -->
-    <link type="text/css" href="/css/volt.css" rel="stylesheet">
+    <link type="text/css" href="/css/volt.css?v=1" rel="stylesheet">
+    <link type="text/css" href="/css/style.css" rel="stylesheet">
 
     @livewireStyles
 
@@ -72,7 +73,7 @@
     <script src="/assets/js/smooth-scroll.polyfills.min.js"></script>
 
     <!-- Apex Charts -->
-    {{-- <script src="/vendor/apexcharts/apexcharts.min.js"></script> --}}
+    <script src="/vendor/apexcharts/apexcharts.min.js"></script>
 
     <!-- Charts -->
     <script src="/assets/js/chartist.min.js"></script>
@@ -97,7 +98,7 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     
     <!-- Volt JS -->
-    {{-- <script src="/assets/js/volt.js"></script> --}}
+    <script src="/assets/js/volt.js"></script>
 
     @if(env('IS_DEMO')) 
         <!-- Global site tag (gtag.js) - Google Analytics -->
