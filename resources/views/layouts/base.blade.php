@@ -97,7 +97,7 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     
     <!-- Volt JS -->
-    <script src="/assets/js/volt.js"></script>
+    {{-- <script src="/assets/js/volt.js"></script> --}}
 
     @if(env('IS_DEMO')) 
         <!-- Global site tag (gtag.js) - Google Analytics -->
