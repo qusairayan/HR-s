@@ -22,12 +22,15 @@ class AddPromotions extends Component
 
 
     public $user;
-    public $salary='';
-    public $from='';
+    public $salary = '';
+    public $from = '';
     public $to = '';
-    public $position='';
+    public $position = '';
 
     protected $rules = [
+        'company' => 'required|numeric',
+        'department' => 'required|numeric',
+        'user' => 'required|numeric',
         'salary' => 'required|numeric',
         'from' => 'required|date',
         'position' => 'required',
@@ -37,9 +40,13 @@ class AddPromotions extends Component
         $this->validateOnly($propertyName);
     }
 
-    public function create(){
-        
+    public function create()
+    {
+
         $this->validate([
+            'company' => 'required|numeric',
+            'department' => 'required|numeric',
+            'user' => 'required|numeric',
             'salary' => 'required|numeric',
             'from' => 'required|date',
             'position' => 'required',
@@ -47,11 +54,19 @@ class AddPromotions extends Component
         ]);
 
 
-        $promotion=Promotion::create([
-            'user_id'=>$this->user,
-            'salary'=>$this->salary,
-            'from'=>$this->from,
-            'position'=>$this->position,
+
+
+        $prevPromo = Promotion::where('user_id', $this->user)->where('from', '<', $this->from)->orderBy('from', 'desc')->first();
+        if($prevPromo){
+            $prevPromo->to=$this->from;
+            $prevPromo->save();
+        }
+
+        $promotion = Promotion::create([
+            'user_id' => $this->user,
+            'salary' => $this->salary,
+            'from' => $this->from,
+            'position' => $this->position,
 
         ]);
 
@@ -63,18 +78,13 @@ class AddPromotions extends Component
     public function render()
     {
 
-        
-        $companies=Company::all();
-        
-        $departments=Department::Where('company_id','=',$this->company)->get();
-        $users=User::Where('department_id','=',$this->department)->get();
-           
 
-        return view ('livewire.employees.addPromotions',['companies'=>$companies,'departments'=>$departments,'users'=>$users]);
+        $companies = Company::all();
+
+        $departments = Department::Where('company_id', '=', $this->company)->get();
+        $users = User::Where('department_id', '=', $this->department)->get();
+
+
+        return view('livewire.employees.addPromotions', ['companies' => $companies, 'departments' => $departments, 'users' => $users]);
     }
-
-
-
-
-
 }

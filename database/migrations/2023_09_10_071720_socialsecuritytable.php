@@ -4,27 +4,20 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePromotionsTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
-        Schema::create('promotions', function (Blueprint $table) {
+        Schema::create('social_security', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-
-            $table->date('from');
-            $table->date('to')->nullable();
-
-            $table->string('position');
-            $table->integer('salary')->default(0);
-            
+            $table->date('date');
+            $table->double('onEmployee')->default(7.5);
+            $table->double('onCompany')->default(14,25);            
             $table->timestamps();
-
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             
         });
@@ -32,11 +25,10 @@ class CreatePromotionsTable extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
-        Schema::dropIfExists('promotions');
+        Schema::dropIfExists('social_security');
+
     }
-}
+};

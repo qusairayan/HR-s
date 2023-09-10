@@ -53,6 +53,7 @@
     
     <!-- Volt CSS -->
     <link type="text/css" href="/css/volt.css?v=1" rel="stylesheet">
+    <link type="text/css" href="/css/volt.css" rel="stylesheet">
 
     @livewireStyles
 

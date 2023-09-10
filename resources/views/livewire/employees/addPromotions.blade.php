@@ -19,7 +19,7 @@
                             <div>
                                 <label for="name">Company</label>
                                 <select class="form-select mb-0" id="company" aria-label="company select example"
-                                    wire:model="company" autofocus required>
+                                    wire:model="company" autofocus >
                                   
                                     <option selected>Select Employee's Company</option>
                                     @foreach ($companies as $comp)
@@ -38,7 +38,7 @@
                             <div>
                                 <label for="department">Department</label>
                                 <select class="form-select mb-0" id="department" aria-label="department select example"
-                                    wire:model="department" autofocus required {{$this->company==''?'disabled': ''}}  >
+                                    wire:model="department" autofocus  {{$this->company==''?'disabled': ''}}  >
 
                                     <option selected>Select Employee's Department</option>
 
@@ -59,7 +59,7 @@
                             <div>
                                 <label for="user">Employee</label>
                                 <select class="form-select mb-0" {{$this->department==''?'disabled': ''}}   id="user" aria-label="user select example"
-                                    wire:model="user" autofocus required>
+                                    wire:model="user" autofocus >
                                     <option selected>Select Employee</option>
                                     @foreach ($users as $user)
                                         <option value="{{ $user->id }}">
@@ -85,7 +85,7 @@
                             <div class="input-group">
 
                                 <input class="form-control " type="text" id="position"
-                                    placeholder="Enter Employee's position" wire:model="position" autofocus required>
+                                    placeholder="Enter Employee's position" wire:model="position" autofocus >
 
 
                                 @error('position')
@@ -114,7 +114,7 @@
                             <div class="input-group">
 
                                 <input class="form-control datepicker-input" type="text" id="salary"
-                                    placeholder="Enter Employee's salary" wire:model="salary" autofocus required>
+                                    placeholder="Enter Employee's salary" wire:model="salary" autofocus >
                                 @error('salary')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -127,7 +127,7 @@
 
                                 <input class="form-control datepicker-input" type="date" id="from"
                                     placeholder="Enter Employee's start_date" wire:model="from" autofocus
-                                    required>
+                                    >
                                 @error('from')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror

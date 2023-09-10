@@ -1,3 +1,4 @@
+
 <x-layouts.base>
 
 
@@ -38,7 +39,7 @@
                 'upgrade-to-pro',
                 'promotions',
                 'promotions.add',
-                'promotions.edit'
+                'payroll.socialsecurity'
             ]))
         {{-- Nav --}}
         @include('layouts.nav')

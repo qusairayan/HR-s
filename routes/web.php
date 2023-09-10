@@ -10,6 +10,7 @@ use App\Http\Livewire\Dashboard;
 
 use App\Http\Livewire\Employees\Employees;
 use App\Http\Livewire\Employees\Promotions;
+use App\Http\Livewire\Employees\PromotionEdit;
 use App\Http\Livewire\Employees\AddPromotions;
 use App\Http\Livewire\Employees\AddNewEmployee;
 use App\Http\Livewire\Employees\Edit;
@@ -35,6 +36,7 @@ use App\Http\Livewire\Allownces\AllowncesController;
 
 use App\Http\Livewire\Salaries\Salaries;
 use App\Http\Livewire\Salaries\AddSalaries;
+use App\Http\Livewire\Salaries\SocialSecurityController;
 
 
 
@@ -144,7 +146,7 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/promotions', Promotions::class)->name('promotions'); //->middleware('permission:viewAllEmployees');
         Route::get('/promotions.add', AddPromotions::class)->name('promotions.add'); //->middleware('permission:viewAllEmployees');
-        Route::get('/promotions.edit', Promotions::class)->name('promotions.edit'); //->middleware('permission:viewAllEmployees');
+        Route::get('/promotions/{promotion}/edit', [PromotionEdit::class,'render'])->name('promotions.edit'); //->middleware('permission:viewAllEmployees');
 
     });
 
@@ -207,6 +209,7 @@ Route::middleware('auth')->group(function () {
     Route::prefix('payroll')->group(function () {
         Route::get('/salaries', Salaries::class)->name('payroll.salaries'); //->middleware('role:viewroles')
         Route::get('/addSalary', AddSalaries::class)->name('payroll.addSalary'); //->middleware('role:viewroles')
+        Route::get('/socialsecurity', SocialSecurityController::class)->name('payroll.socialsecurity'); //->middleware('role:viewroles')
     });
 
 

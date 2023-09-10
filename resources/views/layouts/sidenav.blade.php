@@ -90,11 +90,11 @@
 
 
                             <li
-                            class="nav-item {{ Route::currentRouteName() == 'promotions' || Route::currentRouteName() == 'promotions.edit' ? 'active' : '' }}">
-                            <a href="/employees/promotions" class="nav-link">
-                                <span class="sidebar-text">Promtions</span>
-                            </a>
-                        </li>
+                                class="nav-item {{ Route::currentRouteName() == 'promotions' || Route::currentRouteName() == 'promotions.add' ? 'active' : ''  }}">
+                                <a href="/employees/promotions" class="nav-link">
+                                    <span class="sidebar-text">Promtions</span>
+                                </a>
+                            </li>
 
 
 
@@ -143,25 +143,23 @@
                         </li>
 
 
-                            {{-- @if (auth()->user()->hasPermissionTo('viewDeduction')) --}}
-                            <li
-                                class="nav-item {{ Route::currentRouteName() == 'employees.lateness' ? 'active' : '' }}">
-                                <a href="/employees/lateness" class="nav-link">
-                                    <span class="sidebar-text">Lateness</span>
-                                </a>
-                            </li>
-                            {{-- @endif --}}
+                        {{-- @if (auth()->user()->hasPermissionTo('viewDeduction')) --}}
+                        <li class="nav-item {{ Route::currentRouteName() == 'employees.lateness' ? 'active' : '' }}">
+                            <a href="/employees/lateness" class="nav-link">
+                                <span class="sidebar-text">Lateness</span>
+                            </a>
+                        </li>
+                        {{-- @endif --}}
 
 
 
-                            {{-- @if (auth()->user()->hasPermissionTo('viewDeduction')) --}}
-                            <li
-                                class="nav-item {{ Route::currentRouteName() == 'employees.overtime' ? 'active' : '' }}">
-                                <a href="/employees/overtime" class="nav-link">
-                                    <span class="sidebar-text">Overtime</span>
-                                </a>
-                            </li>
-                            {{-- @endif --}}
+                        {{-- @if (auth()->user()->hasPermissionTo('viewDeduction')) --}}
+                        <li class="nav-item {{ Route::currentRouteName() == 'employees.overtime' ? 'active' : '' }}">
+                            <a href="/employees/overtime" class="nav-link">
+                                <span class="sidebar-text">Overtime</span>
+                            </a>
+                        </li>
+                        {{-- @endif --}}
 
 
 
@@ -378,7 +376,7 @@
                         <span class="sidebar-icon"
                             style="{{ in_array(Request::segment(1), ['payroll', 'payroll.salaries']) ? 'color: #fb503b !important' : '' }} ">
                             <i class="fas fa-file-invoice-dollar"></i>
-                         </span>
+                        </span>
                         <span class="sidebar-text">payroll</span>
                     </span>
                     <span class="link-arrow"><svg class="icon icon-sm" fill="currentColor" viewBox="0 0 20 20"
@@ -388,19 +386,29 @@
                                 clip-rule="evenodd"></path>
                         </svg></span>
                 </span>
-                <div class="multi-level collapse {{ in_array(Request::segment(1), ['payroll', 'payroll.salaries','payroll.addSalaries']) ? 'show' : '' }}"
+                <div class="multi-level collapse {{ in_array(Request::segment(1), ['payroll', 'payroll.salaries', 'payroll.addSalaries']) ? 'show' : '' }}"
                     role="list" id="submenu-payroll" aria-expanded="false">
                     <ul class="flex-column nav">
-                      
-                        <li class="nav-item {{ in_array(Request::segment(1), ['payroll', 'payroll.salaries','payroll.addSalary']) ? 'active' : '' }}">
+
+                        <li
+                            class="nav-item {{ in_array(Request::segment(1), [ 'payroll.salaries', 'payroll.addSalary']) ? 'active' : '' }}">
                             <a href="/payroll/salaries" class="nav-link">
                                 <span class="sidebar-text">Salaries</span>
                             </a>
                         </li>
+                        <li
+                        class="nav-item {{  request()->route()->getName() == 'payroll.socialsecurity' ? 'active' : '' }}">
+                        <a href="/payroll/socialsecurity" class="nav-link">
+                            <span class="sidebar-text">Social security</span>
+                        </a>
+                    </li>
 
                     </ul>
-                    
+
                 </div>
+
+
+                
             </li>
 
 
@@ -461,7 +469,7 @@
 
 
 
-           
+
 
 
 
