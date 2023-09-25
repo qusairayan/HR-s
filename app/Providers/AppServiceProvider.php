@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-use App\Models\Year;
 use Illuminate\Support\ServiceProvider;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
@@ -31,12 +30,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        View::composer('layouts.app', function ($view) {
-            $years=Year::get();
-            $year = session('year'); // Replace with your session key
-            $view->with('years', $years);
-            $view->with('year', $year);
-        });
-    
+       
     }
 }
