@@ -141,7 +141,7 @@ class AddNewEmployee extends Component
         
         if ($this->contract ||$this->sign_date) {
             $this->validate([
-                'contract' => 'required|mimes:pdf',
+                'contract' => 'mimes:pdf',
                 'sign_date' => 'required|date',
               ]);
             
