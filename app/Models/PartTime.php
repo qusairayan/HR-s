@@ -5,21 +5,22 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Salary extends Model
+class PartTime extends Model
 {
     use HasFactory;
-    protected $table = 'salaries';
+    protected $table = 'part_times';
      
 
+    
     protected $fillable = [
         'user_id',
-        'company_id',        
+        'from',        
+        'to',
         'amount',
-        'type',
-        'bank',
-        'status',
-        'IBAN',
-        'detail',
+    
 
     ];
+
+
+
 }

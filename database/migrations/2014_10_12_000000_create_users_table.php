@@ -20,10 +20,13 @@ class CreateUsersTable extends Migration
             $table->string('password');
 
             $table->integer('salary');
+            $table->unsignedBigInteger('bank');
+            $table->string('IBAN');
+            $table->enum('part_time',['daily','period','weekly'])->nullable();
             $table->integer('vacation_balance')->default(0);
             
 
-            $table->string('type');
+            $table->enum('type', ['full-time', 'part-time']);
 
             
 
@@ -69,6 +72,7 @@ class CreateUsersTable extends Migration
             
             $table->foreign('company_id')->references('id')->on('company')->onDelete('cascade');
             $table->foreign('department_id')->references('id')->on('department')->onDelete('cascade');
+            $table->foreign('bank')->references('id')->on('banks')->onDelete('cascade');
             
         });
     }

@@ -41,6 +41,7 @@
     <!-- Datepicker -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.1.4/dist/css/datepicker.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.1.4/dist/css/datepicker-bs4.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <!-- Fontawesome -->
     <link type="text/css" href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
@@ -52,7 +53,6 @@
     <link type="text/css" href="/vendor/notyf/notyf.min.css" rel="stylesheet">
     
     <!-- Volt CSS -->
-    <link type="text/css" href="/css/volt.css?v=1" rel="stylesheet">
     <link type="text/css" href="/css/style.css" rel="stylesheet">
 
     @livewireStyles
@@ -137,3 +137,12 @@
 </body>
 
 </html>
+
+
+
+<script>
+$('#year').change(function () {
+
+    $("#yearForm").submit();
+});
+</script>

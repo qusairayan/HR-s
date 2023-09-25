@@ -82,6 +82,7 @@
                     <th class="border-gray-200">Company</th>
                     <th class="border-gray-200">Department</th>
                     <th class="border-gray-200">Position</th>
+                    <th class="border-gray-200">type</th>
                     <th class="border-gray-200">Status</th>
                     <th class="border-gray-200">Action</th>
                 </tr>
@@ -126,6 +127,12 @@
                         <td class="border-0 fw-bold">
                             <span class="fw-normal">
                                 {{ $user->position }}
+                            </span>
+                        </td>
+                        
+                        <td class="border-0 fw-bold">
+                            <span class="fw-normal">
+                                {{ $user->type }}
                             </span>
                         </td>
 

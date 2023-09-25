@@ -44,7 +44,9 @@ class Schedule extends Component
        
         $departments=Department::all();
         $users = User::where('department_id', '=', $this->department)
-            ->where('name', 'LIKE', '%' . $this->search . '%')->get();
+            ->where('status', '=', 1)
+            ->where('name', 'LIKE', '%' . $this->search . '%')
+            ->get();
 
         return view('livewire.schedule.schedule',  ['users'=>$users,'schdules'=>$schdules,'departments'=>$departments]);
     }

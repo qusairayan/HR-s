@@ -95,6 +95,7 @@
 
 
                                 <input class="form-control datepicker-input" type="text" id="salary"
+                                @if($this->type == "full-time") disabled @endif
                                     placeholder="Enter Employee's salary" wire:model="salary" autofocus required>
 
 
@@ -105,7 +106,25 @@
                             </div>
                         </div>
 
+@if($this->type =="part-time")
+                        <div class="col-md-5 mb-3">
+                            <label for="type">type</label>
+                            <div class="input-group">
 
+
+                                <input class="form-control datepicker-input" type="text" id="period"
+                                    placeholder="Enter salary's type" wire:model="period" autofocus required>
+
+
+                                @error('period')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+
+                            </div>
+                        </div>
+
+
+                        @endif
 
 
 

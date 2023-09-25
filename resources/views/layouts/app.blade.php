@@ -39,7 +39,10 @@
                 'upgrade-to-pro',
                 'promotions',
                 'promotions.add',
-                'payroll.socialsecurity'
+                'payroll.socialsecurity',
+                'payroll.part_time',
+                'payroll.add_part_time',
+                'payroll.edit_part_time',
             ]))
         {{-- Nav --}}
         @include('layouts.nav')
@@ -72,14 +75,3 @@
     @endif
 </x-layouts.base>
 
-
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-3D2FJ9N4TM">
-</script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-3D2FJ9N4TM');
-</script>

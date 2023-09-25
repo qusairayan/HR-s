@@ -43,6 +43,23 @@
                 </a>
             </li>
 
+            <li class="nav-item ">
+                <form method="POST" action="{{ route('update.year') }}" id="yearForm">
+                    @csrf
+
+                    <select class="form-select mb-3" id="year" aria-label="year select example" name="year" style="background: none; border: 0;border-bottom: 1px solid;"
+                        autofocus required>
+                        <option value="" disabled selected hidden>Select year session</option>
+                        @foreach ($years as $year)
+                            <option value="{{ $year->id }}" {{ session('year') == $year->id ? 'selected':'' }}>
+                                {{ $year->name }} </option>
+                        @endforeach
+                        
+
+                    </select>
+
+                </form>
+            </li>
             <li class="nav-item {{ Request::segment(1) == 'dashboard' ? 'active' : '' }}">
                 <a href="/dashboard" class="nav-link">
                     <span class="sidebar-icon"> <svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20"
@@ -90,7 +107,7 @@
 
 
                             <li
-                                class="nav-item {{ Route::currentRouteName() == 'promotions' || Route::currentRouteName() == 'promotions.add' ? 'active' : ''  }}">
+                                class="nav-item {{ Route::currentRouteName() == 'promotions' || Route::currentRouteName() == 'promotions.add' ? 'active' : '' }}">
                                 <a href="/employees/promotions" class="nav-link">
                                     <span class="sidebar-text">Promtions</span>
                                 </a>
@@ -391,24 +408,34 @@
                     <ul class="flex-column nav">
 
                         <li
-                            class="nav-item {{ in_array(Request::segment(1), [ 'payroll.salaries', 'payroll.addSalary']) ? 'active' : '' }}">
+                            class="nav-item {{ in_array(request()->route()->getName(), ['payroll.add_part_time','payroll.edit_part_time','payroll.part_time']) ? 'active' : '' }}">
+                            <a href="/payroll/parttime" class="nav-link">
+                                <span class="sidebar-text">Part times</span>
+                            </a>
+                        </li>
+
+
+                        <li
+                            class="nav-item {{ in_array(Request::segment(1), ['payroll.salaries', 'payroll.addSalary']) ? 'active' : '' }}">
                             <a href="/payroll/salaries" class="nav-link">
                                 <span class="sidebar-text">Salaries</span>
                             </a>
                         </li>
+
+
                         <li
-                        class="nav-item {{  request()->route()->getName() == 'payroll.socialsecurity' ? 'active' : '' }}">
-                        <a href="/payroll/socialsecurity" class="nav-link">
-                            <span class="sidebar-text">Social security</span>
-                        </a>
-                    </li>
+                            class="nav-item {{ request()->route()->getName() == 'payroll.socialsecurity'? 'active': '' }}">
+                            <a href="/payroll/socialsecurity" class="nav-link">
+                                <span class="sidebar-text">Social security</span>
+                            </a>
+                        </li>
 
                     </ul>
 
                 </div>
 
 
-                
+
             </li>
 
 

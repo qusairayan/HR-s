@@ -45,12 +45,14 @@
                                 <label for="comapny">Company</label>
                                 <select class="form-select mb-0" id="company" aria-label="company select example"
                                     wire:model="company" autofocus required>
+                                    <option value=""  selected >Select Employee's Company
+                                    </option>
+
                                     @foreach ($companies as $comp)
                                         <option value="{{ $comp->id }}">
                                             {{ $comp->name }} </option>
                                     @endforeach
-                                    <option value="" disabled selected hidden>Select Employee's Company
-                                    </option>
+                                   
 
                                 </select>
                                 @error('company')
@@ -65,12 +67,14 @@
                                 <label for="department">Department</label>
                                 <select class="form-select mb-0" id="department" aria-label="department select example"
                                     wire:model="department" autofocus required>
-                                    @foreach ($departments as $dept)
+                                    
+                                    <option value="" selected >Select Employee's Department
+                                    </option>@foreach ($departments as $dept)
+
                                         <option value="{{ $dept->id }}">
                                             {{ $dept->name }} - {{ $dept->company_name }}</option>
                                     @endforeach
-                                    <option value="" disabled selected hidden>Select Employee's Department
-                                    </option>
+                                  
 
                                 </select>
                                 @error('department')
@@ -93,7 +97,7 @@
                                     <option value="employee">Employee</option>
                                     <option value="manager">Manager</option>
 
-                                    
+
 
                                 </select>
 
@@ -131,6 +135,33 @@
 
 
 
+                        @if ($this->type == 'part-time')
+                            <div class="col-md-5 mb-3">
+                                <label for="position">Part Time Period</label>
+                                <div class="input-group">
+
+
+                                    <select class="form-select mb-0" id="part_time"
+                                        aria-label="part_time select example" wire:model="part_time" autofocus required>
+                                        <option value=""  selected >Select Employee's part time period</option>
+
+                                        <option value="daily">Daily</option>
+                                        <option value="weekly">Weekly</option>
+                                        <option value="monthly">Monthly</option>
+
+                                    </select>
+
+
+                                    @error('part_time')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+
+                                </div>
+                            </div>
+                        @endif
+
+
+
 
                         <div class="col-md-5 mb-3">
                             <label for="role">Role</label>
@@ -139,12 +170,14 @@
 
                                 <select class="form-select mb-0" id="role" aria-label="role select example"
                                     wire:model="role" autofocus required>
+                                    
+                                    <option value="" selected>Select Employee's Role
+                                    </option>
                                     @foreach ($roles as $role)
                                         <option value="{{ $role->name }}">
                                             {{ $role->name }} </option>
                                     @endforeach
-                                    <option value="" disabled selected hidden>Select Employee's Role
-                                    </option>
+                                    
 
                                 </select>
 
@@ -160,35 +193,7 @@
 
 
                     </div>
-                    <div class="row">
 
-                        <div class="col-md-6 mb-3">
-                            <label for="salary">Salary</label>
-                            <div class="input-group">
-
-                                <input class="form-control datepicker-input" type="text" id="salary"
-                                    placeholder="Enter Employee's salary" wire:model="salary" autofocus required>
-                                @error('salary')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-
-                            </div>
-                        </div>
-                        <div class="col-md-5 mb-3">
-                            <label for="start_date">Start Date</label>
-                            <div class="input-group">
-
-                                <input class="form-control datepicker-input" type="date" id="start_date"
-                                    placeholder="Enter Employee's start_date" wire:model="start_date" autofocus
-                                    required>
-                                @error('start_date')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-
-                            </div>
-                        </div>
-
-                    </div>
 
                     <div class="row align-items-center">
 
@@ -223,7 +228,7 @@
                             <label for="gender">Gender</label>
                             <select class="form-select mb-0" id="gender" aria-label="Gender select example"
                                 wire:model="gender" autofocus required>
-                                <option value="" disabled selected hidden>Select Employee's gender</option>
+                                <option value=""  selected>Select Employee's gender</option>
                                 <option value="Male">Male</option>
 
                                 <option value="Female">Female</option>
@@ -233,7 +238,76 @@
                             @enderror
 
                         </div>
+                        <div class="col-md-5 mb-3">
+                            <label for="start_date">Start Date</label>
+                            <div class="input-group">
+
+                                <input class="form-control datepicker-input" type="date" id="start_date"
+                                    placeholder="Enter Employee's start_date" wire:model="start_date" autofocus
+                                    required>
+                                @error('start_date')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+
+                            </div>
+                        </div>
                     </div>
+
+
+                    <div class="row">
+                        <h2 class="h5 my-4">Salar information</h2>
+
+                        <div class="col-md-6 mb-3">
+                            <label for="salary">Salary</label>
+                            <div class="input-group">
+
+                                <input class="form-control datepicker-input" type="text" id="salary"
+                                    placeholder="Enter Employee's salary" wire:model="salary" autofocus required>
+                                @error('salary')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label for="bank">Bank</label>
+                            <div class="input-group">
+
+                                <select class="form-select mb-0" id="bank" aaria-label="bank select example"
+                                    wire:model="bank" autofocus required>
+                                    <option value="" selected >Select Bank</option>
+
+                                    @foreach ($banks as $bank)
+                                        <option value="{{ $bank->id }}">{{ $bank->name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('bank')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label for="IBAN">IBAN</label>
+                            <div class="input-group">
+
+                                <input class="form-control datepicker-input" type="text" id="IBAN"
+                                    placeholder="Enter Employee's IBAN" wire:model="IBAN" autofocus required>
+                                @error('IBAN')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+
+                            </div>
+                        </div>
+
+
+
+
+                    </div>
+
+
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <div class="form-group">
@@ -328,6 +402,7 @@
                                 <h5 class="fw-normal">{{ $this->departmentName . ' - ' . $this->position }}</h5>
 
                             </div>
+
                             <div class="col-sm-10 mb-3 ">
                                 <label for="formFile" class="form-label">upload Employee's image</label>
                                 <input class="form-control" type="file" id="image" wire:model="image">
@@ -342,44 +417,46 @@
 
 
 
+                    <div class="col-12 mb-4">
+                        <div class="align-items-center card shadow border-0 text-center p-0">
+
+                            <div class="card-body pb-5">
+                                <h4 class="h3">Upload conrtacts copy</h4>
+
+                            </div>
+                            <div class="col-sm-10 mb-3 ">
+                                <label for="formFile" class="form-label">upload contract's copy</label>
+                                <input class="form-control" type="file" id="contract" wire:model="contract">
+                                @error('contract')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+
+                            </div>
 
 
-                    <div class="col-12 mb-3">
-                        <div class="card card-body border-0 shadow mb-4 mb-xl-0">
-                            <h2 class="h5 mb-4">Activities</h2>
-                            <ul class="list-group list-group-flush">
-                                <li
-                                    class="list-group-item d-flex align-items-center justify-content-between px-0 border-bottom">
-                                    <div>
-                                        <h3 class="h6 mb-1">Active</h3>
-                                        <p class="small pe-4">Employee's Account Active</p>
-                                    </div>
-                                    <div>
-                                        <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" id="user-notification-1"
-                                                checked>
-                                            <label class="form-check-label" for="user-notification-1"></label>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li
-                                    class="list-group-item d-flex align-items-center justify-content-between px-0 border-bottom">
-                                    <div>
-                                        <h3 class="h6 mb-1">Account Activity</h3>
-                                        <p class="small pe-4">Get important notifications about you or activity you've
-                                            missed</p>
-                                    </div>
-                                    <div>
-                                        <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" id="user-notification-2">
-                                            <label class="form-check-label" for="user-notification-2"></label>
-                                        </div>
-                                    </div>
-                                </li>
 
-                            </ul>
+                            <div class="col-sm-9 mb-3">
+                                <div class="form-group">
+                                    <label for="sign_date">Sgined date</label>
+                                    <input class="form-control" id="sign_date" type="date"
+                                        placeholder="Enter Employee's home signed date" wire:model="sign_date">
+                                    @error('sign_date')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+
+                                </div>
+                            </div>
+
+
+                            <!-- End of Form -->
                         </div>
                     </div>
+
+
+
+
+
+
 
 
 
@@ -424,6 +501,44 @@
 
                             </div>
                             <!-- End of Form -->
+                        </div>
+                    </div>
+
+
+                    <div class="col-12 mb-3">
+                        <div class="card card-body border-0 shadow mb-4 mb-xl-0">
+                            <h2 class="h5 mb-4">Activities</h2>
+                            <ul class="list-group list-group-flush">
+                                <li
+                                    class="list-group-item d-flex align-items-center justify-content-between px-0 border-bottom">
+                                    <div>
+                                        <h3 class="h6 mb-1">Active</h3>
+                                        <p class="small pe-4">Employee's Account Active</p>
+                                    </div>
+                                    <div>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="user-notification-1"
+                                                checked>
+                                            <label class="form-check-label" for="user-notification-1"></label>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li
+                                    class="list-group-item d-flex align-items-center justify-content-between px-0 border-bottom">
+                                    <div>
+                                        <h3 class="h6 mb-1">Account Activity</h3>
+                                        <p class="small pe-4">Get important notifications about you or activity you've
+                                            missed</p>
+                                    </div>
+                                    <div>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="user-notification-2">
+                                            <label class="form-check-label" for="user-notification-2"></label>
+                                        </div>
+                                    </div>
+                                </li>
+
+                            </ul>
                         </div>
                     </div>
 

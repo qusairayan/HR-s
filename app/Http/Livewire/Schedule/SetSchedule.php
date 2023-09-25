@@ -153,6 +153,7 @@ if($this->user != null){
 
             $users = User::leftJoin('department', 'department.id', '=', 'users.department_id')
                 ->select('users.*', 'users.name as user_name', 'department.name as department_name')
+                ->where('users.status', '=', 1)
                 ->where('users.department_id', '=', $this->department)
                 ->where('users.name', 'LIKE', '%' . $this->search . '%')->get();
 
@@ -164,6 +165,7 @@ if($this->user != null){
     
             $users = User::leftJoin('department', 'department.id', '=', 'users.department_id')
                 ->select('users.*', 'users.name as user_name', 'department.name as department_name')
+                ->where('users.status', '=', 1)
                 ->where('users.department_id', '=', $this->department)
                 ->where('users.name', 'LIKE', '%' . $this->search . '%')->get();
             return view('livewire.schedule.setSchedule', compact('users'));
@@ -190,6 +192,7 @@ if($this->user != null){
 
             $users = User::leftJoin('department', 'department.id', '=', 'users.department_id')
                 ->select('users.*', 'users.name as user_name', 'department.name as department_name')
+                ->where('users.status', '=', 1)
                 ->where('users.department_id', '=', $this->department)
                 ->where('users.name', 'LIKE', '%' . $this->search . '%')->get();
 
@@ -201,6 +204,7 @@ if($this->user != null){
     
             $users = User::leftJoin('department', 'department.id', '=', 'users.department_id')
                 ->select('users.*', 'users.name as user_name', 'department.name as department_name')
+                ->where('users.status', '=', 1)
                 ->where('users.department_id', '=', $this->department)
                 ->where('users.name', 'LIKE', '%' . $this->search . '%')->get();
             return view('livewire.schedule.setSchedule', compact('users'));

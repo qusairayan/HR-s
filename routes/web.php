@@ -36,6 +36,9 @@ use App\Http\Livewire\Allownces\AllowncesController;
 
 use App\Http\Livewire\Salaries\Salaries;
 use App\Http\Livewire\Salaries\AddSalaries;
+use App\Http\Livewire\Salaries\AddPartTimes;
+use App\Http\Livewire\Salaries\EditPartTimes;
+use App\Http\Livewire\Salaries\PartTimes;
 use App\Http\Livewire\Salaries\SocialSecurityController;
 
 
@@ -67,6 +70,7 @@ use App\Http\Controllers\PrivacyPolicyController;
 
 
 
+use App\Http\Controllers\Updateyear;
 use App\Http\Livewire\Err404;
 use App\Http\Livewire\Err500;
 use App\Http\Livewire\ResetPassword;
@@ -99,6 +103,9 @@ use App\Models\Leave;
 */
 
 Route::redirect('/', '/login');
+
+Route::post('/update-year', [Updateyear::class,'year'])->name('update.year');
+
 
 Route::get('/register', Register::class)->name('register');
 
@@ -208,6 +215,9 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('payroll')->group(function () {
         Route::get('/salaries', Salaries::class)->name('payroll.salaries'); //->middleware('role:viewroles')
+        Route::get('/parttime', PartTimes::class)->name('payroll.part_time'); //->middleware('role:viewroles')
+        Route::get('/addParttime', AddPartTimes::class)->name('payroll.add_part_time'); //->middleware('role:viewroles')
+        Route::get('/{parttime}/editParttime', EditPartTimes::class)->name('payroll.edit_part_time'); //->middleware('role:viewroles')
         Route::get('/addSalary', AddSalaries::class)->name('payroll.addSalary'); //->middleware('role:viewroles')
         Route::get('/socialsecurity', SocialSecurityController::class)->name('payroll.socialsecurity'); //->middleware('role:viewroles')
     });

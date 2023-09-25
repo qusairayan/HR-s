@@ -1,5 +1,5 @@
 <div>
-    <title>Salaries </title>
+    <title>PartTimes </title>
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
         <div class="d-block mb-4 mb-md-0">
             <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
@@ -17,21 +17,21 @@
 
 
                     <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Payroll / Salaries</li>
+                    <li class="breadcrumb-item active" aria-current="page">Payroll / PartTimes</li>
                 </ol>
             </nav>
-            <h2 class="h4">All Salaries</h2>
+            <h2 class="h4">All PartTimes</h2>
             {{-- <p class="mb-0">Your web analytics dashboard template.</p> --}}
         </div>
         <div class="btn-toolbar mb-2 mb-md-0">
-            <a href="{{ route('payroll.addSalary') }}" class="btn btn-sm btn-gray-800 d-inline-flex align-items-center">
+            <a href="{{ route('payroll.add_part_time') }}" class="btn btn-sm btn-gray-800 d-inline-flex align-items-center">
                 <svg class="icon icon-xs me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M12 6v6m0 0v6m0-6h6m-6 0H6">
                     </path>
                 </svg>
-                New Salary
+                New Parttime
             </a>
             <div class="btn-group ms-2 ms-lg-3">
                 <button type="button" class="btn btn-sm btn-outline-gray-600">Share</button>
@@ -40,6 +40,98 @@
         </div>
     </div>
     <div class="table-settings mb-4">
+
+
+
+        <div class="row">
+
+            <div class="col-md-3 mb-3">
+                <div>
+                    <label for="comapny">Company</label>
+                    <select class="form-select mb-0" id="company" aria-label="company select example"
+                        wire:model="company" autofocus required>
+
+                        <option value=""selected>Select Employee's Company</option>
+                        @foreach ($companies as $comp)
+                            <option value="{{ $comp->id }}">
+                                {{ $comp->name }} </option>
+                        @endforeach
+                        
+
+                    </select>
+                    @error('company')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+
+                </div>
+            </div>
+
+
+
+
+            <div class="col-md-3 mb-3">
+
+                <div>
+                    <label for="department">Department</label>
+                    <select class="form-select mb-0"
+                        id="department" aria-label="department select example" wire:model="department" autofocus
+                        required>
+                        <option value="" selected>Select department's Department
+                        </option>
+                        @foreach ($departments as $dep)
+                            <option value="{{ $dep->id }}">
+                                {{ $dep->name }} </option>
+                        @endforeach
+                        
+
+                    </select>
+                  
+                    @error('department')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+            </div>
+           
+
+
+            <div class="col-md-3 mb-3">
+
+                <div>
+                    <label for="from">From</label>
+                    <input class="form-control datepicker-input" type="date" id="from"
+                     placeholder="From date"
+                    wire:model="from">
+
+                  
+                    @error('from')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+            </div>
+
+
+            <div class="col-md-3 mb-3">
+
+                <div>
+                    <label for="to">To</label>
+                    <input class="form-control datepicker-input" type="date" id="to"
+                     placeholder="To date"
+                    wire:model="to">
+
+                  
+                    @error('from')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+            </div>
+           
+
+
+
+        </div>
+
+
+        
         <div class="row align-items-center justify-content-between">
             <div class="col col-md-6 col-lg-3 col-xl-4">
                 <div class="input-group me-2 me-lg-3 fmxw-400">
@@ -83,6 +175,10 @@
                 </div>
             </div>
         </div>
+
+
+
+        
     </div>
 
 
@@ -98,12 +194,11 @@
             <thead>
                 <tr>
 
-                    <th class="border-gray-200"></th>
-                    <th class="border-gray-200">Name</th>
+                    <th class="border-gray-200">Employee</th>
                     <th class="border-gray-200">Department</th>
-                    <th class="border-gray-200">Salary</th>
-                    <th class="border-gray-200">Bank</th>
-                    <th class="border-gray-200">Status</th>
+                    <th class="border-gray-200">From</th>
+                    <th class="border-gray-200">To</th>
+                    <th class="border-gray-200">Amount </th>
                     <th class="border-gray-200">Action</th>
                 </tr>
             </thead>
@@ -111,70 +206,53 @@
 
 
 
-                @foreach ($salaries as $salary)
+                @foreach ($partime as $pt)
                     <tr>
 
 
-
-                        <td>
-                            <span class="fw-normal">
-                                {{ $salary->id }}
-                            </span>
-                        </td>
                         <td class="border-0 fw-bold">
                             <span class="fw-normal">
-                                {{ $salary->user_name }}
+                                {{$pt->user_name}}
                             </span>
-                            <div class="d-block">
-                                <div class="small text-gray">{{ $salary->user_type }}</div>
-                            </div>
-                        </td>
-
-                        <td class="border-0 fw-bold">
-                            <span class="fw-normal">
-                                {{ $salary->department_name }}
-                            </span>
-                            <div class="d-block">
-                                <div class="small text-gray">{{ $salary->user_position }}</div>
-                            </div>
                         </td>
                         
+
+                       
                         <td class="border-0 fw-bold">
                             <span class="fw-normal">
-                                {{ $salary->amount }}
+                                {{ $pt->dep_name }}
                             </span>
                             <div class="d-block">
-                                <div class="small text-gray">{{ $salary->type }}</div>
+                                <div class="small text-gray">{{ $pt->position }}</div>
                             </div>
                         </td>
 
                         <td class="border-0 fw-bold">
                             <span class="fw-normal">
-                                {{ $salary->bank_name }}
+                                {{$pt->from}}
                             </span>
-                            <div class="d-block">
-                                <div class="small text-gray">{{ $salary->branch }}</div>
-                            </div>
                         </td>
+
 
                         <td class="border-0 fw-bold">
                             <span class="fw-normal">
-
-                                {!! $salary->status == 1
-                                    ? '<span class="fw-bold text-success">Active</span>'
-                                    : '<span class="fw-bold text-danger">Inactive</span>' !!}
+                                {{$pt->to}}
                             </span>
                         </td>
+                        <td class="border-0 fw-bold">
+                            <span class="fw-normal">
+                                {{$pt->amount}}
+                            </span>
+                        </td>
+
 
                         <td class="border-0 fw-bold">
                             <div style="display: flex">
-                                <a class="dropdown-item p-sm-2" wire:click="edit({{ $salary->id }})">
+                                <a class="dropdown-item p-sm-2" wire:click="edit({{ $pt->id }})">
                                     <span class="fas fa-edit me-2"></span>
                                 </a>
 
-                                <a class="dropdown-item p-sm-2" wire:click="view({{ $salary->id }})">
-                                    <span class="far fa-eye"></span>
-                                </a>
+                               
 
                             </div>
                         </td>
@@ -186,7 +264,7 @@
             </tbody>
         </table>
         <div>
-            {{ $salaries->links('vendor.pagination.custom') }}
+            {{-- {{ $partime->links('vendor.pagination.custom') }} --}}
         </div>
     </div>
 </div>
