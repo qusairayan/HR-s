@@ -43,23 +43,7 @@
                 </a>
             </li>
 
-            <li class="nav-item ">
-                <form method="POST" action="{{ route('update.year') }}" id="yearForm">
-                    @csrf
-
-                    <select class="form-select mb-3" id="year" aria-label="year select example" name="year" style="background: none; border: 0;border-bottom: 1px solid;"
-                        autofocus required>
-                        <option value="" disabled selected hidden>Select year session</option>
-                        @foreach ($years as $year)
-                            <option value="{{ $year->id }}" {{ session('year') == $year->id ? 'selected':'' }}>
-                                {{ $year->name }} </option>
-                        @endforeach
-                        
-
-                    </select>
-
-                </form>
-            </li>
+            
             <li class="nav-item {{ Request::segment(1) == 'dashboard' ? 'active' : '' }}">
                 <a href="/dashboard" class="nav-link">
                     <span class="sidebar-icon"> <svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20"
