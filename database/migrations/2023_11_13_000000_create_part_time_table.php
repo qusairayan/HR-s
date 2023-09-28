@@ -18,9 +18,11 @@ class CreatePartTimeTable extends Migration
             $table->unsignedBigInteger('user_id');
 
             $table->date('from');
-            $table->date('to');
+            $table->date('to')->nullable();
 
-            $table->string('amount');
+            $table->enum('status',[0,1])->default(0);
+
+            $table->double('amount')->nullable();
             
             $table->timestamps();
 

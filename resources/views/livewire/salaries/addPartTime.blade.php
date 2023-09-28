@@ -112,10 +112,12 @@
 
 
                         @if ($this->dateSet)
-                            <span class="error">This date al ready set</span>
+                            <span class="invalid-feedback">This date al ready set</span>
                         @endif
 
-
+                        @if ($this->date_incorrect)
+                            <span class="invalid-feedback">The To date must be after From date</span>
+                        @endif
 
 
                         @if ($this->total)

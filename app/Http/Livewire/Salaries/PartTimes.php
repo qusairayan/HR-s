@@ -64,8 +64,8 @@ class PartTimes extends Component
             'users.company_id',
             'part_times.from',
             'part_times.to',
-            'part_times.amount',
-  
+            'part_times.status',
+            'part_times.amount',  
         )
             ->leftJoin('users', 'users.id', '=', 'part_times.user_id')
             ->leftJoin('department', 'department.id', '=', 'users.department_id');
@@ -94,7 +94,8 @@ class PartTimes extends Component
 
 
 
-        $partime = $partimeQuery->get();
+        $partime = $partimeQuery->paginate( $this->paginator );
+        
 
         return view('livewire.salaries.partTime', compact('companies', 'departments', 'partime'));
     }

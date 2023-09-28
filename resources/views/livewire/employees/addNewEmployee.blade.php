@@ -258,7 +258,7 @@
                         <h2 class="h5 my-4">Salar information</h2>
 
                         <div class="col-md-6 mb-3">
-                            <label for="salary">Salary</label>
+                            <label for="salary">Salary @if($this->part_time) -  {{$this->part_time}} @endif</label>
                             <div class="input-group">
 
                                 <input class="form-control datepicker-input" type="text" id="salary"

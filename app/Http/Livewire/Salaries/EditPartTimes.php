@@ -34,6 +34,7 @@ class EditPartTimes extends Component
 
     public $company = '';
     public $employee = '';
+    public $employee_id = '';
 
 
 
@@ -50,16 +51,17 @@ class EditPartTimes extends Component
     public $noSalary = false;
     public $period = '';
     public $dateSet = false;
+    public $date_incorrect = false;
 
 
 
     public function mount(PartTime $parttime)
     {
-
         $this->parttime = $parttime;
         $user = User::where('id', '=', $parttime->user_id)->first();
 
         $this->employee = $user->name;
+        $this->employee_id = $user->id;
         $this->total = $parttime->amount;
         $this->from = $parttime->from;
         $this->to = $parttime->to;
@@ -76,7 +78,7 @@ class EditPartTimes extends Component
 
 
 
-        $salary = Salary::where('user_id', '=', intval($this->employee))->first();
+        $salary = Salary::where('user_id', '=', intval($this->employee_id))->first();
         $this->noSalary = true;
 
         if ($salary) {
@@ -103,6 +105,14 @@ class EditPartTimes extends Component
             $to = Carbon::parse($this->to);
 
 
+            If($to <= $from ){
+                $this->date_incorrect = true;
+            return false;
+
+            }
+            else{
+                $this->date_incorrect = false;
+            }
             $daysDifference = $from->diffInDays($to);
 
 
@@ -114,6 +124,7 @@ class EditPartTimes extends Component
                 $this->total = round($this->salary / 30 * $daysDifference / 30, 1);
             }
         }
+
     }
 
 
@@ -122,7 +133,6 @@ class EditPartTimes extends Component
 
 
         $this->validate([
-            'employee' => 'required|exists:users,id',
             'from' => 'required',
             'to' => 'required',
 
@@ -141,11 +151,18 @@ class EditPartTimes extends Component
             return false;
         }
 
+        $from = Carbon::parse($this->from);
+        $to = Carbon::parse($this->to);
+        If($to <= $from ){
+            $this->date_incorrect = true;
+            return false;
+        }
+
 
         $this->parttime->update([
-            'user_id' => $this->employee,
             'from' => $this->from,
             'to' => $this->to,
+            'status' => 1,
             'amount' => $this->total,
 
 
@@ -155,7 +172,7 @@ class EditPartTimes extends Component
 
 
         $this->showSavedAlert = true;
-        redirect(route('payroll.salaries'));
+        redirect(route('payroll.part_time'));
     }
 
     public function render()

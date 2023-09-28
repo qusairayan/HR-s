@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use App\Models\User;
 use App\Models\Department;
+use App\Models\PartTime;
 use App\Models\Role;
 use App\Models\Company;
 use App\Models\EmployeesContract;
@@ -134,9 +135,7 @@ class AddNewEmployee extends Component
         ]);
 
 
-        if($this->type =='part-time'){
-            $this->validate(['part_time' => 'required']);
-        }
+        
 
         
         if ($this->contract ||$this->sign_date) {
@@ -156,7 +155,9 @@ class AddNewEmployee extends Component
         }
 
 
-
+        if($this->type =='part-time'){
+            $this->validate(['part_time' => 'required']);
+        }
         $user = User::create([
             'name' => $this->name,
             'email' => $this->email,
@@ -179,6 +180,15 @@ class AddNewEmployee extends Component
             'birthday' => $this->birth,
         ]);
 
+        if($this->type =='part-time'){
+
+            $part_time=PartTime::create([
+                'user_id'=> $user->id,
+                'from'=> $this->start_date,
+                'status'=> 0,
+            ]);
+        }
+
 
 
         $user->assignRole($this->role);
@@ -194,6 +204,7 @@ class AddNewEmployee extends Component
                 "user_id"=>$user->id,
                 "bank"=>$this->bank,
                 "IBAN"=>$this->IBAN,
+                "type"=>$this->part_time,
                 "amount"=>$this->salary,
               ]);
               $salary->save();

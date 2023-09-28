@@ -199,6 +199,7 @@
                     <th class="border-gray-200">From</th>
                     <th class="border-gray-200">To</th>
                     <th class="border-gray-200">Amount </th>
+                    <th class="border-gray-200">Status </th>
                     <th class="border-gray-200">Action</th>
                 </tr>
             </thead>
@@ -207,6 +208,7 @@
 
 
                 @foreach ($partime as $pt)
+
                     <tr>
 
 
@@ -247,13 +249,27 @@
 
 
                         <td class="border-0 fw-bold">
+                        @if($pt->status == 1)
+                            <span class="fw-bold text-success">
+                                 Ready
+                            </span>
+                            @else
+                              <span class="fw-bold text-danger">
+                                 Pending
+                            </span>
+                            @endif
+                        </td>
+
+
+
+
+                        <td class="border-0 fw-bold">
                             <div style="display: flex">
-                                <a class="dropdown-item p-sm-2" wire:click="edit({{ $pt->id }})">
+                        @if($pt->status == 0)
+                                <a class="dropdown-item p-sm-2" href="{{ route('payroll.edit_part_time', ['parttime' => $pt->id]) }}">
                                     <span class="fas fa-edit me-2"></span>
                                 </a>
-
-                               
-
+                            @endif
                             </div>
                         </td>
 
@@ -264,7 +280,7 @@
             </tbody>
         </table>
         <div>
-            {{-- {{ $partime->links('vendor.pagination.custom') }} --}}
+            {{ $partime->links('vendor.pagination.custom') }}
         </div>
     </div>
 </div>

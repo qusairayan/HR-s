@@ -16,6 +16,7 @@ class PartTime extends Model
         'user_id',
         'from',        
         'to',
+        'status',
         'amount',
     
 

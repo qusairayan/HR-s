@@ -50,6 +50,7 @@ class AddPartTimes extends Component
     public $noSalary = false;
     public $period = '';
     public $dateSet = false;
+    public $date_incorrect = false;
 
 
 
@@ -61,7 +62,6 @@ class AddPartTimes extends Component
         $this->validate([
             'employee' => 'required|exists:users,id',
             'from' => 'required|date',
-            'to' => 'required|date',
            
         ]);
        
@@ -87,6 +87,7 @@ class AddPartTimes extends Component
 
 
 
+        
 
         // Assuming you have two date values as Carbon objects
 if ($this->from && $this->to ) {
@@ -97,6 +98,13 @@ if ($this->from && $this->to ) {
         $from = Carbon::parse($this->from);
         $to = Carbon::parse($this->to);
 
+If($to <= $from ){
+            $this->date_incorrect = true;
+            return false;
+        }
+        else{
+            $this->date_incorrect = false;
+        }
 
         $daysDifference = $from->diffInDays($to);
 
@@ -121,9 +129,22 @@ if ($this->from && $this->to ) {
         $this->validate([
             'employee' => 'required|exists:users,id',
             'from' => 'required',
-            'to' => 'required',
             
         ]);
+
+        $from = Carbon::parse($this->from);
+        $to = Carbon::parse($this->to);
+
+If($to <= $from ){
+            $this->date_incorrect = true;
+            return false;
+        }
+        else{
+            $this->date_incorrect = false;
+            
+        }
+
+
         $check = PartTime::where('user_id', '=', $this->employee)
         ->where(function ($query) {
             $query->whereBetween('from', [$this->from, $this->to])
@@ -136,12 +157,19 @@ if ($this->from && $this->to ) {
             $this->dateSet=true;
             return false;
                 }
+                $status=0;
+                if($this->from && $this->to){
+                    $status=1;
 
+                }
+
+                
 
         $PartTime = PartTime::create([
             'user_id' => $this->employee,
             'from' => $this->from,
             'to' => $this->to,
+            'status' => $status,
             'amount' => $this->total,
            
 
@@ -151,7 +179,7 @@ if ($this->from && $this->to ) {
 
 
         $this->showSavedAlert = true;
-        redirect(route('payroll.salaries'));
+        redirect(route('payroll.part_time'));
     }
 
     public function render()
