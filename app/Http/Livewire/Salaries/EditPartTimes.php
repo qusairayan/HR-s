@@ -121,7 +121,7 @@ class EditPartTimes extends Component
             } else if ($this->period == 'weekly') {
                 $this->total =  round($this->salary / 7 * $daysDifference, 1);
             } else if ($this->period == 'monthly') {
-                $this->total = round($this->salary / 30 * $daysDifference / 30, 1);
+                $this->total = round($this->salary / 30 * $daysDifference , 1);
             }
         }
 
