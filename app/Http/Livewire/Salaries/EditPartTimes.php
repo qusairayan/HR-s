@@ -105,12 +105,10 @@ class EditPartTimes extends Component
             $to = Carbon::parse($this->to);
 
 
-            If($to <= $from ){
+            if ($to <= $from) {
                 $this->date_incorrect = true;
-            return false;
-
-            }
-            else{
+                return false;
+            } else {
                 $this->date_incorrect = false;
             }
             $daysDifference = $from->diffInDays($to);
@@ -121,10 +119,16 @@ class EditPartTimes extends Component
             } else if ($this->period == 'weekly') {
                 $this->total =  round($this->salary * intval($daysDifference / 7), 1);
             } else if ($this->period == 'monthly') {
-                $this->total = round($this->salary * intval($daysDifference / 30) , 1);
+
+                $interval = $from->diff($to);
+
+                $months = $interval->y * 12 + $interval->m;
+
+
+
+                $this->total = round($this->salary * $months, 1);
             }
         }
-
     }
 
 
@@ -153,7 +157,7 @@ class EditPartTimes extends Component
 
         $from = Carbon::parse($this->from);
         $to = Carbon::parse($this->to);
-        If($to <= $from ){
+        if ($to <= $from) {
             $this->date_incorrect = true;
             return false;
         }
@@ -178,7 +182,7 @@ class EditPartTimes extends Component
     public function render()
     {
 
-        
+
 
         return view('livewire.salaries.editPartTime');
     }
