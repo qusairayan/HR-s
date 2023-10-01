@@ -9,6 +9,7 @@ use App\Models\Department;
 use App\Models\Company;
 use App\Models\EmployeesContract;
 use App\Models\Bank;
+use App\Models\PartTime;
 use App\Models\Role;
 use App\Models\Salary;
 use App\Models\User;
@@ -65,7 +66,6 @@ class Edit extends Component
 
 
     public $rules = [
-
         'name' => 'required',
         'username' => 'required',
         'email' => 'required',
@@ -83,14 +83,11 @@ class Edit extends Component
         'phone' => 'required',
         'address' => 'required',
         'ID_no' => 'required|integer|digits:10',
-
     ];
 
 
     public function mount(User $user)
     {
-
-
         $this->user = $user;
         $this->email = $user->email;
         $this->username = $user->username;
@@ -287,8 +284,7 @@ class Edit extends Component
     public function save()
     {
 
-        $this->validate();
-
+   
 
         if ($this->contract || $this->signedDate) {
 
@@ -301,7 +297,7 @@ class Edit extends Component
 
 
 
-        if ($this->type= 'part-time' ) {
+        if ($this->type == 'part-time' ) {
 
             $this->validate([
                 'part_time' => 'required',
@@ -311,6 +307,9 @@ class Edit extends Component
 
 
             
+        }
+        else{
+            $this->part_time= '';
         }
 
 
@@ -347,6 +346,20 @@ class Edit extends Component
             'status' => $this->status,
         ]);
 
+
+        if ($this->type == 'part-time' ) {
+
+            $partTime = PartTime::where('user_id', $this->user->id)->first();
+            if(!$partTime){
+
+                $part_time=PartTime::create([
+                    'user_id'=> $this->user->id,
+                    'from'=> $this->start_date,
+                    'status'=> 0,
+                ]);
+            }
+
+        }
 
         if ($this->signedDate) {
 
