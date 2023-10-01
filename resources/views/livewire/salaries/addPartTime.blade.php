@@ -72,11 +72,11 @@
                                 - {{ $this->period }}
                             @endif
                         </h2>
-
                     </div>
+
                     <div class="row align-items-center">
 
-                        <div class="col-md-6 mb-3">
+                        <div class="col-md-4 mb-3">
                             <div>
                                 <label for="from" class="h5 mt-5">From</label>
 
@@ -93,7 +93,8 @@
                         </div>
 
 
-                        <div class="col-md-6 mb-3">
+                        <div class="col-md-4 mb-3">
+
                             <div>
                                 <label for="to" class="h5 mt-5">To </label>
 
@@ -105,6 +106,7 @@
                                 @error('to')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
+
                             </div>
 
                         </div>
@@ -121,19 +123,17 @@
 
 
                         @if ($this->total)
-                        <div class="row align-items-center justify-content-end">
-                            <div class="col-md-3 mb-3" style="text-align:right;">
-                                <h3 class="h5 my-4">Total:</h3>
+                           
+                                <div class="col-md-4 mb-4 " style="text-align:right; margin-top:auto;">
+
+                                <div class="align-items-end d-flex justify-content-sm-around">
+                                <h3 class="h5">Total:</h3>
+                       
+                                <p class="h5">{{ $this->total }}</p>
                             </div>
-                            <div class="col-md-3 mb-3">
-                                <p style="margin: 0;">{{ $this->total }}</p>
-                            </div>
+
                         </div>
                         @endif
-
-
-
-
 
                     </div>
 

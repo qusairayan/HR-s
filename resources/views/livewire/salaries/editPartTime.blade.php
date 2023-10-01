@@ -20,14 +20,13 @@
 
                             <div>
                                 <label for="employee">Employee</label>
-                                <input class="form-control " type="text" id="employee"
-                                disabled 
-                                wire:model="employee">
+                                <input class="form-control " type="text" id="employee" disabled
+                                    wire:model="employee">
 
 
                             </div>
                         </div>
-                        
+
                         <h2 class="h5 my-4">Salary @if ($this->period)
                                 - {{ $this->period }}
                             @endif
@@ -80,16 +79,16 @@
                         @endif
 
 
-
                         @if ($this->total)
-                        <div class="row align-items-center justify-content-end">
-                            <div class="col-md-3 mb-3" style="text-align:right;">
-                                <h3 class="h5 my-4">Total:</h3>
+                            <div class="col-md-4 mb-4 " style="text-align:right; margin-top:auto;">
+
+                                <div class="align-items-end d-flex justify-content-sm-around">
+                                    <h3 class="h5">Total:</h3>
+
+                                    <p class="h5">{{ $this->total }}</p>
+                                </div>
+
                             </div>
-                            <div class="col-md-3 mb-3">
-                                <p style="margin: 0;">{{ $this->total }}</p>
-                            </div>
-                        </div>
                         @endif
 
 
