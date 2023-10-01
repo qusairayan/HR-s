@@ -35,7 +35,7 @@
                     </div>
                     <div class="row align-items-center">
 
-                        <div class="col-md-6 mb-3">
+                        <div class="col-md-4 mb-3">
                             <div>
                                 <label for="from" class="h5 mt-5">From</label>
 
@@ -52,7 +52,7 @@
                         </div>
 
 
-                        <div class="col-md-6 mb-3">
+                        <div class="col-md-4 mb-3">
                             <div>
                                 <label for="to" class="h5 mt-5">To </label>
 
