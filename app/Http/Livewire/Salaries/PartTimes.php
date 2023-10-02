@@ -82,7 +82,7 @@ class PartTimes extends Component
         }
 
         if ($this->to) {
-            $partimeQuery->where('part_times.department_id', '<=', $this->to);
+            $partimeQuery->where('users.department_id', '<=', $this->to);
         }
 
         if ($this->search) {
