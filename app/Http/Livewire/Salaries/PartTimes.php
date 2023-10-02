@@ -34,6 +34,7 @@ class PartTimes extends Component
 
     public $company = '';
     public $department = '';
+    public $employee = '';
 
 
     public $from = '';
@@ -45,7 +46,19 @@ class PartTimes extends Component
 
 
 
+public function report(){
+    
 
+    $this->validate([
+        'employee' => 'required',
+        'from' => 'required|date',
+        'to' => 'required|date',
+    ]);
+
+    return redirect()->route('payroll.part_time_report',['id' => $this->employee, 'from' => $this->from, 'to' => $this->to]);
+
+
+}
 
 
 
@@ -54,7 +67,24 @@ class PartTimes extends Component
 
 
         $companies = Company::all();
-        $departments = Department::all();
+
+        $departmentsQuery = Department::select('*');
+        if($this->company){
+        $departmentsQuery ->where('company_id','=',$this->company);
+        }
+        $departments= $departmentsQuery ->get();
+
+
+        $employeesQuery = User::select('*');
+        if($this->company){
+            $employeesQuery ->where('company_id','=',$this->company);
+            }
+            if($this->department){
+                $employeesQuery ->where('department_id','=',$this->department);
+                }
+        $employees= $employeesQuery ->get();
+
+        
 
         $partimeQuery = PartTime::select(
             'part_times.id','users.name as user_name',
@@ -97,6 +127,6 @@ class PartTimes extends Component
         $partime = $partimeQuery->paginate( $this->paginator );
         
 
-        return view('livewire.salaries.partTime', compact('companies', 'departments', 'partime'));
+        return view('livewire.salaries.partTime', compact('companies', 'departments','employees','partime'));
     }
 }

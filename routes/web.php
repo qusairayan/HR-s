@@ -39,6 +39,7 @@ use App\Http\Livewire\Salaries\AddSalaries;
 use App\Http\Livewire\Salaries\AddPartTimes;
 use App\Http\Livewire\Salaries\EditPartTimes;
 use App\Http\Livewire\Salaries\PartTimes;
+use App\Http\Livewire\Salaries\Ptreportpdf;
 use App\Http\Livewire\Salaries\SocialSecurityController;
 
 
@@ -218,6 +219,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/parttime', PartTimes::class)->name('payroll.part_time'); //->middleware('role:viewroles')
         Route::get('/addParttime', AddPartTimes::class)->name('payroll.add_part_time'); //->middleware('role:viewroles')
         Route::get('/{parttime}/editParttime', EditPartTimes::class)->name('payroll.edit_part_time'); //->middleware('role:viewroles')
+        Route::get('/PartTimeReport/{id}/{from}/{to}', [Ptreportpdf::class,'generatePDF'])->name('payroll.part_time_report'); //->middleware('role:viewroles')
         Route::get('/addSalary', AddSalaries::class)->name('payroll.addSalary'); //->middleware('role:viewroles')
         Route::get('/socialsecurity', SocialSecurityController::class)->name('payroll.socialsecurity'); //->middleware('role:viewroles')
     });

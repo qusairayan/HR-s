@@ -94,6 +94,31 @@
            
 
 
+
+            <div class="col-md-4 mb-4">
+
+                <div>
+                    <label for="employee">Employee</label>
+                    <select class="form-select mb-0"
+                        id="employee" aria-label="employee select example" wire:model="employee" autofocus
+                        required>
+                        <option value="" selected>Select employee
+                        </option>
+                        @foreach ($employees as $emp)
+                            <option value="{{ $emp->id }}">
+                                {{ $emp->name }} </option>
+                        @endforeach
+                        
+
+                    </select>
+                  
+                    @error('employee')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+            </div>
+
+
             <div class="col-md-3 mb-3">
 
                 <div>
@@ -126,6 +151,13 @@
             </div>
            
 
+            <div class="col-md-4 d-flex align-items-center justify-content-center">
+                <div style="width: 58%;">
+
+                <button class="btn btn-success" type="button" wire:click="report()">View Report</button>
+              
+            </div>
+        </div>
 
 
         </div>
