@@ -147,7 +147,7 @@
         @endforeach
 <tr>  <td style="text-align: center;padding-top: 8px; width: 10%" colspan="5"></td></tr>
         @foreach ($checks as $check)
-        @php($total += $check->Value)
+        @php($total -= $check->Value)
 
         <tr>
             <td style="text-align: center;padding-top: 8px; width: 10%" colspan="2">{{ $check->Date }}</td>
@@ -160,9 +160,7 @@
     @endforeach
     @if(count($checks)>0 || count($partTime) > 0)
         <tr>
-            <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px; width: 11%">
-            </th>
-            <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 22%">Totla:</th>
+            <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 22%" colspan="3">Totla:</th>
             <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 14%">
                 {{ $total }}
             </th>
