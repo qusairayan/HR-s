@@ -150,10 +150,10 @@
         @php($total -= $check->Value)
 
         <tr>
-            <td style="text-align: center;padding-top: 8px; width: 10%; background:#5b5d5e59;" colspan="2">{{ $check->Date }}</td>
-            <td style="text-align: center;padding-top: 8px; width: 10%; background:#5b5d5e59;">{{ $check->Value }}</td>
-            <td style="text-align: center;padding-top: 8px; width: 10%; background:#5b5d5e59;"></td>
-            <td style="text-align: center;padding-top: 8px; width: 10%; background:#5b5d5e59;">{{ $total }}</td>
+            <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;" colspan="2">{{ $check->Date }}</td>
+            <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{ $check->Value }}</td>
+            <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;"></td>
+            <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{ $total }}</td>
 
         </tr>
         {{ $check->id }}
