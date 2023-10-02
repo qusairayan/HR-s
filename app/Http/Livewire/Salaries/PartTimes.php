@@ -75,7 +75,7 @@ public function report(){
         $departments= $departmentsQuery ->get();
 
 
-        $employeesQuery = User::select('*');
+        $employeesQuery = User::select('*')->where('type','=','part-time');
         if($this->company){
             $employeesQuery ->where('company_id','=',$this->company);
             }
