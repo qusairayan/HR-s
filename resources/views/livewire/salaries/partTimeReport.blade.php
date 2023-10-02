@@ -145,11 +145,11 @@
         @endforeach
 
         @foreach ($checks as $check)
-        @php($total += $check->amount)
+        @php($total += $check->Value)
 
         <tr>
             <td style="text-align: center;padding-top: 8px; width: 10%" colspan="2">{{ $check->Date }}</td>
-            <td style="text-align: center;padding-top: 8px; width: 10%">{{ $check->amount }}</td>
+            <td style="text-align: center;padding-top: 8px; width: 10%">{{ $check->Value }}</td>
             <td style="text-align: center;padding-top: 8px; width: 10%"></td>
         </tr>
         {{ $check->id }}
