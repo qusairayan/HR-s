@@ -20,7 +20,19 @@ class Ptreportpdf extends Component
 
         $partTimeQuery = PartTime::where('user_id', '=', $id);
 
-        $checks = DB::connection('LYONDB')->table('check_lyon')->where('Name_To','LIKE',$employee)->whereBetween('Date',[$from,$to])->get();
+        $checkComp='';
+
+        if($company == 'Lyon Travel'){
+            $checkComp='check_lyon';
+        }
+        elseif($company == 'Lyon Rental Car'){
+            $checkComp='check_lyon_rental';
+        }
+        else{
+            $checkComp='check_marvell';
+        }
+
+        $checks = DB::connection('LYONDB')->table($checkComp)->where('Name_To','LIKE',$employee)->whereBetween('Date',[$from,$to])->get();
 
         if ($from) {
             $partTimeQuery = $partTimeQuery->where('from', '>=', $from);
