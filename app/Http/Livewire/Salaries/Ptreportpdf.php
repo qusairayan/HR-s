@@ -24,15 +24,19 @@ class Ptreportpdf extends Component
         $partTimeQuery = PartTime::where('user_id', '=', $id);
 
         $checkComp='';
+        $image='';
 
         if($company == 'Lyon Travel'){
             $checkComp='check_lyon';
+            $image='lyontravell.png';
         }
         elseif($company == 'Lyon Rental Car'){
             $checkComp='check_lyon_rental';
+            $image='lyonrentall.png';
         }
         else{
             $checkComp='check_marvell';
+            $image='marvellLogo.png';
         }
 
         $checks = DB::connection('LYONDB')->table($checkComp)->where('Name_To','LIKE',$employee)->whereBetween('Date',[$from,$to])->get();
@@ -55,7 +59,7 @@ class Ptreportpdf extends Component
             'margin_top' => 10, 
             'margin_bottom' => 10, 
         ]);
-        $mpdf->WriteHTML(view('livewire.salaries.partTimeReport', ['partTime' => $partTime,'checks' => $checks,'employee' => $employee,'employee_id' => $employee_id,'company' => $company,'department' => $department,'position' => $position,'from'=>$from,'to'=>$to]));
+        $mpdf->WriteHTML(view('livewire.salaries.partTimeReport', ['partTime' => $partTime,'checks' => $checks,'employee' => $employee,'employee_id' => $employee_id,'company' => $company,'image' => $image,'department' => $department,'position' => $position,'from'=>$from,'to'=>$to]));
 
         $mpdf->Output('document.pdf', 'I');
     }

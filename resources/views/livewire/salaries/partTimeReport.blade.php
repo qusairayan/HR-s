@@ -59,9 +59,14 @@
     <div style="padding:5mm; margin: bottom 25px;">
         <div class="row">
 
-            <div class="column" style="width:100%">
+            <div class="column" style="width:50%">
                 <p style="font-size:18px;text-align:center"><b>{{ $company }}</b></p>
             </div>
+
+            <div class="column" style="width:50%">
+                <img src="/storage/company/{{$image}}" height="70" width="160" />
+            </div>
+            
         </div>
     </div>
 
