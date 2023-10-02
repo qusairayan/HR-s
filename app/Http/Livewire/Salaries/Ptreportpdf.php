@@ -16,7 +16,7 @@ class Ptreportpdf extends Component
 
         $user=User::where('id','=',$id)->first();
         $employee=$user->name;
-        $position=$user->position;
+        $postion=$user->position;
         $employee_id=$user->id;
         $company=$user->company->name;
         $department=$user->department->name;
@@ -49,7 +49,7 @@ class Ptreportpdf extends Component
 
         $mpdf = new Mpdf();
 
-        $mpdf->WriteHTML(view('livewire.salaries.partTimeReport', ['partTime' => $partTime,'checks' => $checks,'employee' => $employee,'employee_id' => $employee_id,'company' => $company,'department' => $department,'position' => $position,'from'=>$from,'to'=>$to]));
+        $mpdf->WriteHTML(view('livewire.salaries.partTimeReport', ['partTime' => $partTime,'checks' => $checks,'employee' => $employee,'employee_id' => $employee_id,'company' => $company,'department' => $department,'postion' => $postion,'from'=>$from,'to'=>$to]));
 
         $mpdf->Output('document.pdf', 'I');
     }

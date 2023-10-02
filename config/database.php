@@ -70,6 +70,12 @@ return [
             'database' => env('LYONDB_DATABASE', 'lyonjo'),
             'username' => env('LYONDB_USERNAME', 'root'),
             'password' => env('LYONDB_PASSWORD', ''),
+            'charset' => 'utf8', // Set the charset here
+            'collation' => 'utf8_unicode_ci', // Set the collation here
+            'prefix' => '',
+            'strict' => true,
+            'engine' => null,
+    
         ],
         
 
