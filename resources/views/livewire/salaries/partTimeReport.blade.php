@@ -150,17 +150,17 @@
         @php($total -= $check->Value)
 
         <tr>
-            <td style="text-align: center;padding-top: 8px; width: 10%" colspan="2">{{ $check->Date }}</td>
-            <td style="text-align: center;padding-top: 8px; width: 10%">{{ $check->Value }}</td>
-            <td style="text-align: center;padding-top: 8px; width: 10%"></td>
-            <td style="text-align: center;padding-top: 8px; width: 10%">{{ $total }}</td>
+            <td style="text-align: center;padding-top: 8px; width: 10%; background:#5b5d5e59;" colspan="2">{{ $check->Date }}</td>
+            <td style="text-align: center;padding-top: 8px; width: 10%; background:#5b5d5e59;">{{ $check->Value }}</td>
+            <td style="text-align: center;padding-top: 8px; width: 10%; background:#5b5d5e59;"></td>
+            <td style="text-align: center;padding-top: 8px; width: 10%; background:#5b5d5e59;">{{ $total }}</td>
 
         </tr>
         {{ $check->id }}
     @endforeach
     @if(count($checks)>0 || count($partTime) > 0)
         <tr>
-            <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 22%" colspan="3">Totla:</th>
+            <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 22%" colspan="4">Totla:</th>
             <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 14%">
                 {{ $total }}
             </th>
