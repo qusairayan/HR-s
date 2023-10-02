@@ -153,7 +153,7 @@
             <td style="text-align: center;padding-top: 8px; width: 10%" colspan="2">{{ $check->Date }}</td>
             <td style="text-align: center;padding-top: 8px; width: 10%">{{ $check->Value }}</td>
             <td style="text-align: center;padding-top: 8px; width: 10%"></td>
-            <td style="text-align: center;padding-top: 8px; width: 10%">{{ $pt->total }}</td>
+            <td style="text-align: center;padding-top: 8px; width: 10%">{{ $check->total }}</td>
 
         </tr>
         {{ $check->id }}
