@@ -70,7 +70,7 @@
         </div>
     </div>
 
-    
+
 
     <div style="color: white;background-color: #03415F;" class="row">
         <div class="column" style="padding:4px;width: 100%">
@@ -148,8 +148,8 @@
             <tr>
                 <td style="text-align: center;padding-top: 8px; width: 10%">{{ $pt->from }}</td>
                 <td style="text-align: center;padding-top: 8px; width: 10%">{{ $pt->to }}</td>
-                <td style="text-align: center;padding-top: 8px; width: 10%"></td>
                 <td style="text-align: center;padding-top: 8px; width: 10%">{{ $pt->amount }}</td>
+                <td style="text-align: center;padding-top: 8px; width: 10%"></td>
                 <td style="text-align: center;padding-top: 8px; width: 10%">{{ $total }}</td>
             </tr>
             {{ $pt->id }}
@@ -161,12 +161,12 @@
             @php($total -= $check->Value)
 
             <tr>
-                <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;" colspan="2">
-                    {{ $check->Date }}</td>
-                <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{ $check->Value }}
-                </td>
-                <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;"></td>
+                <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{ $check->Date }}</td>
+                <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{ $check->Payment_Method }}</td>
+                <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{ $check->Value }}</td>
                 <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{ $total }}
+                <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;"></td>
+
                 </td>
 
             </tr>
