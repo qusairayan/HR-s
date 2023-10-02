@@ -4,7 +4,7 @@
 <head>
 
     <head>
-        <title>Part Time Report - {{$employee}}</title>
+        <title>Part Time Report - {{ $employee }}</title>
         <style>
             body {
                 font-family: Arial, Helvetica, sans-serif;
@@ -58,7 +58,7 @@
 <body>
     <div style="padding:5mm; margin: bottom 25px;">
         <div class="row">
-            
+
             <div class="column" style="width:100%">
                 <p style="font-size:18px;text-align:center"><b>{{ $company }}</b></p>
             </div>
@@ -72,29 +72,33 @@
         </div>
     </div>
 
-    <div style="margin-top:8px" class="row">
+
+    <br>
+
+
+    <div class="row" style="background: #03415F; ma">
         <div class="column" style="padding:0; width:20%">
-            <p style="font-size:15px;color: #03415F;margin:0;padding:4;font-weight:bold">Employee :</p>
+            <p style="font-size:15px;color: white;margin:0;padding:4;font-weight:bold">Employee :</p>
         </div>
         <div class="column" style="padding:0;margin-left:3px; width:33%">
-            <p style="font-size:12px;color: #03415F;margin:0;padding:4;font-weight:bold">{{ $employee }}</p>
+            <p style="font-size:12px;color: white;margin:0;padding:4;font-weight:bold">{{ $employee }}</p>
         </div>
 
 
 
         <div class="column" style="padding:0; width:10%">
-            <p style="font-size:15px;color: #03415F;margin:0;padding:4;font-weight:bold">From :</p>
+            <p style="font-size:15px;color: white;margin:0;padding:4;font-weight:bold">From :</p>
         </div>
 
         <div class="column" style="padding:0;margin-left:3px; width:14%">
-            <p style="font-size:12px;color: #03415F;margin:0;padding:4;font-weight:bold">{{ $from }}</p>
+            <p style="font-size:12px;color: white;margin:0;padding:4;font-weight:bold">{{ $from }}</p>
         </div>
 
         <div class="column" style="padding:0; width:10%">
-            <p style="font-size:15px;color: #03415F;margin:0;padding:4;font-weight:bold">To :</p>
+            <p style="font-size:15px;color: white;margin:0;padding:4;font-weight:bold">To :</p>
         </div>
         <div class="column" style="padding:0;margin-left:3px; width:10%">
-            <p style="font-size:12px;color: #03415F;margin:0;padding:4;font-weight:bold">{{ $to }}</p>
+            <p style="font-size:12px;color: white;margin:0;padding:4;font-weight:bold">{{ $to }}</p>
         </div>
     </div>
 
@@ -106,37 +110,54 @@
     <br>
     <table id="account">
         <tr>
-            <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px; width: 10%">#</th>
             <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px; width: 11%">From
             </th>
             <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 22%">To</th>
-            <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 14%">Amount
-            </th>
+            <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 14%">Debit</th>
+            <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 14%">Credit</th>
         </tr>
 
-        @php($total=0)
+        @php($total = 0)
 
         @foreach ($partTime as $pt)
-        @php($total+=$pt->amount)
+            @php($total += $pt->amount)
 
             <tr>
-
-                <td style="text-align: center;padding-top: 8px; width: 10%">{{ $pt->id }}</td>
                 <td style="text-align: center;padding-top: 8px; width: 10%">{{ $pt->from }}</td>
                 <td style="text-align: center;padding-top: 8px; width: 10%">{{ $pt->to }}</td>
+                <td style="text-align: center;padding-top: 8px; width: 10%"></td>
                 <td style="text-align: center;padding-top: 8px; width: 10%">{{ $pt->amount }}</td>
             </tr>
             {{ $pt->id }}
+
         @endforeach
 
+        @foreach ($checks as $check)
+        @php($total += $check->amount)
+
         <tr>
-            <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px; width: 10%"></th>
+            <td style="text-align: center;padding-top: 8px; width: 10%" colspan="2">{{ $check->Date }}</td>
+            <td style="text-align: center;padding-top: 8px; width: 10%">{{ $check->amount }}</td>
+            <td style="text-align: center;padding-top: 8px; width: 10%"></td>
+        </tr>
+        {{ $check->id }}
+    @endforeach
+    @if(count($checks)>0 || count($partTime) > 0)
+        <tr>
             <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px; width: 11%">
             </th>
             <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 22%">Totla:</th>
-            <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 14%">{{$total}}
+            <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 14%">
+                {{ $total }}
             </th>
         </tr>
+        @else
+        <tr>
+            <th style="text-align: center; color: #03415F; font-size: 12px; width: 11% "colspan="4"> No Records </th>
+            
+        </tr>
+        @endif
+
     </table>
 </body>
 

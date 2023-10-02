@@ -62,6 +62,16 @@ return [
                 PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
             ]) : [],
         ],
+        
+        'LYONDB' => [
+            'driver' => 'mysql',
+            'host' => env('LYONDB_HOST', '127.0.0.1'),
+            'port' => env('LYONDB_PORT', '3306'),
+            'database' => env('LYONDB_DATABASE', 'lyonjo'),
+            'username' => env('LYONDB_USERNAME', 'root'),
+            'password' => env('LYONDB_PASSWORD', ''),
+        ],
+        
 
         'pgsql' => [
             'driver' => 'pgsql',

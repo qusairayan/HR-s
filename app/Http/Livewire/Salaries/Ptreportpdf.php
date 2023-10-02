@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Salaries;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Livewire\Component;
 use App\Models\PartTime;
@@ -19,6 +20,8 @@ class Ptreportpdf extends Component
 
         $partTimeQuery = PartTime::where('user_id', '=', $id);
 
+        $checks = DB::connection('LYONDB')->table('check_lyon')->where('Name_To','LIKE',$employee)->whereBetween('Date',[$from,$to])->get();
+
         if ($from) {
             $partTimeQuery = $partTimeQuery->where('from', '>=', $from);
         }
@@ -31,7 +34,7 @@ class Ptreportpdf extends Component
 
         $mpdf = new Mpdf();
 
-        $mpdf->WriteHTML(view('livewire.salaries.partTimeReport', ['partTime' => $partTime,'employee' => $employee,'company' => $company,'from'=>$from,'to'=>$to]));
+        $mpdf->WriteHTML(view('livewire.salaries.partTimeReport', ['partTime' => $partTime,'checks' => $checks,'employee' => $employee,'company' => $company,'from'=>$from,'to'=>$to]));
 
         $mpdf->Output('document.pdf', 'I');
     }
