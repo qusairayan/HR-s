@@ -52,8 +52,7 @@
     <!-- Notyf -->
     <link type="text/css" href="/vendor/notyf/notyf.min.css" rel="stylesheet">
     
-    <!-- Volt CSS -->
-    <link type="text/css" href="/css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 
     @livewireStyles
 
