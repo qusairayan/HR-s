@@ -152,7 +152,7 @@
                 <td style="text-align: center;padding-top: 8px; width: 10%">{{ $pt->amount }}</td>
                 <td style="text-align: center;padding-top: 8px; width: 10%"></td>
                 <td style="text-align: center;padding-top: 8px; width: 10%">{{ $total }}</td>
-                <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;"></td>
+                <td style="text-align: center;padding-top: 8px; width: 10%; "></td>
 
             </tr>
             {{ $pt->id }}
