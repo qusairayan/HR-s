@@ -127,6 +127,7 @@
             <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 22%">To</th>
             <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 14%">Debit</th>
             <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 14%">Credit</th>
+            <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 14%">balance</th>
         </tr>
 
         @php($total = 0)
@@ -139,11 +140,12 @@
                 <td style="text-align: center;padding-top: 8px; width: 10%">{{ $pt->to }}</td>
                 <td style="text-align: center;padding-top: 8px; width: 10%"></td>
                 <td style="text-align: center;padding-top: 8px; width: 10%">{{ $pt->amount }}</td>
+                <td style="text-align: center;padding-top: 8px; width: 10%">{{ $pt->total }}</td>
             </tr>
             {{ $pt->id }}
 
         @endforeach
-
+<tr>  <td style="text-align: center;padding-top: 8px; width: 10%" colspan="5"></td></tr>
         @foreach ($checks as $check)
         @php($total += $check->Value)
 
@@ -151,6 +153,8 @@
             <td style="text-align: center;padding-top: 8px; width: 10%" colspan="2">{{ $check->Date }}</td>
             <td style="text-align: center;padding-top: 8px; width: 10%">{{ $check->Value }}</td>
             <td style="text-align: center;padding-top: 8px; width: 10%"></td>
+            <td style="text-align: center;padding-top: 8px; width: 10%">{{ $pt->total }}</td>
+
         </tr>
         {{ $check->id }}
     @endforeach
@@ -165,7 +169,7 @@
         </tr>
         @else
         <tr>
-            <th style="text-align: center; color: #03415F; font-size: 12px; width: 11% "colspan="4"> No Records </th>
+            <th style="text-align: center; color: #03415F; font-size: 17px; width: 11% "colspan="5"> No Records </th>
             
         </tr>
         @endif
