@@ -316,3 +316,8 @@
         </div>
     </div>
 </div>
+<script>
+    @if(session('newTab'))
+        window.open('{{ route("payroll.part_time_report", ["id" => $this->employee, "from" => $this->from, "to" => $this->to]) }}', '_blank');
+    @endif
+</script>
