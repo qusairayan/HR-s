@@ -136,7 +136,8 @@
             <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 22%">To</th>
             <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 14%">Debit</th>
             <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 14%">Credit</th>
-            <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 14%">balance
+            <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 14%">Balance
+                <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 14%">Details
             </th>
         </tr>
 
@@ -151,6 +152,8 @@
                 <td style="text-align: center;padding-top: 8px; width: 10%">{{ $pt->amount }}</td>
                 <td style="text-align: center;padding-top: 8px; width: 10%"></td>
                 <td style="text-align: center;padding-top: 8px; width: 10%">{{ $total }}</td>
+                <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;"></td>
+
             </tr>
             {{ $pt->id }}
         @endforeach
@@ -163,9 +166,11 @@
             <tr>
                 <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{ $check->Date }}</td>
                 <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{ $check->Payment_Method }}</td>
+                <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;"></td>
                 <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{ $check->Value }}</td>
                 <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{ $total }}
-                <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;"></td>
+                <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{ $check->check_details }}</td>
+
 
                 </td>
 
