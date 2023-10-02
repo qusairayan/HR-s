@@ -81,7 +81,7 @@
             <p style="font-size:15px;color: white;margin:0;padding:4;font-weight:bold">Employee :</p>
         </div>
         <div class="column" style="padding:0;margin-left:3px; width:33%">
-            <p style="font-size:12px;color: white;margin:0;padding:4;font-weight:bold">{{ $employee }}</p>
+            <p style="font-size:12px;color: white;margin:0;padding:4;font-weight:bold">{{ $employee }} - {{$employee_id}}</p>
         </div>
 
 
@@ -100,6 +100,18 @@
         <div class="column" style="padding:0;margin-left:3px; width:10%">
             <p style="font-size:12px;color: white;margin:0;padding:4;font-weight:bold">{{ $to }}</p>
         </div>
+    </div>
+
+    <div class="row" style="background: #03415F; ma">
+        <div class="column" style="padding:0; width:20%">
+            <p style="font-size:15px;color: white;margin:0;padding:4;font-weight:bold">Department :</p>
+        </div>
+        <div class="column" style="padding:0;margin-left:3px; width:33%">
+            <p style="font-size:12px;color: white;margin:0;padding:4;font-weight:bold">{{ $department }} - {{$position}}</p>
+        </div>
+
+
+
     </div>
 
 
