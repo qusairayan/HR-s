@@ -79,8 +79,10 @@
 
                     <th class="border-gray-200">Name</th>
                     <th class="border-gray-200">Department</th>
+                    <th class="border-gray-200">type</th>
                     <th class="border-gray-200">date</th>
                     <th class="border-gray-200">Amount <small>JD</small></th>
+                    <th class="border-gray-200">Details</th>
                     <th class="border-gray-200">Action</th>
                 </tr>
             </thead>
@@ -88,7 +90,7 @@
 
 
 
-                @foreach ($deductions as $deduction)
+                @foreach ($mergedPaginatedResults as $deduction)
                     <tr>
 
 
@@ -98,7 +100,7 @@
                             <a href="#" class="d-flex align-items-center">
                                 
                                 <div class="d-block">
-                                    <span class="fw-bold">{{ $deduction->user_name }}</span>
+                                    <span class="fw-bold">{{ $deduction->user_name ? $deduction->user_name : $deduction->name }}</span>
                                 </div>
                             </a>
                         </td>
@@ -114,9 +116,23 @@
                             </span>
                         </td>
 
+
                         <td class="border-0 fw-bold">
                             <span class="fw-normal">
-                                {{ $deduction->date }}
+                               @if ($deduction->type )
+                               {{ $deduction->type==1 ? 'lateness':'other' }}
+
+                               @else
+                               Traffic Violation
+                               @endif
+                            </span>
+                        </td>
+
+
+                        <td class="border-0 fw-bold">
+                            <span class="fw-normal">
+                                {{ $deduction->date }} 
+                                {{-- {{ $deduction->time ? ' - '.$deduction->time:'' }} --}}
                             </span>
                         </td>
 
@@ -128,9 +144,16 @@
                             </span>
                         </td>
 
+                        
+                        <td class="border-0 fw-bold">
+                            <span class="fw-normal">
+                                {{ $deduction->details ? $deduction->details : $deduction->violation_reason }}
+                            </span>
+                        </td>
+
                         <td class="border-0 fw-bold">
 
-                            @if($deduction->status == 0)
+                            @if($deduction->status == 0 && !$deduction->violation_number)
                             <div class="btn-group">
                                 <button class="btn btn-success" data-bs-toggle="modal"
                                     data-bs-target="#modal-notification"
@@ -148,60 +171,12 @@
                 @endforeach
 
 
-                @foreach ($violations as $vio)
-                    <tr>
-
-
-
-
-                        <td>
-                            <a href="#" class="d-flex align-items-center">
-                               
-                                <div class="d-block">
-                                    <span class="fw-bold">{{ $vio->employee_name }}</span>
-                                </div>
-                            </a>
-                        </td>
-
-
-
-
-
-
-                        <td class="border-0 fw-bold">
-                            <span class="fw-normal">
-                            </span>
-                        </td>
-
-                        <td class="border-0 fw-bold">
-                            <span class="fw-normal">
-                                {{ $vio->date }}
-                            </span>
-                        </td>
-
-             
-
-                        <td class="border-0 fw-bold">
-                            <span class="fw-normal">
-                                {{ $vio->violation_price }}
-                            </span>
-                        </td>
-
-                        <td class="border-0 fw-bold">
-
-                          
-                            <span class="badge text-white bg-success">Approved</span>
-
-                        </td>
-
-
-                    </tr>
-                @endforeach
+               
 
             </tbody>
         </table>
         <div>
-            {{-- {{ $deductions->links('vendor.pagination.custom') }} --}}
+            {{ $mergedPaginatedResults->links('vendor.pagination.custom') }}
         </div>
     </div>
 </div>

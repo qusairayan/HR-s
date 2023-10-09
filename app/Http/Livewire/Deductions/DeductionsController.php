@@ -7,8 +7,8 @@ namespace App\Http\Livewire\Deductions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
-use App\Models\Department;
 use App\Models\Deductions;
+use App\Models\TrafficViolations;
 use App\Models\Allownce;
 use App\Models\User;
 use Livewire\WithPagination;
@@ -46,22 +46,43 @@ class DeductionsController extends Component
 
     public function render()
     {
-        $violationQuery = DB::connection('LYONDB')
-        ->table('employee_traffic_violation')
-        ->join('attendence1.users as users', 'users.name', '=', 'employee_traffic_violation.employee_name')
-        ->select('users.phone','employee_traffic_violation.*', 'employee_traffic_violation.violation_date as date');
+        $violationQuery = TrafficViolations::leftJoin('users', 'users.name', '=', 'traffic_violations.name')
+        ->leftJoin('department', 'department.id', '=', 'users.department_id')
+        ->select('traffic_violations.*','department.name as department_name');
 
-        $violations = $violationQuery->get();
+        if($this->from){
+            $violationQuery = $violationQuery->where('traffic_violations.from','>=',$this->from);
+        }
+        if($this->to){
+            $violationQuery = $violationQuery->where('traffic_violations.to','<=',$this->to);
+        }
+
+        $violations = $violationQuery->paginate(10);
 
 
 
-        $deductions = Deductions::leftJoin('users', 'deductions.user_id', '=', 'users.id')
+        $deductionsQuery = Deductions::leftJoin('users', 'deductions.user_id', '=', 'users.id')
             ->leftJoin('department', 'department.id', '=', 'users.department_id')
             ->select('deductions.*', 'users.name as user_name', 'users.image as user_image', 'department.name as department_name',)
-            ->where('users.name', 'LIKE', '%' . $this->search . '%')
-            ->get();
+            ->where('users.name', 'LIKE', '%' . $this->search . '%');
+            
+        
+            if($this->from){
+                $violationQuery = $violationQuery->where('deductions.from','>=',$this->from);
+            }
+            if($this->to){
+                $violationQuery = $violationQuery->where('deductions.to','<=',$this->to);
+            }
+    
+            $deductions = $deductionsQuery->paginate(10);
+    
+            $mergedResults = $violations->concat($deductions);
 
-
-        return view('livewire.deductions.deductions', compact('deductions','violations'));
+            $mergedPaginatedResults = new \Illuminate\Pagination\LengthAwarePaginator(
+                $mergedResults,
+                $mergedResults->count(),
+                10
+            );
+        return view('livewire.deductions.deductions', compact('mergedPaginatedResults'));
     }
 }
