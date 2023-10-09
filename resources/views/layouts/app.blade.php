@@ -8,6 +8,7 @@
                 'departments',
                 'employees',
                 'employees.edit',
+                'employees.view',
                 'employees.addNew',
                 'employees.lateness',
                 'employees.overtime',

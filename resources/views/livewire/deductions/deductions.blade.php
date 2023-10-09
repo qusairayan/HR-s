@@ -96,8 +96,7 @@
 
                         <td>
                             <a href="#" class="d-flex align-items-center">
-                                <img src="/storage/profile/{{ $deduction->user_image }}" class="avatar rounded-circle me-3"
-                                    alt="Avatar">
+                                
                                 <div class="d-block">
                                     <span class="fw-bold">{{ $deduction->user_name }}</span>
                                 </div>
@@ -139,8 +138,59 @@
                             </div>
 
                             @else
-                            <span class="badge text-white bg-success">Approve</span>
+                            <span class="badge text-white bg-success">Approved</span>
                         @endif
+
+                        </td>
+
+
+                    </tr>
+                @endforeach
+
+
+                @foreach ($violations as $vio)
+                    <tr>
+
+
+
+
+                        <td>
+                            <a href="#" class="d-flex align-items-center">
+                               
+                                <div class="d-block">
+                                    <span class="fw-bold">{{ $vio->employee_name }}</span>
+                                </div>
+                            </a>
+                        </td>
+
+
+
+
+
+
+                        <td class="border-0 fw-bold">
+                            <span class="fw-normal">
+                            </span>
+                        </td>
+
+                        <td class="border-0 fw-bold">
+                            <span class="fw-normal">
+                                {{ $vio->date }}
+                            </span>
+                        </td>
+
+             
+
+                        <td class="border-0 fw-bold">
+                            <span class="fw-normal">
+                                {{ $vio->violation_price }}
+                            </span>
+                        </td>
+
+                        <td class="border-0 fw-bold">
+
+                          
+                            <span class="badge text-white bg-success">Approved</span>
 
                         </td>
 
@@ -151,7 +201,7 @@
             </tbody>
         </table>
         <div>
-            {{ $deductions->links('vendor.pagination.custom') }}
+            {{-- {{ $deductions->links('vendor.pagination.custom') }} --}}
         </div>
     </div>
 </div>

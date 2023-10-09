@@ -5,7 +5,7 @@
 
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
 
-            <h1>Edit Employee</h1>
+            <h1>View Employee</h1>
         </div>
         <div class="row">
             <div class="col-12 col-xl-8">
@@ -15,7 +15,7 @@
                         <div class="col-md-2 mb-3">
                             <div>
                                 <label for="id">ID</label>
-                                <input class="form-control" type="text" disabled value="{{ $user->id }}">
+                                <input disabled class="form-control" type="text" disabled value="{{ $user->id }}">
 
 
                             </div>
@@ -23,7 +23,7 @@
                         <div class="col-md-8 mb-3">
                             <div>
                                 <label for="name">Name</label>
-                                <input class="form-control" id="name" type="text"
+                                <input disabled class="form-control" id="name" type="text"
                                     placeholder="Enter Employee's Name" value="{{ $user->name }}" wire:model="name">
 
                             </div>
@@ -32,11 +32,9 @@
                         <div class="col-md-5 mb-3">
                             <div>
                                 <label for="username">Username</label>
-                                <input class="form-control" id="username" type="text" wire:model="username"
+                                <input disabled class="form-control" id="username" type="text" wire:model="username"
                                     value="{{ $user->username }}">
-                                @error('username')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
+                            
                             </div>
 
                         </div>
@@ -49,19 +47,9 @@
                             <div>
 
                                 <label for="comapny">Company</label>
-                                <select class="form-select mb-0" id="company_id" aria-label="company select example"
-                                    wire:model="company_id" autofocus required>
-                                    @foreach ($companies as $comp)
-                                        <option value="{{ $comp->id }}"
-                                            {{ $comp->id == $user->company_id ? 'selected' : '' }}>
-                                            {{ $comp->name }} </option>
-                                    @endforeach
-
-
-                                </select>
-                                @error('company')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
+                     
+                                <input disabled class="form-control" id="username" type="text" wire:model="company_name"
+                                value="{{ $user->company_name }}">
 
                             </div>
                         </div>
@@ -70,17 +58,9 @@
                         <div class="col-md-6 mb-3">
                             <div>
                                 <label for="name">Department</label>
-                                <select class="form-select mb-0" id="department_id"
-                                    aria-label="department select example" wire:model="department_id">
-                                    @foreach ($departments as $dept)
-                                        <option {{ $user->dept == $dept->id ? 'selected' : '' }}
-                                            value="{{ $dept->id }}">
-                                            {{ $dept->name }} </option>
-                                    @endforeach
-                                </select>
-                                @error('department_id')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
+                       
+                                <input disabled class="form-control" id="username" type="text" wire:model="department_name"
+                                value="{{ $user->department_name }}">
 
                             </div>
                         </div>
@@ -91,24 +71,10 @@
 
 
 
-                                <select class="form-select mb-0" id="position" aria-label="position select example"
-                                    wire:model="position" autofocus required>
-                                    <option hidden selected>Select Employee's Postion</option>
 
-
-                                    <option value="employee" {{ $user->position == 'employee' ? 'selected' : '' }}>
-                                        Employee</option>
-                                    <option value="manager" {{ $user->position == 'manager' ? 'selected' : '' }}>
-                                        Manager</option>
-
-
-                                </select>
-
-
-                                @error('position')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-
+                                <input disabled class="form-control" id="position" type="text" wire:model="position"
+                                value="{{ $user->position }}">
+                        
                             </div>
                         </div>
 
@@ -119,22 +85,8 @@
                             <label for="position">Employee Type</label>
                             <div class="input-group">
 
-
-                                <select class="form-select mb-0" id="type" aria-label="type select example"
-                                    wire:model="type" autofocus required>
-                                    <option hidden selected>Select Employee's Type</option>
-
-                                    <option value="full-time" {{ $user->type == 'full-time' ? 'selected' : '' }}>
-                                        Full-time</option>
-                                    <option value="part-time" {{ $user->type == 'part-time' ? 'selected' : '' }}>
-                                        Part-time</option>
-
-                                </select>
-
-
-                                @error('type')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
+                                <input disabled class="form-control" id="type" type="text" wire:model="type"
+                                value="{{ $user->type }}">
 
                             </div>
                         </div>
@@ -145,22 +97,9 @@
                             <label for="position">Part Time Period</label>
                             <div class="input-group">
 
-
-                                <select class="form-select mb-0" id="part_time"
-                                    aria-label="part_time select example" wire:model="part_time"  >
-                                    <option value=""  selected >Select Employee's part time period</option>
-
-                                    <option value="daily" {{ $user->part_time == 'daily' ? 'selected' : '' }} >Daily</option>
-                                    <option value="weekly" {{ $user->part_time == 'weekly' ? 'selected' : '' }}>Weekly</option>
-                                    <option value="monthly" {{ $user->part_time == 'monthly' ? 'selected' : '' }}>Monthly</option>
-
-                                </select>
-
-
-                                @error('part_time')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-
+                                <input disabled class="form-control" id="part_time" type="text" wire:model="part_time"
+                                value="{{ $user->part_time }}">
+                             
                             </div>
                         </div>
                     @endif
@@ -168,30 +107,7 @@
 
 
 
-                        <div class="col-md-6 mb-3">
-                            <label for="role">Role</label>
-                            <div class="input-group">
-
-
-                                <select class="form-select mb-0" id="role" aria-label="role select example"
-                                    wire:model="role" autofocus required>
-
-                                    @foreach ($roles as $role)
-                                        <option value="{{ $role->name }}"
-                                            {{ $this->user->hasRole($role->name) ? ' selected' : '' }}>
-                                            {{ $role->name }} </option>
-                                    @endforeach
-
-                                </select>
-
-
-                                @error('role')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-
-                            </div>
-                        </div>
-
+                       
 
 
 
@@ -199,7 +115,7 @@
                             <label for="start_date">Start Date</label>
                             <div class="input-group">
 
-                                <input class="form-control datepicker-input" type="date" id="start_date"
+                                <input disabled class="form-control datepicker-input" type="date" id="start_date"
                                     placeholder="Enter Employee's start_date" wire:model="start_date" autofocus
                                     required>
                                 @error('start_date')
@@ -221,7 +137,7 @@
                             <label for="birthday">Birthday</label>
                             <div class="input-group">
 
-                                <input class="form-control datepicker-input" type="date" id="birthday"
+                                <input disabled class="form-control datepicker-input" type="date" id="birthday"
                                     value="{{ $user->birthday }}" wire:model="birthday">
                                 @error('birthday')
                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -231,15 +147,9 @@
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="gender">Gender</label>
-                            <select class="form-select mb-0" id="gender" aria-label="Gender select example"
-                                wire:model="gender">
-                                <option value="Male" {{ $user->gender == 'male' ? 'selected' : '' }}>Male</option>
-                                <option value="Female" {{ $user->gender == 'female' ? 'selected' : '' }}>Female
-                                </option>
-                            </select>
-                            @error('gender')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
+                        
+                            <input disabled class="form-control" id="gender" type="text" wire:model="gender"
+                            value="{{ $user->gender }}">
 
                         </div>
 
@@ -248,7 +158,7 @@
                             <label for="ID_no" autofocus required>ID Number</label>
                             <div class="input-group">
 
-                                <input class="form-control datepicker-input" value="{{ $user->ID_no }}"
+                                <input disabled class="form-control datepicker-input" value="{{ $user->ID_no }}"
                                     type="text" id="ID_no" placeholder="Enter Employee's National ID"
                                     wire:model="ID_no">
                                 @error('ID_no')
@@ -269,7 +179,7 @@
                             <label for="salary">Salary</label>
                             <div class="input-group">
 
-                                <input class="form-control datepicker-input" type="text" id="salary"
+                                <input disabled class="form-control datepicker-input" type="text" id="salary"
                                     placeholder="Enter Employee's salary" wire:model="salary" autofocus required>
                                 @error('salary')
                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -282,15 +192,10 @@
                             <label for="bank">Bank</label>
                             <div class="input-group">
 
-                                <select class="form-select mb-0" id="bank" aaria-label="bank select example"
-                                wire:model="bank" autofocus required>
-                                <option value="" disabled selected hidden>Select Bank</option>
+               
+                            <input disabled class="form-control" id="bank" type="text" wire:model="bank"
+                            value="{{ $user->bank }}">
 
-                                @foreach($banks as $bank )
-                                <option value="{{$bank->id}}" {{$this->bank == $bank->id ? 'checked':''}}>{{$bank->name}}</option>
-                            
-                                @endforeach
-                            </select>
                                 @error('bank')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -302,7 +207,7 @@
                             <label for="IBAN">IBAN</label>
                             <div class="input-group">
 
-                                <input class="form-control datepicker-input" type="text" id="IBAN"
+                                <input disabled class="form-control datepicker-input" type="text" id="IBAN"
                                     placeholder="Enter Employee's IBAN" wire:model="IBAN" autofocus required>
                                 @error('IBAN')
                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -323,7 +228,7 @@
                         <div class="col-md-6 mb-3">
                             <div class="form-group">
                                 <label for="email">Email</label>
-                                <input class="form-control" type="email" wire:model="email"
+                                <input disabled class="form-control" type="email" wire:model="email"
                                     value="{{ $user->email }}">
                                 @error('email')
                                     <div class="invalid-feedback"> {{ $message }} </div>
@@ -334,7 +239,7 @@
                         <div class="col-md-6 mb-3">
                             <div class="form-group">
                                 <label for="phone">Phone</label>
-                                <input class="form-control" id="phone" type="number"
+                                <input disabled class="form-control" id="phone" type="number"
                                     placeholder="+962790000000" value="{{ $user->phone }}" wire:model="phone">
                                 @error('phone')
                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -348,7 +253,7 @@
                         <div class="col-sm-9 mb-3">
                             <div class="form-group">
                                 <label for="address">Address</label>
-                                <input class="form-control" id="address" type="text"
+                                <input disabled class="form-control" id="address" type="text"
                                     placeholder="Enter Employee's home address" wire:model="address">
                                 @error('address')
                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -379,7 +284,7 @@
 
                                     <div>
                                         <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" id="status" wire:model="status"
+                                            <input disabled class="form-check-input" type="checkbox" id="status" wire:model="status"
                                                 {{ $user->status == 1 ? 'checked' : '' }}>
                                             <label class="form-check-label" for="user-notification-1"></label>
                                         </div>
@@ -393,7 +298,7 @@
                             @if($this->status != 1)
                                     <div class="form-group">
                                         <label for="unemployment">End date</label>
-                                        <input class="form-control" id="unemployment" type="date"
+                                        <input disabled class="form-control" id="unemployment" type="date"
                                             placeholder="Enter Employee's home unemployment Date" wire:model="unemployment">
                                         @error('unemployment')
                                             <div class="invalid-feedback">{{ $message }}</div>
@@ -405,9 +310,7 @@
                         </div>
                     </div>
                     
-                    <div class="mt-3">
-                        <button type="submit" class="btn btn-gray-800 mt-2 animate-up-2">Save All</button>
-                    </div>
+                  
 
                 </div>
 
@@ -422,10 +325,7 @@
 
                             <div class="card-body pb-5">
 
-                                @if ($newImage)
-                                    <img src="{{ $newImage }}" class="avatar-xl rounded-circle mx-auto mb-4"
-                                        alt="{{ $user->name }} Profile Pic">
-                                @elseif($user->image)
+                              @if($user->image)
                                     <img src="/storage/profile/{{ $user->image }}"
                                         class="avatar-xl rounded-circle mx-auto mb-4"
                                         alt="{{ $user->name }} Profile Pic">
@@ -435,14 +335,7 @@
                                 <h4 class="h3">{{ $user->name }}</h4>
                                 <h5 class="fw-normal">{{ $user->position }}</h5>
                                 <p class="text-gray mb-4">Start Date: {{ $user->start_date }}</p>
-                                <div class="col-sm-10 mb-3 ">
-                                    <label for="formFile" class="form-label">upload Employee's image</label>
-                                    <input class="form-control" type="file" id="image" wire:model="image">
-                                    @error('image')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-
-                                </div>
+                                
 
                             </div>
                         </div>
@@ -471,7 +364,7 @@
                                 <div class="col-sm-12 mb-3">
                                     <div class="form-group">
                                         <label for="signedDate">Sgined date</label>
-                                        <input class="form-control" id="signedDate" type="date"
+                                        <input disabled class="form-control" id="signedDate" type="date"
                                             placeholder="Enter Employee's home signedDate" wire:model="signedDate">
                                         @error('signedDate')
                                             <div class="invalid-feedback">{{ $message }}</div>
@@ -479,15 +372,7 @@
 
                                     </div>
                                 </div>
-                                <div class="col-sm-12 mb-3 ">
-                                    <label for="formFile" class="form-label">upload new Contract's copy</label>
-                                    <input class="form-control" type="file" id="newContract"
-                                        wire:model="newContract">
-                                    @error('newContract')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-
-                                </div>
+                                
 
                             </div>
                         </div>
@@ -499,9 +384,7 @@
                             <div class="card-body pb-5">
                                 <h4 class="h3">Employee's ID card image</h4>
 
-                                @if ($newID_image)
-                                    <img src="{{ $newID_image }}" class="avatar-xxl  mx-auto mb-4" alt="ID Image">
-                                @elseif($user->ID_image)
+                                @if($user->ID_image)
                                     <img src="/storage/profile/{{ $user->ID_image }}" class="avatar-xxl mx-auto mb-4"
                                         alt="ID Image">
                                         <a href="/storage/profile/{{ $user->ID_image }}" target="_blangk"
@@ -512,14 +395,7 @@
 
 
                             </div>
-                            <div class="col-sm-10 mb-3 mt-4">
-                                <label for="formFile" class="form-label">upload new Employee's ID card image</label>
-                                <input class="form-control" type="file" id="ID_image" wire:model="ID_image">
-                                @error('ID_image')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-
-                            </div>
+                            
 
                             <!-- End of Form -->
                         </div>
@@ -533,10 +409,7 @@
 
                             <div class="card-body pb-5">
 
-                                @if ($newLicense_image)
-                                    <img src="{{ $newLicense_image }}" class="avatar-xxl  mx-auto "
-                                        alt="ID Image">
-                                @elseif($user->license_image)
+                                @if($user->license_image)
                                     <img src="/storage/profile/{{ $user->license_image }}"
                                         class="avatar-xxl mx-auto mb-4" alt="License Image">
                                         <a href="/storage/profile/{{ $user->license_image }}" target="_blangk"
@@ -546,15 +419,7 @@
                                 <h4 class="h3">Employee's License image</h4>
 
                             </div>
-                            <div class="col-sm-10 mb-3 mt-4">
-                                <label for="formFile" class="form-label">upload Employee's License image</label>
-                                <input class="form-control" type="file" id="license_image"
-                                    wire:model="license_image">
-                                @error('ID_image')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-
-                            </div>
+                           
                             <!-- End of Form -->
                         </div>
                     </div>

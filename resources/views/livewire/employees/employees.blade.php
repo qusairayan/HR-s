@@ -151,6 +151,9 @@
                                 <a class="dropdown-item"
                                 href="{{ route('employees.edit', ['user' => $user->id]) }}"><span
                                     class="fas fa-edit me-2"></span>Edit</a>
+                            <a class="dropdown-item"
+                                href="{{ route('employees.view', ['user' => $user->id]) }}"><span
+                                class="fas fa-eye me-2"></span>View</a>
                                
                             </div>
                         </td>

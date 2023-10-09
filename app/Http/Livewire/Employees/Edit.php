@@ -250,11 +250,10 @@ class Edit extends Component
     {
 
 
-        if ($this->license_image) {
 
             $validExtensions = ['jpg', 'jpeg', 'png'];
             $extension = strtolower($this->license_image->getClientOriginalExtension());
-
+           
             if (!in_array($extension, $validExtensions)) {
                 $this->reset('license_image');
                 $this->addError('license_image', 'Invalid image format. Only JPG, JPEG, and PNG images are allowed.');
@@ -276,7 +275,7 @@ class Edit extends Component
             $this->user->save();
 
             $this->newLicense_image = asset('storage/profile/' . $this->user->license_image);
-        }
+        
     }
 
 
