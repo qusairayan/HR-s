@@ -44,6 +44,7 @@
                 'payroll.part_time',
                 'payroll.add_part_time',
                 'payroll.edit_part_time',
+                'payroll.view_part_time',
             ]))
         {{-- Nav --}}
         @include('layouts.nav')
