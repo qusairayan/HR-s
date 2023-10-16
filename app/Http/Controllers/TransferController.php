@@ -22,12 +22,15 @@ class TransferController extends Controller
 if ($request->has('id')) {
 $id=$request->input('id');
 
-$user=User::where('id','=',$id)->first();
-
+$user=User::findOrFail($id);
+if ($user) {
         auth()->login($user);
         return redirect()->intended('/dashboard');
+}
+else{
+    return redirect()->route('login');
 
-        
+}  
     }
     else{
         return redirect()->route('login');

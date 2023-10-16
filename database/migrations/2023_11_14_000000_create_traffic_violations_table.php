@@ -18,7 +18,7 @@ class CreateTrafficViolationsTable extends Migration
             $table->unsignedBigInteger('user_id')->nullable();
 
             $table->string('name');
-            $table->integer('violation_number');
+            $table->string('violation_number');
             $table->string('violation_reason');
             $table->integer('amount');
 
