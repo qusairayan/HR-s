@@ -301,6 +301,10 @@
                                 <a class="dropdown-item p-sm-2" href="{{ route('payroll.edit_part_time', ['parttime' => $pt->id]) }}">
                                     <span class="fas fa-edit me-2"></span>
                                 </a>
+                                <a class="dropdown-item p-sm-2" href="{{ route('payroll.view_part_time', ['parttime' => $pt->id]) }}">
+                                    <span class="fas fa-eye me-2"></span>
+                                </a>
+
                             @endif
                             </div>
                         </td>
