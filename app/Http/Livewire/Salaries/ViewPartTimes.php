@@ -21,7 +21,7 @@ use Carbon\Carbon;
 use Livewire\Component;
 
 
-class EditPartTimes extends Component
+class ViewPartTimes extends Component
 {
 
     public $showSavedAlert = false;
