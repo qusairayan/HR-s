@@ -297,6 +297,9 @@
 
                         <td class="border-0 fw-bold">
                             <div style="display: flex">
+                                <a class="dropdown-item p-sm-2" href="{{ route('payroll.view_part_time', ['parttime' => $pt->id]) }}">
+                                    <span class="fas fa-eye me-2"></span>
+                                </a>
                         @if($pt->status == 0)
                                 <a class="dropdown-item p-sm-2" href="{{ route('payroll.edit_part_time', ['parttime' => $pt->id]) }}">
                                     <span class="fas fa-edit me-2"></span>
@@ -304,9 +307,7 @@
                                 
 
                             @endif
-                            <a class="dropdown-item p-sm-2" href="{{ route('payroll.view_part_time', ['parttime' => $pt->id]) }}">
-                                <span class="fas fa-eye me-2"></span>
-                            </a>
+                          
                             </div>
                         </td>
 
