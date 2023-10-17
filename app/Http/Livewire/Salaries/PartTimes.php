@@ -124,7 +124,7 @@ public function report(){
 
 
 
-        $partime = $partimeQuery->paginate( $this->paginator );
+        $partime = $partimeQuery->orderBy('status','desc')->paginate( $this->paginator );
         
 
         return view('livewire.salaries.partTime', compact('companies', 'departments','employees','partime'));
