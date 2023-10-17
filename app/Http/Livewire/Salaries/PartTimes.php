@@ -119,12 +119,12 @@ public function report(){
             $partimeQuery->where('users.name', 'LIKE', '%'.$this->search.'%');
         }
 
-        $partimeQuery->orderBy('users.name', 'asc');
+        $partimeQuery->orderBy('part_times.status', 'asc');
 
 
 
 
-        $partime = $partimeQuery->orderBy('status','desc')->paginate( $this->paginator );
+        $partime = $partimeQuery->paginate( $this->paginator );
         
 
         return view('livewire.salaries.partTime', compact('companies', 'departments','employees','partime'));
