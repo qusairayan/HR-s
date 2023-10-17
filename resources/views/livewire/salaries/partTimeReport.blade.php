@@ -142,10 +142,12 @@
         </tr>
 
         @php($total = 0)
+        @php($totalDebit =0)
+        @php($totalCredit =0)
 
         @foreach ($partTime as $pt)
             @php($total += $pt->amount)
-
+            @php($totalDebit +=$pt->amount)
             <tr>
                 <td style="text-align: center;padding-top: 8px; width: 10%">{{ $pt->from }}</td>
                 <td style="text-align: center;padding-top: 8px; width: 10%">{{ $pt->to }}</td>
@@ -162,6 +164,7 @@
         </tr>
         @foreach ($checks as $check)
             @php($total -= $check->Value)
+            @php($totalCredit +=$check->Value)
 
             <tr>
                 <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{ $check->Date }}</td>
@@ -180,10 +183,16 @@
         @if (count($checks) > 0 || count($partTime) > 0)
             <tr>
                 <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 22%"
-                    colspan="4">Totla:</th>
-                <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 14%">
-                    {{ $total }}
-                </th>
+                    colspan="2">Totla:</th>
+                    <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 14%">
+                        {{ $total }}
+                    </th>
+                    <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 14%">
+                        {{ $totalDebit }}
+                    </th>
+                    <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 14%">
+                        {{ $totalCredit }}
+                    </th>
             </tr>
         @else
             <tr>
