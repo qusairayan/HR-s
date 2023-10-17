@@ -101,10 +101,7 @@
 
 
 
-                    <div class="mt-3">
-                        <button type="submit" class="btn btn-gray-800 mt-2 animate-up-2"
-                            wire:loading.attr="disabled">Save </button>
-                    </div>
+                  
 
                 </div>
 
