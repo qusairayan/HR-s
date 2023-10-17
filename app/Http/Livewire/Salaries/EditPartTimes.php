@@ -114,8 +114,7 @@ class EditPartTimes extends Component
                 $this->date_incorrect = false;
             }
             $daysDifference = $from->diffInDays($to);
-            
-            dd($daysDifference + 1);
+
 
 
             if ($this->period == 'daily') {
