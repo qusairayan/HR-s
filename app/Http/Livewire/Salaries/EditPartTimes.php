@@ -117,6 +117,7 @@ class EditPartTimes extends Component
 
 
             if ($this->period == 'daily') {
+                dd($daysDifference + 1);
                 $this->total =  round($this->salary * ($daysDifference + 1), 1)  ;
             } else if ($this->period == 'weekly') {
                 $this->total =  round($this->salary / 7 * $daysDifference, 1);
