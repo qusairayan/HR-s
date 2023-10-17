@@ -183,7 +183,7 @@
         @if (count($checks) > 0 || count($partTime) > 0)
             <tr>
                 <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 22%"
-                    colspan="2">total:</th>
+                    colspan="2">Total:</th>
                     
                     <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 14%">
                         {{ $totalDebit }}
@@ -193,6 +193,8 @@
                     </th>
                     <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 14%">
                         {{ $total }}
+                    </th>
+                    <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 14%">
                     </th>
                     
             </tr>
