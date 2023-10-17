@@ -107,7 +107,7 @@ class Edit extends Component
         $this->address = $user->address;
         $this->ID_no = $user->ID_no;
         $this->status = $user->status;
-        $this->unemployment = $user->unemployment;
+        $this->unemployment = $user->unemployment_date;
         $this->image = $user->image;
         $this->ID_image = $user->ID_image;
         $this->license_image = $user->license_image;
@@ -343,6 +343,7 @@ class Edit extends Component
             'address' => $this->address,
             'ID_no' => $this->ID_no,
             'status' => $this->status,
+            'unemployment_date' => $this->unemployment,
         ]);
 
 
