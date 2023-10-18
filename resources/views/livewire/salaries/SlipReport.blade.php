@@ -1,6 +1,9 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <head>
 
     <head>
@@ -55,7 +58,7 @@
 
     </head>
 
-<body>
+<body id="element-to-print">
 
 
     <div style="padding:5mm; margin: bottom 25px;">
@@ -74,7 +77,7 @@
 
     <div style="color: white;background-color: #03415F;" class="row">
         <div class="column" style="padding:4px;width: 100%">
-            <p style="text-align: center; font-size:18px;color: #fff;margin:0;padding:5;"><b>Part Times Report</b>
+            <p style="text-align: center; font-size:18px;color: #fff;margin:0;padding:5;"><b>Slip Report</b>
             </p>
         </div>
     </div>
@@ -95,19 +98,14 @@
 
 
         <div class="column" style="padding:0; width:10%">
-            <p style="font-size:15px;color: white;margin:0;padding:4;font-weight:bold">From :</p>
+            <p style="font-size:15px;color: white;margin:0;padding:4;font-weight:bold">date :</p>
         </div>
 
         <div class="column" style="padding:0;margin-left:3px; width:14%">
-            <p style="font-size:12px;color: white;margin:0;padding:4;font-weight:bold">{{ $from }}</p>
+            <p style="font-size:12px;color: white;margin:0;padding:4;font-weight:bold">{{ $date }}</p>
         </div>
 
-        <div class="column" style="padding:0; width:10%">
-            <p style="font-size:15px;color: white;margin:0;padding:4;font-weight:bold">To :</p>
-        </div>
-        <div class="column" style="padding:0;margin-left:3px; width:10%">
-            <p style="font-size:12px;color: white;margin:0;padding:4;font-weight:bold">{{ $to }}</p>
-        </div>
+        
     </div>
 
     <div class="row" style="background: #03415F; ma">
@@ -122,91 +120,137 @@
 
 
     </div>
-
-
-
-
-
-
     <br>
-    <table id="account">
-        <tr>
-            <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px; width: 11%">From
-            </th>
-            <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 22%">To</th>
-            <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 14%">Debit</th>
-            <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 14%">Credit</th>
-            <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 14%">Balance
-                <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 14%">Details
-            </th>
-        </tr>
 
-        @php($total = 0)
-        @php($totalDebit =0)
-        @php($totalCredit =0)
 
-        @foreach ($partTime as $pt)
-            @php($total += $pt->amount)
-            @php($totalDebit +=$pt->amount)
+    <div class="tables row">
+        <div class="p-3 allownce-table col-md-6 col-12">
+            <h2 class="text-center">العلاوات</h2>
+            <table class="allownce">
+                <tr>
+                    <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px; width: 11%">نوع العلاوة</th>
+                    <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 22%">المبلغ</th>
+                    <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 14%">التاريخ</th>
+                </tr>
+                @php($totalAllownce=0)
+                @foreach ($allownce as $item)
+                @php($totalAllownce+=$item->amount)
+                    <tr>
+                        <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">
+                            @if($item->type ===1) {{'lateness'}}
+                                        @elseif($item->type ===2){{"Social Security"}}
+                                        @elseif($item->type ===3){{"Tax"}}
+                                        @elseif($item->type ===4){{"Loans"}}
+                                        @else {{'other'}}
+                                    @endif
+                                </td>
+                        <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$item->amount}}</td>
+                        <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$item->date}}</td>
+                    </tr>
+                @endforeach
+                <tfoot>
+                    <tr>
+                        <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px; width: 11%"></th>
+                        <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px; width: 11%">{{$totalAllownce}}</th>
+                        <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px; width: 11%">المجموع</th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        <div class="p-3 deduction-table col-md-6 col-12">
+            <h2 class="text-center">الخصومات</h2>
+            <table class="deduction">        
             <tr>
-                <td style="text-align: center;padding-top: 8px; width: 10%">{{ $pt->from }}</td>
-                <td style="text-align: center;padding-top: 8px; width: 10%">{{ $pt->to }}</td>
-                <td style="text-align: center;padding-top: 8px; width: 10%">{{ $pt->amount }}</td>
-                <td style="text-align: center;padding-top: 8px; width: 10%"></td>
-                <td style="text-align: center;padding-top: 8px; width: 10%">{{ $total }}</td>
-                <td style="text-align: center;padding-top: 8px; width: 10%; "></td>
-
+                <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px; width: 11%">نوع الخصم</th>
+                <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 22%">المبلغ</th>
+                <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 14%">التاريخ</th>
             </tr>
-            {{ $pt->id }}
-        @endforeach
-        <tr>
-            <td style="text-align: center;padding-top: 8px; width: 10%" colspan="5"></td>
-        </tr>
-        @foreach ($checks as $check)
-            @php($total -= $check->Value)
-            @php($totalCredit +=$check->Value)
-
+            @php($totalDeduction=0)
+            @foreach ($deduction as $item)
+            @php($totalDeduction+=$item->amount)
+                <tr>
+                    <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">
+                        @if($item->type ===1) {{'lateness'}}
+                        @elseif($item->type ===2){{"Social Security"}}
+                        @elseif($item->type ===3){{"Tax"}}
+                        @elseif($item->type ===4){{"Loans"}}
+                        @else {{'other'}}
+                        @endif
+                    </td>
+                    <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$item->amount}}</td>
+                    <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$item->date}}</td>
+                </tr>
+            @endforeach
+            <tfoot>
+                <tr>
+                    <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px; width: 11%"></th>
+                    <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px; width: 11%">{{$totalDeduction}}</th>
+                    <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px; width: 11%">المجموع</th>
+                </tr>
+            </tfoot>
+            </table>
+        </div>
+        <div class="p-3 d-flex align-item-center justify-content-center total col-md-6 col-12 text-center">
+                <h2 class="    align-self-center">المجموع = <span class="border p-1">{{$totalAllownce - $totalDeduction}}</span></h2>
+        </div>
+        <div class="p-3 checks-table col-md-6 col-12">
+            <h2 class="text-center">الرواتب</h2>
+            <table class="checks">        
             <tr>
-                <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{ $check->Date }}</td>
-                <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{ $check->Payment_Method }}</td>
-                <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;"></td>
-                <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{ $check->Value }}</td>
-                <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{ $total }}
-                <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{ $check->check_details }}</td>
-
-
-                </td>
-
+                <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px; width: 11%"> التفاصيل</th>
+                <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 22%">المبلغ</th>
+                <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 14%">التاريخ</th>
             </tr>
-            {{ $check->id }}
-        @endforeach
-        @if (count($checks) > 0 || count($partTime) > 0)
-            <tr>
-                <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 22%"
-                    colspan="2">Total:</th>
-                    
-                    <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 14%">
-                        {{ $totalDebit }}
-                    </th>
-                    <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 14%">
-                        {{ $totalCredit }}
-                    </th>
-                    <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 14%">
-                        {{ $total }}
-                    </th>
-                    <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 14%">
-                    </th>
-                    
-            </tr>
-        @else
-            <tr>
-                <th style="text-align: center; color: #03415F; font-size: 17px; width: 11% "colspan="5"> No Records
-                </th>
- 
-            </tr>
-        @endif
-
-    </table>
+            @php($totalChecks=0)
+            @foreach ($checks as $item)
+            @php($totalChecks+=$item->amount)
+                <tr>
+                    <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$item->check_details}}</td>
+                    <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$item->value}}</td>
+                    <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$item->date}}</td>
+                </tr>
+            @endforeach
+            <tfoot>
+                <tr>
+                    <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px; width: 11%"></th>
+                    <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px; width: 11%">{{$totalChecks}}</th>
+                    <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px; width: 11%">المجموع</th>
+                </tr>
+            </tfoot>
+            </table>
+        </div>
+</div>
 </body>
 
 </html>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    window.onload = function() {
+        var element = document.getElementById('element-to-print');
+        html2pdf()
+            .from(element)
+            .set({
+                margin: 10,
+                filename: 'your-document.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            })
+            .outputPdf(function(pdf) {
+                var blob = pdf.output('blob');
+                var url = URL.createObjectURL(blob);
+                var iframe = document.createElement('iframe');
+                iframe.src = url;
+                iframe.style.width = '100%';
+                iframe.style.height = '600px';
+                document.body.appendChild(iframe);
+            });
+    }
+</script>
+
+
+
+
+
+
+

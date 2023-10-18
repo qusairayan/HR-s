@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire\Salaries;
 
+use App\Models\Allownce;
+use App\Models\Deductions;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Livewire\Component;
@@ -11,9 +13,8 @@ use Mpdf\Mpdf;
 
 class SlipReportpdf extends Component
 {
-    public function generatePDF($id, $date, )
+    public function generatePDF($id, $date)
     {
-
         $user=User::where('id','=',$id)->first();
         $employee=$user->name;
         $position=$user->position;
@@ -21,7 +22,8 @@ class SlipReportpdf extends Component
         $company=$user->company->name;
         $department=$user->department->name;
 
-        $partTimeQuery = PartTime::where('user_id', '=', $id);
+       $deduction = Deductions::where('user_id','=',$id)->where("date", 'LIKE', $date . '-%')->get();
+       $allownce  = Allownce::where('user_id','=',$id)->where("date", 'LIKE', $date . '-%')->get();
 
         $checkComp='';
         $image='';
@@ -39,14 +41,7 @@ class SlipReportpdf extends Component
             $image='marvellLogo.png';
         }
 
-        $checks = DB::connection('LYONDB')->table($checkComp)->where('Name_To','LIKE',$employee)->whereBetween('Date',[$from,$to])->get();
-
-        if ($date) {
-            $partTimeQuery = $partTimeQuery->where('from', '>=', $date);
-        }
-        
-
-        $partTime = $partTimeQuery->get();
+        $checks = DB::connection('LYONDB')->table($checkComp)->where('Name_To','LIKE',$employee)->where("date", 'LIKE', $date . '-%')->get();
 
         $mpdf = new Mpdf([
             'mode' => 'utf-8',
@@ -56,9 +51,8 @@ class SlipReportpdf extends Component
             'margin_top' => 10, 
             'margin_bottom' => 10, 
         ]);
-        $mpdf->WriteHTML(view('livewire.salaries.SlipReport', ['partTime' => $partTime,'checks' => $checks,'employee' => $employee,'employee_id' => $employee_id,'company' => $company,'image' => $image,'department' => $department,'position' => $position,'from'=>$from,'to'=>$to]));
-
-        $mpdf->Output('document.pdf', 'I');
+      
+    return view('livewire.salaries.SlipReport', ["allownce"=>$allownce, "deduction"=>$deduction,'checks' => $checks,'employee' => $employee,'employee_id' => $employee_id,'company' => $company,'image' => $image,'department' => $department,'position' => $position,'date'=>$date]);
     }
 
     public function render()

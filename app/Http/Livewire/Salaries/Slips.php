@@ -47,8 +47,7 @@ public function report(){
 
     $this->validate([
         'employee' => 'required',
-        'from' => 'required|date',
-        'to' => 'required|date',
+        'date' => 'required|date',
     ]);
 
     return redirect()->route('payroll.slip_report',['id' => $this->employee, 'date' => $this->date])
