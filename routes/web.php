@@ -36,12 +36,14 @@ use App\Http\Livewire\Deductions\DeductionsController;
 use App\Http\Livewire\Allownces\AllowncesController;
 
 use App\Http\Livewire\Salaries\Salaries;
+use App\Http\Livewire\Salaries\Slips;
 use App\Http\Livewire\Salaries\AddSalaries;
 use App\Http\Livewire\Salaries\AddPartTimes;
 use App\Http\Livewire\Salaries\EditPartTimes;
 use App\Http\Livewire\Salaries\ViewPartTimes;
 use App\Http\Livewire\Salaries\PartTimes;
 use App\Http\Livewire\Salaries\Ptreportpdf;
+use App\Http\Livewire\Salaries\SlipReportpdf;
 use App\Http\Livewire\Salaries\SocialSecurityController;
 
 
@@ -219,10 +221,12 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('payroll')->group(function () {
         Route::get('/salaries', Salaries::class)->name('payroll.salaries'); //->middleware('role:viewroles')
+        Route::get('/slips', Slips::class)->name('payroll.slips'); //->middleware('role:viewroles')
         Route::get('/parttime', PartTimes::class)->name('payroll.part_time'); //->middleware('role:viewroles')
         Route::get('/addParttime', AddPartTimes::class)->name('payroll.add_part_time'); //->middleware('role:viewroles')
         Route::get('/{parttime}/editParttime', EditPartTimes::class)->name('payroll.edit_part_time'); //->middleware('role:viewroles')
         Route::get('/{parttime}/viewParttime', ViewPartTimes::class)->name('payroll.view_part_time'); //->middleware('role:viewroles')
+        Route::get('/SlipReport/{id}/{date}', [SlipReportpdf::class,'generatePDF'])->name('payroll.slip_report'); //->middleware('role:viewroles')
         Route::get('/PartTimeReport/{id}/{from}/{to}', [Ptreportpdf::class,'generatePDF'])->name('payroll.part_time_report'); //->middleware('role:viewroles')
         Route::get('/addSalary', AddSalaries::class)->name('payroll.addSalary'); //->middleware('role:viewroles')
         Route::get('/socialsecurity', SocialSecurityController::class)->name('payroll.socialsecurity'); //->middleware('role:viewroles')

@@ -390,13 +390,20 @@
                 <div class="multi-level collapse {{ in_array(Request::segment(1), ['payroll', 'payroll.salaries', 'payroll.addSalaries']) ? 'show' : '' }}"
                     role="list" id="submenu-payroll" aria-expanded="false">
                     <ul class="flex-column nav">
-
+                        <li
+                        class="nav-item {{ in_array(request()->route()->getName(), ['payroll.slips']) ? 'active' : '' }}">
+                        <a href="/payroll/slips" class="nav-link">
+                            <span class="sidebar-text">Salary Slips</span>
+                        </a>
+                    </li>
                         <li
                             class="nav-item {{ in_array(request()->route()->getName(), ['payroll.add_part_time','payroll.edit_part_time','payroll.part_time']) ? 'active' : '' }}">
                             <a href="/payroll/parttime" class="nav-link">
                                 <span class="sidebar-text">Part times</span>
                             </a>
                         </li>
+
+                       
 
 
                         <li

@@ -41,6 +41,7 @@
                 'promotions',
                 'promotions.add',
                 'payroll.socialsecurity',
+                'payroll.slips',
                 'payroll.part_time',
                 'payroll.add_part_time',
                 'payroll.edit_part_time',
