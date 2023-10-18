@@ -19,78 +19,54 @@ class AttendanceController extends Controller
     public function attendence(Request $request)
     {
         date_default_timezone_set('Asia/Amman');
-
-
+        // validation
         $validator = Validator::make($request->all(), [
-            'id' => 'required',
-            'type' => 'required|in:0,1,2',
+            'id' => 'required|numeric',
+            'type' => 'required|in:0,1',
         ]);
-
-        $id = $request->input('id');
-        $type = $request->input('type');
-
-
         if ($validator->fails()) {
             return response()->json([
                 'success' => false,
                 'message' => 'Invalid Values.',
-
             ], 400);
         }
 
+        $id = $request->input('id');
+        $type = $request->input('type');
 
         try {
             $user = User::findOrFail($id);
-
-
-
             $currentDateTime = Carbon::now();
-
-
             $currentTime = $currentDateTime->format('H:i');
             $currentDate = $currentDateTime->format('Y-m-d');
 
-
-
             if ($type == 0) {
-
-
-                $isChecked = Attendence::where('user_id', '=', $id)->whereDate('date', '=', Carbon::now()->toDateString())->first();
-
+                // check if user made Attendance  
+                $isChecked = Attendence::where('user_id', $id)->whereDate('date', '=', Carbon::now()->toDateString())->first();
                 if ($isChecked) {
                     return response()->json([
                         'success' => false,
                         'message' => 'User has attendence for today',
-
                     ], 400);
                 }
-
-
-
+                // make new Attendance
                 $attendence = new Attendence();
                 $attendence->user_id = $id;
                 $attendence->type = $type;
                 $attendence->check_in  = $currentTime;
                 $attendence->date = $currentDate;
                 $success = $attendence->save();
-
-
-
+                // get Work schedule for the user
                 $scheduale = Schedules::select('*')
                     ->where('user_id', '=', $id)
                     ->where('date', '=', $currentDate)
                     ->first();
-
                 $latenessTxt = '';
-
+                // if user has work scheduale for current day 
                 if ($scheduale) {
                     $from = strtotime($scheduale->from);
-
                     $fromDateTime = \DateTime::createFromFormat('H:i', date('H:i', $from));
                     $currentTime = \DateTime::createFromFormat('H:i', $currentTime);
-
-
-
                     if ($fromDateTime < $currentTime) {
 
                         $diff = $fromDateTime->diff($currentTime);
@@ -110,8 +86,6 @@ class AttendanceController extends Controller
                         }
                     }
                 }
-
-
                 if ($success) {
                     return response()->json([
                         'success' => true,
@@ -133,10 +107,6 @@ class AttendanceController extends Controller
 
                     $attendence->check_out = $currentTime;
                     $success = $attendence->save();
-
-
-
-
                     $scheduale = Schedules::select('*')
                         ->where('user_id', '=', $id)
                         ->where('date', '=', $currentDate)
@@ -283,8 +253,7 @@ class AttendanceController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'User does not  exist .',
-
-            ], 400);
+            ], 404);
         }
     }
 }
