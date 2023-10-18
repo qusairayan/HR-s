@@ -40,6 +40,21 @@
 
                 </div>
             </div>
+
+            <div class="col-md-4 col-12 btn-toolbar mb-2 mb-md-0" >
+                <a data-bs-toggle="modal" data-bs-target="#modal-notification"
+                    class="btn btn-sm btn-gray-800 d-inline-flex align-items-center">
+                    <svg class="icon icon-xs me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 6v6m0 0v6m0-6h6m-6 0H6">
+                        </path>
+                    </svg>
+                    Add Allownces
+                </a>
+    
+            </div>
+
             <div class="col-4 col-md-2 col-xl-1 ps-md-0 text-end">
                 <div class="dropdown">
                     <button class="btn btn-link text-dark dropdown-toggle dropdown-toggle-split m-0 p-1"
@@ -79,6 +94,7 @@
 
                     <th class="border-gray-200">Name</th>
                     <th class="border-gray-200">Department</th>
+                    <th class="border-gray-200">type</th>
                     <th class="border-gray-200">date</th>
                     <th class="border-gray-200">Amount <small>JD</small></th>
                     <th class="border-gray-200">Action</th>
@@ -96,8 +112,8 @@
 
                         <td>
                             <a href="#" class="d-flex align-items-center">
-                                <img src="/storage/profile/{{ $allownce->user_image }}" class="avatar rounded-circle me-3"
-                                    alt="Avatar">
+                                {{-- <img src="/storage/profile/{{ $allownce->user_image }}" class="avatar rounded-circle me-3"
+                                    alt="Avatar"> --}}
                                 <div class="d-block">
                                     <span class="fw-bold">{{ $allownce->user_name }}</span>
                                 </div>
@@ -115,14 +131,29 @@
                             </span>
                         </td>
 
+
+
+             
+                        <td class="border-0 fw-bold">
+                            <span class="fw-normal">
+                               @if ($allownce->type )
+                                    @if($allownce->type ===1) {{'lateness'}}
+                                        @elseif($allownce->type ===2){{"Social Security"}}
+                                        @elseif($allownce->type ===3){{"Tax"}}
+                                        @elseif($allownce->type ===4){{"Loans"}}
+                                        @else {{'other'}}
+                                    @endif
+
+                               @else
+                               Traffic Violation
+                               @endif
+                            </span>
+                        </td>
                         <td class="border-0 fw-bold">
                             <span class="fw-normal">
                                 {{ $allownce->date }}
                             </span>
                         </td>
-
-             
-
                         <td class="border-0 fw-bold">
                             <span class="fw-normal">
                                 {{ $allownce->amount }}
@@ -154,4 +185,134 @@
             {{ $allownces->links('vendor.pagination.custom') }}
         </div>
     </div>
+
+
+    <div wire:ignore.self class="modal fade" id="modal-notification" tabindex="-1" role="dialog"
+    aria-labelledby="modal-notification" aria-hidden="true" wire:ignore>
+    <div class="modal-dialog modal-info modal-dialog-centered" role="document">
+        <div class="modal-content bg-gradient-secondary" style="background: #13223d">
+            <button type="button" class="btn-close theme-settings-close fs-6 ms-auto" data-bs-dismiss="modal"
+                aria-label="Close"></button>
+            <div class="modal-header">
+                <p class="modal-title text-gray-200" id="modal-title-notification">
+                    Add Allownces
+                </p>
+            </div>
+
+
+
+
+
+
+
+
+
+
+            <form wire:submit.prevent="addAllownces">
+
+                <div class="row p-md text-white">
+
+                </div>
+
+                <div class="modal-body text-white">
+                    <div class="py-1 text-start">
+
+                        <h4 class="h5 py-2">User Name:</h4>
+
+                        <div class="input-group mt-1">
+                            <select class="mt-2 mb-2 form-control" wire:model="userId">
+                                <option value=""  hidden selected>select Employee</option>
+
+                                @foreach($users as $user)
+                                <option value="{{$user->id}}">{{$user->name}}</option>
+                                @endforeach
+                            </select> 
+
+
+                            @error('userId')
+                                <div class="invalid-feedback py-2"> {{ $message }} </div>
+                            @enderror
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="py-1 text-start">
+
+                        <h4 class="h5 py-2">date:</h4>
+
+                        <div class="input-group mt-1">
+                            <input wire:model="date" type="date" class="form-control">
+                        </div>
+                        @error('date')
+                        <div class="invalid-feedback py-2"> {{ $message }} </div>
+                    @enderror
+                    </div>
+
+                    <div class="py-1 text-start">
+
+                        <h4 class="h5 py-2">amount:</h4>
+
+                        <div class="input-group mt-1">
+                            <input wire:model="amount" type="text" placeholder="amount" class="form-control">
+                        </div>
+                        @error('amount')
+                        <div class="invalid-feedback py-2"> {{ $message }} </div>
+                    @enderror
+                    </div>
+
+
+                    <div class="py-1 text-start">
+
+                        <h4 class="h5 py-2">type:</h4>
+
+                        <div class="input-group mt-1">
+                            <select class="w-75 mt-2 mb-2 form-control" wire:model="type">
+                                <option value="2">Social Security</option>
+                                <option value="3">Tax</option>
+                                <option value="4">Loans</option>
+                            </select>
+                        </div>
+                        @error('detail')
+                        <div class="invalid-feedback py-2"> {{ $message }} </div>
+                    @enderror
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-sm btn-success">Add Allownces</button>
+                </div>
+            </form>
+
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+<div wire:ignore.self class="modal fade" id="modal-edit" tabindex="-1" role="dialog"
+    aria-labelledby="modal-edit" aria-hidden="true" wire:ignore>
+    <div class="modal-dialog modal-info modal-dialog-centered" role="document">
+        <div class="modal-content bg-gradient-secondary" style="background: #13223d">
+            <button type="button" class="btn-close theme-settings-close fs-6 ms-auto" data-bs-dismiss="modal"
+                aria-label="Close"></button>
+            <div class="modal-header">
+                <p class="modal-title text-gray-200" id="modal-title-edit">
+                    Edit Allownces
+                </p>
+            </div>
+
+            
+        </div>
+    </div>
+</div>
 </div>

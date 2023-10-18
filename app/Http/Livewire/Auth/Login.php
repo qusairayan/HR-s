@@ -41,10 +41,8 @@ class Login extends Component
             return $this->addError('username', trans('auth.failed'));
         }
     }
-
     public function render()
     {
-
         return view('livewire.auth.login');
     }
 }

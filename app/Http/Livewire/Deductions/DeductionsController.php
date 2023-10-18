@@ -22,6 +22,10 @@ class DeductionsController extends Component
 {
     use WithPagination;
 
+    public $amount;
+    public $userId;
+    public $date ;
+    public $type ;
     public $paginator = 10;
     public $search = '';
     public $employee = '';
@@ -30,7 +34,12 @@ class DeductionsController extends Component
     public $department = '';
 
 
-
+    protected $rules = [
+        'amount' => 'required|numeric',
+        'userId' => 'required|numeric',
+        'date' => 'required|date',
+        'type' => 'required|numeric',
+    ];
 
 
 
@@ -46,6 +55,7 @@ class DeductionsController extends Component
 
     public function render()
     {
+        $users = User::all()->where('status', '=', 1);
         $violationQuery = TrafficViolations::leftJoin('users', 'users.name', '=', 'traffic_violations.name')
         ->leftJoin('department', 'department.id', '=', 'users.department_id')
         ->select('traffic_violations.*','department.name as department_name');
@@ -83,6 +93,16 @@ class DeductionsController extends Component
                 $mergedResults->count(),
                 10
             );
-        return view('livewire.deductions.deductions', compact('mergedPaginatedResults'));
+        return view('livewire.deductions.deductions', compact('mergedPaginatedResults','users'));
+    }
+    public function addDeduction(){
+        $err = $this->validate();
+        Deductions::create([
+            "user_id"=>$this->userId ,
+             "amount"=>$this->amount ,
+             "date"=>$this->date  ,
+             "type"=>$this->type  ,
+        ]);
+        return redirect("deductions");
     }
 }

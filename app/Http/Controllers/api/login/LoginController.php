@@ -12,76 +12,59 @@ use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Company;
 use App\Models\User;
+use Exception;
 use GrahamCampbell\ResultType\Success;
-
+use Illuminate\Auth\Events\Validated;
+use Illuminate\Validation\Rules\Password;
+use Illuminate\Validation;
 class LoginController extends Controller
 {
-
     public function login(Request $request)
     {
-
-
-
-
-        if ($request->has('password') && $request->has('username')) {
-            $username = $request->input('username');
-            $password = Hash::make($request->input('password'));
-            if (auth()->attempt(['username' => $username, 'password' => $password])) {
-
-                $user = User::where('username', $username)->where('password', $password)->first();
-
-
-                return response()->json([
-                    'message' => "The password or username doesn't match.",
-                    'status' => 201
-                ]);
-            } else {
-                $user = User::where(['username' => $username])->first();
-
-                $id = $user->id;
-                $name = $user->name;
-                $email = $user->email;
-                $department =  $user->department->name;
-                $position = $user->position;
-
-                $status = $user->status;
-                $company_id = $user->company_id;
-                $company = Company::where('id', $company_id)->first();
-
-                if ($company) {
-                    $company_name = $company->name;
-                    $company_lat = $company->latitude;
-                    $company_long = $company->longitude;
-                    $max_distance = $company->max_distance;
-                }
-
-                $img = '';
-                if ($user->image != '') {
-                    $img = 'https://'.request()->getHttpHost().'/storage/profile/'.$user->image;
-                }
-                return response()->json([
-                    // 'token' => $token,
-                    'message' => 'Login successful', "status" => 200, "ID" => $id, "name" => $name,
-                    "username" => $username,
-                    "email" => $email,
-                    "department" => $department,
-                    "department" => $department,
-                    "image" => $img,
-                    "UserStatus" => $status, "company_name" => $company_name,
-                    "latitude" => $company_lat, "longitude" => $company_long,
-                    'max_distance' => $max_distance
-                ]);
-            }
-        } else {
-            return response()->json([
-                'success' => false,
-                'error' => 'Email or password is empty.'
+        try {
+            $this->validate($request,[
+                "username"=>"required|min:3|max:255",
+                "password"=>"required|min:6",
             ]);
+        } catch (Exception $e) {
+            return response()->json(["error"=>$e->getMessage()],400);
+        }
+        if (auth()->attempt(['username' => $request->username, 'password' => $request->password])) {
+            $user = User::where('username', $request->username)->first();
+            $id = $user->id;
+            $name = $user->name;
+            $email = $user->email;
+            $department =  $user->department->name;
+            $position = $user->position;
+            $status = $user->status;
+            $company_id = $user->company_id;
+            $company = Company::where('id', $company_id)->first();
+            if ($company) {
+                $company_name = $company->name;
+                $company_lat = $company->latitude;
+                $company_long = $company->longitude;
+                $max_distance = $company->max_distance;
+            }
+            $img = '';
+            if ($user->image != '') {
+                $img = 'https://'.request()->getHttpHost().'/storage/profile/'.$user->image;
+            }
+            return response()->json([
+                // 'token' => $token,
+                'message' => 'Login successful', "status" => 200, "ID" => $id, "name" => $name,
+                "username" => $request->username,
+                "email" => $email,
+                "department" => $department,
+                "department" => $department,
+                "image" => $img,
+                "UserStatus" => $status, "company_name" => $company_name,
+                "latitude" => $company_lat, "longitude" => $company_long,
+                'max_distance' => $max_distance
+            ],200);
+        }else{
+            return response()->json(["error"=>"the password or username is incorrect please try again"],404);
         }
     }
-
-
-
     public function sendOtp(Request $request)
     {
         // Validate the request data
