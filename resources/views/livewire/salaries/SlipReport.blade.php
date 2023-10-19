@@ -1,87 +1,94 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <head>
-    <title>Part Time Report - {{ $employee }}</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-</head>
-<style>
-    .allownce-line{
-    text-align: center;
-    display: flex;
-    justify-content: end;
-    align-items: center;
-}
-.allownce-line span{
-    border-left: 3px solid green;
-    height: 42px;
-    border-bottom: 3px solid green;
-    width: 50%;
-}
-.deduction-line{
-    text-align: center;
-    display: flex;
-    justify-content: start;
-    align-items: center;
-}
-.deduction-line span{
-    border-right: 3px solid green;
-    height: 42px;
-    border-bottom: 3px solid green;
-    width: 50%;
-}
-body {
-    font-family: Arial, Helvetica, sans-serif;
 
-}
+    <head>
+        <title>Part Time Report - {{ $employee }}</title>
+        <style>
 
-@page {
-    margin: 10px 10px 10px 10px !important;
-    padding: 10px1 0px 10px 10px !important;
-}
+            .allownce-line{
+                text-align: center;
+                display: flex;
+                justify-content: end;
+                align-items: center;
+            }
+            .allownce-line span{
+                border-left: 3px solid green;
+                height: 42px;
+                border-bottom: 3px solid green;
+                width: 50%;
+            }
+            .deduction-line{
+                text-align: center;
+                display: flex;
+                justify-content: start;
+                align-items: center;
+            }
+            .deduction-line span{
+                border-right: 3px solid green;
+                height: 42px;
+                border-bottom: 3px solid green;
+                width: 50%;
+            }
+            body {
+                font-family: Arial, Helvetica, sans-serif;
 
-table {
-    font-family: Arial, Helvetica, sans-serif;
-    border-collapse: separate;
-    width: 100%;
-}
+            }
 
-table th {
-    border: 1px solid #000;
-    padding: 2px
-}
+            @page {
+                margin: 10px 10px 10px 10px !important;
+                padding: 10px1 0px 10px 10px !important;
+            }
 
-table th {
-    text-align: center;
-    background-color: #F7F9F9;
-    color: black;
-}
+            table {
+                font-family: Arial, Helvetica, sans-serif;
+                border-collapse: separate;
+                width: 100%;
+            }
 
-table td {
-    text-align: center;
-    padding-bottom: 5px;
-    padding: 8px;
-    border-collapse: collapse;
-}
+            table th {
+                border: 1px solid #000;
+                padding: 2px
+            }
 
-.column {
-    float: left;
-    width: 50%;
-    padding: 10px;
-}
+            table th {
+                text-align: center;
+                background-color: #F7F9F9;
+                color: black;
+            }
 
-.row:after {
-    content: "";
-    display: table;
-    clear: both;
-}
-</style>
-<body>
+            table td {
+                text-align: center;
+                padding-bottom: 5px;
+                padding: 8px;
+                border-collapse: collapse;
+            }
+
+            .column {
+                float: left;
+                width: 50%;
+                padding: 10px;
+            }
+
+            .row:after {
+                content: "";
+                display: table;
+                clear: both;
+            }
+        </style>
+
+    </head>
+
+<body id="element-to-print">
+
     <div style="padding:5mm; margin: bottom 25px;">
         <div class="row">
             <div class="column" style="width:20%">
-                {{-- <img src="/storage/company/{{ $image }}" height="70" width="160" /> --}}
+                <img src="/storage/company/{{ $image }}" height="70" width="160" />
 
             </div>
             <div class="column" style="width:70%">
@@ -89,7 +96,10 @@ table td {
             </div>
         </div>
     </div>
-    <div style="color: white;background-color: #03415F;" class="row">
+
+
+
+     <div style="color: white;background-color: #03415F;" class="row">
         <div class="column" style="padding:4px;width: 100%">
             <p style="text-align: center; font-size:18px;color: #fff;margin:0;padding:5;"><b>Slip Report</b>
             </p>
@@ -121,6 +131,7 @@ table td {
 
         
     </div>
+
     <div class="row" style="background: #03415F; ma">
         <div class="column" style="padding:0; width:20%">
             <p style="font-size:15px;color: white;margin:0;padding:4;font-weight:bold">Department :</p>
@@ -137,14 +148,9 @@ table td {
     </div>
     <br>
 
-
-
-
-
-
-    <div style="display: flex" class="tables">
+    <div class="tables row">
         <div class="p-3 allownce-table col-md-6 col-12">
-            <h2 style="direction: rtl" class="text-center">العلاوات</h2>
+            <h2 class="text-center">العلاوات</h2>
             <table class="allownce">
                 <tr>
                     <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px; width: 11%">نوع العلاوة</th>
@@ -152,7 +158,7 @@ table td {
                     <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 14%">التاريخ</th>
                 </tr>
                 @php($totalAllownce=0)
-               {{--  @foreach ($allownce as $item)
+                @foreach ($allownce as $item)
                 @php($totalAllownce+=$item->amount)
                     <tr>
                         <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">
@@ -166,7 +172,7 @@ table td {
                         <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$item->amount}}</td>
                         <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$item->date}}</td>
                     </tr>
-                @endforeach --}}
+                @endforeach
                 <tfoot>
                     <tr>
                         <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px; width: 11%"></th>
@@ -177,7 +183,7 @@ table td {
             </table>
         </div>
         <div class="p-3 deduction-table col-md-6 col-12">
-            <h2 style="direction: rtl" class="text-center">الخصومات</h2>
+            <h2 class="text-center">الخصومات</h2>
             <table class="deduction">        
             <tr>
                 <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px; width: 11%">نوع الخصم</th>
@@ -185,7 +191,7 @@ table td {
                 <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 14%">التاريخ</th>
             </tr>
             @php($totalDeduction=0)
-          {{--   @foreach ($deduction as $item)
+            @foreach ($deduction as $item)
             @php($totalDeduction+=$item->amount)
                 <tr>
                     <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">
@@ -199,7 +205,7 @@ table td {
                     <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$item->amount}}</td>
                     <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$item->date}}</td>
                 </tr>
-            @endforeach --}}
+            @endforeach
             <tfoot>
                 <tr>
                     <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px; width: 11%"></th>
@@ -210,18 +216,11 @@ table td {
             </table>
         </div>
     </div>
-
-
-
     <div class="row">
         <div class="col-5 allownce-line"><span></span></div>
         <div class="col-2 d-flex align-item-center justify-content-center"><h4 class="m-0 align-self-end">المجموع = <span class="border p-1">{{$totalAllownce - $totalDeduction}}</span></h4></div>
         <div class="col-5 deduction-line"><span></span></div>
     </div>
-
-
-
-
     <div class="tables row"> 
         <div class="p-3 d-flex align-item-center justify-content-center total col-md-6 col-12 text-center">
                 <h2 class="text-right align-self-end">صافي الراتب : <span class="border p-2 border-info rounded">{{$salary +$totalAllownce - $totalDeduction}}</span></h2>
@@ -235,14 +234,14 @@ table td {
                 <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 14%">التاريخ</th>
             </tr>
             @php($totalChecks=0)
-          {{--   @foreach ($checks as $item)
+            @foreach ($checks as $item)
             @php($totalChecks+=$item->value)
                 <tr>
                     <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$item->check_details}}</td>
                     <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$item->value}}</td>
                     <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$item->date}}</td>
                 </tr>
-            @endforeach --}}
+            @endforeach
             <tfoot>
                 <tr>
                     <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px; width: 11%"></th>
@@ -252,8 +251,18 @@ table td {
             </tfoot>
             </table>
         </div>
-    </div>
+        </div>
 
-    
+
 </body>
+
 </html>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+
+
+
+
+
+
