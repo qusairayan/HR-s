@@ -106,7 +106,7 @@
 
                 <div>
                     <label for="date">Date</label>
-                    <input class="form-control datepicker-input" type="month" id="date"
+                    <input  class="form-control datepicker-input" type="month" id="date"
                         placeholder="Select Month and Year" wire:model="date">
 
 
@@ -149,3 +149,9 @@
 
 
 </div>
+<script>
+    const dss = new Date();
+    let month = dss.getMonth()+1;
+    let year = dss.getFullYear();
+    document.getElementById("date").setAttribute("max", `${year}-${month}`);
+</script>

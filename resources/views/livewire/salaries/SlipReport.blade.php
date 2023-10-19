@@ -84,8 +84,8 @@
     </head>
 
 <body id="element-to-print">
-
-    <div style="padding:5mm; margin: bottom 25px;">
+saassasa
+    {{-- <div style="padding:5mm; margin: bottom 25px;">
         <div class="row">
             <div class="column" style="width:20%">
                 <img src="/storage/company/{{ $image }}" height="70" width="160" />
@@ -251,13 +251,13 @@
             </tfoot>
             </table>
         </div>
-        </div>
+        </div>--}}
 
 
-</body>
+</body> 
 
 </html>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> --}}
 
 
 
