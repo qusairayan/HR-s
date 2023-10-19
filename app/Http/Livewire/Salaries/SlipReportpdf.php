@@ -54,7 +54,10 @@ class SlipReportpdf extends Component
         $content = view('livewire.salaries.SlipReport',["salary"=>$salary,"allownce"=>$allownce, "deduction"=>$deduction,'checks' => $checks,'employee' => $employee,'employee_id' => $employee_id,'company' => $company,'image' => $image,'department' => $department,'position' => $position,'date'=>$date]);
         // return view('livewire.salaries.SlipReport', ["salary"=>$salary,"allownce"=>$allownce, "deduction"=>$deduction,'checks' => $checks,'employee' => $employee,'employee_id' => $employee_id,'company' => $company,'image' => $image,'department' => $department,'position' => $position,'date'=>$date]);
         $mpdf->WriteHTML($content);
-        $mpdf->Output('document.pdf', 'I');
+        $mpdf->showImageErrors = true;
+        $mpdf->Output();
+        exit;
+        // $mpdf->Output('document.pdf', 'I');
         
     }
 
