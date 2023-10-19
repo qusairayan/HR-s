@@ -84,7 +84,6 @@
     </head>
 
 <body id="element-to-print">
-saas
 
     <div style="padding:5mm; margin: bottom 25px;">
         <div class="row">
@@ -147,9 +146,6 @@ saas
 
 
     </div>
-
-
-
     <br>
 
     <div class="tables row">
