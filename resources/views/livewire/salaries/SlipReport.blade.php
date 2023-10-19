@@ -84,7 +84,7 @@
     </head>
 
 <body id="element-to-print">
-
+saas
 
     <div style="padding:5mm; margin: bottom 25px;">
         <div class="row">
@@ -100,7 +100,7 @@
 
 
 
-    <div style="color: white;background-color: #03415F;" class="row">
+    {{-- <div style="color: white;background-color: #03415F;" class="row">
         <div class="column" style="padding:4px;width: 100%">
             <p style="text-align: center; font-size:18px;color: #fff;margin:0;padding:5;"><b>Slip Report</b>
             </p>
@@ -116,8 +116,8 @@
             <p style="font-size:15px;color: white;margin:0;padding:4;font-weight:bold">Employee :</p>
         </div>
         <div class="column" style="padding:0;margin-left:3px; width:33%">
-            <p style="font-size:12px;color: white;margin:0;padding:4;font-weight:bold">@if($employee){{ $employee }} @else{{" " }} @endif -
-                @if($employee_id){{ $employee_id }} @else{{" " }} @endif   </p>
+            <p style="font-size:12px;color: white;margin:0;padding:4;font-weight:bold"> {{ $employee }} -
+                {{ $employee_id }}</p>
         </div>
 
 
@@ -138,15 +138,12 @@
             <p style="font-size:15px;color: white;margin:0;padding:4;font-weight:bold">Department :</p>
         </div>
         <div class="column" style="padding:0;margin-left:3px; width:33%">
-            <p style="font-size:12px;color: white;margin:0;padding:4;font-weight:bold">@if($department){{ $department }} @else{{" " }} @endif -
-                @if($position){{ $position }} @else{{" " }} @endif </p>
+            <p style="font-size:12px;color: white;margin:0;padding:4;font-weight:bold">{{ $department }} -
+                {{ $position }}</p>
         </div>
         <div class="column" style="padding:0; width:20%">
-            <p style="font-size:15px;color: white;margin:0;padding:4;font-weight:bold">salary :@if($salary){{ $salary }} @else{{" " }} @endif   </p>
+            <p style="font-size:15px;color: white;margin:0;padding:4;font-weight:bold">salary :{{ $salary }} </p>
         </div>
-        {{-- <div class="column" style="padding:0;margin-left:3px; width:33%">
-            <p style="font-size:12px;color: white;margin:0;padding:4;font-weight:bold">{{ $salary }} -</p>
-        </div> --}}
 
 
     </div>
@@ -154,7 +151,7 @@
 
 
     <br>
-    @if($allownce)
+
     <div class="tables row">
         <div class="p-3 allownce-table col-md-6 col-12">
             <h2 class="text-center">العلاوات</h2>
@@ -164,7 +161,6 @@
                     <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 22%">المبلغ</th>
                     <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 14%">التاريخ</th>
                 </tr>
-                
                 @php($totalAllownce=0)
                 @foreach ($allownce as $item)
                 @php($totalAllownce+=$item->amount)
@@ -229,7 +225,7 @@
         <div class="col-2 d-flex align-item-center justify-content-center"><h4 class="m-0 align-self-end">المجموع = <span class="border p-1">{{$totalAllownce - $totalDeduction}}</span></h4></div>
         <div class="col-5 deduction-line"><span></span></div>
     </div>
-    <div class="tables row">
+    <div class="tables row"> 
         <div class="p-3 d-flex align-item-center justify-content-center total col-md-6 col-12 text-center">
                 <h2 class="text-right align-self-end">صافي الراتب : <span class="border p-2 border-info rounded">{{$salary +$totalAllownce - $totalDeduction}}</span></h2>
         </div>
@@ -259,9 +255,10 @@
             </tfoot>
             </table>
         </div>
+        </div>--}}
         
-</div>
-@else{{" " }} @endif
+
+
 </body>
 
 </html>
