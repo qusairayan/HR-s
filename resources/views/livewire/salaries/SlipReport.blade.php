@@ -152,7 +152,7 @@ table td {
                     <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 14%">التاريخ</th>
                 </tr>
                 @php($totalAllownce=0)
-                @foreach ($allownce as $item)
+               {{--  @foreach ($allownce as $item)
                 @php($totalAllownce+=$item->amount)
                     <tr>
                         <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">
@@ -166,7 +166,7 @@ table td {
                         <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$item->amount}}</td>
                         <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$item->date}}</td>
                     </tr>
-                @endforeach
+                @endforeach --}}
                 <tfoot>
                     <tr>
                         <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px; width: 11%"></th>
@@ -185,7 +185,7 @@ table td {
                 <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 14%">التاريخ</th>
             </tr>
             @php($totalDeduction=0)
-            @foreach ($deduction as $item)
+          {{--   @foreach ($deduction as $item)
             @php($totalDeduction+=$item->amount)
                 <tr>
                     <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">
@@ -199,7 +199,7 @@ table td {
                     <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$item->amount}}</td>
                     <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$item->date}}</td>
                 </tr>
-            @endforeach
+            @endforeach --}}
             <tfoot>
                 <tr>
                     <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px; width: 11%"></th>
@@ -235,14 +235,14 @@ table td {
                 <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 14%">التاريخ</th>
             </tr>
             @php($totalChecks=0)
-            @foreach ($checks as $item)
+          {{--   @foreach ($checks as $item)
             @php($totalChecks+=$item->value)
                 <tr>
                     <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$item->check_details}}</td>
                     <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$item->value}}</td>
                     <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$item->date}}</td>
                 </tr>
-            @endforeach
+            @endforeach --}}
             <tfoot>
                 <tr>
                     <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px; width: 11%"></th>
