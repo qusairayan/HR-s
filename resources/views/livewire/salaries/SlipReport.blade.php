@@ -33,12 +33,79 @@
 <head>
 
     <head>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-        <title>Part Time Report - {{ $employee }}</title>
 
+        <title>Part Time Report - {{ $employee }}</title>
+<style>
+    .allownce-line{
+    text-align: center;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
+.allownce-line span{
+    border-left: 3px solid green;
+    height: 42px;
+    border-bottom: 3px solid green;
+    width: 50%;
+}
+.deduction-line{
+    text-align: center;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+.deduction-line span{
+    border-right: 3px solid green;
+    height: 42px;
+    border-bottom: 3px solid green;
+    width: 50%;
+}
+body {
+    font-family: Arial, Helvetica, sans-serif;
+
+}
+
+@page {
+    margin: 10px 10px 10px 10px !important;
+    padding: 10px1 0px 10px 10px !important;
+}
+
+table {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: separate;
+    width: 100%;
+}
+
+table th {
+    border: 1px solid #000;
+    padding: 2px
+}
+
+table th {
+    text-align: center;
+    background-color: #F7F9F9;
+    color: black;
+}
+
+table td {
+    text-align: center;
+    padding-bottom: 5px;
+    padding: 8px;
+    border-collapse: collapse;
+}
+
+.column {
+    float: left;
+    width: 50%;
+    padding: 10px;
+}
+
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+</style>
     </head>
 
     <body id="element-to-print">

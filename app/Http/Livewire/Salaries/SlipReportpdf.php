@@ -52,11 +52,10 @@ class SlipReportpdf extends Component
             'margin_bottom' => 10, 
         ]);
         
-        $style = file_get_contents(dirname(__DIR__,4)."/resources/css/SlipReport.css");
-        $mpdf->WriteHTML($style,\Mpdf\HTMLParserMode::HEADER_CSS);
+        // $style = file_get_contents(dirname(__DIR__,4)."/resources/css/SlipReport.css");
+        // $mpdf->WriteHTML($style,\Mpdf\HTMLParserMode::HEADER_CSS);
         $mpdf->WriteHTML(view('livewire.salaries.SlipReport',["salary"=>$salary,"allownce"=>$allownce, "deduction"=>$deduction,'checks' => $checks,'employee' => $employee,'employee_id' => $employee_id,'company' => $company,'image' => $image,'department' => $department,'position' => $position,'date'=>$date]),\Mpdf\HTMLParserMode::HTML_BODY);
         // $mpdf->WriteHTML(view('livewire.salaries.SlipReport',["salary"=>$salary,"allownce"=>$allownce, "deduction"=>$deduction,'checks' => $checks,'employee' => $employee,'employee_id' => $employee_id,'company' => $company,'image' => $image,'department' => $department,'position' => $position,'date'=>$date]));
-        // $mpdf->WriteHTML("<h1>welcome</h1>");
         $mpdf->showImageErrors = true;
         $mpdf->Output();
         exit;
