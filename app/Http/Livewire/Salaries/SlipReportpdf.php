@@ -54,9 +54,9 @@ class SlipReportpdf extends Component
         $allownce ? $allownce :"";
         $deduction? $deduction : "";
         $checks?$checks:"";
-        // $mpdf->WriteHTML(view('livewire.salaries.SlipReport',["salary"=>$salary,"allownce"=>$allownce, "deduction"=>$deduction,'checks' => $checks,'employee' => $employee,'employee_id' => $employee_id,'company' => $company,'image' => $image,'department' => $department,'position' => $position,'date'=>$date]));
-        // $mpdf->Output('document.pdf', 'I');
-    return view('livewire.salaries.SlipReport', ["salary"=>$salary,"allownce"=>$allownce, "deduction"=>$deduction,'checks' => $checks,'employee' => $employee,'employee_id' => $employee_id,'company' => $company,'image' => $image,'department' => $department,'position' => $position,'date'=>$date]);
+        $mpdf->WriteHTML(view('livewire.salaries.SlipReport',["salary"=>$salary,"allownce"=>$allownce, "deduction"=>$deduction,'checks' => $checks,'employee' => $employee,'employee_id' => $employee_id,'company' => $company,'image' => $image,'department' => $department,'position' => $position,'date'=>$date]));
+        $mpdf->Output('document.pdf', 'I');
+    // return view('livewire.salaries.SlipReport', ["salary"=>$salary,"allownce"=>$allownce, "deduction"=>$deduction,'checks' => $checks,'employee' => $employee,'employee_id' => $employee_id,'company' => $company,'image' => $image,'department' => $department,'position' => $position,'date'=>$date]);
     }
 
     public function render()
