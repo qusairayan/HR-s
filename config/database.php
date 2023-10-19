@@ -67,7 +67,7 @@ return [
             'driver' => 'mysql',
             'host' => env('LYONDB_HOST', '127.0.0.1'),
             'port' => env('LYONDB_PORT', '3306'),
-            'database' => env('LYONDB_DATABASE', 'lyondb'),
+            'database' => env('LYONDB_DATABASE', 'lyonjo'),
             'username' => env('LYONDB_USERNAME', 'root'),
             'password' => env('LYONDB_PASSWORD', ''),
             'charset' => 'utf8',
