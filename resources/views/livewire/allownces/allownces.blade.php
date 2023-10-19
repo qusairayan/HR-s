@@ -137,10 +137,11 @@
                         <td class="border-0 fw-bold">
                             <span class="fw-normal">
                                @if ($allownce->type )
-                                    @if($allownce->type ===1) {{'lateness'}}
-                                        @elseif($allownce->type ===2){{"Social Security"}}
-                                        @elseif($allownce->type ===3){{"Tax"}}
-                                        @elseif($allownce->type ===4){{"Loans"}}
+                                    @if($allownce->type ===1) {{'Overtime weekdays'}}
+                                    @elseif($allownce->type ===2){{"Overtime weekends"}}
+                                        @elseif($allownce->type ===3){{"Rewards"}}
+                                        @elseif($allownce->type ===4){{"Transportation"}}
+
                                         @else {{'other'}}
                                     @endif
 
@@ -269,9 +270,10 @@
 
                         <div class="input-group mt-1">
                             <select class="w-75 mt-2 mb-2 form-control" wire:model="type">
-                                <option value="2">Social Security</option>
-                                <option value="3">Tax</option>
-                                <option value="4">Loans</option>
+                                <option value="1">Overtime weekdays</option>
+                                <option value="2">Overtime weekends</option>
+                                <option value="3">Rewards</option>
+                                <option value="4">Transportation</option>
                             </select>
                         </div>
                         @error('detail')

@@ -17,6 +17,7 @@ class SlipReportpdf extends Component
     {
         $user=User::where('id','=',$id)->first();
         $employee=$user->name;
+        $salary=$user->salary;
         $position=$user->position;
         $employee_id=$user->id;
         $company=$user->company->name;
@@ -27,7 +28,6 @@ class SlipReportpdf extends Component
 
         $checkComp='';
         $image='';
-
         if($company == 'Lyon Travel'){
             $checkComp='check_lyon';
             $image='lyontravell.png';
@@ -41,7 +41,7 @@ class SlipReportpdf extends Component
             $image='marvellLogo.png';
         }
 
-        $checks = DB::connection('LYONDB')->table($checkComp)->where('Name_To','LIKE',$employee)->where("date", 'LIKE', $date . '-%')->get();
+        $checks = DB::connection('LYONDB')->table($checkComp)->where('Name_To','LIKE',$employee."-%")->where("date", 'LIKE', $date . '-%')->get();
 
         $mpdf = new Mpdf([
             'mode' => 'utf-8',
@@ -52,7 +52,7 @@ class SlipReportpdf extends Component
             'margin_bottom' => 10, 
         ]);
       
-    return view('livewire.salaries.SlipReport', ["allownce"=>$allownce, "deduction"=>$deduction,'checks' => $checks,'employee' => $employee,'employee_id' => $employee_id,'company' => $company,'image' => $image,'department' => $department,'position' => $position,'date'=>$date]);
+    return view('livewire.salaries.SlipReport', ["salary"=>$salary,"allownce"=>$allownce, "deduction"=>$deduction,'checks' => $checks,'employee' => $employee,'employee_id' => $employee_id,'company' => $company,'image' => $image,'department' => $department,'position' => $position,'date'=>$date]);
     }
 
     public function render()

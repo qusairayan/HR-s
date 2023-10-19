@@ -162,6 +162,27 @@
                             </div>
 
                         </div>
+                        <div class="py-3 text-center">
+
+                            <h4 class="h5 py-2">type:</h4>
+
+                            <div class="input-group mt-1">
+                                <select class="form-control" wire:model="type">
+                                    <option value="" hidden="" selected="">select type</option>
+                                    <option value="1">Overtime weekdays</option>
+                                    <option value="2">Overtime weekends</option>
+                                </select>
+
+
+                                @error('type')
+                                    <div class="invalid-feedback py-2"> {{ $message }} </div>
+                                @enderror
+
+                                
+
+                            </div>
+
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-sm btn-success">Add</button>

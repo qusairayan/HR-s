@@ -32,6 +32,7 @@ public $checkOut='';
 public $amount=0;
 public $allownce=0;
 public $overtimrID=0;
+public $type;
 
 
 protected $rules = [
@@ -68,16 +69,16 @@ public function updated(){
 }
 public function addAllownce()  {
     $this->validate([
-        'allownce' => 'required|numeric'
+        'allownce' => 'required|numeric',
+        'type' => 'required|numeric'
     ]);
 
     Allownce::create([
         'user_id'=>$this->user_id,
         'date'=>$this->date,
         'amount'=>$this->amount,
-        'type'=>1,
-        'overtime'=>$this->overtimrID
-
+        'type'=>$this->type,
+        'overtime'=>$this->overtimrID,
     ]);
     $overtime=Overtime::findOrFail($this->overtimrID);
     $overtime->allownce=1;

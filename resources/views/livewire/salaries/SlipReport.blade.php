@@ -9,6 +9,31 @@
     <head>
         <title>Part Time Report - {{ $employee }}</title>
         <style>
+
+            .allownce-line{
+                text-align: center;
+                display: flex;
+                justify-content: end;
+                align-items: center;
+            }
+            .allownce-line span{
+                border-left: 3px solid green;
+                height: 42px;
+                border-bottom: 3px solid green;
+                width: 50%;
+            }
+            .deduction-line{
+                text-align: center;
+                display: flex;
+                justify-content: start;
+                align-items: center;
+            }
+            .deduction-line span{
+                border-right: 3px solid green;
+                height: 42px;
+                border-bottom: 3px solid green;
+                width: 50%;
+            }
             body {
                 font-family: Arial, Helvetica, sans-serif;
 
@@ -116,12 +141,19 @@
             <p style="font-size:12px;color: white;margin:0;padding:4;font-weight:bold">{{ $department }} -
                 {{ $position }}</p>
         </div>
-
+        <div class="column" style="padding:0; width:20%">
+            <p style="font-size:15px;color: white;margin:0;padding:4;font-weight:bold">salary :{{ $salary }} </p>
+        </div>
+        {{-- <div class="column" style="padding:0;margin-left:3px; width:33%">
+            <p style="font-size:12px;color: white;margin:0;padding:4;font-weight:bold">{{ $salary }} -</p>
+        </div> --}}
 
 
     </div>
-    <br>
 
+
+
+    <br>
 
     <div class="tables row">
         <div class="p-3 allownce-table col-md-6 col-12">
@@ -137,10 +169,10 @@
                 @php($totalAllownce+=$item->amount)
                     <tr>
                         <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">
-                            @if($item->type ===1) {{'lateness'}}
-                                        @elseif($item->type ===2){{"Social Security"}}
-                                        @elseif($item->type ===3){{"Tax"}}
-                                        @elseif($item->type ===4){{"Loans"}}
+                            @if($item->type ===1) {{'العمل الاضافي بالايام العاديه'}}
+                                        @elseif($item->type ===2){{"مكافأت"}}
+                                        @elseif($item->type ===3){{"بدل مواصلات"}}
+                                        @elseif($item->type ===4){{"العمل الاضافي ايام العطل"}}
                                         @else {{'other'}}
                                     @endif
                                 </td>
@@ -190,8 +222,15 @@
             </tfoot>
             </table>
         </div>
+    </div>
+    <div class="row">
+        <div class="col-5 allownce-line"><span></span></div>
+        <div class="col-2 d-flex align-item-center justify-content-center"><h4 class="m-0 align-self-end">المجموع = <span class="border p-1">{{$totalAllownce - $totalDeduction}}</span></h4></div>
+        <div class="col-5 deduction-line"><span></span></div>
+    </div>
+    <div class="tables row">
         <div class="p-3 d-flex align-item-center justify-content-center total col-md-6 col-12 text-center">
-                <h2 class="    align-self-center">المجموع = <span class="border p-1">{{$totalAllownce - $totalDeduction}}</span></h2>
+                <h2 class="text-right align-self-end">صافي الراتب : <span class="border p-2 border-info rounded">{{$salary +$totalAllownce - $totalDeduction}}</span></h2>
         </div>
         <div class="p-3 checks-table col-md-6 col-12">
             <h2 class="text-center">الرواتب</h2>
@@ -203,7 +242,7 @@
             </tr>
             @php($totalChecks=0)
             @foreach ($checks as $item)
-            @php($totalChecks+=$item->amount)
+            @php($totalChecks+=$item->value)
                 <tr>
                     <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$item->check_details}}</td>
                     <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$item->value}}</td>
@@ -219,7 +258,9 @@
             </tfoot>
             </table>
         </div>
+        
 </div>
+
 </body>
 
 </html>
