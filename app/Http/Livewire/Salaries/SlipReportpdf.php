@@ -42,7 +42,7 @@ class SlipReportpdf extends Component
         }
 
         $checks = DB::connection('LYONDB')->table($checkComp)->where('Name_To','LIKE',$employee."-%")->where("date", 'LIKE', $date . '-%')->get();
-        $mpdf = new mPDF();
+
         // $mpdf = new Mpdf([
         //     'mode' => 'utf-8',
         //     'format' => 'A4-L',
@@ -51,12 +51,13 @@ class SlipReportpdf extends Component
         //     'margin_top' => 10, 
         //     'margin_bottom' => 10, 
         // ]);
-        $content = view('livewire.salaries.SlipReport',["salary"=>$salary,"allownce"=>$allownce, "deduction"=>$deduction,'checks' => $checks,'employee' => $employee,'employee_id' => $employee_id,'company' => $company,'image' => $image,'department' => $department,'position' => $position,'date'=>$date]);
+        // $content = view('livewire.salaries.SlipReport',["salary"=>$salary,"allownce"=>$allownce, "deduction"=>$deduction,'checks' => $checks,'employee' => $employee,'employee_id' => $employee_id,'company' => $company,'image' => $image,'department' => $department,'position' => $position,'date'=>$date]);
         // return view('livewire.salaries.SlipReport', ["salary"=>$salary,"allownce"=>$allownce, "deduction"=>$deduction,'checks' => $checks,'employee' => $employee,'employee_id' => $employee_id,'company' => $company,'image' => $image,'department' => $department,'position' => $position,'date'=>$date]);
-        $mpdf->WriteHTML($content);
-        $mpdf->showImageErrors = true;
+        $mpdf = new Mpdf();
+        $mpdf->WriteHTML("<h1>welcome</h1>");
+        // $mpdf->showImageErrors = true;
         $mpdf->Output();
-        exit;
+        // exit;
         // $mpdf->Output('document.pdf', 'I');
         
     }
