@@ -52,7 +52,10 @@ class SlipReportpdf extends Component
             'margin_bottom' => 10, 
         ]);
       
-    return view('livewire.salaries.SlipReport', ["salary"=>$salary,"allownce"=>$allownce, "deduction"=>$deduction,'checks' => $checks,'employee' => $employee,'employee_id' => $employee_id,'company' => $company,'image' => $image,'department' => $department,'position' => $position,'date'=>$date]);
+    // return view('livewire.salaries.SlipReport', ["salary"=>$salary,"allownce"=>$allownce, "deduction"=>$deduction,'checks' => $checks,'employee' => $employee,'employee_id' => $employee_id,'company' => $company,'image' => $image,'department' => $department,'position' => $position,'date'=>$date]);
+    $mpdf->WriteHTML(view('livewire.salaries.partTimeReport', ["salary"=>$salary,"allownce"=>$allownce, "deduction"=>$deduction,'checks' => $checks,'employee' => $employee,'employee_id' => $employee_id,'company' => $company,'image' => $image,'department' => $department,'position' => $position,'date'=>$date]));
+
+    $mpdf->Output('document.pdf', 'I');
     }
 
     public function render()

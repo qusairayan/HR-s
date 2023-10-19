@@ -18,7 +18,7 @@ use Livewire\WithPagination;
 use Carbon\Carbon;
 
 use Livewire\Component;
-
+use Mpdf\Mpdf;
 
 class Slips extends Component
 {
