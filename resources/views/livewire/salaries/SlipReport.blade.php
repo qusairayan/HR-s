@@ -263,29 +263,7 @@ saas
 
 </html>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script>
-    window.onload = function() {
-        var element = document.getElementById('element-to-print');
-        html2pdf()
-            .from(element)
-            .set({
-                margin: 10,
-                filename: 'your-document.pdf',
-                image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: 2 },
-                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-            })
-            .outputPdf(function(pdf) {
-                var blob = pdf.output('blob');
-                var url = URL.createObjectURL(blob);
-                var iframe = document.createElement('iframe');
-                iframe.src = url;
-                iframe.style.width = '100%';
-                iframe.style.height = '600px';
-                document.body.appendChild(iframe);
-            });
-    }
-</script>
+
 
 
 
