@@ -100,7 +100,7 @@ saas
 
 
 
-    {{-- <div style="color: white;background-color: #03415F;" class="row">
+     <div style="color: white;background-color: #03415F;" class="row">
         <div class="column" style="padding:4px;width: 100%">
             <p style="text-align: center; font-size:18px;color: #fff;margin:0;padding:5;"><b>Slip Report</b>
             </p>
@@ -255,7 +255,7 @@ saas
             </tfoot>
             </table>
         </div>
-        </div>--}}
+        </div>
         
 
 
