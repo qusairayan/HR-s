@@ -84,8 +84,7 @@
     </head>
 
 <body id="element-to-print">
-<div class="">welcome</div>
-    {{-- <div style="padding:5mm; margin: bottom 25px;">
+     <div style="padding:5mm; margin: bottom 25px;">
         <div class="row">
             <div class="column" style="width:20%">
                 <img src="/storage/company/{{ $image }}" height="70" width="160" />
@@ -251,7 +250,7 @@
             </tfoot>
             </table>
         </div>
-        </div>--}}
+        </div>
 
 
 </body> 
