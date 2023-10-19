@@ -157,6 +157,7 @@
                     <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 22%">المبلغ</th>
                     <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 14%">التاريخ</th>
                 </tr>
+                @if($allownce)
                 @php($totalAllownce=0)
                 @foreach ($allownce as $item)
                 @php($totalAllownce+=$item->amount)
@@ -180,6 +181,7 @@
                         <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px; width: 11%">المجموع</th>
                     </tr>
                 </tfoot>
+                @else <h2>no allownce</h2>       @endif
             </table>
         </div>
         <div class="p-3 deduction-table col-md-6 col-12">
@@ -190,6 +192,7 @@
                 <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 22%">المبلغ</th>
                 <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 14%">التاريخ</th>
             </tr>
+            @if($deduction)
             @php($totalDeduction=0)
             @foreach ($deduction as $item)
             @php($totalDeduction+=$item->amount)
@@ -213,6 +216,7 @@
                     <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px; width: 11%">المجموع</th>
                 </tr>
             </tfoot>
+            @else <h2>no deduction</h2>       @endif
             </table>
         </div>
     </div>
@@ -233,6 +237,7 @@
                 <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 22%">المبلغ</th>
                 <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 14%">التاريخ</th>
             </tr>
+            @if($checks)
             @php($totalChecks=0)
             @foreach ($checks as $item)
             @php($totalChecks+=$item->value)
@@ -249,10 +254,11 @@
                     <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px; width: 11%">المجموع</th>
                 </tr>
             </tfoot>
+            @else <h2>no checks</h2>
+            @endif
             </table>
         </div>
         </div>
-        
 
 
 </body>
