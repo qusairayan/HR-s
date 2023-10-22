@@ -24,6 +24,9 @@
 .totalDA{
     text-align: center
 }
+.allownce-table h2, .deduction-table h2 ,.checks-table h2{
+    text-align:right !important ;
+}
 .salary-total{
     float: left;
         width: 50%;
@@ -34,12 +37,6 @@
 .checks-table{
     float: left;
         width: 50%;
-}
-.checks-table h2{
-    text-align: end !important;
-}
-.checks-table h2{
-    text-align: end !important;
 }
 .allownce-line span{
     border-left: 3px solid green;
