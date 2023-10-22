@@ -51,24 +51,12 @@ class SlipReportpdf extends Component
             'margin_top' => 10, 
             'margin_bottom' => 10, 
         ]);
-<<<<<<< HEAD
             $mpdf->WriteHTML(view('livewire.salaries.SlipReport',["allownce"=>$allownce, "deduction"=>$deduction,'checks' => $checks,"salary"=>$salary,"employee"=>$employee,'employee_id' => $employee_id,'company' => $company,'image' => $image,'department' => $department,'position' => $position,'date'=>$date]));
 
             $mpdf->showImageErrors = true;
             $mpdf->Output('document.pdf', 'I');
             exit;
 
-=======
-        // $style = file_get_contents(dirname(__DIR__,4)."/resources/css/SlipReport.css");
-        // $mpdf->WriteHTML($style,\Mpdf\HTMLParserMode::HEADER_CSS);
-        // $mpdf->WriteHTML(view('livewire.salaries.SlipReport',["salary"=>$salary,"allownce"=>$allownce, "deduction"=>$deduction,'checks' => $checks,'employee' => $employee,'employee_id' => $employee_id,'company' => $company,'image' => $image,'department' => $department,'position' => $position,'date'=>$date]),\Mpdf\HTMLParserMode::HTML_BODY);
-        // $mpdf->WriteHTML(view('livewire.salaries.SlipReport',["salary"=>$salary,"allownce"=>$allownce, "deduction"=>$deduction,'checks' => $checks,'employee' => $employee,'employee_id' => $employee_id,'company' => $company,'image' => $image,'department' => $department,'position' => $position,'date'=>$date]));
-        $data = "marwan";
-        $mpdf->WriteHTML(view('livewire.salaries.SlipReport',["allownce"=>$allownce, "deduction"=>$deduction,'checks' => $checks,"salary"=>$salary,"employee"=>$employee,'employee_id' => $employee_id,'company' => $company,'image' => $image,'department' => $department,'position' => $position,'date'=>$date]));
-        $mpdf->showImageErrors = true;
-        $mpdf->Output('document.pdf', 'I');
-        exit;
->>>>>>> 41d72fb4a20d552188b4806cd1ec00aadb141aea
         
     }
 
