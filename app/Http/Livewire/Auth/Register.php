@@ -43,7 +43,6 @@ class Register extends Component
             return redirect()->intended('/dashboard');
         }
     }
-
     public function updatedEmail()
     {
         $this->validate(['email'=>'required|email:rfc,dns|unique:users']);

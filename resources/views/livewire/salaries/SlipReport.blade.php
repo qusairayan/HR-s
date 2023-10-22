@@ -198,14 +198,11 @@
     </div>
     <br>
 
-<<<<<<< HEAD
 
 
 
 
 
-=======
->>>>>>> 41d72fb4a20d552188b4806cd1ec00aadb141aea
     <div class="tables row">
         <div class="p-3 allownce-table col-md-6 col-12">
             <h2 class="text-center">العلاوات</h2>
@@ -274,14 +271,10 @@
             </table>
         </div>
     </div>
-<<<<<<< HEAD
 
 
 
     <div class="totalDA">
-=======
-    <div class="row">
->>>>>>> 41d72fb4a20d552188b4806cd1ec00aadb141aea
         <div class="col-5 allownce-line"><span></span></div>
         <div class="col-2 d-flex align-item-center justify-content-center"><h4 class="m-0 align-self-end">المجموع = <span class="border p-1">{{$totalAllownce - $totalDeduction}}</span></h4></div>
         <div class="col-5 deduction-line"><span></span></div>

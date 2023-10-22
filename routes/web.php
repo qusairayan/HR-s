@@ -1,5 +1,4 @@
 <?php
-
 use App\Http\Livewire\BootstrapTables;
 use App\Http\Livewire\Components\Buttons;
 use App\Http\Livewire\Components\Forms;
@@ -7,7 +6,6 @@ use App\Http\Livewire\Components\Modals;
 use App\Http\Livewire\Components\Notifications;
 use App\Http\Livewire\Components\Typography;
 use App\Http\Livewire\Dashboard;
-
 use App\Http\Livewire\Employees\Employees;
 use App\Http\Livewire\Employees\Promotions;
 use App\Http\Livewire\Employees\PromotionEdit;
@@ -18,23 +16,13 @@ use App\Http\Livewire\Employees\View;
 use App\Http\Livewire\Employees\Latenesses;
 use App\Http\Livewire\Employees\Overtimes;
 use App\Http\Livewire\Employees\Destroy;
-
 use App\Http\Livewire\Leaves\Leaves;
 use App\Http\Livewire\Vacations\Vacations;
-
-
-
 use App\Http\Livewire\Attendence\Attendences;
-
 use App\Http\Livewire\Schedule\Schedule;
 use App\Http\Livewire\Schedule\SetSchedule;
-
-
-
 use App\Http\Livewire\Deductions\DeductionsController;
-
 use App\Http\Livewire\Allownces\AllowncesController;
-
 use App\Http\Livewire\Salaries\Salaries;
 use App\Http\Livewire\Salaries\Slips;
 use App\Http\Livewire\Salaries\AddSalaries;
@@ -45,36 +33,15 @@ use App\Http\Livewire\Salaries\PartTimes;
 use App\Http\Livewire\Salaries\Ptreportpdf;
 use App\Http\Livewire\Salaries\SlipReportpdf;
 use App\Http\Livewire\Salaries\SocialSecurityController;
-
-
-
-
-
 use App\Http\Livewire\Permission\Permissions;
 use App\Http\Livewire\Permission\PermissionEdit;
 use App\Http\Livewire\Permission\PermissionRoles;
 use App\Http\Livewire\Permission\PermissionRolesEdit;
-
-
-
 use App\Http\Livewire\Role\Roles;
 use App\Http\Livewire\Role\AddnewRole;
-
 use App\Http\Livewire\Departments\Departments;
-
-
-
-
-
-
 use App\Http\Controllers\TransferController;
-
 use App\Http\Controllers\PrivacyPolicyController;
-
-
-
-
-
 use App\Http\Controllers\Updateyear;
 use App\Http\Livewire\Err404;
 use App\Http\Livewire\Err500;
@@ -95,26 +62,12 @@ use App\Http\Livewire\ResetPasswordExample;
 use App\Http\Livewire\UpgradeToPro;
 use App\Http\Livewire\Users;
 use App\Models\Leave;
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
 Route::redirect('/', '/login');
-
+Route::get('/login', Login::class)->name('login');
+Route::get('/register', Register::class)->name('register');
 Route::post('/update-year', [Updateyear::class,'year'])->name('update.year');
 
 
-Route::get('/register', Register::class)->name('register');
-
-Route::get('/login', Login::class)->name('login');
 
 Route::get('/forgot-password', ForgotPassword::class)->name('forgot-password');
 
