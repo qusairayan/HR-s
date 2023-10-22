@@ -7,11 +7,39 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 </head>
 <style>
+    .allownce-table{
+        float: right;
+        width: 50%; 
+    }
+    .deduction-table{
+        float: left;
+        width: 50%; 
+    }
     .allownce-line{
     text-align: center;
     display: flex;
     justify-content: end;
     align-items: center;
+}
+.totalDA{
+    text-align: center
+}
+.salary-total{
+    float: left;
+        width: 50%;
+        text-align: center;
+    padding: 50px 0 0 0;
+    margin: 0;
+}
+.checks-table{
+    float: left;
+        width: 50%;
+}
+.checks-table h2{
+    text-align: end !important;
+}
+.checks-table h2{
+    text-align: end !important;
 }
 .allownce-line span{
     border-left: 3px solid green;
@@ -142,7 +170,7 @@ table td {
 
 
 
-    <div style="display: flex" class="tables">
+    <div class="tables row">
         <div class="p-3 allownce-table col-md-6 col-12">
             <h2 style="direction: rtl" class="text-center">العلاوات</h2>
             <table class="allownce">
@@ -213,7 +241,7 @@ table td {
 
 
 
-    <div class="row">
+    <div class="totalDA">
         <div class="col-5 allownce-line"><span></span></div>
         <div class="col-2 d-flex align-item-center justify-content-center"><h4 class="m-0 align-self-end">المجموع = <span class="border p-1">{{$totalAllownce - $totalDeduction}}</span></h4></div>
         <div class="col-5 deduction-line"><span></span></div>
@@ -223,7 +251,7 @@ table td {
 
 
     <div class="tables row"> 
-        <div class="p-3 d-flex align-item-center justify-content-center total col-md-6 col-12 text-center">
+        <div class="salary-total p-3 d-flex align-item-center justify-content-center total col-md-6 col-12 text-center">
                 <h2 class="text-right align-self-end">صافي الراتب : <span class="border p-2 border-info rounded">{{$salary +$totalAllownce - $totalDeduction}}</span></h2>
         </div>
         <div class="p-3 checks-table col-md-6 col-12">
