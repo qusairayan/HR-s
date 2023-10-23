@@ -13,7 +13,6 @@ class showPdf extends Controller
     // dd($path);
     if (Storage::disk('local')->exists($path)) {
         $file = Storage::disk('local')->get($path);
-dd($file);
         // Set the appropriate HTTP response headers
         $headers = [
             'Content-Type' => 'application/pdf',
