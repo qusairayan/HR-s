@@ -348,8 +348,7 @@
                                 <h4 class="h3">Contract</h4>
 
                                 @if ($this->contract)
-                                    <embed src="/storage/contracts/{{ $this->contract }} type="application/pdf"
-                                        width="100%" height="600px" class="avatar-xxl mx-auto" />
+                                    <embed src="{{ route('viewContract', ['filename' => $this->contract]) }}" type="application/pdf" width="100%" height="600px" class="avatar-xxl mx-auto" />
                                         <a class="mb-4"style="color: #3892ff;" href="{{ route('viewContract', ['filename' => $this->contract]) }}" target="_blank">open Contract in new tab</a>
                                 @endif
 
