@@ -11,15 +11,14 @@ class showPdf extends Controller
 {
     $path = '/public/contracts/' . $filename; // Adjust the path to match your storage structure
     if (Storage::disk('local')->exists($path)) {
-        dd("ssa");
         $file = Storage::disk('local')->get($path);
         
         // Set the appropriate HTTP response headers
-        $headers = [
-            'Content-Type' => 'application/pdf',
-            'Content-Disposition' => 'inline; filename="' . $filename . '"',
-        ];
-        return response($file, 200, $headers);
+        // $headers = [
+        //     'Content-Type' => 'application/pdf',
+        //     'Content-Disposition' => 'inline; filename="' . $filename . '"',
+        // ];
+        return response($file, 200);
     } else {
     }
 }
