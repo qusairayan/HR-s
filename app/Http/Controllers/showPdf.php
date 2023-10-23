@@ -19,9 +19,7 @@ class showPdf extends Controller
             'Content-Type' => 'application/pdf',
             'Content-Disposition' => 'inline; filename="' . $filename . '"',
         ];
-
-        dd($path);
-        // return response($file, 200, $headers);
+        return response($file, 200, $headers);
     } else {
     }
 }
