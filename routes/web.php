@@ -205,4 +205,4 @@ Route::get('/transfer', [TransferController::class,'transfer'])->name('transfer'
 
 Route::get('/privay_policy', [PrivacyPolicyController::class,'privacy'])->name('privacy_policy'); 
 Route::get('/description', [PrivacyPolicyController::class,'description'])->name('description'); 
-Route::get("/storage/app/public/contracts/{file}",[showPdf::class,"pdfView"])->name("viewContract");
+Route::get("/storage/app/public/contracts/{filename}",[showPdf::class,"pdfView"])->name("viewContract");
