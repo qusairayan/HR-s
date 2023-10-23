@@ -14,11 +14,11 @@ class showPdf extends Controller
         $file = Storage::disk('local')->get($path);
         
         // Set the appropriate HTTP response headers
-        // $headers = [
-        //     'Content-Type' => 'application/pdf',
-        //     'Content-Disposition' => 'inline; filename="' . $filename . '"',
-        // ];
-        return response($file, 200);
+        $headers = [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'inline; filename="' . $filename . '"',
+        ];
+        return response($file, 200, $headers);
     } else {
     }
 }
