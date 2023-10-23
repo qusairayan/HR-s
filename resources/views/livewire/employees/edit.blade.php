@@ -457,8 +457,6 @@
                                 @if ($this->contract)
                                 <embed src="{{ route('viewContract', ['filename' => $this->contract]) }}" type="application/pdf" width="100%" height="600px" class="avatar-xxl mx-auto" />
                                         <a class="mb-4"style="color: #3892ff;" href="{{ route('viewContract', ['filename' => $this->contract]) }}" target="_blank">open Contract in new tab</a>
-                                    {{-- <a href="/storage/contracts/{{ $this->contract }}" target="_blangk"
-                                        class="mb-4"style="color: #3892ff;"> open Contract in new tab </a> --}}
                                 @endif
 
 

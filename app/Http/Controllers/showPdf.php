@@ -22,7 +22,7 @@ class showPdf extends Controller
 
         return response($file, 200, $headers);
     } else {
-        // Handle the case where the file doesn't exist.
+        dd("ee");
     }
 }
 }
