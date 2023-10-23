@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->date('date');
-            $table->double('onEmployee')->default(7.5);
-            $table->double('onCompany')->default(14,25);            
+            $table->float('onEmployee',8,2);
+            $table->float('onCompany',8,2);
             $table->timestamps();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate("cascade");
             
         });
     }

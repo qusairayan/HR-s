@@ -19,7 +19,8 @@ use Livewire\Component;
 class SocialSecurityController extends Component
 {
     use WithPagination;
-
+    private static $COMPANY_SOCIAL_SECURIT_DEDUCTION_RATE = 11;
+    private static $EMPLOYEE_SOCIAL_SECURIT_DEDUCTION_RATE = 5.5;
     public $paginator = 10;
     public $search = '';
     public $company = '';
@@ -51,13 +52,19 @@ class SocialSecurityController extends Component
 
 
         $exist=SocialSecurity::where('user_id','=',$this->user)->first();
-
-
         if(!$exist){
-
+            $userSalary = User::where('id',$this->user)->first()->only("salary");
+            $userSalary = $userSalary["salary"];
+            $Salary_percentage = $userSalary / 100;
             $currentMonth = date('Y-m-d');
-            $socialsecurity=new SocialSecurity(['user_id'=>$this->user,
-        'date'=>$currentMonth]);
+            $socialsecurity=new SocialSecurity(
+                [
+                    'user_id'=>$this->user,
+                    'date'=>$currentMonth,
+                    'onEmployee'=> $Salary_percentage * SocialSecurityController::$EMPLOYEE_SOCIAL_SECURIT_DEDUCTION_RATE,
+                    'onCompany'=>$Salary_percentage* SocialSecurityController::$COMPANY_SOCIAL_SECURIT_DEDUCTION_RATE,
+                ]
+    );
         $socialsecurity->save();
 
 

@@ -56,7 +56,9 @@
     border-bottom: 3px solid green;
     width: 50%;
 }
-
+.userSocialSecurity{
+    text-align:right !important;
+}
             .allownce-line{
                 text-align: center;
                 display: flex;
@@ -135,7 +137,7 @@
     <div style="padding:5mm; margin: bottom 25px;">
         <div class="row">
             <div class="column" style="width:20%">
-                <img src="/storage/company/{{ $image }}" height="70" width="160" />
+                {{-- <img src="/storage/company/{{ $image }}" height="70" width="160" /> --}}
 
             </div>
             <div class="column" style="width:70%">
@@ -270,15 +272,18 @@
     </div>
 
 
-
     <div class="totalDA">
         <div class="col-5 allownce-line"><span></span></div>
         <div class="col-2 d-flex align-item-center justify-content-center"><h4 class="m-0 align-self-end">المجموع = <span class="border p-1">{{$totalAllownce - $totalDeduction}}</span></h4></div>
         <div class="col-5 deduction-line"><span></span></div>
     </div>
-    <div class="tables row"> 
+
+
+
+    @php( $sum =(float)  $salary +(float)$totalAllownce - (float)$totalDeduction  - $userSocialSecurity) 
+        <div class="tables row"> 
         <div class="salary-total p-3 d-flex align-item-center justify-content-center total col-md-6 col-12 text-center">
-                <h2 class="text-right align-self-end">صافي الراتب : <span class="border p-2 border-info rounded">{{$salary +$totalAllownce - $totalDeduction}}</span></h2>
+            <h2 class="text-right align-self-end">صافي الراتب : <span class="border p-2 border-info rounded">{{$sum}}</span></h2>
         </div>
         <div class="p-3 checks-table col-md-6 col-12">
             <h2 class="text-center">الرواتب</h2>
@@ -307,7 +312,7 @@
             </table>
         </div>
         </div>
-
+        <h2 class="userSocialSecurity">{{$userSocialSecurity  ? "اقتطاع الضمان الاجتماعي".$userSocialSecurity : "لا يوجد بيانات ضمات اجتماعي للموظف : ".$employee   }}</h2>
 
 </body>
 </html>

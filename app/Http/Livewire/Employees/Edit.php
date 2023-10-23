@@ -12,6 +12,7 @@ use App\Models\Bank;
 use App\Models\PartTime;
 use App\Models\Role;
 use App\Models\Salary;
+use App\Models\SocialSecurity;
 use App\Models\User;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -21,6 +22,8 @@ use Livewire\WithFileUploads;
 
 class Edit extends Component
 {
+    private static $COMPANY_SOCIAL_SECURIT_DEDUCTION_RATE = 11;
+    private static $EMPLOYEE_SOCIAL_SECURIT_DEDUCTION_RATE = 5.5;
     use WithFileUploads;
 
     public $user;
@@ -322,8 +325,14 @@ class Edit extends Component
         }
 
         $this->email = $this->email ?: null;
-
-
+        if($this->salary !== $this->user->salary){
+            $Salary_percentage = $this->salary / 100;
+             SocialSecurity::where("user_id",$this->user->id)->update([
+                "date"=>date('Y-m-d'),
+                "onEmployee"=>$Salary_percentage * self::$EMPLOYEE_SOCIAL_SECURIT_DEDUCTION_RATE,
+                "onCompany"=>$Salary_percentage* self::$COMPANY_SOCIAL_SECURIT_DEDUCTION_RATE,
+             ]);
+        }
         $this->user->update([
             'email' => $this->email,
             'username' => $this->username,
@@ -343,7 +352,6 @@ class Edit extends Component
             'address' => $this->address,
             'ID_no' => $this->ID_no,
             'status' => $this->status,
-            'unemployment_date' => $this->unemployment,
         ]);
 
 

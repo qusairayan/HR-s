@@ -192,19 +192,22 @@
 
                             <td class="border-0 fw-bold">
                                 <span class="fw-normal">
-                                    {{  ($soc->onEmployee /100)*$soc->salary  }} JD
+                                    {{$soc->onEmployee}}
+                                    {{-- {{  ($soc->onEmployee /100)*$soc->salary  }} JD --}}
                                 </span>
                             </td>
 
                             <td class="border-0 fw-bold">
                                 <span class="fw-normal">
-                                    {{ ($soc->onCompany /100)*$soc->salary }} JD
+                                    {{$soc->onCompany}}
+                                    {{-- {{ ($soc->onCompany /100)*$soc->salary }} JD --}}
                                 </span>
                             </td>
 
                             <td class="border-0 fw-bold">
                                 <span class="fw-normal">
-                                    {{(($soc->onEmployee /100)*$soc->salary)+ ($soc->onCompany /100)*$soc->salary}} JD
+                                    {{ $soc->onEmployee + $soc->onCompany }}
+                                    {{-- {{(($soc->onEmployee /100)*$soc->salary)+ ($soc->onCompany /100)*$soc->salary}} JD --}}
                                 </span>
                             </td>
 

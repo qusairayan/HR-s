@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Livewire\Component;
 use App\Models\PartTime;
+use App\Models\SocialSecurity;
 use App\Models\User;
 use Mpdf\Mpdf;
 
@@ -40,9 +41,7 @@ class SlipReportpdf extends Component
             $checkComp='check_marvell';
             $image='marvellLogo.png';
         }
-
         $checks = DB::connection('LYONDB')->table($checkComp)->where('Name_To','LIKE',$employee."-%")->where("date", 'LIKE', $date . '-%')->get();
-
         $mpdf = new Mpdf([
             'mode' => 'utf-8',
             'format' => 'A4-L',
@@ -51,12 +50,13 @@ class SlipReportpdf extends Component
             'margin_top' => 10, 
             'margin_bottom' => 10, 
         ]);
-            $mpdf->WriteHTML(view('livewire.salaries.SlipReport',["allownce"=>$allownce, "deduction"=>$deduction,'checks' => $checks,"salary"=>$salary,"employee"=>$employee,'employee_id' => $employee_id,'company' => $company,'image' => $image,'department' => $department,'position' => $position,'date'=>$date]));
-            $mpdf->showImageErrors = true;
-            $mpdf->Output('document.pdf', 'I');
-            exit;
+        $userSocialSecurity =  SocialSecurity::where("user_id",$id)->first();
+        $userSocialSecurity = $userSocialSecurity ? $userSocialSecurity->onEmployee : 0;
+        $mpdf->WriteHTML(view('livewire.salaries.SlipReport',["allownce"=>$allownce, "deduction"=>$deduction,'checks' => $checks,"salary"=>$salary,"employee"=>$employee,'employee_id' => $employee_id,'company' => $company,'image' => $image,'department' => $department,'position' => $position,'date'=>$date,"userSocialSecurity" => $userSocialSecurity]));
+        $mpdf->showImageErrors = true;
+        $mpdf->Output('document.pdf', 'I');
+        exit;
     }
-
     public function render()
     {
         return view('livewire.salaries.SlipReport');
