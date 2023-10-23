@@ -20,9 +20,9 @@ class showPdf extends Controller
             'Content-Disposition' => 'inline; filename="' . $filename . '"',
         ];
 
-        return response($file, 200, $headers);
+        dd($path);
+        // return response($file, 200, $headers);
     } else {
-        dd("ee");
     }
 }
 }
