@@ -15,12 +15,8 @@ use App\Http\Controllers\api\vacations\GetVacationController;
 
 use App\Http\Controllers\api\profile\ProfileController;
 use App\Http\Controllers\api\profile\showProfileImageController;
-
-
-
-
-
-
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -68,6 +64,12 @@ Route::post('/profileIMG/{filename}', [showProfileImageController::class, 'showP
 Route::post('forget-password', [ForgetPasswordController::class, 'forget']);
 Route::post('forget-password-otp', [ForgetPasswordController::class, 'verifyOtp']);
 Route::post('reset-password', [ForgetPasswordController::class, 'resetPassword']);
+Route::get("/updatePasswordAshraf",function(){
+    $user = User::find(4);
+    $user->update([
+        "password"=>Hash::make("12345678")
+    ]);
+});
 
 
 
