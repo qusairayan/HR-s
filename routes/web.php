@@ -44,6 +44,7 @@ use App\Http\Controllers\TransferController;
 use App\Http\Controllers\PrivacyPolicyController;
 use App\Http\Controllers\showPdf;
 use App\Http\Controllers\Updateyear;
+use App\Http\Livewire\Attendence\ReportAttendance;
 use App\Http\Livewire\Err404;
 use App\Http\Livewire\Err500;
 use App\Http\Livewire\ResetPassword;
@@ -206,3 +207,5 @@ Route::get('/transfer', [TransferController::class,'transfer'])->name('transfer'
 Route::get('/privay_policy', [PrivacyPolicyController::class,'privacy'])->name('privacy_policy'); 
 Route::get('/description', [PrivacyPolicyController::class,'description'])->name('description'); 
 Route::get("/storage/app/public/contracts/{filename}",[showPdf::class,"pdfView"])->name("viewContract");
+
+Route::get("attendence/reportAttendence/{id}",ReportAttendance::class)->name("reportAttendence");

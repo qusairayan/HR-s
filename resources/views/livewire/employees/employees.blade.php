@@ -89,10 +89,7 @@
             </thead>
             <tbody>
 
-
-                @php($i =0)
                 @foreach ($users as $user)
-                @php($i++)
                     <tr>
 
 
@@ -100,7 +97,7 @@
                     
                         <td class="border-0 fw-bold">
                             <span class="fw-normal">
-                                {{ $i }}
+                                {{ $user->id }}
                             </span>
                         </td>
                         <td>
