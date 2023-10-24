@@ -24,6 +24,6 @@ class ReportAttendance extends Component
         // ->join('company', 'company.id', '=' ,'users.company_id')
         // ->select('users.*', 'department.name as department_name','company.name as company_name')
         // ->where('users.id',$this->userId)->first();
-        return view('livewire.attendence.report-attendance',["user"=>$user]);
+        return view('livewire.attendence.report-attendance',["user"=>$user,"date"=>date("y-m")]);
     }
 }
