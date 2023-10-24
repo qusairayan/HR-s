@@ -2,7 +2,7 @@
 <style>
     .information-user{
         background-color: hsl(0deg 0% 100%);
-        /* height: 200px; */
+        margin: 2rem 0;
         padding: 2rem;
         border-radius: 25px;
         display: flex;
@@ -79,7 +79,7 @@
                                         <tr>
                                             <td>{{ $item->check_in }}</td>
                                             <td>{{ $item->check_in }}</td>
-                                            <td>{{ $item->check_in }}</td>
+                                            <td>{{$item->on =="chckin" ? $item->amount : "" }}</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -97,7 +97,7 @@
                                         <tr>
                                             <td>{{ $item->check_out }}</td>
                                             <td>{{ $item->check_out }}</td>
-                                            <td>{{ $item->check_out }}</td>
+                                            <td>{{$item->on =="checkout" ? $item->amount : "" }}</td>
                                         </tr>
                                     </tbody>
                                 </table>
