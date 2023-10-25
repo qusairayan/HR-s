@@ -1,43 +1,67 @@
 <?php
-
 namespace App\Http\Livewire\Attendence;
-
 use App\Models\Attendence;
 use App\Models\Lateness;
+use App\Models\Schedules;
 use App\Models\User;
 use Illuminate\Support\Facades\Date;
 use Livewire\Component;
-
+use Mpdf\Mpdf;
 class ReportAttendance extends Component
 {
     public $userId;
     public $date;
-    public function mount(string $id)
+    public function mount($id, $date)
     {
-        $this->userId = $id;
-        $this->date = date("y-m");
+        $this->userId =$id ;
+        
+        $this->date = $date;
     }
     public function render()
     {
-        $user = User::
-          join('department', 'users.department_id', '=', 'department.id')
-        ->join('company', 'company.id', '=' ,'users.company_id')
-        ->select('users.*', 'department.name as department_name','company.name as company_name')
-        ->where('users.id',$this->userId)->first();
- 
-
-
-        
+        $user=User::where('id','=',$this->userId)->first();
+        $employee=$user->name;
+        $image=$user->image;
+        $position=$user->position;
+        $employee_id=$user->id;
+        $company=$user->company->name;
+        $department=$user->department->name;
         $attendanceList = Attendence::
-        //   leftJoin('lateness','attendence.id','=','lateness.attendence_id')
           leftJoin('overtime','attendence.id','=','overtime.attendence_id')
-        //   ->select("attendence.*","lateness.amount as late_amount","lateness.on as late_type","lateness.deduction as late_deduction","overtime.amount as overtime_amount","overtime.allownce as overtime_allownce")
-          ->select("attendence.*","overtime.amount as overtime_amount","overtime.allownce as overtime_allownce")
-        ->where('attendence.user_id',$this->userId)->get();
-        $lateness = Lateness::where("attendence_id",1)->get();
-//  dd($attendanceList);
-        
-        // $attendanceList = Attendence::where('user_id',$this->userId)->get();
-        return view('livewire.attendence.report-attendance',["user"=>$user,"date"=>$this->date,'attendanceList'=>$attendanceList]);
+          ->leftJoin('schedule','attendence.date','=','schedule.date')
+          ->select(
+            "attendence.*",
+            "overtime.amount as overtime_amount",
+            "overtime.allownce as overtime_allownce",
+            "schedule.from as work_from",
+            "schedule.to as work_to")
+        ->where('attendence.user_id',$this->userId)
+        ->where("attendence.date",'LIKE',$this->date.'-%')
+        ->get();
+            $attendanceList = $attendanceList->map(function ($record) {
+              $lateness = Lateness::where("attendence_id",$record->id)->get();
+              if($lateness->count()>0){
+                foreach($lateness as $lat){
+                  if($lat->on == "cehckIn"){
+                    $record->amount_checkin = $lat->amount;
+                  }else{
+                    $record->amount_checkout = $lat->amount;
+                    return $record;
+                  }
+                }
+              }else return $record;
+            });
+        $mpdf = new Mpdf([
+          'mode' => 'utf-8',
+          'format' => 'A4-L',
+          'margin_left' => 10, 
+          'margin_right' => 10, 
+          'margin_top' => 10, 
+          'margin_bottom' => 10, 
+      ]);
+      $mpdf->WriteHTML(view('livewire.attendence.report-attendance',["date"=>$this->date,'attendanceList'=>$attendanceList,"employee"=>$employee,'employee_id' => $employee_id,'company' => $company,'image' => $image,'department' => $department,'position' => $position]));
+      $mpdf->showImageErrors = true;
+      $mpdf->Output('document.pdf', 'I');
+      exit;
     }
 }
