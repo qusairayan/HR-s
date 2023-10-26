@@ -59,7 +59,7 @@ class ReportAttendance extends Component
           'margin_top' => 10, 
           'margin_bottom' => 10, 
       ]);
-      dd($attendanceList);
+     
       $mpdf->WriteHTML(view('livewire.attendence.report-attendance',["date"=>$this->date,'attendanceList'=>$attendanceList,"employee"=>$employee,'employee_id' => $employee_id,'company' => $company,'image' => $image,'department' => $department,'position' => $position]));
       $mpdf->showImageErrors = true;
       $mpdf->Output('document.pdf', 'I');
