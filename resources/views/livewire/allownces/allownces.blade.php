@@ -186,7 +186,6 @@
                             @if($allownce->status == 0)
                             <div class="btn-group">
                                 <button class="btn btn-success" data-bs-toggle="modal"
-                                    data-bs-target="#modal-notification"
                                     wire:click="approve({{ $allownce->id }})" type="button">Approve</button>
                             </div>
 

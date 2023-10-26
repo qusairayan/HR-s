@@ -189,13 +189,10 @@
                                 {{ $deduction->details ? $deduction->details : $deduction->violation_reason }}
                             </span>
                         </td>
-
                         <td class="border-0 fw-bold">
-
                             @if($deduction->status == 0 && !$deduction->violation_number)
                             <div class="btn-group">
                                 <button class="btn btn-success" data-bs-toggle="modal"
-                                    data-bs-target="#modal-notification"
                                     wire:click="approve({{ $deduction->id }})" type="button">Approve</button>
                             </div>
 
@@ -301,7 +298,6 @@
                         <h4 class="h5 py-2">type:</h4>
 
                         <div class="input-group mt-1">
-                          
                             <select class="mt-2 mb-2 form-control" wire:model="type">
                                 <option value=""  hidden selected>Deductions type</option>
 
