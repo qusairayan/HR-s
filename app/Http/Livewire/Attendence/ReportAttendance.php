@@ -39,6 +39,7 @@ class ReportAttendance extends Component
         ->where("attendence.date",'LIKE',$this->date.'-%')
         ->get();
             $attendanceList = $attendanceList->map(function ($record) {
+              echo "this";
               $lateness = Lateness::where("attendence_id",$record->id)->get();
               if($lateness->count()>0){
                 foreach($lateness as $lat){
@@ -48,7 +49,7 @@ class ReportAttendance extends Component
                   }else{
                     $record->amount_checkout = $lat->amount;
                   }
-                  return $record;
+                  // return $record;
                 }
               }else return $record;
             });
