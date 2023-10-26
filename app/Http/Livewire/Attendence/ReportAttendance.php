@@ -19,7 +19,7 @@ class ReportAttendance extends Component
     }
     public function render()
     {
-        $user=User::where('id','=',$this->userId)->first();
+        /* $user=User::where('id','=',$this->userId)->first();
         $employee=$user->name;
         $image=$user->image;
         $position=$user->position;
@@ -63,6 +63,6 @@ class ReportAttendance extends Component
       $mpdf->WriteHTML(view('livewire.attendence.report-attendance',["date"=>$this->date,'attendanceList'=>$attendanceList,"employee"=>$employee,'employee_id' => $employee_id,'company' => $company,'image' => $image,'department' => $department,'position' => $position]));
       $mpdf->showImageErrors = true;
       $mpdf->Output('document.pdf', 'I');
-      exit;
+      exit; */
     }
 }
