@@ -23,6 +23,12 @@
         </div>
         
     </div>
+
+
+  
+
+
+
     <div class="table-settings mb-4">
         <div class="row align-items-center justify-content-between">
             <div class="col col-md-6 col-lg-3 col-xl-4">
@@ -55,6 +61,20 @@
     
             </div>
 
+
+            <div class="col-md-3 col-12 btn-toolbar mb-2 mb-md-0" >
+                <a data-bs-toggle="modal" data-bs-target="#modal-addTypellownces"
+                    class="btn btn-sm btn-gray-800 d-inline-flex align-items-center">
+                    <svg class="icon icon-xs me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 6v6m0 0v6m0-6h6m-6 0H6">
+                        </path>
+                    </svg>
+                    Add Allownces Type
+                </a>
+        
+            </div>
             <div class="col-4 col-md-2 col-xl-1 ps-md-0 text-end">
                 <div class="dropdown">
                     <button class="btn btn-link text-dark dropdown-toggle dropdown-toggle-split m-0 p-1"
@@ -136,14 +156,14 @@
              
                         <td class="border-0 fw-bold">
                             <span class="fw-normal">
-                               @if ($allownce->type )
-                                    @if($allownce->type ===1) {{'Overtime weekdays'}}
+                               @if ($allownce->type ){{$allownce->type}}
+                                    {{-- @if($allownce->type ===1) {{'Overtime weekdays'}}
                                     @elseif($allownce->type ===2){{"Overtime weekends"}}
                                         @elseif($allownce->type ===3){{"Rewards"}}
-                                        @elseif($allownce->type ===4){{"Transportation"}}
+                                        @elseif($allownce->type ===4){{"Transportation"}} --}}
 
-                                        @else {{'other'}}
-                                    @endif
+                                        {{-- @else {{'other'}} --}}
+                                    {{-- @endif --}}
 
                                @else
                                Traffic Violation
@@ -270,13 +290,17 @@
 
                         <div class="input-group mt-1">
                             <select class="w-75 mt-2 mb-2 form-control" wire:model="type">
-                                <option value="1">Overtime weekdays</option>
+                                <option selected disabled>Allownces type</option>
+                                @foreach ($types as $item)
+                                <option value={{$item}}>{{$item}}</option>
+                                @endforeach
+                                {{-- <option value="1">Overtime weekdays</option>
                                 <option value="2">Overtime weekends</option>
                                 <option value="3">Rewards</option>
-                                <option value="4">Transportation</option>
+                                <option value="4">Transportation</option> --}}
                             </select>
                         </div>
-                        @error('detail')
+                        @error('type')
                         <div class="invalid-feedback py-2"> {{ $message }} </div>
                     @enderror
                     </div>
@@ -297,6 +321,58 @@
 
 
 
+{{-- add type allowances --}}
+
+
+<div wire:ignore.self class="modal fade" id="modal-addTypellownces" tabindex="-1" role="dialog"
+aria-labelledby="modal-addTypellownces" aria-hidden="true" wire:ignore>
+<div class="modal-dialog modal-info modal-dialog-centered" role="document">
+    <div class="modal-content bg-gradient-secondary" style="background: #13223d">
+        <button type="button" class="btn-close theme-settings-close fs-6 ms-auto" data-bs-dismiss="modal"
+            aria-label="Close"></button>
+        <div class="modal-header">
+            <p class="modal-title text-gray-200" id="modal-title-addTypellownces">
+                Add allowances Type
+            </p>
+        </div>
+
+        <form wire:submit.prevent="addTypeAllownces">
+
+            <div class="modal-body text-white">
+                <div class="py-1 text-start">
+
+                    <div class="py-1 text-start">
+
+                        <h4 class="h5 py-2">Type allowances:</h4>
+
+                        <div class="input-group mt-1">
+                            <input wire:model="typeAllownces" type="text" class="form-control">
+                        </div>
+                        @error('typeAllownces')
+                        <div class="invalid-feedback py-2"> {{ $message }} </div>
+                    @enderror
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-sm btn-success">Add Deduction Type</button>
+            </div>
+        </form>
+
+        <div style="padding: 1rem;width: 90%;margin:10px auto;background-color: white;overflow-y: scroll;max-height:100px" class="box-item-dedction">
+            @foreach($types as $item)
+            <div>{{$item}}</div>
+            @endforeach
+        </div>
+
+
+
+    </div>
+</div>
+</div>
+{{-- add type allowances --}}
 
 
 

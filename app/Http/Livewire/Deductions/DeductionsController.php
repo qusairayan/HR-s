@@ -10,13 +10,14 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\Deductions;
 use App\Models\TrafficViolations;
 use App\Models\Allownce;
+use App\Models\deduction_allowances_types;
 use App\Models\User;
 use Livewire\WithPagination;
 
 use Livewire\Component;
 
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Validator;
 
 class DeductionsController extends Component
 {
@@ -32,13 +33,14 @@ class DeductionsController extends Component
     public $from = '';
     public $to = '';
     public $department = '';
+    public $typeDeduction = '';
 
 
     protected $rules = [
         'amount' => 'required|numeric',
         'userId' => 'required|numeric',
         'date' => 'required|date',
-        'type' => 'required|numeric',
+        'type' => 'required|string',
     ];
 
 
@@ -93,7 +95,8 @@ class DeductionsController extends Component
                 $mergedResults->count(),
                 10
             );
-        return view('livewire.deductions.deductions', compact('mergedPaginatedResults','users'));
+            $types = deduction_allowances_types::where("type",0)->pluck("name")->toArray();
+            return view('livewire.deductions.deductions', compact('mergedPaginatedResults','users',"types"));
     }
     public function addDeduction(){
         $err = $this->validate();
@@ -104,5 +107,15 @@ class DeductionsController extends Component
              "type"=>$this->type  ,
         ]);
         return redirect("deductions");
+    }
+    public function addTypeDeduction(){
+        $this->rules = [
+            'typeDeduction'=>"required|string|min:3|max:255|unique:deduction_allowances_types,name",
+        ];
+        $this->validate();
+        deduction_allowances_types::create([
+            'type'=>false,
+            "name"=>$this->typeDeduction,
+        ]);
     }
 }
