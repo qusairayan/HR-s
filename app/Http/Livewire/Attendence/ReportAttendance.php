@@ -42,7 +42,7 @@ class ReportAttendance extends Component
               $lateness = Lateness::where("attendence_id",$record->id)->get();
               if($lateness->count()>0){
                 foreach($lateness as $lat){
-                  echo "this";
+                  dd("this");
                   if($lat->on == "cehckIn"){
                     $record->amount_checkin = $lat->amount;
                   }else{
