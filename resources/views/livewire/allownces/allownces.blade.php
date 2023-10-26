@@ -290,7 +290,7 @@
 
                         <div class="input-group mt-1">
                             <select class="w-75 mt-2 mb-2 form-control" wire:model="type">
-                                <option selected disabled>Allownces type</option>
+                                <option value=""  hidden selected>Allownces type</option>
                                 @foreach ($types as $item)
                                 <option value={{$item}}>{{$item}}</option>
                                 @endforeach

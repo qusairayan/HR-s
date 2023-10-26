@@ -301,13 +301,16 @@
                         <h4 class="h5 py-2">type:</h4>
 
                         <div class="input-group mt-1">
-                            <select class="w-75 mt-2 mb-2 form-control" wire:model="type">
-                                @foreach ($types as $item)
-                                <option value={{$item}}>{{$item}}</option>
+                          
+                            <select class="mt-2 mb-2 form-control" wire:model="type">
+                                <option value=""  hidden selected>Deductions type</option>
+
+                                @foreach($types as $item)
+                                <option value="{{$item}}">{{$item}}</option>
                                 @endforeach
                             </select>
                         </div>
-                        @error('detail')
+                        @error('type')
                         <div class="invalid-feedback py-2"> {{ $message }} </div>
                     @enderror
                     </div>
