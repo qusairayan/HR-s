@@ -208,5 +208,5 @@ Route::get('/privay_policy', [PrivacyPolicyController::class,'privacy'])->name('
 Route::get('/description', [PrivacyPolicyController::class,'description'])->name('description'); 
 Route::get("/storage/app/public/contracts/{filename}",[showPdf::class,"pdfView"])->name("viewContract");
 
-Route::get("attendence/reportAttendence/{id}/{date}",ReportAttendance::class)->name("reportAttendence");
+Route::get("attendence/reportAttendence/test/{id}/{date}",ReportAttendance::class)->name("reportAttendence");
 
