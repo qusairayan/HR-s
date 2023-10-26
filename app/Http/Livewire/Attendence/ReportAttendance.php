@@ -44,12 +44,15 @@ class ReportAttendance extends Component
                 foreach($lateness as $lat){
                   if($lat->on == "cehckIn"){
                     $record->amount_checkin = $lat->amount;
+                    if($lateness->count() == 1) return $record;
                   }else{
                     $record->amount_checkout = $lat->amount;
+                    return $record;
                   }
                 }
-              }else return $record;
+              }
             });
+            dd($attendanceList);
         $mpdf = new Mpdf([
           'mode' => 'utf-8',
           'format' => 'A4-L',
