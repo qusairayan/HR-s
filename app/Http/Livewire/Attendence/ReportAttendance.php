@@ -46,8 +46,8 @@ class ReportAttendance extends Component
                     $record->amount_checkin = $lat->amount;
                   }else{
                     $record->amount_checkout = $lat->amount;
-                    return $record;
                   }
+                  return $record;
                 }
               }else return $record;
             });
