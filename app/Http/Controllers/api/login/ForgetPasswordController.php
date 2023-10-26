@@ -137,27 +137,29 @@ $validator = Validator::make($request->all(), [
     'password' => 'required|min:8',
     'email' => 'required|email|exists:users,email'
 ]);
-
 if ($validator->fails()) {
     return response()->json([
         'success' => false,
         'message' => 'Invalid credentials.',
         'errors' => $validator->errors(),
-        ], 201);
+        ], 400);
 }
 $email=$request->input('email');
-$Password = Hash::make(request()->input('newPassword'));
+
+// return response()->json(request()->input('password'));
+$Password = Hash::make(request()->input('password'));
+
 $token=$request->input('token');
 
-$user=User::where('email','LIKE',$email)->first();
-
+$user=User::where('email',$email)->first();
+// return response()->json($user);
 if (Password::broker()->tokenExists($user, $token)) {
 $user->password=$Password;
 $user->save();
 return response()->json([
     'success' => true,
     'message' => 'Password has been changed successfully.',
-    ], 201); 
+    ], 200); 
 }
 else{
     return response()->json([
