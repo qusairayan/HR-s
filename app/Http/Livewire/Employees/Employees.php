@@ -20,7 +20,7 @@ class Employees extends Component
             ->leftjoin('company', 'company.id', '=' ,'users.company_id')
             ->select('users.*', 'department.name as department_name','company.name as company_name')
             ->where('users.name', 'LIKE', '%' . $this->search . '%')
-            ->latest()
+            ->orderBy('id', 'DESC')
             ->paginate(10); // Adjust the pagination limit as per your requirement
         return view('livewire.employees.employees', ['users' => $users]);
     }
