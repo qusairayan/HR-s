@@ -18,7 +18,7 @@ class CreateDeductionsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
 
-            $table->integer('type');
+            $table->string('type');
             $table->integer('amount');
 
             $table->date('date');

@@ -17,7 +17,7 @@ class CreateAllowncesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
 
-            $table->integer('type')->nullable();
+            $table->string('type')->nullable();
             $table->integer('amount');
 
             $table->date('date');
