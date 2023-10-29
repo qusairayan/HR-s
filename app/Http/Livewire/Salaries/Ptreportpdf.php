@@ -28,7 +28,6 @@ class Ptreportpdf extends Component
 
         $checkComp='';
         $image='';
-
         if($company == 'Lyon Travel'){
             $checkComp='check_lyon';
             $image='lyontravell.png';
@@ -43,7 +42,7 @@ class Ptreportpdf extends Component
         }
 
         $checks = DB::connection('LYONDB')->table($checkComp)->where('Name_To','LIKE',$employee)->whereBetween('Date',[$from,$to])->orderBy("date")->get()->toArray();
-
+        
         if ($from) {
             $partTimeQuery = $partTimeQuery->where('from', '>=', $from);
         }
@@ -88,7 +87,9 @@ class Ptreportpdf extends Component
                 $information[$count]['detail' ] = $item["detail"];
             }
         }
-        $checks[0] = (array) $checks[0];
+        for($i=0;$i<count($checks);$i++){
+            $checks[$i] = (array) $checks[0];
+        }
         if($checks){
             foreach($checks as $item){
                 $count--;
