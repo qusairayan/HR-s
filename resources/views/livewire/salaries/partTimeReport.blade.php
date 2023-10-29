@@ -61,7 +61,7 @@
     <div style="padding:5mm; margin: bottom 25px;">
         <div class="row">
             <div class="column" style="width:20%">
-                <img src="/storage/company/{{ $image }}" height="70" width="160" />
+                {{-- <img src="/storage/company/{{ $image }}" height="70" width="160" /> --}}
 
             </div>
             <div class="column" style="width:70%">
@@ -131,8 +131,7 @@
     <br>
     <table id="account">
         <tr>
-            <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px; width: 11%">From
-            </th>
+            <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px; width: 11%">From</th>
             <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 22%">To</th>
             <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 14%">Debit</th>
             <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 14%">Credit</th>
@@ -159,9 +158,11 @@
             </tr>
             {{ $pt->id }}
         @endforeach
+        
         <tr>
             <td style="text-align: center;padding-top: 8px; width: 10%" colspan="5"></td>
         </tr>
+
         @foreach ($checks as $check)
             @php($total -= $check->Value)
             @php($totalCredit +=$check->Value)
@@ -178,6 +179,33 @@
                 </td>
 
             </tr>
+<tr>
+    
+    @foreach ($dedction as $item)
+    @php($total -=$item->amount)
+    @php($totalCredit +=$item->amount)
+        <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$item->date}}</td>
+        <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$item->type}}</td>
+        <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">-</td>
+        <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$item->amount}}</td>
+        <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$total}}</td>
+        <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$item->detail}}</td>
+    @endforeach
+</tr>
+<tr>
+    @foreach ($allownce as $item)
+    @php($total +=$item->amount)
+    @php($totalDebit +=$item->amount)
+        <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$item->date}}</td>
+        <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$item->type}}</td>
+        <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$item->amount}}</td>
+        <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">-</td>
+        <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$total}}</td>
+        <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$item->detail}}</td>
+    @endforeach
+</tr>
+
+            
             {{ $check->id }}
         @endforeach
         @if (count($checks) > 0 || count($partTime) > 0)
@@ -205,6 +233,9 @@
  
             </tr>
         @endif
+
+
+
 
     </table>
 </body>

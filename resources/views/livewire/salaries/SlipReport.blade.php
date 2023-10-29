@@ -216,12 +216,7 @@
                 @php($totalAllownce+=$item->amount)
                     <tr>
                         <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">
-                            @if($item->type ===1) {{'العمل الاضافي بالايام العاديه'}}
-                                        @elseif($item->type ===2){{"مكافأت"}}
-                                        @elseif($item->type ===3){{"بدل مواصلات"}}
-                                        @elseif($item->type ===4){{"العمل الاضافي ايام العطل"}}
-                                        @else {{'other'}}
-                                    @endif
+                            {{$item->type}}
                                 </td>
                         <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$item->amount}}</td>
                         <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$item->date}}</td>
@@ -249,12 +244,7 @@
             @php($totalDeduction+=$item->amount)
                 <tr>
                     <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">
-                        @if($item->type ===1) {{'lateness'}}
-                        @elseif($item->type ===2){{"Social Security"}}
-                        @elseif($item->type ===3){{"Tax"}}
-                        @elseif($item->type ===4){{"Loans"}}
-                        @else {{'other'}}
-                        @endif
+                        {{$item->type}}
                     </td>
                     <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$item->amount}}</td>
                     <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$item->date}}</td>

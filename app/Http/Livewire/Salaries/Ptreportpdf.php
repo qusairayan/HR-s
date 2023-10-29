@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire\Salaries;
 
+use App\Models\Allownce;
+use App\Models\Deductions;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Livewire\Component;
@@ -59,7 +61,9 @@ class Ptreportpdf extends Component
             'margin_top' => 10, 
             'margin_bottom' => 10, 
         ]);
-        $mpdf->WriteHTML(view('livewire.salaries.partTimeReport', ['partTime' => $partTime,'checks' => $checks,'employee' => $employee,'employee_id' => $employee_id,'company' => $company,'image' => $image,'department' => $department,'position' => $position,'from'=>$from,'to'=>$to]));
+        $dedction = Deductions::where("user_id",$id)->get();
+        $allownce = Allownce::where("user_id",$id)->get();
+        $mpdf->WriteHTML(view('livewire.salaries.partTimeReport', ['partTime' => $partTime,'checks' => $checks,'employee' => $employee,'employee_id' => $employee_id,'company' => $company,'image' => $image,'department' => $department,'position' => $position,'from'=>$from,'to'=>$to,"dedction"=>$dedction,"allownce"=>$allownce]));
 
         $mpdf->Output('document.pdf', 'I');
     }
