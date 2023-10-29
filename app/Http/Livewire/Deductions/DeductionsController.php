@@ -117,5 +117,6 @@ class DeductionsController extends Component
             'type'=>false,
             "name"=>$this->typeDeduction,
         ]);
+        return redirect()->route("deductions");
     }
 }

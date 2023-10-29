@@ -291,7 +291,7 @@
                             <select class="w-75 mt-2 mb-2 form-control" wire:model="type">
                                 <option value=""  hidden selected>Allownces type</option>
                                 @foreach ($types as $item)
-                                <option value={{$item}}>{{$item}}</option>
+                                <option value="{{$item}}">{{$item}}</option>
                                 @endforeach
                                 {{-- <option value="1">Overtime weekdays</option>
                                 <option value="2">Overtime weekends</option>

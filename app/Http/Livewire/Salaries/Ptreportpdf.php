@@ -10,6 +10,7 @@ use Livewire\Component;
 use App\Models\PartTime;
 use App\Models\User;
 use Mpdf\Mpdf;
+use stdClass;
 
 class Ptreportpdf extends Component
 {
@@ -41,7 +42,7 @@ class Ptreportpdf extends Component
             $image='marvellLogo.png';
         }
 
-        $checks = DB::connection('LYONDB')->table($checkComp)->where('Name_To','LIKE',$employee)->whereBetween('Date',[$from,$to])->get();
+        $checks = DB::connection('LYONDB')->table($checkComp)->where('Name_To','LIKE',$employee)->whereBetween('Date',[$from,$to])->orderBy("date")->get()->toArray();
 
         if ($from) {
             $partTimeQuery = $partTimeQuery->where('from', '>=', $from);
@@ -61,9 +62,54 @@ class Ptreportpdf extends Component
             'margin_top' => 10, 
             'margin_bottom' => 10, 
         ]);
-        $dedction = Deductions::where("user_id",$id)->get();
-        $allownce = Allownce::where("user_id",$id)->get();
-        $mpdf->WriteHTML(view('livewire.salaries.partTimeReport', ['partTime' => $partTime,'checks' => $checks,'employee' => $employee,'employee_id' => $employee_id,'company' => $company,'image' => $image,'department' => $department,'position' => $position,'from'=>$from,'to'=>$to,"dedction"=>$dedction,"allownce"=>$allownce]));
+        $dedction = Deductions::where("user_id",$id)->orderBy("date")->get()->toArray();
+        $allownce = Allownce::where("user_id",$id)->orderBy("date")->get()->toArray();
+
+
+        $information = [];
+        $count = count($checks) +count($allownce) +count($dedction);
+        if($dedction){
+            foreach($dedction as $item){
+                $count--;
+                $information[$count]['transaction']    = "dedction";
+                $information[$count]['date']    = $item["date"];
+                $information[$count]['type']    = $item["type"];
+                $information[$count]['amount']  = $item["amount"];
+                $information[$count]['detail' ] = $item["detail"];
+            }
+        }
+        if($allownce){
+            foreach($allownce as $item){
+                $count--;
+                $information[$count]['transaction']    ="allownce";
+                $information[$count]['date']    = $item["date"];
+                $information[$count]['type']    = $item["type"];
+                $information[$count]['amount']  = $item["amount"];
+                $information[$count]['detail' ] = $item["detail"];
+            }
+        }
+        $checks[0] = (array) $checks[0];
+        if($checks){
+            foreach($checks as $item){
+                $count--;
+                $information[$count]['transaction']    ="checks";
+                $information[$count]['date']    = $item["Date"];
+                $information[$count]['type']    = $item["Payment_Method"];
+                $information[$count]['amount']  = $item["Value"];
+                $information[$count]['detail' ] = $item["check_details"];
+            }
+        }
+        usort($information,function($a,$b){
+            $dateA = strtotime($a["date"]);
+            $dateB = strtotime($b["date"]);
+            if ($dateA == $dateB) {
+                return 0;
+            }
+            return ($dateA < $dateB) ? -1 : 1;
+        });
+        // dd($information);
+        // $mpdf->WriteHTML(view('livewire.salaries.partTimeReport', ['partTime' => $partTime,'checks' => $checks,'employee' => $employee,'employee_id' => $employee_id,'company' => $company,'image' => $image,'department' => $department,'position' => $position,'from'=>$from,'to'=>$to,"dedction"=>$dedction,"allownce"=>$allownce]));
+        $mpdf->WriteHTML(view('livewire.salaries.partTimeReport', ['partTime' => $partTime,'information' => $information,'employee' => $employee,'employee_id' => $employee_id,'company' => $company,'image' => $image,'department' => $department,'position' => $position,'from'=>$from,'to'=>$to]));
 
         $mpdf->Output('document.pdf', 'I');
     }

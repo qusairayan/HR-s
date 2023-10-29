@@ -71,6 +71,7 @@ public function addTypeAllownces(){
         'type'=>true,
         "name"=>$this->typeAllownces,
     ]);
+    return redirect()->route("allownces");
 }
 
 }
