@@ -61,6 +61,7 @@ use App\Http\Livewire\RegisterExample;
 use App\Http\Livewire\Transactions;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\ResetPasswordExample;
+use App\Http\Livewire\Salaries\NewSalary;
 use App\Http\Livewire\UpgradeToPro;
 use App\Http\Livewire\Users;
 use App\Models\Leave;
@@ -182,9 +183,12 @@ Route::middleware('auth')->group(function () {
         Route::get('/{parttime}/editParttime', EditPartTimes::class)->name('payroll.edit_part_time'); //->middleware('role:viewroles')
         Route::get('/{parttime}/viewParttime', ViewPartTimes::class)->name('payroll.view_part_time'); //->middleware('role:viewroles')
         Route::get('/SlipReport/{id}/{date}', [SlipReportpdf::class,'generatePDF'])->name('payroll.slip_report'); //->middleware('role:viewroles')
+        Route::get('/FullTimeReport/{id}/{from}/{to}', [SlipReportpdf::class,'FullTimegeneratePDF'])->name('payroll.fullTimeReport'); //->middleware('role:viewroles')
         Route::get('/PartTimeReport/{id}/{from}/{to}', [Ptreportpdf::class,'generatePDF'])->name('payroll.part_time_report'); //->middleware('role:viewroles')
         Route::get('/addSalary', AddSalaries::class)->name('payroll.addSalary'); //->middleware('role:viewroles')
         Route::get('/socialsecurity', SocialSecurityController::class)->name('payroll.socialsecurity'); //->middleware('role:viewroles')
+        Route::get('/new-salary', NewSalary::class)->name('payroll.newSalary'); //->middleware('role:viewroles')
+
     });
 
 

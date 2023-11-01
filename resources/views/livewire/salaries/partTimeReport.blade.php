@@ -4,7 +4,7 @@
 <head>
 
     <head>
-        <title>Part Time Report - {{ $employee }}</title>
+        <title>Part Time Report -{{ $user['company'] }}</title>
         <style>
             body {
                 font-family: Arial, Helvetica, sans-serif;
@@ -61,11 +61,11 @@
     <div style="padding:5mm; margin: bottom 25px;">
         <div class="row">
             <div class="column" style="width:20%">
-                <img src="/storage/company/{{ $image }}" height="70" width="160" />
+                {{-- <img src="/storage/company/{{ $image }}" height="70" width="160" /> --}}
 
             </div>
             <div class="column" style="width:70%">
-                <p style="font-size:18px;text-align:center"><b>{{ $company }}</b></p>
+                <p style="font-size:18px;text-align:center"><b>{{ $user['company'] }}</b></p>
             </div>
         </div>
     </div>
@@ -88,8 +88,8 @@
             <p style="font-size:15px;color: white;margin:0;padding:4;font-weight:bold">Employee :</p>
         </div>
         <div class="column" style="padding:0;margin-left:3px; width:33%">
-            <p style="font-size:12px;color: white;margin:0;padding:4;font-weight:bold">{{ $employee }} -
-                {{ $employee_id }}</p>
+            <p style="font-size:12px;color: white;margin:0;padding:4;font-weight:bold">{{ $user['name']}} -
+                {{ $user["id"] }}</p>
         </div>
 
 
@@ -115,12 +115,16 @@
             <p style="font-size:15px;color: white;margin:0;padding:4;font-weight:bold">Department :</p>
         </div>
         <div class="column" style="padding:0;margin-left:3px; width:33%">
-            <p style="font-size:12px;color: white;margin:0;padding:4;font-weight:bold">{{ $department }} -
-                {{ $position }}</p>
+            <p style="font-size:12px;color: white;margin:0;padding:4;font-weight:bold">{{ $user['department'] }} -
+                {{ $user["position"] }}</p>
         </div>
 
-
-
+        <div class="column" style="padding:0; width:10%">
+            <p style="font-size:15px;color: white;margin:0;padding:4;font-weight:bold">Salary :</p>
+        </div>
+        <div class="column" style="padding:0;margin-left:3px; width:10%">
+            <p style="font-size:12px;color: white;margin:0;padding:4;font-weight:bold">{{ $user['salary'] }} JD -  {{$user["part_time"]}}</p>
+        </div>
     </div>
     <br>
 <table id="account">
@@ -132,48 +136,78 @@
         <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 14%">Balance</th>
         <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 14%">Details</th>
     </tr>
-    @php($total = 0)
+    <tr>
+        <td style="text-align: center;padding-top: 8px; width: 10%">{{ $from }}</td>
+        <td style="text-align: center;padding-top: 8px; width: 10%">-</td>
+        <td style="text-align: center;padding-top: 8px; width: 10%">-</td>
+        <td style="text-align: center;padding-top: 8px; width: 10%"></td>
+        <td style="text-align: center;padding-top: 8px; width: 10%">{{ $reBalance }}</td>
+        <td style="text-align: center;padding-top: 8px; width: 10%; ">PRE Balance</td>
+    </tr>
     @php($totalDebit =0)
+    @php($total =0)
     @php($totalCredit =0)
-
-    @foreach ($partTime as $pt)
-    @php($total += $pt->amount)
-    @php($totalDebit +=$pt->amount)
+    @foreach ($data as $key => $row)
+    @php($total += $row["amount"]+$reBalance)
         <tr>
-            <td style="text-align: center;padding-top: 8px; width: 10%">{{ $pt->from }}</td>
-            <td style="text-align: center;padding-top: 8px; width: 10%">{{ $pt->to }}</td>
-            <td style="text-align: center;padding-top: 8px; width: 10%">{{ $pt->amount }}</td>
+            <td style="text-align: center;padding-top: 8px; width: 10%">{{ $row['from'] }}</td>
+            <td style="text-align: center;padding-top: 8px; width: 10%">{{ $row['to'] }}</td>
+            <td style="text-align: center;padding-top: 8px; width: 10%">{{ $row['amount'] }}</td>
             <td style="text-align: center;padding-top: 8px; width: 10%"></td>
             <td style="text-align: center;padding-top: 8px; width: 10%">{{ $total }}</td>
-            <td style="text-align: center;padding-top: 8px; width: 10%; "></td>
+            <td style="text-align: center;padding-top: 8px; width: 10%; ">salary</td>
         </tr>
-        {{ $pt->id }}
+
+        @for ($i = 0; $i < count($row)-1; $i++)
+            @if(isset($row[$i]))
+                <tr>
+                    <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{ $row[$i]["date"] }}</td>
+                    <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{ $row[$i]["type"] }}</td>
+                    @if($row[$i]["transaction"] =="checks" || $row[$i]["transaction"] =="dedction")
+                    {{$total-=$row[$i]["amount"] }}
+                    @php($totalCredit +=$row[$i]["amount"])
+                    <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">0</td>
+                    <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$row[$i]["amount"]}}</td>
+                    <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$total}}</td>
+                    @endif
+                    @if($row[$i]["transaction"] =="allownce")
+                    {{$total+=$row[$i]["amount"] }}
+                    @php($totalDebit +=$row[$i]["amount"])
+                    <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$row[$i]["amount"]}}</td>
+                    <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">0</td>
+                    <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$total}}</td>
+                    @endif
+                    <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{ $row[$i]["detail"] }}</td>
+                    </td>
+                </tr>
+            @else @break 
+            @endif
+        @endfor
     @endforeach
 
-    @foreach ($information as $info)
-    @if ($info["transaction"] =="checks" || $info["transaction"] =="allownce")
-    @php($total -= $info["amount"])
-    @php($totalCredit +=$info["amount"])
-    @else
-    @php($total +=$info["amount"])
-    @php($totalDebit +=$info["amount"])
-    @endif
+
+    {{-- @foreach ($information as $info)
     <tr>
         <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{ $info["date"] }}</td>
         <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{ $info["type"] }}</td>
-        @if ($info["transaction"] =="dedction")
-        <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{ $info["amount"] }}</td>
-        @else <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">-</td>
+        @if($info["transaction"] =="checks" || $info["transaction"] =="dedction")
+        {{$total-=$info["amount"] }}
+        @php($totalCredit +=$info["amount"])
+        <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">0</td>
+        <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$info["amount"]}}</td>
+        <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$total}}</td>
         @endif
-        @if ($info["transaction"] =="checks" || $info["transaction"] =="allownce")
-              <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{ $info["amount"] }}</td>
-        @else <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">-</td>
+        @if($info["transaction"] =="allownce")
+        {{$total+=$info["amount"] }}
+        @php($totalDebit +=$info["amount"])
+        <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$info["amount"]}}</td>
+        <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">0</td>
+        <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$total}}</td>
         @endif
-        <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{ $total }}
         <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{ $info["detail"] }}</td>
         </td>
     </tr>
-    @endforeach
+    @endforeach --}}
     @if ( count($partTime) > 0)
     <tr>
         <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 22%"
@@ -200,116 +234,5 @@
     </tr>
 @endif
 </table>
-
-
-
-
-
-
-
-
-    {{-- <table id="account">
-        <tr>
-            <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px; width: 11%">From</th>
-            <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 22%">To</th>
-            <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 14%">Debit</th>
-            <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 14%">Credit</th>
-            <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 14%">Balance
-                <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 14%">Details
-            </th>
-        </tr>
-
-        @php($total = 0)
-        @php($totalDebit =0)
-        @php($totalCredit =0)
-
-        @foreach ($partTime as $pt)
-            @php($total += $pt->amount)
-            @php($totalDebit +=$pt->amount)
-            <tr>
-                <td style="text-align: center;padding-top: 8px; width: 10%">{{ $pt->from }}</td>
-                <td style="text-align: center;padding-top: 8px; width: 10%">{{ $pt->to }}</td>
-                <td style="text-align: center;padding-top: 8px; width: 10%">{{ $pt->amount }}</td>
-                <td style="text-align: center;padding-top: 8px; width: 10%"></td>
-                <td style="text-align: center;padding-top: 8px; width: 10%">{{ $total }}</td>
-                <td style="text-align: center;padding-top: 8px; width: 10%; "></td>
-
-            </tr>
-            {{ $pt->id }}
-        @endforeach
-        
-        <tr>
-            <td style="text-align: center;padding-top: 8px; width: 10%" colspan="5"></td>
-        </tr>
-
-        @foreach ($checks as $check)
-            @php($total -= $check->Value)
-            @php($totalCredit +=$check->Value)
-            <tr>
-                <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{ $check->Date }}</td>
-                <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{ $check->Payment_Method }}</td>
-                <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;"></td>
-                <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{ $check->Value }}</td>
-                <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{ $total }}
-                <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{ $check->check_details }}</td>
-                </td>
-            </tr>
-        @foreach ($dedction as $item)
-        @php($total -=$item->amount)
-        @php($totalCredit +=$item->amount)
-        <tr>
-        <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$item->date}}</td>
-        <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$item->type}}</td>
-        <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">-</td>
-        <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$item->amount}}</td>
-        <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$total}}</td>
-        <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$item->detail}}</td> 
-</tr>
-@endforeach
-@foreach ($allownce as $item)
-@php($total +=$item->amount)
-@php($totalDebit +=$item->amount)
-<tr>
-        <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$item->date}}</td>
-        <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$item->type}}</td>
-        <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$item->amount}}</td>
-        <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">-</td>
-        <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$total}}</td>
-        <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$item->detail}}</td>
-</tr>
-@endforeach 
-            {{ $check->id }}
-        @endforeach
-        @if (count($checks) > 0 || count($partTime) > 0)
-            <tr>
-                <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 22%"
-                    colspan="2">Total:</th>
-                    
-                    <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 14%">
-                        {{ $totalDebit }}
-                    </th>
-                    <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 14%">
-                        {{ $totalCredit }}
-                    </th>
-                    <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 14%">
-                        {{ $total }}
-                    </th>
-                    <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 14%">
-                    </th>
-                    
-            </tr>
-        @else
-            <tr>
-                <th style="text-align: center; color: #03415F; font-size: 17px; width: 11% "colspan="5"> No Records
-                </th>
- 
-            </tr>
-        @endif
-
-
-
-
-    </table> --}}
 </body>
-
 </html>

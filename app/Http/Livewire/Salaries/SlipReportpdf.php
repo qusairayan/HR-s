@@ -1,47 +1,39 @@
 <?php
-
 namespace App\Http\Livewire\Salaries;
-
 use App\Models\Allownce;
 use App\Models\Deductions;
+use App\Models\MonthlyPayroll;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Livewire\Component;
 use App\Models\PartTime;
+use App\Models\Promotion;
+use App\Models\Salary;
 use App\Models\SocialSecurity;
 use App\Models\User;
+use DateTime;
 use Mpdf\Mpdf;
-
-class SlipReportpdf extends Component
-{
-    public function generatePDF($id, $date)
-    {
-        $user=User::where('id','=',$id)->first();
-        $employee=$user->name;
-        $salary=$user->salary;
-        $position=$user->position;
-        $employee_id=$user->id;
-        $company=$user->company->name;
-        $department=$user->department->name;
-
-       $deduction = Deductions::where('user_id','=',$id)->where("date", 'LIKE', $date . '-%')->get();
-       $allownce  = Allownce::where('user_id','=',$id)->where("date", 'LIKE', $date . '-%')->get();
-
-        $checkComp='';
-        $image='';
-        if($company == 'Lyon Travel'){
-            $checkComp='check_lyon';
-            $image='lyontravell.png';
-        }
-        elseif($company == 'Lyon Rental Car'){
-            $checkComp='check_lyon_rental';
-            $image='lyonrentall.png';
-        }
-        else{
-            $checkComp='check_marvell';
-            $image='marvellLogo.png';
-        }
-        $checks = DB::connection('LYONDB')->table($checkComp)->where('Name_To','LIKE',$employee."-%")->where("date", 'LIKE', $date . '-%')->get();
+use PhpParser\Node\Stmt\Return_;
+class SlipReportpdf extends Component{
+    public $user;
+    public function generatePDF($id, $date){
+        $this->getUser($id);
+        $deduction = $this->getDeductions($date);
+        $allownce = $this->getAllownce($date);
+        $checks = $this->getChecks($date);
+        $this->runPdf('livewire.salaries.SlipReport',["user"=>$this->user,"allownce"=>$allownce,"deduction"=>$deduction,'checks' => $checks,'date'=>$date]);
+    }
+    public function FullTimegeneratePDF($id, $from ,$to){
+        $this->getUser($id);
+        $check= $this->getChecks($from."-01",$to."-01");
+        $preBalance = $this->PreBalance($from."-30");
+        $salaries = $this->calcSalary($from."-01",$to."-01");
+        $arr = array_merge($salaries,$check);
+        $months = array_column($arr, 'month');
+        array_multisort($months, SORT_ASC, $arr);
+        $this->runPdf('livewire.salaries.full-time-report',["user"=>$this->user,"arr"=>$arr,"preBalance"=>$preBalance,'from'=>$from ,"to"=>$to]);
+    }
+    private function runPdf(string $view , array $arr):void{
         $mpdf = new Mpdf([
             'mode' => 'utf-8',
             'format' => 'A4-L',
@@ -50,19 +42,94 @@ class SlipReportpdf extends Component
             'margin_top' => 10, 
             'margin_bottom' => 10, 
         ]);
-        $userSocialSecurity =  SocialSecurity::where("user_id",$id)->first();
-        $userSocialSecurity = $userSocialSecurity ? $userSocialSecurity->onEmployee : 0;
-        $mpdf->WriteHTML(view('livewire.salaries.SlipReport',["allownce"=>$allownce, "deduction"=>$deduction,'checks' => $checks,"salary"=>$salary,"employee"=>$employee,'employee_id' => $employee_id,'company' => $company,'image' => $image,'department' => $department,'position' => $position,'date'=>$date,"userSocialSecurity" => $userSocialSecurity]));
+        $mpdf->WriteHTML(view($view,$arr));
         $mpdf->showImageErrors = true;
         $mpdf->Output('document.pdf', 'I');
         exit;
     }
-    public function render()
-    {
-        return view('livewire.salaries.SlipReport');
+    private function getUser($id){
+        $this->user = User::where("id",$id)->first();
+        $this->user->company;
+        $this->user->department->name;
+        $this->user = $this->user->toArray();
+        $this->user["company"] = $this->user["company"]["name"];
+        $this->user["department"] = $this->user["department"]["name"];
+        $promotion = Promotion::where("user_id",$this->user["id"])->orderBy("from","desc")->pluck("salary")->first();
+        if($promotion)$this->user["salary"] = $promotion;
+        return $this->IdentifyCompany();
+    }
+    private function IdentifyCompany(){
+        switch ($this->user['company']){
+            case 'Lyon Travel':
+                $this->user['checkComp']='check_lyon';
+                $this->user['image']='lyontravell.png';
+            break;
+            case 'Lyon Rental Car':
+                $this->user['checkComp']='check_lyon';
+                $this->user['image']='lyontravell.png';
+            break;
+            default:
+                $this->user['checkComp']='check_marvell';
+                $this->user['image']='marvellLogo.png';
+            break;
+        }
+        return $this->getSocialSecurity();
+    }
+    private function getSocialSecurity(){
+        try {
+            $test= SocialSecurity::where("user_id",$this->user["id"])->first();
+            $this->user["SocialSecurity"] = $test->onEmployee;
+            
+        } catch (\Throwable $th) {
+            $this->user["SocialSecurity"] = 0;
+        }
+    }
+    private function getChecks(string $from,$to =NULL){
+
+        if(!$to){
+        $checks = DB::connection('LYONDB')
+        ->table($this->user["checkComp"])
+        ->where('NAME_TO', $this->user["name"])
+        ->orWhere('NAME_TO', 'like', '%' . $this->user["name"] . '%')
+        ->whereBetween("date",[$from,$to])
+        ->orderBy("date")
+        ->select("Payment_Method","Value","Date")
+        ->get()->toArray();
+        }
+        
+        else{
+            $from = substr($from,0,7 );
+            $from = $from."-30";
+        $checks = DB::connection('LYONDB')
+        ->table($this->user["checkComp"])
+        ->where("Date",">=",$from)
+        ->where('NAME_TO', $this->user["name"])
+        ->orWhere('NAME_TO', 'like',"%-".$this->user["name"].'-%')->select("*","Date as month")
+        ->get()->toArray();
+    }
+
+        return $checks;
+    }
+    private function getDeductions(string $from,$to = NULL){
+        if(!$to)return Deductions::where('user_id',$this->user['id'])->where("date", ">=", $from)->orderBy("date")->get()->toArray();
+        return Deductions::where('user_id',$this->user['id'])->whereBetween("date",[$from,$to])->get()->toArray();
+    }
+    private function getAllownce(string $from,$to = NULL){
+        if(!$to)return Allownce::where('user_id',$this->user['id'])->where("date", ">=", $from)->orderBy("date")->get()->toArray();
+        return Allownce::where('user_id','=',$this->user['id'])->whereBetween("date",[$from,$to])->get()->toArray();
+    }
+    private function PreBalance($from){
+        $sum = DB::connection('LYONDB')
+        ->table($this->user["checkComp"])
+        ->where("Date","<=",$from)
+        ->where('NAME_TO', $this->user["name"])
+        ->orWhere('NAME_TO', 'like',"%-".$this->user["name"].'-%')
+        ->whereBetween('Date',[$this->user["start_date"],$from])->sum("Value");
+        $sum -= MonthlyPayroll::where("user_id",$this->user["id"])->whereBetween("month",[$this->user["start_date"],$from])->sum("salary");
+        return $sum;
+    }
+    private function calcSalary($from,$to){
+        $salaries = MonthlyPayroll::where("user_id",$this->user["id"])->whereBetween("month",[$from,$to])->select("salary","month")->orderBy("month","asc")->get()->toArray();
+        return $salaries;
     }
 }
-
-
-
-

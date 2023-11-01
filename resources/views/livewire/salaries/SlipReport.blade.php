@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="">
 <head>
-    <title>Part Time Report - {{ $employee }}</title>
+    <title>Part Time Report - {{ $user["name"] }}</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -137,11 +137,11 @@
     <div style="padding:5mm; margin: bottom 25px;">
         <div class="row">
             <div class="column" style="width:20%">
-                <img src="/storage/company/{{ $image }}" height="70" width="160" />
+                {{-- <img src="/storage/company/{{ $image }}" height="70" width="160" /> --}}
 
             </div>
             <div class="column" style="width:70%">
-                <p style="font-size:18px;text-align:center"><b>{{ $company }}</b></p>
+                <p style="font-size:18px;text-align:center"><b>{{ $user["company"] }}</b></p>
             </div>
         </div>
     </div>
@@ -164,8 +164,8 @@
             <p style="font-size:15px;color: white;margin:0;padding:4;font-weight:bold">Employee :</p>
         </div>
         <div class="column" style="padding:0;margin-left:3px; width:33%">
-            <p style="font-size:12px;color: white;margin:0;padding:4;font-weight:bold"> {{ $employee }} -
-                {{ $employee_id }}</p>
+            <p style="font-size:12px;color: white;margin:0;padding:4;font-weight:bold"> {{ $user["name"] }} -
+                {{ $user["id"] }}</p>
         </div>
 
 
@@ -186,11 +186,11 @@
             <p style="font-size:15px;color: white;margin:0;padding:4;font-weight:bold">Department :</p>
         </div>
         <div class="column" style="padding:0;margin-left:3px; width:33%">
-            <p style="font-size:12px;color: white;margin:0;padding:4;font-weight:bold">{{ $department }} -
-                {{ $position }}</p>
+            <p style="font-size:12px;color: white;margin:0;padding:4;font-weight:bold">{{ $user["department"] }} -
+                {{ $user["position"] }}</p>
         </div>
         <div class="column" style="padding:0; width:20%">
-            <p style="font-size:15px;color: white;margin:0;padding:4;font-weight:bold">salary :{{ $salary }} </p>
+            <p style="font-size:15px;color: white;margin:0;padding:4;font-weight:bold">salary :{{ $user["salary"] }} </p>
         </div>
 
 
@@ -213,13 +213,13 @@
                 </tr>
                 @php($totalAllownce=0)
                 @foreach ($allownce as $item)
-                @php($totalAllownce+=$item->amount)
+                @php($totalAllownce+=$item["amount"])
                     <tr>
                         <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">
-                            {{$item->type}}
+                            {{$item["type"]}}
                                 </td>
-                        <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$item->amount}}</td>
-                        <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$item->date}}</td>
+                        <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$item["amount"]}}</td>
+                        <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$item["date"]}}</td>
                     </tr>
                 @endforeach
                 <tfoot>
@@ -241,13 +241,13 @@
             </tr>
             @php($totalDeduction=0)
             @foreach ($deduction as $item)
-            @php($totalDeduction+=$item->amount)
+            @php($totalDeduction+=$item["amount"])
                 <tr>
                     <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">
-                        {{$item->type}}
+                        {{$item["type"]}}
                     </td>
-                    <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$item->amount}}</td>
-                    <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$item->date}}</td>
+                    <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$item["amount"]}}</td>
+                    <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$item["date"]}}</td>
                 </tr>
             @endforeach
             <tfoot>
@@ -270,7 +270,7 @@
 
 
 
-    @php( $sum =(float)  $salary +(float)$totalAllownce - (float)$totalDeduction  - $userSocialSecurity) 
+    @php( $sum =(float)  $user["salary"] +(float)$totalAllownce - (float)$totalDeduction  - $user["SocialSecurity"]) 
         <div class="tables row"> 
         <div class="salary-total p-3 d-flex align-item-center justify-content-center total col-md-6 col-12 text-center">
             <h2 class="text-right align-self-end">صافي الراتب : <span class="border p-2 border-info rounded">{{$sum}}</span></h2>
@@ -285,11 +285,11 @@
             </tr>
             @php($totalChecks=0)
             @foreach ($checks as $item)
-            @php($totalChecks+=$item->value)
+            @php($totalChecks+=$item["Value"])
                 <tr>
-                    <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$item->check_details}}</td>
-                    <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$item->value}}</td>
-                    <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$item->date}}</td>
+                    <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$item["check_details"]}}</td>
+                    <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$item["Value"]}}</td>
+                    <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$item["Date"]}}</td>
                 </tr>
             @endforeach
             <tfoot>
@@ -302,7 +302,7 @@
             </table>
         </div>
         </div>
-        <h2 class="userSocialSecurity">{{$userSocialSecurity  ? "اقتطاع الضمان الاجتماعي".$userSocialSecurity : "لا يوجد بيانات ضمات اجتماعي للموظف : ".$employee   }}</h2>
+        <h2 class="userSocialSecurity">{{$user["SocialSecurity"]  ? "اقتطاع الضمان الاجتماعي".$user["SocialSecurity"] : "لا يوجد بيانات ضمات اجتماعي للموظف : ".$user["name"]   }}</h2>
 
 </body>
 </html>

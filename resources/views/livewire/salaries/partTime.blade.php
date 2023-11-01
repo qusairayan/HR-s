@@ -123,9 +123,13 @@
 
                 <div>
                     <label for="from">From</label>
-                    <input class="form-control datepicker-input" type="date" id="from"
+                    <input  class="form-control datepicker-input" type="month" id="from"
+                        placeholder="From date" wire:model="from">
+
+
+                    {{-- <input class="form-control datepicker-input" type="date" id="from"
                      placeholder="From date"
-                    wire:model="from">
+                    wire:model="from"> --}}
 
                   
                     @error('from')
@@ -139,9 +143,13 @@
 
                 <div>
                     <label for="to">To</label>
-                    <input class="form-control datepicker-input" type="date" id="to"
+                    <input  class="form-control datepicker-input" type="month" id="to"
+                        placeholder="To date" wire:model="to">
+
+
+                    {{-- <input class="form-control datepicker-input" type="date" id="to"
                      placeholder="To date"
-                    wire:model="to">
+                    wire:model="to"> --}}
 
                   
                     @error('from')

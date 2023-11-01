@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 
 use App\Models\Department;
 use App\Models\Company;
+use App\Models\MonthlyPayroll;
 use App\Models\PartTime;
 
 use App\Models\User;
@@ -39,20 +40,27 @@ class Slips extends Component
 
   
 
-
+    public $from;
+    public $to;
+    public $MonthlyPayroll;
 
 
 public function report(){
-    
-
     $this->validate([
         'employee' => 'required',
         'date' => 'required|date',
     ]);
-
     return redirect()->route('payroll.slip_report',['id' => $this->employee, 'date' => $this->date])
     ->with(['newTab' => true]);
-
+}
+public function fullTimeReport(){
+    $this->validate([
+        'employee' => 'required',
+        'from' => 'required|date',
+        'to' => 'required|date',
+    ]);
+    return redirect()->route('payroll.fullTimeReport',['id' => $this->employee, 'from' => $this->from,"to"=>$this->to])
+    ->with(['newTab' => true]);
 }
 
 
@@ -60,7 +68,7 @@ public function report(){
     public function render()
     {
 
-
+        $monthlyPayrollQuery= MonthlyPayroll::leftJoin("users","monthly_payrolls.user_id","users.id")->select("monthly_payrolls.*","users.name as name");
         $companies = Company::all();
 
         $departmentsQuery = Department::select('*');
@@ -76,11 +84,21 @@ public function report(){
             }
             if($this->department){
                 $employeesQuery ->where('department_id','=',$this->department);
+
                 }
-        $employees= $employeesQuery ->get();
+                $employees= $employeesQuery ->get();
+                if($this->employee){
+                   $monthlyPayrollQuery->where('user_id','=',$this->employee);
+                   $monthlyPayrollQuery->employee = $this->employee;
+                }
+                $payrolls = $monthlyPayrollQuery->get()->toArray();
+
+
 
         
 
-        return view('livewire.salaries.slips', compact('companies', 'departments','employees'));
+        
+
+        return view('livewire.salaries.slips', compact('companies', 'departments','employees',"payrolls"));
     }
 }
