@@ -196,7 +196,11 @@
                     <td class="border-0 fw-bold"><span class="fw-normal">{{$item["name"]}}</span></td>
                     <td class="border-0 fw-bold"><span class="fw-normal">{{$item["month"]}}</span></td>
                     <td class="border-0 fw-bold"><span class="fw-normal">{{$item["salary"]}}</span></td>
-                    <td class="border-0 fw-bold"><span class="fw-normal"><button class="btn btn-primary">Deposit Salary</button></span></td>
+                   @if ($item["salaryDepositId"])
+                   <td class="border-0 fw-bold"><span class="fw-normal"><a href="{{route ("payroll.depositSalarypdf",["id"=>$item["salaryDepositId"]])}}" class="btn btn-info">View Salary Pdf</a></span></td>   
+                   @else
+                   <td class="border-0 fw-bold"><span class="fw-normal"><a href="{{route ("payroll.depositsalary",["id_salary"=>$item["id"],"id"=> $item["user_id"],"salary"=>$item["salary"]])}}" class="btn btn-primary">Deposit Salary</a></span></td>   
+                   @endif                    
                 </tr>
                 @endforeach
             </tbody>

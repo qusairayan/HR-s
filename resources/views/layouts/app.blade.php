@@ -47,7 +47,9 @@
                 'payroll.add_part_time',
                 'payroll.edit_part_time',
                 'payroll.view_part_time',
+                'payroll.depositsalary',
                 'reportAttendence',
+                'payroll.depositSalarypdf',
             ]))
         {{-- Nav --}}
         @include('layouts.nav')
@@ -79,4 +81,3 @@
         {{ $slot }}
     @endif
 </x-layouts.base>
-

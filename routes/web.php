@@ -61,6 +61,8 @@ use App\Http\Livewire\RegisterExample;
 use App\Http\Livewire\Transactions;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\ResetPasswordExample;
+use App\Http\Livewire\Salaries\DepositSalary;
+use App\Http\Livewire\Salaries\DepositSalaryPdf;
 use App\Http\Livewire\Salaries\NewSalary;
 use App\Http\Livewire\UpgradeToPro;
 use App\Http\Livewire\Users;
@@ -188,7 +190,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/addSalary', AddSalaries::class)->name('payroll.addSalary'); //->middleware('role:viewroles')
         Route::get('/socialsecurity', SocialSecurityController::class)->name('payroll.socialsecurity'); //->middleware('role:viewroles')
         Route::get('/new-salary', NewSalary::class)->name('payroll.newSalary'); //->middleware('role:viewroles')
-
+        Route::any('/depositsalary/{id_salary}/{id}/{salary}', DepositSalary::class)->name('payroll.depositsalary'); //->middleware('role:viewroles')
+        Route::get('/deposit-salarypdf/{id}', DepositSalaryPdf::class)->name('payroll.depositSalarypdf'); //->middleware('role:viewroles')
     });
 
 
@@ -213,4 +216,3 @@ Route::get('/description', [PrivacyPolicyController::class,'description'])->name
 Route::get("/storage/app/public/contracts/{filename}",[showPdf::class,"pdfView"])->name("viewContract");
 
 Route::get("attendence/report_Attendence/{id}/{date}",ReportAttendance::class)->name("reportAttendence");
-

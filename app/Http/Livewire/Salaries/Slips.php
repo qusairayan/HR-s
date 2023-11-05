@@ -68,7 +68,15 @@ public function fullTimeReport(){
     public function render()
     {
 
-        $monthlyPayrollQuery= MonthlyPayroll::leftJoin("users","monthly_payrolls.user_id","users.id")->select("monthly_payrolls.*","users.name as name");
+        $monthlyPayrollQuery= MonthlyPayroll::
+        leftJoin("users","monthly_payrolls.user_id","users.id")
+        ->leftJoin("salary_deposits","monthly_payrolls.id","salary_deposits.salary_id")
+        ->select("monthly_payrolls.*","users.name as name","salary_deposits.id as salaryDepositId");
+
+
+        // ->get()->toArray();
+        // dd($monthlyPayrollQuery);
+   
         $companies = Company::all();
 
         $departmentsQuery = Department::select('*');
@@ -92,9 +100,6 @@ public function fullTimeReport(){
                    $monthlyPayrollQuery->employee = $this->employee;
                 }
                 $payrolls = $monthlyPayrollQuery->get()->toArray();
-
-
-
         
 
         
