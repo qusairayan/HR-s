@@ -285,11 +285,11 @@
             </tr>
             @php($totalChecks=0)
             @foreach ($checks as $item)
-            @php($totalChecks+=$item["Value"])
+            @php($totalChecks+=$item->Value)
                 <tr>
-                    <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$item["check_details"]}}</td>
-                    <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$item["Value"]}}</td>
-                    <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$item["Date"]}}</td>
+                    <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$item->check_details ?? "assaas" }}</td>
+                    <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$item->Value}}</td>
+                    <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$item->Date}}</td>
                 </tr>
             @endforeach
             <tfoot>

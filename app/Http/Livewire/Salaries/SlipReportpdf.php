@@ -17,10 +17,19 @@ use PhpParser\Node\Stmt\Return_;
 class SlipReportpdf extends Component{
     public $user;
     public function generatePDF($id, $date){
-        $this->getUser($id);
-        $deduction = $this->getDeductions($date);
-        $allownce = $this->getAllownce($date);
-        $checks = $this->getChecks($date);
+        $this->getUser($id,$date);
+        $deduction = Deductions::where("date","LIKE",$date."-%")->get()->toArray();
+        $allownce = Allownce::where("date","LIKE",$date."-%")->get()->toArray();
+        $checks = DB::connection('LYONDB')
+        ->table($this->user["checkComp"])
+        ->where('NAME_TO', $this->user["name"])
+        ->where("date","LIKE",$date."-%")
+        ->select("Payment_Method","Value","Date","check_details")
+        ->get()->toArray();
+        $promotion = Promotion::where('from', '<=', $date."-01")->where(function ($query) use ($date){
+            $query->where('to', '>=', $date."-01")->orWhereNull("to");
+        })->pluck("salary")->first();
+        if($promotion)if($promotion)$this->user["salary"] = $promotion;
         $this->runPdf('livewire.salaries.SlipReport',["user"=>$this->user,"allownce"=>$allownce,"deduction"=>$deduction,'checks' => $checks,'date'=>$date]);
     }
     public function FullTimegeneratePDF($id, $from ,$to){
@@ -47,15 +56,18 @@ class SlipReportpdf extends Component{
         $mpdf->Output('document.pdf', 'I');
         exit;
     }
-    private function getUser($id){
+    private function getUser($id, $date =null){
         $this->user = User::where("id",$id)->first();
         $this->user->company;
         $this->user->department->name;
         $this->user = $this->user->toArray();
         $this->user["company"] = $this->user["company"]["name"];
         $this->user["department"] = $this->user["department"]["name"];
-        $promotion = Promotion::where("user_id",$this->user["id"])->orderBy("from","desc")->pluck("salary")->first();
-        if($promotion)$this->user["salary"] = $promotion;
+        if(!$date){
+            $promotion = Promotion::where("user_id",$this->user["id"])->orderBy("from","desc")->pluck("salary")->first();
+            if($promotion)$this->user["salary"] = $promotion;
+            if($promotion)$this->user["salary"] = $promotion;
+        } 
         return $this->IdentifyCompany();
     }
     private function IdentifyCompany(){
@@ -93,13 +105,13 @@ class SlipReportpdf extends Component{
         ->orWhere('NAME_TO', 'like', '%' . $this->user["name"] . '%')
         ->whereBetween("date",[$from,$to])
         ->orderBy("date")
-        ->select("Payment_Method","Value","Date")
+        ->select("Payment_Method","Value","Date","check_details")
         ->get()->toArray();
         }
-        
         else{
-            $from = substr($from,0,7 );
-            $from = $from."-30";
+  
+        $from = substr($from,0,7 );
+        $from = $from."-30";
         $checks = DB::connection('LYONDB')
         ->table($this->user["checkComp"])
         ->where("Date",">=",$from)
@@ -107,7 +119,6 @@ class SlipReportpdf extends Component{
         ->orWhere('NAME_TO', 'like',"%-".$this->user["name"].'-%')->select("*","Date as month")
         ->get()->toArray();
     }
-
         return $checks;
     }
     private function getDeductions(string $from,$to = NULL){
