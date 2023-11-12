@@ -20,7 +20,7 @@ class Register extends Controller
             'password' => ['required',Password::min(8)->mixedCase()->letters()->numbers()->symbols()->uncompromised()],
         ]);
         if($validator->fails()){
-            return response($validator->errors(),400);
+            return response(["success"=>false,"message"=>$validator->errors()],400);
         }
         $currentDate = date("Y-m-d");
         $request->merge(['password' =>Hash::make($request->input("password"))]);
@@ -36,7 +36,7 @@ class Register extends Controller
         $request->merge(['position' => "IT"]);
         $request->merge(['start_date' => $currentDate]);
         $user = User::create($request->all());
-        if($user)return response("User has been registered successfully",201);
-        else return response("Field registere User",422);
+        if($user)return response(["success"=>true,"message"=>"User has been registered successfully"],201);
+        else return response(["success"=>false,"message"=>"Field registere User"],422);
     }
 }
