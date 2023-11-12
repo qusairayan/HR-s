@@ -15,12 +15,7 @@ use App\Http\Controllers\api\vacations\GetVacationController;
 
 use App\Http\Controllers\api\profile\ProfileController;
 use App\Http\Controllers\api\profile\showProfileImageController;
-
-
-
-
-
-
+use App\Http\Controllers\api\register\Register;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -60,7 +55,7 @@ Route::post('/updateProfile', [ProfileController::class, 'updateProfile']);
 Route::post('/profilePassword', [ProfileController::class, 'profilePassword']);
 
 Route::post('/profileIMG/{filename}', [showProfileImageController::class, 'showProfileImage']);
-
+Route::post("/register",[Register::class,"create"])->name("register");
 
 
 

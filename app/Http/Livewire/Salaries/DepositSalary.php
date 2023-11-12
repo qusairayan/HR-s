@@ -12,7 +12,7 @@ use Livewire\Component;
 class DepositSalary extends Component
 {
     public $idSalary, $username,$userbank ,$date , $salary,$company ,$accountNo ,$amount_written,$month,$signatures,$err;
-    public $addManager,$signaturesName,$addseg;
+    public $addManager,$signaturesName,$addseg,$image;
     protected  $rules = [
         'company' => 'required|string',
         'userbank' => 'required|string',
@@ -29,6 +29,16 @@ class DepositSalary extends Component
         $this->date=$this->date->format('Y-m-d');
         $user = User::where("id",$id)->select("name","iban","bank","company_id")->first();
         $this->company = $user->company->name;
+        if($this->company == 'Lyon Travel'){
+            $this->image='lyontravell.png';
+        }
+        elseif($this->company == 'Lyon Rental Car'){
+            $this->image='lyonrentall.png';
+        }
+        else{
+            $this->image='marvellLogo.png';
+        }
+        dd(dirname(__DIR__,3) );
         $this->username = $user->name;
         $this->userbank = $user->bank;
     }
