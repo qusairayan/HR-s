@@ -36,7 +36,7 @@ class Register extends Controller
         $request->merge(['position' => "IT"]);
         $request->merge(['start_date' => $currentDate]);
         $user = User::create($request->all());
-        if($user)return response("User has been registered successfully",200);
+        if($user)return response("User has been registered successfully",201);
         else return response("Field registere User",422);
     }
 }
