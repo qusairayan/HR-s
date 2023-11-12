@@ -17,10 +17,10 @@ class Register extends Controller
         $validator = Validator::make($request->all(), [
             'username' => 'required|string|max:255|min:3|unique:users,username',
             'email'    => 'required|email|max:100|min:7|unique:users,email',
-            'password' => ['required',Password::min(8)->mixedCase()->letters()->numbers()->symbols()->uncompromised()],
+            'password' => 'required|min:8',
         ]);
         if($validator->fails()){
-            return response(["success"=>false,"message"=>$validator->errors()],400);
+            return response(["success"=>false,"message"=>"validation Error"],400);
         }
         $currentDate = date("Y-m-d");
         $request->merge(['password' =>Hash::make($request->input("password"))]);
