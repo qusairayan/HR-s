@@ -17,7 +17,7 @@ class Register extends Controller
         $validator = Validator::make($request->all(), [
             'username' => 'required|string|max:255|min:3|unique:users,username',
             'email'    => 'required|email|max:100|min:7|unique:users,email',
-            'password' => ['required','confirmed',Password::min(8)->mixedCase()->letters()->numbers()->symbols()->uncompromised()],
+            'password' => ['required',Password::min(8)->mixedCase()->letters()->numbers()->symbols()->uncompromised()],
         ]);
         if($validator->fails()){
             return response($validator->errors(),400);
@@ -35,8 +35,8 @@ class Register extends Controller
         $request->merge(['company_id' => "1"]);
         $request->merge(['position' => "IT"]);
         $request->merge(['start_date' => $currentDate]);
-        $request = $request->except('password_confirmation');
-        $user = User::create($request);
+        $user = User::create($request->all());
         if($user)return response("User has been registered successfully",200);
+        else return response("Field registere User",422);
     }
 }
