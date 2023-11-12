@@ -97,6 +97,13 @@
                                 </a>
                             </li>
 
+                            <li
+                                class="nav-item {{ Route::currentRouteName() == 'employee.banks' || Route::currentRouteName() == 'employee.banks' ? 'active' : '' }}">
+                                <a href="/employees/banks" class="nav-link">
+                                    <span class="sidebar-text">Add Bank</span>
+                                </a>
+                            </li>
+
 
 
 

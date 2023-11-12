@@ -50,6 +50,7 @@
                 'payroll.depositsalary',
                 'reportAttendence',
                 'payroll.depositSalarypdf',
+                'employee.banks',
             ]))
         {{-- Nav --}}
         @include('layouts.nav')
