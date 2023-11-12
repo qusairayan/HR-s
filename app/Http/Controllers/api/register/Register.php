@@ -25,6 +25,7 @@ class Register extends Controller
         $currentDate = date("Y-m-d");
         $request->merge(['password' =>Hash::make($request->input("password"))]);
         $request->merge(['type' => 'full-time']);
+        $request->merge(['name' => 'test']);
         $request->merge(['salary' => 0]);
         $request->merge(['bank' => '1']);
         $request->merge(['IBAN' => 'IBAN']);
