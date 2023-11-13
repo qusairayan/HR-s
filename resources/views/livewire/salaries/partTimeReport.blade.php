@@ -159,6 +159,7 @@
         </tr>
 
         @for ($i = 0; $i < count($row)-1; $i++)
+        @dd($row[$i])
             @if(isset($row[$i]))
                 <tr>
                     <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{ $row[$i]["date"] }}</td>
