@@ -35,6 +35,7 @@ class Ptreportpdf extends Component
                 $checks[$i] = (array) $this->checks[$i];
             }
         }
+        dd($this->checks);
         $information = [];
         $count = count($this->checks) +count($this->allownce) +count($this->dedction);
         if($this->dedction){
