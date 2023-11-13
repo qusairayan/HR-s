@@ -32,23 +32,4 @@
             @endforeach
 </tbody>
 </table>
-<div wire:ignore.self class="modal fade" id="modal-addTypeDeduction" tabindex="-1" role="dialog"
-    aria-labelledby="modal-addTypeDeduction" aria-hidden="true" wire:ignore>
-    <div class="modal-dialog modal-info modal-dialog-centered" role="document">
-        <div class="modal-content bg-gradient-secondary" style="background: #13223d">
-            <button type="button" class="btn-close theme-settings-close fs-6 ms-auto" data-bs-dismiss="modal"
-                aria-label="Close"></button>
-            <div class="modal-header">
-                <p class="modal-title text-gray-200" id="modal-title-addTypeDeduction">
-                    Update Bank
-                </p>
-            </div>            
-            <div class="m-5">
-                {{-- <input type="text" class="mt-4 mb-4 form-control" wire:model="bankName" name="bankNameupdade" id="bankNameupdade" value="{{$item->bankName}}">
-                <button class="mt-4 mb-4 btn btn-success w-100" wire:click="update({{$item->id}})">Update Bank</button> --}}
-            </div>
-        </div>
-        
-    </div>
-</div>
 </div>
