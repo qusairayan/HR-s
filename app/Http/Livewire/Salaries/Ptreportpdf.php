@@ -12,6 +12,8 @@ use App\Models\User;
 use Mpdf\Mpdf;
 use stdClass;
 
+use function PHPSTORM_META\map;
+
 class Ptreportpdf extends Component
 {
     public $user ;
@@ -22,84 +24,39 @@ class Ptreportpdf extends Component
     public $checkComp;
     public $image;
     public $reBalance;
-    public function generatePDF($id, $from, $to)
-    {
+    public function generatePDF($id, $from, $to) {
         $from = $from."-01";
         $to = $to."-31";
         $this->getDate($id,$from,$to);
        $this->reBalance = $this->reBalance($from, $to);
-    //    dd($this->checks);
-        $checks = [];
-        if($this->checks){
-            for($i=0;$i<count($this->checks);$i++){
-                $checks[$i] = (array) $this->checks[$i];
-            }
-        }
-        dd($this->checks);
-        $information = [];
-        $count = count($this->checks) +count($this->allownce) +count($this->dedction);
-        if($this->dedction){
-            foreach($this->dedction as $item){
-                $count--;
-                $information[$count]['transaction']    = "dedction";
-                $information[$count]['date']    = $item["date"];
-                $information[$count]['type']    = $item["type"];
-                $information[$count]['amount']  = $item["amount"];
-                $information[$count]['detail' ] = $item["detail"];
-            }
-        }
-        if($this->allownce){
-            foreach($this->allownce as $item){
-                $count--;
-                $information[$count]['transaction']    ="allownce";
-                $information[$count]['date']    = $item["date"];
-                $information[$count]['type']    = $item["type"];
-                $information[$count]['amount']  = $item["amount"];
-                $information[$count]['detail' ] = $item["detail"];
-            }
-        }
-
-        if($checks){
-            foreach($checks as $item){
-                $count--;
-                $information[$count]['transaction']    ="checks";
-                $information[$count]['date']    = $item["Date"];
-                $information[$count]['type']    = $item["Payment_Method"];
-                $information[$count]['amount']  = $item["Value"];
-                $information[$count]['detail' ] = $item["check_details"];
-            }
-        }
-        // dd($information);
-// sort    
-    usort($information,function($a,$b){
-        $dateA = strtotime($a["date"]);
-        $dateB = strtotime($b["date"]);
-        if ($dateA == $dateB) {
-            return 0;
-        }
-        return ($dateA < $dateB) ? -1 : 1;
-    });
-    usort($this->partTime,function($a,$b){
-        $dateA = strtotime($a["from"]);
-        $dateB = strtotime($b["from"]);
-        if ($dateA == $dateB) {
-            return 0;
-        }
-        return ($dateA < $dateB) ? -1 : 1;
-    });
-    // sort
-    $data =[];
-    foreach ($this->partTime as $part) { 
-        array_push($data ,$part);
-        foreach ($information as $info) {
-            $date1 = substr($part["from"],0,7);
-            $date2 = substr($info["date"],0,7);
-            if($date1 == $date2){
-                array_push($data[count($data)-1] ,$info);
-            }
-        }
-    }
-    dd($data);
+       $checks = [];
+       if($this->checks){
+           for($i=0;$i<count($this->checks);$i++){
+               $checks[$i] = (array) $this->checks[$i];
+               $checks[$i]["type"] ="check";
+           }
+       }
+       if($this->dedction){
+           for($i=0;$i<count($this->dedction);$i++){
+            $this->dedction[$i] = (array) $this->dedction[$i];
+            $this->dedction[$i]["type"] ="dedction";
+           }
+       }
+       if($this->allownce){
+           for($i=0;$i<count($this->allownce);$i++){
+            $this->allownce[$i] = (array) $this->allownce[$i];
+            $this->allownce[$i]["type"] ="allownce";
+           }
+       }
+       if($this->partTime){
+           for($i=0;$i<count($this->partTime);$i++){
+            $this->partTime[$i] = (array) $this->partTime[$i];
+            $this->partTime[$i]["type"] ="salary";
+           }
+       }
+       $data = array_merge($checks,$this->dedction,$this->allownce,$this->partTime);
+          $date = array_column($data, 'date');
+          array_multisort($date, SORT_ASC, $data);
         $mpdf = new Mpdf([
             'mode' => 'utf-8',
             'format' => 'A4-L',
@@ -108,7 +65,7 @@ class Ptreportpdf extends Component
             'margin_top' => 10, 
             'margin_bottom' => 10, 
         ]);
-        $mpdf->WriteHTML(view('livewire.salaries.partTimeReport', ["data"=>$data, "reBalance" =>$this->reBalance,"user"=>$this->user,'partTime'=>$this->partTime,'information' => $information,'from'=>$from,'to'=>$to]));
+        $mpdf->WriteHTML(view('livewire.salaries.partTimeReport', ["data"=>$data, "reBalance" =>$this->reBalance,"user"=>$this->user,'partTime'=>$this->partTime,'from'=>$from,'to'=>$to]));
         $mpdf->Output('document.pdf', 'I');
     }
     private function reBalance($from,$to){
@@ -138,8 +95,8 @@ class Ptreportpdf extends Component
             $this->image='marvellLogo.png';
         }
         // get parttime
-        $this->partTime = PartTime::where('user_id', $this->user['id'])->where('from',">=",$from)->where("to","<=",$to)->get()->toArray();
-        $this->checks = DB::connection('LYONDB')->table($this->checkComp)->where('Name_To','LIKE',$this->user["name"])->whereBetween('Date',[$from,$to])->orderBy("date")->get()->toArray();
+        $this->partTime = PartTime::where('user_id', $this->user['id'])->where('from',">=",$from)->where("to","<=",$to)->select("part_times.*","from as date")->get()->toArray();
+        $this->checks = DB::connection('LYONDB')->table($this->checkComp)->where('Name_To','LIKE',$this->user["name"])->whereBetween('Date',[$from,$to])->orderBy("date")->select("$this->checkComp.*","Date as date")->get()->toArray();
         $this->dedction = Deductions::where("user_id",$this->user['id'])->whereBetween('Date',[$from,$to])->orderBy("date")->get()->toArray();
         $this->allownce = Allownce::where("user_id",$this->user['id'])->whereBetween('Date',[$from,$to])->orderBy("date")->get()->toArray();
     }
