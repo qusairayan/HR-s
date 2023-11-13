@@ -145,18 +145,18 @@
     @php($totalCredit =0)
     @foreach ($data as $key => $row)
     
-    @php($totalDebit +=$row["type"] == "salary" ||$row["type"] == "dedction" ? $row["amount"] : 0)
-    @php($totalCredit +=$row["type"] == "check" ||$row["type"] == "allownce" ? $row["amount"] ?? $row["Value"] : 0)
+    @php($totalDebit +=$row["type"] == "salary" ||$row["type"] == "allownce" ? $row["amount"] : 0)
+    @php($totalCredit +=$row["type"] == "check" ||$row["type"] == "dedction" ? $row["amount"] ?? $row["Value"] : 0)
     @php($reBalance -= $row["type"] == "check" ? $row["Value"] :0 )
-    @php($reBalance -= $row["type"] ==="allownce" ? $row["amount"] : 0 )
-    @php($reBalance += $row["type"] == "dedction" ? $row["amount"] : 0 )
+    @php($reBalance += $row["type"] ==="allownce" ? $row["amount"] : 0 )
+    @php($reBalance -= $row["type"] == "dedction" ? $row["amount"] : 0 )
     @php($reBalance += $row["type"] == "salary" ? $row["amount"] : 0)
     @php($total +=$reBalance)
     <tr>
         <td style="text-align: center;padding-top: 8px; width: 10%">{{$row["date"]}}</td>
         <td style="text-align: center;padding-top: 8px; width: 10%">{{$row["type"] == "salary" ? $row["to"] : "-"}}</td>
-        <td style="text-align: center;padding-top: 8px; width: 10%">{{$row["type"] ==="dedction" ||$row["type"] ==="salary" ?$row["amount"] : "-"}}</td>
-        <td style="text-align: center;padding-top: 8px; width: 10%">{{$row["type"] ==="allownce" || $row["type"] == "check" ? $row["amount"] ?? $row["Value"] : "-"}}</td>
+        <td style="text-align: center;padding-top: 8px; width: 10%">{{$row["type"] ==="allownce" ||$row["type"] ==="salary" ?$row["amount"] : "-"}}</td>
+        <td style="text-align: center;padding-top: 8px; width: 10%">{{$row["type"] ==="dedction" || $row["type"] == "check" ? $row["amount"] ?? $row["Value"] : "-"}}</td>
         <td style="text-align: center;padding-top: 8px; width: 10%">{{ $reBalance }}</td>
         <td style="text-align: center;padding-top: 8px; width: 10%">{{$row["type"]}}</td>
     </tr>
