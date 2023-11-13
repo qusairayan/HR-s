@@ -9,7 +9,7 @@ class Banks extends Component
 {
     public string $bankName;
     protected $rules =[
-        "bankName"=>"required|string|min:3|max:50|unique:public_banks",
+        "bankName"=>"required|string|min:3|max:50",
     ];
     public function render(){
         $banks =Bank::latest()->paginate(10);
