@@ -24,7 +24,7 @@
             @foreach ($banks as $item)
             <tr>
                 <td class="border-0 fw-bold"><span class="fw-normal">{{$item->id}}</span></td>
-                <td class="border-0 fw-bold"><span class="fw-normal">{{$item->bankName}}</span></td>
+                <td class="border-0 fw-bold"><span class="fw-normal">{{$item->name}}</span></td>
             </tr>
             @endforeach
 </tbody>

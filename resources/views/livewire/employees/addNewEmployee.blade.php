@@ -279,7 +279,7 @@
                                     <option value="" selected >Select Bank</option>
 
                                     @foreach ($banks as $bank)
-                                        <option value="{{ $bank->id }}">{{ $bank->bankName }}</option>
+                                        <option value="{{ $bank->id }}">{{ $bank->name }}</option>
                                     @endforeach
                                 </select>
                                 @error('bank')

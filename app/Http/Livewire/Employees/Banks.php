@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Employees;
 
-use App\Models\PublicBank;
+use App\Models\Bank;
 use Livewire\Component;
 
 class Banks extends Component
@@ -12,11 +12,11 @@ class Banks extends Component
         "bankName"=>"required|string|min:3|max:50|unique:public_banks",
     ];
     public function render(){
-        $banks =PublicBank::latest()->paginate(10);
+        $banks =Bank::latest()->paginate(10);
         return view('livewire.employees.banks',["banks"=>$banks]);
     }
     public function create(){
         $this->validate();
-        PublicBank::create(["bankName"=>$this->bankName]);
+        Bank::create(["name"=>$this->bankName]);
     }
 }

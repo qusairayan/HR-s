@@ -1,5 +1,4 @@
 <div wire:ignore.self>
-    {{-- @dd($banks); --}}
     <form wire:submit.prevent="save" action="#">
 
 
@@ -286,7 +285,7 @@
                                 wire:model="bank" autofocus required>
                                 <option value="" disabled selected hidden>Select Bank</option>
                                 @foreach($banks as $bank )
-                                <option value="{{$bank->id}}" {{$this->bank == $bank->id ? 'checked':''}}>{{$bank->bankName}}</option>
+                                <option value="{{$bank->id}}" {{$this->bank == $bank->id ? 'checked':''}}>{{$bank->name}}</option>
                             
                                 @endforeach
                             </select>
