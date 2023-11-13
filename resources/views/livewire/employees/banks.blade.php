@@ -44,8 +44,8 @@
                 </p>
             </div>            
             <div class="m-5">
-                <input type="text" class="mt-4 mb-4 form-control" wire:model="bankName" name="bankNameupdade" id="bankNameupdade" value="{{$item->bankName}}">
-                <button class="mt-4 mb-4 btn btn-success w-100" wire:click="update({{$item->id}})">Update Bank</button>
+                {{-- <input type="text" class="mt-4 mb-4 form-control" wire:model="bankName" name="bankNameupdade" id="bankNameupdade" value="{{$item->bankName}}">
+                <button class="mt-4 mb-4 btn btn-success w-100" wire:click="update({{$item->id}})">Update Bank</button> --}}
             </div>
         </div>
         
