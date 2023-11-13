@@ -28,44 +28,11 @@ class Ptreportpdf extends Component
         $to = $to."-31";
         $this->getDate($id,$from,$to);
        $this->reBalance = $this->reBalance($from, $to);
-        // $user=User::where('id','=',$id)->first();
-        // $employee=$user->name;
-        // $position=$user->position;
-        // $employee_id=$user->id;
-        // $company=$user->company->name;
-        // $department=$user->department->name;
-        // $partTimeQuery = PartTime::where('user_id', '=', $id);
-
-        // $checkComp='';
-        // $image='';
-        // if($company == 'Lyon Travel'){
-        //     $checkComp='check_lyon';
-        //     $image='lyontravell.png';
-        // }
-        // elseif($company == 'Lyon Rental Car'){
-        //     $checkComp='check_lyon_rental';
-        //     $image='lyonrentall.png';
-        // }
-        // else{
-        //     $checkComp='check_marvell';
-        //     $image='marvellLogo.png';
-        // }
-
-        // $checks = DB::connection('LYONDB')->table($checkComp)->where('Name_To','LIKE',$employee)->whereBetween('Date',[$from,$to])->orderBy("date")->get()->toArray();
-        
-        // if ($from) {
-        //     $partTimeQuery = $partTimeQuery->where('from', '>=', $from);
-        // }
-        // if ($to) {
-        //     $partTimeQuery = $partTimeQuery->where('to', '<=', $to);
-        // }
-        // $partTime = $partTimeQuery->get();
-        // $dedction = Deductions::where("user_id",$id)->orderBy("date")->get()->toArray();
-        // $allownce = Allownce::where("user_id",$id)->orderBy("date")->get()->toArray();
+    //    dd($this->checks);
         $checks = [];
         if($this->checks){
             for($i=0;$i<count($this->checks);$i++){
-                $checks[$i] = (array) $this->checks[0];
+                $checks[$i] = (array) $this->checks[$i];
             }
         }
         $information = [];
@@ -90,9 +57,9 @@ class Ptreportpdf extends Component
                 $information[$count]['detail' ] = $item["detail"];
             }
         }
+
         if($checks){
             foreach($checks as $item){
-                dd($item["Date"]);
                 $count--;
                 $information[$count]['transaction']    ="checks";
                 $information[$count]['date']    = $item["Date"];
@@ -101,6 +68,7 @@ class Ptreportpdf extends Component
                 $information[$count]['detail' ] = $item["check_details"];
             }
         }
+        // dd($information);
 // sort    
     usort($information,function($a,$b){
         $dateA = strtotime($a["date"]);
@@ -174,7 +142,3 @@ class Ptreportpdf extends Component
         $this->allownce = Allownce::where("user_id",$this->user['id'])->whereBetween('Date',[$from,$to])->orderBy("date")->get()->toArray();
     }
 }
-
-
-
-
