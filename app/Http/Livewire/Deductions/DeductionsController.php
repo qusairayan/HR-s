@@ -48,11 +48,27 @@ class DeductionsController extends Component
 
 
 
-    public function approve($id)
+    public function approve($deduction)
     {
-        $deduction = Deductions::findOrFail($id);
-        $deduction->status = 1;
-        $deduction->save();
+        if(isset($deduction['violation_number'])){
+            Deductions::create([
+                "user_id"=>$deduction["user_id"],
+                "type"=>1 ,
+                 "amount"=>$deduction["amount"],
+                 "date"=>$deduction["date"],
+                 "detail"=>$deduction["violation_reason"],
+                 "status"=>1,
+            ]);
+            $deduction = TrafficViolations::findOrFail($deduction["id"]);
+            $deduction->status = 1;
+            $deduction->save();
+        }
+        else {
+            $deduction = Deductions::findOrFail($deduction["id"]);
+            $deduction->status = 1;
+            $deduction->save();
+        }
+
     }
 
     public function render()
@@ -60,6 +76,7 @@ class DeductionsController extends Component
         $users = User::all()->where('status', '=', 1);
         $violationQuery = TrafficViolations::leftJoin('users', 'users.name', '=', 'traffic_violations.name')
         ->leftJoin('department', 'department.id', '=', 'users.department_id')
+        ->where("traffic_violations.status","=",false)
         ->select('traffic_violations.*','department.name as department_name');
 
         if($this->from){
@@ -95,7 +112,7 @@ class DeductionsController extends Component
                 $mergedResults->count(),
                 10
             );
-            $types = deduction_allowances_types::where("type",0)->pluck("name")->toArray();
+            $types = deduction_allowances_types::where("type",0)->get();
             return view('livewire.deductions.deductions', compact('mergedPaginatedResults','users',"types"));
     }
     public function addDeduction(){

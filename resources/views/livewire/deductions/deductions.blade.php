@@ -190,10 +190,10 @@
                             </span>
                         </td>
                         <td class="border-0 fw-bold">
-                            @if($deduction->status == 0 && !$deduction->violation_number)
+                            @if($deduction->status == 0)
                             <div class="btn-group">
                                 <button class="btn btn-success" data-bs-toggle="modal"
-                                    wire:click="approve({{ $deduction->id }})" type="button">Approve</button>
+                                    wire:click="approve({{ $deduction }})" type="button">Approve</button>
                             </div>
 
                             @else
@@ -302,7 +302,7 @@
                                 <option value=""  hidden selected>Deductions type</option>
 
                                 @foreach($types as $item)
-                                <option value="{{$item}}">{{$item}}</option>
+                                <option value="{{$item->id}}">{{$item->name}}</option>
                                 @endforeach
                             </select>
                         </div>
