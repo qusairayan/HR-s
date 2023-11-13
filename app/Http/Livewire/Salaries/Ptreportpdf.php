@@ -92,6 +92,7 @@ class Ptreportpdf extends Component
         }
         if($checks){
             foreach($checks as $item){
+                dd($item["Date"]);
                 $count--;
                 $information[$count]['transaction']    ="checks";
                 $information[$count]['date']    = $item["Date"];
@@ -169,7 +170,6 @@ class Ptreportpdf extends Component
         // get parttime
         $this->partTime = PartTime::where('user_id', $this->user['id'])->where('from',">=",$from)->where("to","<=",$to)->get()->toArray();
         $this->checks = DB::connection('LYONDB')->table($this->checkComp)->where('Name_To','LIKE',$this->user["name"])->whereBetween('Date',[$from,$to])->orderBy("date")->get()->toArray();
-        dd($this->checks);
         $this->dedction = Deductions::where("user_id",$this->user['id'])->whereBetween('Date',[$from,$to])->orderBy("date")->get()->toArray();
         $this->allownce = Allownce::where("user_id",$this->user['id'])->whereBetween('Date',[$from,$to])->orderBy("date")->get()->toArray();
     }
