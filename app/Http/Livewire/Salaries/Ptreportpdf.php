@@ -66,7 +66,7 @@ class Ptreportpdf extends Component
             'margin_top' => 10, 
             'margin_bottom' => 10, 
         ]);
-        $mpdf->WriteHTML(view('livewire.salaries.PartTime_Report', ["data"=>$data, "reBalance" =>$this->reBalance,"user"=>$this->user,'partTime'=>$this->partTime,'from'=>$from,'to'=>$to]));
+        $mpdf->WriteHTML(view('livewire.salaries.partTimeReport', ["data"=>$data, "reBalance" =>$this->reBalance,"user"=>$this->user,'partTime'=>$this->partTime,'from'=>$from,'to'=>$to]));
         $mpdf->Output('document.pdf', 'I');
     }
     private function reBalance($from,$to){
