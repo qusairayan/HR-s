@@ -192,9 +192,8 @@
                             <label for="bank">Bank</label>
                             <div class="input-group">
 
-               
                             <input disabled class="form-control" id="bank" type="text" wire:model="bank"
-                            value="{{ $user->bank }}">
+                            value="{{ $bank_name }}"  >
 
                                 @error('bank')
                                     <div class="invalid-feedback">{{ $message }}</div>

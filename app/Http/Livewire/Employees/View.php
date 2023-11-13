@@ -10,6 +10,7 @@ use App\Models\Company;
 use App\Models\EmployeesContract;
 use App\Models\Bank;
 use App\Models\PartTime;
+use App\Models\PublicBank;
 use App\Models\Role;
 use App\Models\Salary;
 use App\Models\User;
@@ -98,7 +99,7 @@ class View extends Component
 
 
 if($user->bank){
-        $getBank = Bank::where('id', '=', $user->bank)->first()->name;
+        $getBank = PublicBank::where('id', $user->bank)->first()->bankName;
         $this->bank_name=$getBank;
 }
 
