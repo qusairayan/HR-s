@@ -99,8 +99,8 @@ class View extends Component
 
 
 if($user->bank){
-        $getBank = PublicBank::where('id', $user->bank)->first()->bankName;
-        $this->bank_name=$getBank;
+        $getBank = PublicBank::find($user->bank);
+        $this->bank_name=$getBank->bankName;
 }
 
 
