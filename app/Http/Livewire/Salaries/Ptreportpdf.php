@@ -99,6 +99,7 @@ class Ptreportpdf extends Component
             }
         }
     }
+    dd($data);
         $mpdf = new Mpdf([
             'mode' => 'utf-8',
             'format' => 'A4-L',

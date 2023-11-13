@@ -147,7 +147,6 @@
     @php($totalDebit =0)
     @php($total =0)
     @php($totalCredit =0)
-    @dd($data);
     @foreach ($data as $key => $row)
     @php($total += $row["amount"]+$reBalance)
         <tr>
@@ -160,7 +159,6 @@
         </tr>
 
         @for ($i = 0; $i < count($row)-1; $i++)
-        @dd($row[$i])
             @if(isset($row[$i]))
                 <tr>
                     <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{ $row[$i]["date"] }}</td>
