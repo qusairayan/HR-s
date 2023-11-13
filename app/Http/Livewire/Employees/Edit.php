@@ -10,6 +10,7 @@ use App\Models\Company;
 use App\Models\EmployeesContract;
 use App\Models\Bank;
 use App\Models\PartTime;
+use App\Models\PublicBank;
 use App\Models\Role;
 use App\Models\Salary;
 use App\Models\SocialSecurity;
@@ -397,7 +398,7 @@ class Edit extends Component
         }
         $companies = Company::all();
         $roles = Role::all();
-        $banks = Bank::get();
+        $banks = PublicBank::get();
 
         return view('livewire.employees.edit', compact('departments', 'companies', 'roles', 'banks'));
     }

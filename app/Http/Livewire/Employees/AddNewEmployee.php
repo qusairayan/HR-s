@@ -11,6 +11,7 @@ use App\Models\PartTime;
 use App\Models\Role;
 use App\Models\Company;
 use App\Models\EmployeesContract;
+use App\Models\PublicBank;
 use App\Models\Salary;
 use GuzzleHttp\Promise\Create;
 use Livewire\Component;
@@ -262,7 +263,7 @@ class AddNewEmployee extends Component
         }
 
         $roles = Role::all()->where('name', '!=', 'admin');
-        $banks = Bank::get();
+        $banks = PublicBank::get();
 
 
         return view('livewire.employees.addNewEmployee', compact('departments', 'companies', 'roles','banks'));

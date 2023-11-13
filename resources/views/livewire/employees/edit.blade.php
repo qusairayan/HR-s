@@ -1,5 +1,5 @@
 <div wire:ignore.self>
-
+    {{-- @dd($banks); --}}
     <form wire:submit.prevent="save" action="#">
 
 
@@ -285,9 +285,8 @@
                                 <select class="form-select mb-0" id="bank" aaria-label="bank select example"
                                 wire:model="bank" autofocus required>
                                 <option value="" disabled selected hidden>Select Bank</option>
-
                                 @foreach($banks as $bank )
-                                <option value="{{$bank->id}}" {{$this->bank == $bank->id ? 'checked':''}}>{{$bank->name}}</option>
+                                <option value="{{$bank->id}}" {{$this->bank == $bank->id ? 'checked':''}}>{{$bank->bankName}}</option>
                             
                                 @endforeach
                             </select>
