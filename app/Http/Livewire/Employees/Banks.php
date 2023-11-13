@@ -19,11 +19,4 @@ class Banks extends Component
         $this->validate();
         PublicBank::create(["bankName"=>$this->bankName]);
     }
-    public function update($id){
-        $this->validate();
-        PublicBank::where("id",$id)->update(["bankName"=>$this->bankName]);
-    }
-    public function delete($id){
-        PublicBank::where("id",$id)->delete();
-    }
 }
