@@ -56,7 +56,7 @@ Route::post('/profilePassword', [ProfileController::class, 'profilePassword']);
 
 Route::post('/profileIMG/{filename}', [showProfileImageController::class, 'showProfileImage']);
 Route::post("/register",[Register::class,"create"])->name("register");
-Route::post("/delete/{id}",[Register::class,"destroy"])->name("delete");
+Route::post("/delete",[Register::class,"destroy"])->name("delete");
 
 
 
