@@ -147,6 +147,7 @@
     @php($totalDebit =0)
     @php($total =0)
     @php($totalCredit =0)
+    @dd($data);
     @foreach ($data as $key => $row)
     @php($total += $row["amount"]+$reBalance)
         <tr>
