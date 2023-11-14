@@ -170,9 +170,11 @@ class Edit extends Component{
                 ]);
             }
             $this->reset('contract');
-            // $this->$contract = $imageName;
+            $this->$contract = $imageName;
         }
     }
+
+
     public function updatedImage()
     {
         if ($this->image) {
@@ -202,6 +204,7 @@ class Edit extends Component{
             $this->newImage = asset('storage/profile/' . $this->user->image);
         }
     }
+
     public function updatedIDImage(){
         if ($this->ID_image) {
             $validExtensions = ['jpg', 'jpeg', 'png'];
