@@ -315,7 +315,9 @@
                                 
 
                             @endif
-                          
+                            <a class="dropdown-item p-sm-2" wire:click="delete({{$pt->id}})">
+                                <span class="fas fa-trash me-2"></span>
+                            </a>
                             </div>
                         </td>
 

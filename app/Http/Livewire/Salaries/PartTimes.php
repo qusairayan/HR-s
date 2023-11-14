@@ -129,4 +129,7 @@ public function report(){
 
         return view('livewire.salaries.partTime', compact('companies', 'departments','employees','partime'));
     }
+    public function delete($id){
+        PartTime::destroy($id);
+    }
 }
