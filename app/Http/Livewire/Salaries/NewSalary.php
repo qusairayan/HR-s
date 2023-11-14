@@ -45,7 +45,6 @@ class NewSalary extends Component{
                 }
             }
         }
-        dd($this->userSalary);
         $this->netSalary = $this->userSalary - $this->userDeduction + $this->userAllownces;
     }
     public function approve(){
