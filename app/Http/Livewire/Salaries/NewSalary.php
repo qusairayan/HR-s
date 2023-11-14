@@ -8,6 +8,7 @@ use App\Models\Department;
 use App\Models\MonthlyPayroll;
 use App\Models\Promotion;
 use App\Models\User;
+use Carbon\Carbon;
 use Livewire\Component;
 class NewSalary extends Component{
     public $user , $date ,$userSalary=0,$userDeduction=0,$userAllownces=0,$netSalary=0,$err="",$monthlyPayrollId;
@@ -20,7 +21,31 @@ class NewSalary extends Component{
         $this->userSalary = Promotion::where("user_id",$this->user)->where("from","<=",$this->date."-01")->orderBy("from","desc")->pluck("salary")->first();
         $this->userDeduction = Deductions::where("user_id",$this->user)->where("date","LIKE",$this->date . '-%')->sum("amount");
         $this->userAllownces = Allownce::where("user_id",$this->user)->where("date","LIKE",$this->date . '-%')->sum("amount");
-        if(!$this->userSalary)$this->userSalary = User::where("id",$this->user)->pluck("salary")->first();
+        // $user = User::where("id",$this->user)->select("salary","start_date","unemployment_date")->get()->toArray();
+        // if($user[0]["unemployment_date"] && $this->userSalary){
+        //     if($unemployment && $unemployment->format("Y-m") === $this->date){
+        //         if($unemployment->format("d") >"01"){
+        //             $countDays = (int) $unemployment->format("d");
+        //             $salaryPerDay = $this->userSalary /30;
+        //             $this->userSalary = $salaryPerDay * $countDays;
+        //             $this->userSalary =number_format($this->userSalary,2,"."," ");
+        //         }
+        //     }
+        // }
+        if(!$this->userSalary){
+            $this->userSalary = User::where("id",$this->user)->select("salary","start_date","unemployment_date")->get()->toArray();
+            $startDate = Carbon::parse( $this->userSalary[0]["start_date"]);
+            $this->userSalary = $this->userSalary[0]["salary"];
+            if($startDate->format("Y-m") === $this->date){
+                if($startDate->format("d") !== "01" && $startDate->format("d") <=30){
+                    $countDays = 31 - $startDate->format("d");
+                    $salaryPerDay = $this->userSalary /30;
+                    $this->userSalary = $salaryPerDay * $countDays;
+                    $this->userSalary =number_format($this->userSalary,2,"."," ");
+                }
+            }
+        }
+        dd($this->userSalary);
         $this->netSalary = $this->userSalary - $this->userDeduction + $this->userAllownces;
     }
     public function approve(){

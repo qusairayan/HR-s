@@ -39,6 +39,7 @@ class CreateUsersTable extends Migration
             $table->integer('status')->default(0);
 
             $table->integer('ID_no');
+            $table->date('unemployment_date')->nullable();
             $table->date('birthday');
             $table->string('phone');
 

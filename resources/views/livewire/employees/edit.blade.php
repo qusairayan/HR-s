@@ -392,7 +392,7 @@
                                     <div class="form-group">
                                         <label for="unemployment">End date</label>
                                         <input class="form-control" id="unemployment" type="date"
-                                            placeholder="Enter Employee's home unemployment Date" wire:model="unemployment">
+                                            placeholder="Enter Employee's home unemployment Date" wire:initial="unemployment" wire:model="unemployment">
                                         @error('unemployment')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror

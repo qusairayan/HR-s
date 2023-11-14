@@ -1,10 +1,7 @@
 <?php
-
 namespace App\Http\Livewire\Employees;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-
 use App\Models\Department;
 use App\Models\Company;
 use App\Models\EmployeesContract;
@@ -16,19 +13,11 @@ use App\Models\SocialSecurity;
 use App\Models\User;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-
-
-
-
-class Edit extends Component
-{
+class Edit extends Component{
+    use WithFileUploads;
     private static $COMPANY_SOCIAL_SECURIT_DEDUCTION_RATE = 11;
     private static $EMPLOYEE_SOCIAL_SECURIT_DEDUCTION_RATE = 5.5;
-    use WithFileUploads;
-
     public $user;
-
-
     public $showSavedAlert = false;
     public $showDemoNotification = false;
     public $username;
@@ -49,25 +38,17 @@ class Edit extends Component
     public $bank = '';
     public $IBAN = '';
     public $start_date;
-
-
-
     public $contract;
     public $newContract;
     public $signedDate;
-
     public $company_id;
     public $department_id;
     public $position;
     public $type;
     public $role;
-
-
     public $newImage;
     public $newID_image;
     public $newLicense_image;
-
-
     public $rules = [
         'name' => 'required',
         'username' => 'required',
@@ -87,10 +68,7 @@ class Edit extends Component
         'address' => 'required',
         'ID_no' => 'required|integer|digits:10',
     ];
-
-
-    public function mount(User $user)
-    {
+    public function mount(User $user){
         $this->user = $user;
         $this->email = $user->email;
         $this->username = $user->username;
@@ -114,16 +92,22 @@ class Edit extends Component
         $this->image = $user->image;
         $this->ID_image = $user->ID_image;
         $this->license_image = $user->license_image;
-
         $this->role = $user->getRoleNames();
-
-
         $getContract = EmployeesContract::where('user_id', '=', $user->id)->first();
-
         if ($getContract) {
             $this->contract = $getContract->image;
             $this->signedDate = $getContract->date;
         }
+    }
+    public function render(){
+        $departments = Department::all();
+        if ($this->company_id != '') {
+            $departments = Department::where('company_id', '=', $this->company_id)->get();
+        }
+        $companies = Company::all();
+        $roles = Role::all();
+        $banks = Bank::get();
+        return view('livewire.employees.edit', compact('departments', 'companies', 'roles', 'banks'));
     }
     public function updated($propertyName)
     {
@@ -148,7 +132,7 @@ class Edit extends Component
     {
         if ($this->status == 0) {
             $this->validate(
-                ['unemployment' => 'required']
+                ['unemployment' => 'required|date']
             );
         }
     }
@@ -165,29 +149,30 @@ class Edit extends Component
                 $this->addError('newContract', 'Invalid format. Only PDF file allowed.');
                 return;
             }
-
             $imageName = $this->user->id . '.' . $extension;
             $imagePath = 'public/contracts/' .  $imageName;
-
             if ($this->contract && Storage::exists('public/contracts/' . $this->contract)) {
 
                 Storage::delete($imagePath);
             }
-
             // Save the new image with the unique name
             $this->newContract->storeAs('public/contracts/', $imageName);
-
             $contract = EmployeesContract::where('user_id', '=', $this->user->id)->where('date', '=', $this->signedDate)->first();
-            $contract->image = $imageName;
-
-            $contract->save();
-
+            if($contract){
+                $contract->image = $imageName;
+                $contract->save();
+            }
+            else{
+                $res = EmployeesContract::create([
+                    "user_id"=>$this->user->id,
+                    "date"=>$this->signedDate,
+                    "image"=>$imageName,
+                ]);
+            }
             $this->reset('contract');
-            $this->$contract = $imageName;
+            // $this->$contract = $imageName;
         }
     }
-
-
     public function updatedImage()
     {
         if ($this->image) {
@@ -217,43 +202,28 @@ class Edit extends Component
             $this->newImage = asset('storage/profile/' . $this->user->image);
         }
     }
-
-    public function updatedIDImage()
-    {
+    public function updatedIDImage(){
         if ($this->ID_image) {
-
             $validExtensions = ['jpg', 'jpeg', 'png'];
             $extension = strtolower($this->ID_image->getClientOriginalExtension());
-
             if (!in_array($extension, $validExtensions)) {
                 $this->reset('ID_image');
                 $this->addError('ID_image', 'Invalid image format. Only JPG, JPEG, and PNG images are allowed.');
                 return;
             }
-
             $imageName = 'ID_' . $this->user->id . '.' . $extension;
             $imagePath = 'public/profile/' .  $imageName;
-
             if ($this->user->ID_image && Storage::exists('public/profile/' . $this->user->ID_image)) {
                 Storage::delete($imagePath);
             }
-
             // Save the new image with the unique name
             $this->ID_image->storeAs('public/profile/', $imageName);
-
             $this->user->ID_image = $imageName;
-
             $this->user->save();
-
             $this->newID_image = asset('storage/profile/' . $this->user->ID_image);
         }
     }
-
-    public function updatedLicenseImage()
-    {
-
-
-
+    public function updatedLicenseImage(){
             $validExtensions = ['jpg', 'jpeg', 'png'];
             $extension = strtolower($this->license_image->getClientOriginalExtension());
            
@@ -262,68 +232,41 @@ class Edit extends Component
                 $this->addError('license_image', 'Invalid image format. Only JPG, JPEG, and PNG images are allowed.');
                 return;
             }
-
             $imageName = 'license_' . $this->user->id . '.' . $extension;
             $imagePath = 'public/profile/' .  $imageName;
-
             if ($this->user->license_image && Storage::exists('public/profile/' . $this->user->license_image)) {
                 Storage::delete($imagePath);
             }
-
             // Save the new image with the unique name
             $this->license_image->storeAs('public/profile/', $imageName);
-
             $this->user->license_image = $imageName;
-
             $this->user->save();
-
-            $this->newLicense_image = asset('storage/profile/' . $this->user->license_image);
-        
+            $this->newLicense_image = asset('storage/profile/' . $this->user->license_image);   
     }
-
-
-
-    public function save()
-    {
-
-   
-
+    public function save(){
         if ($this->contract || $this->signedDate) {
-
-
             $this->validate([
 
                 'signedDate' => 'required|date',
             ]);
         }
-
-
-
         if ($this->type == 'part-time' ) {
 
             $this->validate([
                 'part_time' => 'required',
             ], [
                 'part_time.required' => 'The Part Time field is required.',
-            ]);
-
-
-            
+            ]);   
         }
         else{
             $this->part_time= '';
         }
-
-
-
         $this->status = $this->status ? 1 : 0;
-
         if ($this->status == 0) {
             $this->validate(
-                ['unemployment' => 'required']
+                ['unemployment' => 'required|date']
             );
         }
-
         $this->email = $this->email ?: null;
         if($this->salary !== $this->user->salary){
             $Salary_percentage = $this->salary / 100;
@@ -352,11 +295,9 @@ class Edit extends Component
             'address' => $this->address,
             'ID_no' => $this->ID_no,
             'status' => $this->status,
+            'unemployment_date' => $this->unemployment,
         ]);
-
-
         if ($this->type == 'part-time' ) {
-
             $partTime = PartTime::where('user_id', $this->user->id)->first();
             if(!$partTime){
 
@@ -366,39 +307,16 @@ class Edit extends Component
                     'status'=> 0,
                 ]);
             }
-
         }
-
         if ($this->signedDate) {
-
         $contract = EmployeesContract::where('user_id', '=', $this->user->id)->first();
         $contract->update([
             'date' => $this->signedDate,
         ]);
-
     }
-
         $this->user->syncRoles($this->role);
-
         session()->flash('message', 'Profile updated successfully.');
         $this->showSavedAlert = true;
         return redirect('/employees');
-    }
-
-
-    public function render()
-    {
-
-
-
-        $departments = Department::all();
-        if ($this->company_id != '') {
-            $departments = Department::where('company_id', '=', $this->company_id)->get();
-        }
-        $companies = Company::all();
-        $roles = Role::all();
-        $banks = Bank::get();
-
-        return view('livewire.employees.edit', compact('departments', 'companies', 'roles', 'banks'));
     }
 }
