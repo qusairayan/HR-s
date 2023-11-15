@@ -49,8 +49,9 @@ class LoginController extends Controller
             if ($user->image != '') {
                 $img = 'https://'.request()->getHttpHost().'/storage/profile/'.$user->image;
             }
+            $token =$user->createToken("auth-token")->plainTextToken;
             return response()->json([
-                // 'token' => $token,
+                "token"=>$token,
                 'message' => 'Login successful', "status" => 200, "ID" => $id, "name" => $name,
                 "username" => $request->username,
                 "email" => $email,
