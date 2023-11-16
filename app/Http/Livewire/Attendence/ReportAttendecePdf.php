@@ -97,7 +97,10 @@ class ReportAttendecePdf extends Component{
             $obj->checkOut_late = $this->late($obj->end_work,$obj->check_out);
             $this->totalCheckOut += strtotime($obj->checkOut_late) - strtotime('TODAY');
           }
-          $obj->countHoursWork =  $this->late($obj->end_work,$obj->start_work);
+          if(!$obj->off){
+            $obj->countHoursWork =  $this->late($obj->end_work,$obj->start_work);
+          }
+          
           if(!$obj->off)$this->totalCountHour += strtotime($obj->countHoursWork) - strtotime('TODAY'); 
           if($obj->check_out && $obj->check_in){
             $obj->countHoursWorkEmployee = $this->late($obj->check_out,$obj->check_in);
