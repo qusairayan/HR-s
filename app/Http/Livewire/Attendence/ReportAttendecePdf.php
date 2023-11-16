@@ -43,6 +43,7 @@ class ReportAttendecePdf extends Component{
             ->where("schedule.date",'LIKE',$this->date.'-%')
             ->orderBy("schedule.date")
             ->get();
+            dd($attendanceList);
         $mpdf = new Mpdf([
           'mode' => 'utf-8',
           'format' => 'A4-L',
