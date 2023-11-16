@@ -48,8 +48,9 @@
                 'payroll.edit_part_time',
                 'payroll.view_part_time',
                 'payroll.depositsalary',
-                'reportAttendence',
+                'attendence.Report.pdf',
                 'payroll.depositSalarypdf',
+                "attendence.Report",
                 'employee.banks',
             ]))
         {{-- Nav --}}

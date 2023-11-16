@@ -45,6 +45,7 @@ use App\Http\Controllers\PrivacyPolicyController;
 use App\Http\Controllers\showPdf;
 use App\Http\Controllers\Updateyear;
 use App\Http\Livewire\Attendence\ReportAttendance;
+use App\Http\Livewire\Attendence\ReportAttendecePdf;
 use App\Http\Livewire\Err404;
 use App\Http\Livewire\Err500;
 use App\Http\Livewire\ResetPassword;
@@ -140,6 +141,10 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('attendence')->group(function () {
         Route::get('/', Attendences::class)->name('attendences'); //->middleware('permission:viewAttendence');
+        // Route::get("/report_Attendence/{id}/{date}",ReportAttendance::class)->name("reportAttendence");
+        Route::get("/report",ReportAttendance::class)->name("attendence.Report");
+        Route::get("/repostPdf/{id}/{date}",ReportAttendecePdf::class)->name("attendence.Report.pdf");
+        
     });
 
 
@@ -216,5 +221,3 @@ Route::get('/transfer', [TransferController::class,'transfer'])->name('transfer'
 Route::get('/privay_policy', [PrivacyPolicyController::class,'privacy'])->name('privacy_policy'); 
 Route::get('/description', [PrivacyPolicyController::class,'description'])->name('description'); 
 Route::get("/storage/app/public/contracts/{filename}",[showPdf::class,"pdfView"])->name("viewContract");
-
-Route::get("attendence/report_Attendence/{id}/{date}",ReportAttendance::class)->name("reportAttendence");

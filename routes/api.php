@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\login\LoginController;
 use App\Http\Controllers\api\login\ForgetPasswordController;
 use App\Http\Controllers\api\attendence\AttendanceController;
-
+use App\Http\Controllers\api\attendence\attendenceRecord;
 use App\Http\Controllers\api\leaves\LeaveReqController;
 use App\Http\Controllers\api\leaves\GetLeaveController;
 
@@ -40,7 +40,7 @@ Route::post('/ActivateOtp', [LoginController::class, 'sendOtp']);
 Route::post('/ActivateVerifyOtp', [LoginController::class, 'verifyOtp']);
 
 Route::post('/attendence', [AttendanceController::class, 'attendence']);
-
+Route::post("attendence/record",[attendenceRecord::class,"recordApi"])->name("attendence.record.api");
 
 Route::post('/leaveReq', [LeaveReqController::class, 'leaveReq']);
 Route::post('/vacationReq', [VacationReqController::class, 'vacationReq']);

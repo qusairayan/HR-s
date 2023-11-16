@@ -145,7 +145,7 @@
                         </li>
 
                         <li class="nav-item {{ Request::segment(1) == 'attendence.report' ? 'active' : '' }}">
-                            <a href="/users" class="nav-link">
+                            <a href="{{route("attendence.Report")}}" class="nav-link">
                                 <span class="sidebar-text"> Report</span>
                             </a>
                         </li>
