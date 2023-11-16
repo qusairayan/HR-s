@@ -28,7 +28,7 @@ class attendenceSeeder extends Seeder
             if(date('l', strtotime("2023-11-".$i)) !== "Friday" && date('l', strtotime("2023-11-".$i)) !== "Saturday"){
                 Attendence::create([
                     "type"=>0,
-                    "user_id"=>4,
+                    "user_id"=>17,
                     "date"=>"2023-11-".$i,
                     "check_in"=>$time_in,
                     "check_out"=>$time_out,

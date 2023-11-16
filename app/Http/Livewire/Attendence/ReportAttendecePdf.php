@@ -16,16 +16,26 @@ class ReportAttendecePdf extends Component{
         $this->date = $date;
     }
     public function render(){
-                    $user=User::where('id','=',$this->userId)->first();
+        $user=User::where('id','=',$this->userId)->first();
         $employee=$user->name;
         $image=$user->image;
         $position=$user->position;
         $employee_id=$user->id;
         $company=$user->company->name;
         $department=$user->department->name;
-       $attendanceList = Schedules::leftJoin("attendence","schedule.date","=","attendence.date")
-        ->leftJoin("leaves","schedule.date","=","leaves.date")
-        ->leftJoin("vacations","schedule.date","=","vacations.date")
+       $attendanceList = Schedules::
+       leftJoin("attendence",function($join){
+        $join->on('schedule.date', '=', 'attendence.date')
+        ->on('schedule.user_id', '=', 'attendence.user_id');
+       })
+        ->leftJoin("leaves",function($join){
+          $join->on('schedule.date', '=', 'leaves.date')
+          ->on('schedule.user_id', '=', 'leaves.user_id');
+        })
+        ->leftJoin("vacations",function($join){
+          $join->on('schedule.date', '=', 'vacations.date')
+          ->on('schedule.user_id', '=', 'vacations.user_id');
+        })
         ->select(
             "schedule.date as schedule_date",
             "schedule.day as day",
@@ -39,11 +49,10 @@ class ReportAttendecePdf extends Component{
             "leaves.date as leaves_date",
             "leaves.time as leaves_time",
             "leaves.reason as leaves_reason",
-            )->where('schedule.user_id',$this->userId)
+            )->where('schedule.user_id',"=",$this->userId)
             ->where("schedule.date",'LIKE',$this->date.'-%')
             ->orderBy("schedule.date")
             ->get();
-            dd($attendanceList);
         $mpdf = new Mpdf([
           'mode' => 'utf-8',
           'format' => 'A4-L',

@@ -22,7 +22,7 @@ class scheduleSeeder extends Seeder
 
         for ($i=26; $i <31 ; $i++) { 
             Schedules::create([
-                "user_id"=>4,
+                "user_id"=>17,
                 "date"=>"2023-11-".$i,
                 "day"=>date('l', strtotime("2023-11-".$i)),
                 "off-day"=>date('l', strtotime("2023-11-".$i)) === "Friday" || date('l', strtotime("2023-11-".$i)) === "Saturday" ? 1 : NULL,

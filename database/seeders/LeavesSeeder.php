@@ -24,7 +24,7 @@ class LeavesSeeder extends Seeder
             $time_in= date("H:i:s",$time_in);
             if(date('l', strtotime("2023-11-".$i)) !== "Friday" && date('l', strtotime("2023-11-".$i)) !== "Saturday"){
                 Leave::create([
-                    "user_id"=>4,
+                    "user_id"=>17,
                     "time"=>$time_in,
                     "date"=>"2023-11-".$i+3,
                     "period"=>"0".rand(1,4).":00:00",

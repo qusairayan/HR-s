@@ -18,7 +18,7 @@ class vacationsSeeder extends Seeder
         $faker = Factory::create();
         for ($i=1; $i < 4; $i++) { 
             Vacation::create([
-                "user_id"=>4,
+                "user_id"=>17,
                 "date"=>"2023-11-1".$i,
                 "period"=>1,
                 "type"=>1,
