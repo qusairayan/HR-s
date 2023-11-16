@@ -8,7 +8,14 @@ use App\Models\Schedules;
 use App\Models\User;
 use Livewire\Component;
 use Mpdf\Mpdf;
+
+use function PHPSTORM_META\map;
+
 class ReportAttendecePdf extends Component{
+  private $totalCheckIn =0 ;
+  private $totalCheckOut =0 ;
+  private $totalCountHour =0 ;
+  private $totalCountHourEmployee =0 ;
     public $userId;
     public $date;
     public function mount($id, $date){
@@ -44,7 +51,6 @@ class ReportAttendecePdf extends Component{
             "schedule.to as end_work",
             "attendence.check_in as check_in",
             "attendence.check_out as check_out",
-            "attendence.check_out as check_out",
             "vacations.date as vacation_date",
             "leaves.date as leaves_date",
             "leaves.time as leaves_time",
@@ -53,6 +59,17 @@ class ReportAttendecePdf extends Component{
             ->where("schedule.date",'LIKE',$this->date.'-%')
             ->orderBy("schedule.date")
             ->get();
+            if(!$attendanceList->isEmpty()){
+              $attendanceList = $this->attendance($attendanceList);
+              $this->totalCheckIn = gmdate("H:i:s", $this->totalCheckIn);
+              $attendanceList->totalCheckIn = $this->totalCheckIn;
+              $this->totalCheckOut = gmdate("H:i:s", $this->totalCheckOut);
+              $attendanceList->totalCheckOut = $this->totalCheckOut;
+              $this->totalCountHour = $this->convertToHours($this->totalCountHour);
+              $attendanceList->totalCountHour = $this->totalCountHour;
+              $this->totalCountHourEmployee = $this->convertToHours($this->totalCountHourEmployee);
+              $attendanceList->totalCountHourEmployee = $this->totalCountHourEmployee;
+            }
         $mpdf = new Mpdf([
           'mode' => 'utf-8',
           'format' => 'A4-L',
@@ -65,5 +82,37 @@ class ReportAttendecePdf extends Component{
       $mpdf->showImageErrors = true;
       $mpdf->Output('document.pdf', 'I');
       exit;
+    }
+    private function attendance(object $object):object{
+      $object =  $object->map(function($obj){
+        if(!$obj->off)$obj->type = "Work Day";
+        if($obj->off)$obj->type = "Week End";
+        if($obj->vacation_date)$obj->type = "Vacation Day";
+        if($obj->leaves_date)$obj->type = "Leaves Day";
+          if($obj->check_in){
+            $obj->checkIn_late = $this->late($obj->check_in,$obj->start_work);
+            $this->totalCheckIn += strtotime($obj->checkIn_late) - strtotime('TODAY');
+          }
+          if($obj->check_out){
+            $obj->checkOut_late = $this->late($obj->end_work,$obj->check_out);
+            $this->totalCheckOut += strtotime($obj->checkOut_late) - strtotime('TODAY');
+          }
+          $obj->countHoursWork =  $this->late($obj->end_work,$obj->start_work);
+          if(!$obj->off)$this->totalCountHour += strtotime($obj->countHoursWork) - strtotime('TODAY'); 
+          if($obj->check_out && $obj->check_in){
+            $obj->countHoursWorkEmployee = $this->late($obj->check_out,$obj->check_in);
+            if($obj->type == "Work Day" || $obj->type=="Leaves Day")$this->totalCountHourEmployee += strtotime($obj->countHoursWorkEmployee) - strtotime('TODAY');
+          }
+          return $obj;
+      });
+      return $object;
+    }
+    private function late(string $startTime ,string $endTime):string{
+      $startTime =strtotime($startTime);
+      $endTime =strtotime($endTime);
+      return date("H:i:s",$startTime - $endTime);
+    }
+    private function convertToHours($time){
+      return floor($time / 60 /60 );
     }
 }

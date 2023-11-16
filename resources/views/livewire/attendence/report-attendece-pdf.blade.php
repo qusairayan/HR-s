@@ -87,128 +87,46 @@
                 <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width:15%">The number of working hours the employee works</th>
                 <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width:10%">Detailes</th>
             </tr>
-            @php
-             $totalCheckInLat = 0;   
-             $totalCheckOutLat = 0;
-             $totalCountHouer1 = 0;
-             $totalCountHouer2 = 0;
-             $hour =0;
-             $minute =0;
-             $secound=0;
-
-            @endphp
              @foreach ($attendanceList as $item)
-             @php
-                   $time1 = strtotime($item->start_work);
-                   $time2 = strtotime($item->check_in);
-                    $time = $time2
-             @endphp
                 <tr>
-                    <td style="text-align: center;padding-top: 8px; width: 10%; background:#fff;">{{$item->schedule_date}}</td>
+                    <th style="text-align: center;padding-top: 8px; width: 10%; background:#fff;">{{$item->schedule_date}}</th>
                     <td style="text-align: center;padding-top: 8px; width: 15%; background:#fff;">
                         <table>
                             <tr>
-                                <th style="padding:5px;background:#fff;">{{$item->off == 1 ? "" : substr($item->start_work,0,2).  ($item->start_work < 12 ? "AM"  : "PM")}}</th>
-                                <th style="padding:4px;background:#fff;">{{$item->off == 1 ? "" : substr($item->end_work,0,2).  ($item->end_work < 12 ? "AM"  : "PM")}}</th>
+                                <th style="padding:5px;background:#fff;border-right: 2px solid black;">{{$item->off == 1 ? "--" : substr($item->start_work,0,2).  ($item->start_work < 12 ? "AM"  : "PM")}}</th>
+                                <th style="padding:4px;background:#fff;">{{$item->off == 1 ? "--" : substr($item->end_work,0,2).  ($item->end_work < 12 ? "AM"  : "PM")}}</th>
                             </tr>
                         </table>
                     </td>
                  <td style="text-align: center;padding-top: 8px; width: 15%; background:#fff;">
                         <table>
                             <tr>
-                                @php
-                                  $CheckInLat = diffTime($item->check_in , $item->start_work);
-                                  $totalCheckInLat +=$CheckInLat; 
-                                @endphp
-                                <th style="padding:4px;background:#fff;">{{$item->off == 1 ? "" :$item->check_in}}</th>
-                                <th style="padding:4px;background:#fff;">{{$item->off == 1 ? "" : $CheckInLat}}</th>
+                                <th style="padding:4px;background:#fff;border-right: 2px solid black;">{{$item->off == 1 ? "--" : $item->check_in ?? "--"}}</th>
+                                <th style="padding:4px;background:#fff;">{{$item->off == 1 ? "--" : ($item->check_in ? $item->checkIn_late : "--" )}}</th>
                             </tr>
                         </table>
                     </td>
                  <td style="text-align: center;padding-top: 8px; width: 15%; background:#fff;">
                         <table>
                             <tr>
-                                @php
-                                $CheckOutLat = diffTime($item->end_work,$item->check_out);
-                                $totalCheckOutLat +=$CheckOutLat;
-                              @endphp
-                                <th style="padding:4px;background:#fff;">{{$item->off == 1 ? "" :$item->check_out}}</th>
-                                <th style="padding:4px;background:#fff;">{{ $item->off == 1 ? "" :$CheckOutLat}}</th>
+                                <th style="padding:4px;background:#fff;border-right: 2px solid black;">{{$item->off == 1 ? "--" : $item->check_out ?? "--"}}</th>
+                                <th style="padding:4px;background:#fff;">{{ $item->off == 1 ? "--" : ($item->check_out ? $item->checkOut_late : "--") }}</th>
                             </tr>
                         </table>
                     </td>
-                    @php
-                        $countHour=diffTimeToHour($item->end_work,$item->start_work);
-                        $countHourEmp=diffTimeToHour($item->check_out,$item->check_in);
-                        $totalCountHouer1 += $item->off != 1 ? substr($countHour,0,1) :0;
-                        if($item->off != 1){
-                            $time = diffTimeToHour($countHour,$countHourEmp);
-                        $arr = calcHours($time,$hour,$minute,$secound);
-                        $hour =$arr[0] ;
-                        $minute =$arr[1] ;
-                        $secound =$arr[2] ;
-                        }
-                    @endphp
-                    <td style="text-align: center;padding:4px;background:#fff;">{{$item->off == 1 ? "" : $countHour }}</td>
-                    <td style="text-align: center;padding:4px;background:#fff;">{{$item->off == 1 ? "" : $countHourEmp }}</td>
-                    <td style="text-align: center;padding:4px;background:#fff;">{{$item->off ? "weekend" : ($item->leaves_date ? "leave" : ($item->vacation_date ? "vacation" : "work"))}}</td>
+                    <th style="text-align: center;padding:4px;background:#fff;">{{$item->off == 1 ? "--" : $item->countHoursWork }}</th>
+                    <th style="text-align: center;padding:4px;background:#fff;">{{$item->off == 1 ? "--" : $item->countHoursWorkEmployee }}</th>
+                    <th style="text-align: center;padding:4px;background:#fff;">{{$item->type}}</th>
                 </tr>
             @endforeach
             <tr>
                 <td style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width:15%">Total</td>
                 <td style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width:15%">Times</td>
-                <td style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width:15%">{{$totalCheckInLat}}</td>
-                <td style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width:15%">{{$totalCheckOutLat}}</td>
-                <td style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width:15%">{{$totalCountHouer1}}</td>
-                <td style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width:15%">{{$hour.":".$minute.":".$secound}}</td>
-                <td style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width:15%"></td>
+                <td style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width:15%">{{$attendanceList->totalCheckIn}}</td>
+                <td style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width:15%">{{$attendanceList->totalCheckOut}}</td>
+                <td style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width:15%">{{$attendanceList->totalCountHour}}</td>
+                <td style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width:15%">{{$attendanceList->totalCountHourEmployee}}</td>
+                <td style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width:15%">{{$attendanceList->totalCountHour -$attendanceList->totalCountHourEmployee }}</td>
             </tr>
         </table>
     </div>
-@php
-function diffTime($time1,$time2){
-    $time1 = new DateTime($time1);
-    $time2 = new DateTime($time2);
-
-    // Calculate the difference
-    $difference = $time1->diff($time2);
-
-    // Access the difference in hours, minutes, and seconds
-    // $hours = $difference->h;
-    return $difference->i;
-    // $seconds = $difference->s;
-
-    // Display the difference
-    // echo "Difference: $hours hours, $minutes minutes, $seconds seconds";
-}
-function diffTimeToHour($time1,$time2){
-    $time1 = new DateTime($time1);
-    $time2 = new DateTime($time2);
-
-    // Calculate the difference
-    $difference = $time1->diff($time2);
-
-    // Access the difference in hours, minutes, and seconds
-    // $hours = $difference->h;
-    return $difference->h.":".$difference->i.":".$difference->s;
-    // $seconds = $difference->s;
-
-    // Display the difference
-    // echo "Difference: $hours hours, $minutes minutes, $seconds seconds";
-}
-function calcHours($time,$hour,$minute, $secound){
-    $time = explode(":",$time);
-    $hour += $time[0];
-    $minute += $time[1];
-    $secound += $time[2];
-    if($secound >=60){
-        $secound = $secound % 60;
-        $minute++;
-    }
-    if($minute >=60){
-        $minute = $minute % 60;
-        $hour++;
-    }
-    return [$hour,$minute, $secound];
-}
-@endphp
