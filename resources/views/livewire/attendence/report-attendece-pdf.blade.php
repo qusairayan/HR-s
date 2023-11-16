@@ -144,25 +144,24 @@
                         if($item->off != 1){
                             $time = diffTimeToHour($countHour,$countHourEmp);
                         $arr = calcHours($time,$hour,$minute,$secound);
-                        $hour +=$arr[0] ;
-                        $minute +=$arr[1] ;
-                        $secound +=$arr[2] ;
+                        $hour =$arr[0] ;
+                        $minute =$arr[1] ;
+                        $secound =$arr[2] ;
                         }
                     @endphp
-                    <td style="padding:4px;background:#fff;">{{$item->off == 1 ? "" : $countHour }}</td>
-                    <td style="padding:4px;background:#fff;">{{$item->off == 1 ? "" : $countHourEmp }}</td>
-                    <td style="padding:4px;background:#fff;">{{$item->off ? "weekend" : ($item->leaves_date ? "leave" : ($item->vacation_date ? "vacation" : "work"))}}</td>
+                    <td style="text-align: center;padding:4px;background:#fff;">{{$item->off == 1 ? "" : $countHour }}</td>
+                    <td style="text-align: center;padding:4px;background:#fff;">{{$item->off == 1 ? "" : $countHourEmp }}</td>
+                    <td style="text-align: center;padding:4px;background:#fff;">{{$item->off ? "weekend" : ($item->leaves_date ? "leave" : ($item->vacation_date ? "vacation" : "work"))}}</td>
                 </tr>
             @endforeach
             <tr>
-                {{-- @dd("xsaxas"); --}}
                 <td style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width:15%">Total</td>
                 <td style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width:15%">Times</td>
                 <td style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width:15%">{{$totalCheckInLat}}</td>
                 <td style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width:15%">{{$totalCheckOutLat}}</td>
                 <td style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width:15%">{{$totalCountHouer1}}</td>
                 <td style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width:15%">{{$hour.":".$minute.":".$secound}}</td>
-                {{-- <td style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width:15%">{{$totalCountHouer2}}</td> --}}
+                <td style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width:15%"></td>
             </tr>
         </table>
     </div>
@@ -199,11 +198,10 @@ function diffTimeToHour($time1,$time2){
 }
 function calcHours($time,$hour,$minute, $secound){
     $time = explode(":",$time);
-    $hour = $time[0];
-    $minute = $time[1];
-    $secound = $time[2];
+    $hour += $time[0];
+    $minute += $time[1];
+    $secound += $time[2];
     if($secound >=60){
-        dd($secound);
         $secound = $secound % 60;
         $minute++;
     }
@@ -211,9 +209,6 @@ function calcHours($time,$hour,$minute, $secound){
         $minute = $minute % 60;
         $hour++;
     }
-    // echo "hour=" . $hour."<br>";
-    // echo "minute=" .$minute."<br>";
-    // echo "secound=".$secound."<br>";
     return [$hour,$minute, $secound];
 }
 @endphp
