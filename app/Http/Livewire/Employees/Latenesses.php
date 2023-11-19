@@ -36,7 +36,7 @@ class Latenesses extends Component
 
        $lsa=Lateness::leftJoin('attendence', 'attendence.id', '=', 'lateness.attendence_id')
        ->leftJoin('users', 'users.id', '=', 'lateness.user_id')
-       ->select('lateness.*',  'attendence.date as date','attendence.check_in as check_in', 'users.name as username','users.id as user_id', 'attendence.check_in as check_out')
+       ->select('lateness.*',  'attendence.date as date','attendence.check_in as check_in', 'users.name as username','users.id as user_id', 'attendence.check_out as check_out')
        ->where('lateness.id', '=', $this->lateId)->first();
                
        $this->lateCheckIn=$lsa->check_in;
