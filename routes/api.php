@@ -41,6 +41,7 @@ Route::post('/ActivateVerifyOtp', [LoginController::class, 'verifyOtp']);
 
 Route::post('/attendence', [AttendanceController::class, 'attendence']);
 Route::post("attendence/record",[attendenceRecord::class,"recordApi"])->name("attendence.record.api");
+Route::post("attendence/schedule",[attendenceRecord::class,"getSchedule"])->name("attendence.getSchedule.api");
 
 Route::post('/leaveReq', [LeaveReqController::class, 'leaveReq']);
 Route::post('/vacationReq', [VacationReqController::class, 'vacationReq']);

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\api\attendence;
 
 use App\Http\Controllers\Controller;
 use App\Models\Attendence;
+use App\Models\Schedules;
 use Illuminate\Http\Request;
 
 class attendenceRecord extends Controller
@@ -21,5 +22,10 @@ class attendenceRecord extends Controller
             ->orderBy("attendence.date")
             ->get();
             return response($attendanceList,200);
+    }
+    public function getSchedule(Request $request){
+        $id = $request->input("id");
+        $schedule =Schedules::where("user_id","=",$id)->where("date","LIKE",date("Y-m")."-%")->orderBy("date")->get();
+        return response($schedule,200);
     }
 }
