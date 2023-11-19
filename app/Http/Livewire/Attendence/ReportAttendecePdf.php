@@ -63,17 +63,17 @@ class ReportAttendecePdf extends Component{
             ->get();
             if(!$attendanceList->isEmpty()){
               $attendanceList = $this->attendance($attendanceList);
-              $this->totalCheckIn = $this->totalCheckIn - $this->overTimeCheckIn;
-              $this->totalCheckIn = gmdate("H:i:s", $this->totalCheckIn);
-              $attendanceList->totalCheckIn = $this->totalCheckIn;
-              $this->totalCheckOut = $this->totalCheckOut - $this->overTimeCheckOut;
-              $this->totalCheckOut = gmdate("H:i:s", $this->totalCheckOut);
-              $attendanceList->totalCheckOut = $this->totalCheckOut;
+              if($this->totalCheckIn > $this->overTimeCheckIn)$this->totalCheckIn = $this->totalCheckIn - $this->overTimeCheckIn;
+              else $this->totalCheckIn =$this->overTimeCheckIn - $this->totalCheckIn;
+              $attendanceList->totalCheckIn = gmdate("H:i:s", $this->totalCheckIn);
+              if($this->totalCheckOut > $this->overTimeCheckOut)$this->totalCheckOut = $this->totalCheckOut - $this->overTimeCheckOut;
+              else $this->totalCheckOut =$this->overTimeCheckOut - $this->totalCheckOut;
+              $attendanceList->totalCheckOut = gmdate("H:i:s", $this->totalCheckOut);
               $this->totalCountHour = $this->convertToHours($this->totalCountHour);
               $attendanceList->totalCountHour = $this->totalCountHour;
               $this->totalCountHourEmployee = $this->convertToHours($this->totalCountHourEmployee);
               $attendanceList->totalCountHourEmployee = $this->totalCountHourEmployee;
-              // dd($attendanceList);
+              
             }
         $mpdf = new Mpdf([
           'mode' => 'utf-8',
@@ -101,7 +101,7 @@ class ReportAttendecePdf extends Component{
             }
             else {
               $obj->overTimeCheckIn = $this->late($obj->start_work,$obj->check_in);
-              $this->overTimeCheckIn += strtotime($obj->overTime) - strtotime('TODAY');
+              $this->overTimeCheckIn += strtotime($obj->overTimeCheckIn) - strtotime('TODAY');
             } 
           }
           if($obj->check_out){
