@@ -226,7 +226,7 @@
 
                         <td class="border-0 fw-bold">
                             <span class="fw-normal">
-                                <span class="fw-bold"{{$late->on == 'checkIn' ? "text-success" : "text-danger"}}>{{$late->on == 'checkIn' ? "Check In" : "Check Out"}}</span>
+                                <span class="fw-bold {{$late->on == 'checkIn' ? "text-success" : "text-danger"}} ">{{$late->on == 'cehckIn' ? "Check In" : "Check Out"}}</span>
                                 
                             </span>
                         </td>
