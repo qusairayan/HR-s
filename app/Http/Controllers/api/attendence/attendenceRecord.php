@@ -5,6 +5,7 @@ namespace App\Http\Controllers\api\attendence;
 use App\Http\Controllers\Controller;
 use App\Models\Attendence;
 use App\Models\Schedules;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class attendenceRecord extends Controller
@@ -24,8 +25,10 @@ class attendenceRecord extends Controller
             return response($attendanceList,200);
     }
     public function getSchedule(Request $request){
+        
         $id = $request->input("id");
+        $user = User::where("id",$id)->select("annual_vacation","sick_vacation")->first();
         $schedule =Schedules::where("user_id","=",$id)->where("date",">=",date("Y-m-d"))->orderBy("date")->get();
-        return response($schedule,200);
+        return response(["schedule"=>$schedule,"vacations"=>$user],200);
     }
 }
