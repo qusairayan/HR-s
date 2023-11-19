@@ -227,9 +227,9 @@
                         <td class="border-0 fw-bold">
                             <span class="fw-normal">
 
-                                { $late->on == 'checkIn'
+                                {{ $late->on == 'checkIn'
                                     ? '<span class="fw-bold text-success">Check In</span>'
-                                    : '<span class="fw-bold text-danger">Check Out</span>' }
+                                    : '<span class="fw-bold text-danger">Check Out</span>' }}
                             </span>
                         </td>
 
