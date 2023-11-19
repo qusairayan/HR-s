@@ -25,7 +25,7 @@ class attendenceRecord extends Controller
     }
     public function getSchedule(Request $request){
         $id = $request->input("id");
-        $schedule =Schedules::where("user_id","=",$id)->where("date","LIKE",date("Y-m")."-%")->orderBy("date")->get();
+        $schedule =Schedules::where("user_id","=",$id)->where("date",">=",date("Y-m-d"))->orderBy("date")->get();
         return response($schedule,200);
     }
 }
