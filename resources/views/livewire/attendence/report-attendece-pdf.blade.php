@@ -87,6 +87,8 @@
                 <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width:15%">The number of working hours the employee works</th>
                 <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width:10%">Detailes</th>
             </tr>
+            {{-- @dd($attendanceList->count > 0) --}}
+            @if(!$attendanceList->isEmpty())
              @foreach ($attendanceList as $item)
                 <tr>
                     <th style="text-align: center;padding-top: 8px; width: 10%; background:#fff;">{{$item->schedule_date}}</th>
@@ -128,5 +130,6 @@
                 <td style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width:15%">{{$attendanceList->totalCountHourEmployee}}</td>
                 <td style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width:15%">{{$attendanceList->totalCountHour -$attendanceList->totalCountHourEmployee }}</td>
             </tr>
+            @endIf
         </table>
     </div>

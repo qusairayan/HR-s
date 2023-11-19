@@ -16,8 +16,8 @@ class ReportAttendecePdf extends Component{
   private $totalCheckOut =0 ;
   private $totalCountHour =0 ;
   private $totalCountHourEmployee =0 ;
-  private $overTimeCheckIn =0 ;
-  private $overTimeCheckOut =0 ;
+  private $totleOverTimeCheckIn =0 ;
+  private $totleOverTimeCheckOut =0 ;
     public $userId;
     public $date;
     public function mount($id, $date){
@@ -63,17 +63,19 @@ class ReportAttendecePdf extends Component{
             ->get();
             if(!$attendanceList->isEmpty()){
               $attendanceList = $this->attendance($attendanceList);
-              if($this->totalCheckIn > $this->overTimeCheckIn)$this->totalCheckIn = $this->totalCheckIn - $this->overTimeCheckIn;
-              else $this->totalCheckIn =$this->overTimeCheckIn - $this->totalCheckIn;
+
+              if($this->totalCheckIn > $this->totleOverTimeCheckIn)$this->totalCheckIn = $this->totalCheckIn - $this->totleOverTimeCheckIn;
+              else $this->totalCheckIn =$this->totleOverTimeCheckIn - $this->totalCheckIn;
               $attendanceList->totalCheckIn = gmdate("H:i:s", $this->totalCheckIn);
-              if($this->totalCheckOut > $this->overTimeCheckOut)$this->totalCheckOut = $this->totalCheckOut - $this->overTimeCheckOut;
-              else $this->totalCheckOut =$this->overTimeCheckOut - $this->totalCheckOut;
+
+              if($this->totalCheckOut > $this->totleOverTimeCheckOut)$this->totalCheckOut = $this->totalCheckOut - $this->totleOverTimeCheckOut;
+              else $this->totalCheckOut =$this->totleOverTimeCheckOut - $this->totalCheckOut;
               $attendanceList->totalCheckOut = gmdate("H:i:s", $this->totalCheckOut);
+
               $this->totalCountHour = $this->convertToHours($this->totalCountHour);
               $attendanceList->totalCountHour = $this->totalCountHour;
               $this->totalCountHourEmployee = $this->convertToHours($this->totalCountHourEmployee);
               $attendanceList->totalCountHourEmployee = $this->totalCountHourEmployee;
-              
             }
         $mpdf = new Mpdf([
           'mode' => 'utf-8',
@@ -90,34 +92,34 @@ class ReportAttendecePdf extends Component{
     }
     private function attendance(object $object):object{
       $object =  $object->map(function($obj){
-        if(!$obj->off)$obj->type = "Work Day";
+        if(!$obj->off){
+          $obj->countHoursWork =  $this->late($obj->end_work,$obj->start_work);
+          $obj->type = "Work Day";
+        }
         if($obj->off)$obj->type = "Week End";
         if($obj->vacation_date)$obj->type = "Vacation Day";
         if($obj->leaves_date)$obj->type = "Leaves Day";
+
           if($obj->check_in){
-            if($obj->start_work < $obj->check_in){
+            if($obj->start_work < $obj->check_in){//late
               $obj->checkIn_late = $this->late($obj->check_in,$obj->start_work);
               $this->totalCheckIn += strtotime($obj->checkIn_late) - strtotime('TODAY');
             }
-            else {
+            else {//overtime
               $obj->overTimeCheckIn = $this->late($obj->start_work,$obj->check_in);
-              $this->overTimeCheckIn += strtotime($obj->overTimeCheckIn) - strtotime('TODAY');
+              $this->totleOverTimeCheckIn += strtotime($obj->overTimeCheckIn) - strtotime('TODAY');
             } 
           }
           if($obj->check_out){
-            if($obj->end_work < $obj->check_out){
+            if($obj->end_work < $obj->check_out){//overtime
               $obj->overTimeCheckOut = $this->late($obj->check_out,$obj->end_work);
-              $this->overTimeCheckOut += strtotime($obj->overTimeCheckOut) - strtotime('TODAY');
+              $this->totleOverTimeCheckOut += strtotime($obj->overTimeCheckOut) - strtotime('TODAY');
             }
-            else{
+            else{//late
               $obj->checkOut_late = $this->late($obj->end_work,$obj->check_out);
               $this->totalCheckOut += strtotime($obj->checkOut_late) - strtotime('TODAY');
             }
-          }
-          if(!$obj->off){
-            $obj->countHoursWork =  $this->late($obj->end_work,$obj->start_work);
-          }
-          
+          }         
           if(!$obj->off)$this->totalCountHour += strtotime($obj->countHoursWork) - strtotime('TODAY'); 
           if($obj->check_out && $obj->check_in){
             $obj->countHoursWorkEmployee = $this->late($obj->check_out,$obj->check_in);
@@ -133,6 +135,7 @@ class ReportAttendecePdf extends Component{
       return date("H:i:s",$startTime - $endTime);
     }
     private function convertToHours($time){
-      return floor($time / 60 /60 );
+      return floor($time / 60 /60) ;
+
     }
 }
