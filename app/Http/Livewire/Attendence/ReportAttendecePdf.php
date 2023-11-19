@@ -16,6 +16,8 @@ class ReportAttendecePdf extends Component{
   private $totalCheckOut =0 ;
   private $totalCountHour =0 ;
   private $totalCountHourEmployee =0 ;
+  private $overTimeCheckIn =0 ;
+  private $overTimeCheckOut =0 ;
     public $userId;
     public $date;
     public function mount($id, $date){
@@ -61,14 +63,17 @@ class ReportAttendecePdf extends Component{
             ->get();
             if(!$attendanceList->isEmpty()){
               $attendanceList = $this->attendance($attendanceList);
+              $this->totalCheckIn = $this->totalCheckIn - $this->overTimeCheckIn;
               $this->totalCheckIn = gmdate("H:i:s", $this->totalCheckIn);
               $attendanceList->totalCheckIn = $this->totalCheckIn;
+              $this->totalCheckOut = $this->totalCheckOut - $this->overTimeCheckOut;
               $this->totalCheckOut = gmdate("H:i:s", $this->totalCheckOut);
               $attendanceList->totalCheckOut = $this->totalCheckOut;
               $this->totalCountHour = $this->convertToHours($this->totalCountHour);
               $attendanceList->totalCountHour = $this->totalCountHour;
               $this->totalCountHourEmployee = $this->convertToHours($this->totalCountHourEmployee);
               $attendanceList->totalCountHourEmployee = $this->totalCountHourEmployee;
+              // dd($attendanceList);
             }
         $mpdf = new Mpdf([
           'mode' => 'utf-8',
@@ -95,14 +100,14 @@ class ReportAttendecePdf extends Component{
               $this->totalCheckIn += strtotime($obj->checkIn_late) - strtotime('TODAY');
             }
             else {
-              $obj->checkIn_late = $this->late($obj->start_work,$obj->check_in);
-              $this->totalCheckIn -= strtotime($obj->checkIn_late) - strtotime('TODAY');
+              $obj->overTimeCheckIn = $this->late($obj->start_work,$obj->check_in);
+              $this->overTimeCheckIn += strtotime($obj->overTime) - strtotime('TODAY');
             } 
           }
           if($obj->check_out){
             if($obj->end_work < $obj->check_out){
-              $obj->checkOut_late = $this->late($obj->check_out,$obj->end_work);
-              $this->totalCheckOut -= strtotime($obj->checkOut_late) - strtotime('TODAY');
+              $obj->overTimeCheckOut = $this->late($obj->check_out,$obj->end_work);
+              $this->overTimeCheckOut += strtotime($obj->overTimeCheckOut) - strtotime('TODAY');
             }
             else{
               $obj->checkOut_late = $this->late($obj->end_work,$obj->check_out);

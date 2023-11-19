@@ -102,7 +102,7 @@
                         <table>
                             <tr>
                                 <th style="padding:4px;background:#fff;border-right: 2px solid black;">{{$item->off == 1 ? "--" : $item->check_in ?? "--"}}</th>
-                                <th style="padding:4px;background:#fff;">{{$item->off == 1 ? "--" : ($item->check_in ? $item->checkIn_late : "--" )}}</th>
+                                <th style="padding:4px;background:#fff;">{{$item->off == 1 ? "--" : ($item->check_in ? $item->checkIn_late ?? $item->overTimeCheckIn : "--" )}}</th>
                             </tr>
                         </table>
                     </td>
@@ -110,7 +110,7 @@
                         <table>
                             <tr>
                                 <th style="padding:4px;background:#fff;border-right: 2px solid black;">{{$item->off == 1 ? "--" : $item->check_out ?? "--"}}</th>
-                                <th style="padding:4px;background:#fff;">{{ $item->off == 1 ? "--" : ($item->check_out ? $item->checkOut_late : "--") }}</th>
+                                <th style="padding:4px;background:#fff;">{{ $item->off == 1 ? "--" : ($item->check_out ? $item->checkOut_late ?? $item->overTimeCheckOut : "--") }}</th>
                             </tr>
                         </table>
                     </td>
