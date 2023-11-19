@@ -90,12 +90,24 @@ class ReportAttendecePdf extends Component{
         if($obj->vacation_date)$obj->type = "Vacation Day";
         if($obj->leaves_date)$obj->type = "Leaves Day";
           if($obj->check_in){
-            $obj->checkIn_late = $this->late($obj->check_in,$obj->start_work);
-            $this->totalCheckIn += strtotime($obj->checkIn_late) - strtotime('TODAY');
+            if($obj->start_work < $obj->check_in){
+              $obj->checkIn_late = $this->late($obj->check_in,$obj->start_work);
+              $this->totalCheckIn += strtotime($obj->checkIn_late) - strtotime('TODAY');
+            }
+            else {
+              $obj->checkIn_late = $this->late($obj->start_work,$obj->check_in);
+              $this->totalCheckIn -= strtotime($obj->checkIn_late) - strtotime('TODAY');
+            } 
           }
           if($obj->check_out){
-            $obj->checkOut_late = $this->late($obj->end_work,$obj->check_out);
-            $this->totalCheckOut += strtotime($obj->checkOut_late) - strtotime('TODAY');
+            if($obj->end_work < $obj->check_out){
+              $obj->checkOut_late = $this->late($obj->check_out,$obj->end_work);
+              $this->totalCheckOut -= strtotime($obj->checkOut_late) - strtotime('TODAY');
+            }
+            else{
+              $obj->checkOut_late = $this->late($obj->end_work,$obj->check_out);
+              $this->totalCheckOut += strtotime($obj->checkOut_late) - strtotime('TODAY');
+            }
           }
           if(!$obj->off){
             $obj->countHoursWork =  $this->late($obj->end_work,$obj->start_work);
