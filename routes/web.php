@@ -143,7 +143,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/', Attendences::class)->name('attendences'); //->middleware('permission:viewAttendence');
         // Route::get("/report_Attendence/{id}/{date}",ReportAttendance::class)->name("reportAttendence");
         Route::get("/report",ReportAttendance::class)->name("attendence.Report");
-        Route::get("/repostPdf/{id}/{date}",ReportAttendecePdf::class)->name("attendence.Report.pdf");
+        Route::get("/reportPdf/{id}/{date}",ReportAttendecePdf::class)->name("attendence.Report.pdf");
         
     });
 
