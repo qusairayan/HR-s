@@ -21,7 +21,7 @@ class VacationReqController extends Controller
         $validator = Validator::make($request->all(), [
             'user_id' => 'required|integer',
             'period' => 'required|integer',
-            'type' => 'required',
+            'type' => 'required|boolean',
             'date' => 'required',
 
         ]);
@@ -51,7 +51,12 @@ class VacationReqController extends Controller
 
 
             if ($user) {
-
+                    $vecation = Vacation::where("user_id",$user_id)->where("date",">=",date("Y-m-d"))->orderBy("date","DESC")->first();
+                    if($vecation){
+                        $dateVec = strtotime($vecation->date . " +".$vecation->period." days");
+                        $dateVec = date("Y-m-d",$dateVec);
+                        if($dateVec >=$date)return response(['message'=>"You actually took a vacation"],400);
+                    }
 
 
 

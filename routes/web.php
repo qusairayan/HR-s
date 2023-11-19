@@ -134,7 +134,7 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('vacations')->group(function () {
         Route::get('/', Vacations::class)->name('vacations');
-        Route::get('/{vacation}/approve', [Vacations::class, 'approve'])->name('vacations.approve'); //->middleware('permission:vactionReqAction');
+        Route::get('/{vacation}/{type}/{user_id}/approve', [Vacations::class, 'approve'])->name('vacations.approve'); //->middleware('permission:vactionReqAction');
         Route::get('/{vacation}/reject', [Vacations::class, 'reject'])->name('vacations.reject'); //->middleware('permission:vactionReqAction');
     });
 

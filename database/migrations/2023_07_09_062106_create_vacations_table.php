@@ -14,7 +14,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->date('date');
             $table->integer('period');
-            $table->string('type');
+            $table->boolean('type');
             $table->integer('status')->default(0);
             $table->text('asset') ->nullable();
             $table->timestamps();

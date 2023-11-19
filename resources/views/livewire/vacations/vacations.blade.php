@@ -79,7 +79,9 @@
 
         </div>
     </div>
-
+    @if(Session::has("err"))
+    <h2 class="text-center w-100 invalid-feedback">{{ Session::get("err") }}</h2>
+    @endif
     <div class="card card-body border-0 shadow table-wrapper table-responsive">
         <table class="table table-hover">
             <thead>
@@ -163,8 +165,7 @@
                             </span>
                         </td>
 
-                        <td class="border-0 fw-bold">
-
+                        <td class="border-0 fw-bold">    
                             <div class="btn-group">
                                 <button class="btn btn-link text-dark dropdown-toggle dropdown-toggle-split m-0 p-0"
                                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -175,7 +176,7 @@
                                 </button>
                                 <div class="dropdown-menu py-0">
                                     <a class="dropdown-item text-success"
-                                        href="{{ route('vacations.approve', ['vacation' => $vacation->id]) }}"><span
+                                        href="{{ route('vacations.approve', ['vacation' => $vacation->id,"type"=>$vacation->type,"user_id"=>$vacation->user_id]) }}"><span
                                             class="fas fa-check-circle me-2"></span>Approve</a>
                                     <a class="dropdown-item text-danger rounded-bottom"
                                         href="{{ route('vacations.reject', ['vacation' => $vacation->id]) }}"><span

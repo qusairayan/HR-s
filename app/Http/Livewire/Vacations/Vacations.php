@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Livewire\Vacations;
 
+use App\Models\User;
 use App\Models\Vacation;
 
 use Illuminate\Support\Facades\Redirect;
@@ -26,20 +27,30 @@ class Vacations extends Component
         return view('livewire.vacations.vacations', compact('vacations'));
     }
 
-    public function approve(Vacation $vacations)
+    public function approve(Vacation $vacations,$vacation,$type,$user_id)
     {
-        $vacations->status = 1;
-        $vacations->save();
-
+        $user = User::find($user_id);
+        $vacation = Vacation::find($vacation);
+        if($vacation->status == 1)return redirect()->route('vacations');
+        if($user->type == 0){
+            if($user->sick_vacation >= $vacation->period)$user->sick_vacation- $vacation->period ;
+            else return redirect()->route('vacations')->with(["err"=>"You do not have a balance of sick leave"]);
+        }
+        else {
+            if($user->annual_vacation >= $vacation->period)$user->annual_vacation- $vacation->period ;
+            else return redirect()->route('vacations')->with(["err"=>"You do not have a balance of annual leave"]);
+        }
+        $user->save();
+        $vacation->status = 1;
+        $vacation->save();
         return redirect()->route('vacations');
     }
 
-    public function reject (Vacation $vacations)
+    public function reject ($vacation)
     {
-        $vacations->status = 2;
-        $vacations->save();
-
-
+        $vacation = Vacation::find($vacation);
+        $vacation->status = 2;
+        $vacation->save();
         return redirect()->route('vacations');
     }
 }

@@ -23,7 +23,8 @@ class CreateUsersTable extends Migration
             $table->unsignedBigInteger('bank');
             $table->string('IBAN');
             $table->enum('part_time',['daily','period','weekly'])->nullable();
-            $table->integer('vacation_balance')->default(0);
+            $table->unsignedTinyInteger('sick_vacation')->default(14);
+            $table->unsignedTinyInteger('annual_vacation')->default(14);
             
 
             $table->enum('type', ['full-time', 'part-time']);
