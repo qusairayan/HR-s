@@ -90,6 +90,7 @@
                 </tr>
             </thead>
             <tbody>
+                
                 @foreach ($vacations as $vacation)
                     <tr>
                         <td>
@@ -143,7 +144,7 @@
                         </td>
                     </tr>
                 @endforeach
-                <button class="dedc" style="display: none" wire:click="click({{$vacation}})">click</button>
+                <button class="dedc" style="display: none" wire:click="click({{$vacation ?? "" }})">click</button>
             </tbody>
         </table>
         <div>
