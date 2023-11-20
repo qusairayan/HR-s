@@ -44,12 +44,6 @@ class VacationReqController extends Controller
 
         try {
             $user = User::findOrFail($user_id);
-
-
-
-
-
-
             if ($user) {
                     $vecation = Vacation::where("user_id",$user_id)->where("date",">=",date("Y-m-d"))->orderBy("date","DESC")->first();
                     if($vecation){
@@ -65,6 +59,15 @@ class VacationReqController extends Controller
                 $vacationReq->period = $period;
                 $vacationReq->type = $type;
                 $vacationReq->date = $date;
+                if ($request->hasFile('image')) {
+                    $image = $request->file('image');
+                    // Generate a unique filename
+                    $filename = uniqid() . '.' . $image->getClientOriginalExtension();
+                    $vacationReq->asset = $filename;
+                    // Store the image file
+                    $path = $image->storeAs('public/vacation', $filename);
+                    // $path will contain the path where the image file is stored
+                }
                 $success = $vacationReq->save();
 
 
@@ -73,23 +76,6 @@ class VacationReqController extends Controller
 
 
                 if ($success) {
-
-                    if ($request->hasFile('image')) {
-
-                        $image = $request->file('image');
-
-                        // Generate a unique filename
-                        $filename = $vacationReq->id . '.' . $image->getClientOriginalExtension();
-
-                        // Store the image file
-                        $path = $image->storeAs('public/vacation', $filename);
-
-                        // $path will contain the path where the image file is stored
-
-                       
-
-                        
-                    }
 
                   
                         return response()->json([

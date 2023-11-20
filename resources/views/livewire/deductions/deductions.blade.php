@@ -375,7 +375,7 @@ aria-labelledby="modal-addTypeDeduction" aria-hidden="true" wire:ignore>
 
         <div style="padding: 1rem;width: 90%;margin:10px auto;background-color: white;overflow-y: scroll;max-height:100px" class="box-item-dedction">
             @foreach($types as $item)
-            <div>{{$item}}</div>
+            <div>{{$item->name}}</div>
             @endforeach
         </div>
 

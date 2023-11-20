@@ -1,6 +1,6 @@
 <div>
     <title>Schedule </title>
-
+    
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
         <div class="d-block mb-4 mb-md-0">
             <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
@@ -31,9 +31,10 @@
                 @if (auth()->user()->hasPermissionTo('setSchedule'))
                     <!-- Form -->
 
-                    <div class="col-md-6 mb-4">
+                    <div class="col-md-4 mb-4">
                         <label class="my-1 me-2" for="department">Department</label>
-                        <select class="form-select" id="department" aria-label="Default select example" disabled>
+                        <select class="form-select" id="department" aria-label="Default select example">
+                            
                             <option selected>{{ auth()->user()->department->name }}</option>
 
                         </select>

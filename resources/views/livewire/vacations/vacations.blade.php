@@ -1,6 +1,5 @@
 <div>
-    <title>Vacations </title>
-
+    <title>Vacations</title>
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
         <div class="d-block mb-4 mb-md-0">
             <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
@@ -23,7 +22,6 @@
             {{-- <p class="mb-0">Your web analytics dashboard template.</p> --}}
         </div>
         <div class="btn-toolbar mb-2 mb-md-0">
-        
             <div class="btn-group ms-2 ms-lg-3">
                 <button type="button" class="btn btn-sm btn-outline-gray-600">Share</button>
                 <button type="button" class="btn btn-sm btn-outline-gray-600">Export</button>
@@ -47,8 +45,6 @@
 
                 </div>
             </div>
-
-
             <div class="col-4 col-md-2 col-xl-1 ps-md-0 text-end">
                 <div class="dropdown">
                     <button class="btn btn-link text-dark dropdown-toggle dropdown-toggle-split m-0 p-1"
@@ -70,7 +66,6 @@
                                     d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
                                     clip-rule="evenodd"></path>
                             </svg></a>
-
                         <a class="dropdown-item fw-bold rounded-bottom" wire:click="$set('perPage', 30)"
                             href="#">30</a>
                     </div>
@@ -79,33 +74,24 @@
 
         </div>
     </div>
-    @if(Session::has("err"))
-    <h2 class="text-center w-100 invalid-feedback">{{ Session::get("err") }}</h2>
-    @endif
     <div class="card card-body border-0 shadow table-wrapper table-responsive">
         <table class="table table-hover">
             <thead>
                 <tr>
-
                     <th class="border-gray-200"></th>
                     <th class="border-gray-200">Name</th>
                     <th class="border-gray-200">Department</th>
                     <th class="border-gray-200">Period</th>
                     <th class="border-gray-200">Date</th>
-                    <th class="border-gray-200">Time</th>
+                    <th class="border-gray-200">File</th>
                     <th class="border-gray-200">Reason</th>
                     <th class="border-gray-200">Status</th>
                     <th class="border-gray-200">Action</th>
                 </tr>
             </thead>
             <tbody>
-
-
                 @foreach ($vacations as $vacation)
                     <tr>
-
-
-
                         <td>
                             <div class="form-check dashboard-check">
                                 <input class="form-check-input" type="checkbox" value=""
@@ -114,58 +100,24 @@
                                 </label>
                             </div>
                         </td>
-                        <td class="border-0 fw-bold">
-                            <span class="fw-normal">
-                                {{ $vacation->user_name }}
-                            </span>
-                        </td>
-
-
-
-
-
-
-
-                        <td class="border-0 fw-bold">
-                            <span class="fw-normal">
-                                {{ $vacation->department_name }}
-                            </span>
-                        </td>
-
-                        <td class="border-0 fw-bold">
-                            <span class="fw-normal">
-                                {{ $vacation->period }}
-                            </span>
-                        </td>
-
-                        <td class="border-0 fw-bold">
-                            <span class="fw-normal">
-                                {{ $vacation->date }}
-                            </span>
-                        </td>
-                        <td class="border-0 fw-bold">
-                            <span class="fw-normal">
-                                {{ $vacation->time }}
-                            </span>
-                        </td>
-                        <td class="border-0 fw-bold">
-                            <span class="fw-normal">
-                                {{ $vacation->reason }}
-                            </span>
-                        </td>
-
-                        <td class="border-0 fw-bold">
-                            <span class="fw-normal">
-
+                        <td class="border-0 fw-bold"><span class="fw-normal">{{ $vacation->user_name }}</span></td>
+                        <td class="border-0 fw-bold"><span class="fw-normal">{{ $vacation->department_name }}</span></td>
+                        <td class="border-0 fw-bold"><span class="fw-normal">{{ $vacation->period }}</span></td>
+                        <td class="border-0 fw-bold"><span class="fw-normal">{{ $vacation->date }}</span></td>
+                        <td class="border-0 fw-bold"><span class="fw-normal">
+                            @if($vacation->asset)
+                                <img src="/storage/vacation/{{$vacation->asset}}" alt="img">
+                                @endif
+                            </span></td>
+                        <td class="border-0 fw-bold"><span class="fw-normal">{{ $vacation->reason }}</span></td>
+                        <td class="border-0 fw-bold"><span class="fw-normal">
                                 {!! $vacation->status == 1
                                     ? '<span class="fw-bold text-success">Approved</span>'
                                     : ($vacation->status == 0
                                         ? '<span class="fw-bold text-warning">Pending</span>'
                                         : '<span class="fw-bold text-danger">Rejected</span>') !!}
-                            </span>
-                        </td>
-
-                        <td class="border-0 fw-bold">    
+                            </span></td>
+                        <td class="border-0 fw-bold">
                             <div class="btn-group">
                                 <button class="btn btn-link text-dark dropdown-toggle dropdown-toggle-split m-0 p-0"
                                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -175,29 +127,54 @@
                                     <span class="visually-hidden">Toggle Dropdown</span>
                                 </button>
                                 <div class="dropdown-menu py-0">
-                                    <a class="dropdown-item text-success"
+                                    {{-- <a class="dropdown-item text-success"
                                         href="{{ route('vacations.approve', ['vacation' => $vacation->id,"type"=>$vacation->type,"user_id"=>$vacation->user_id]) }}"><span
-                                            class="fas fa-check-circle me-2"></span>Approve</a>
-                                    <a class="dropdown-item text-danger rounded-bottom"
+                                            class="fas fa-check-circle me-2"></span>Approve</a> --}}
+
+                                    <a wire:click="approve({{$vacation->id}})" class="dropdown-item text-success"><span class="fas fa-check-circle me-2"></span>Approve</a>
+                                            
+                                    {{-- <a class="dropdown-item text-danger rounded-bottom"
                                         href="{{ route('vacations.reject', ['vacation' => $vacation->id]) }}"><span
-                                            class="fas fa-times-circle me-2"></span>Reject</a>
+                                            class="fas fa-times-circle me-2"></span>Reject</a> --}}
+
+                                    <a wire:click="reject({{$vacation->id}})" class="dropdown-item text-danger rounded-bottom"><span class="fas fa-times-circle me-2"></span>Reject</a>
                                 </div>
                             </div>
                         </td>
-
-
                     </tr>
                 @endforeach
-
+                <button class="dedc" style="display: none" wire:click="click({{$vacation}})">click</button>
             </tbody>
         </table>
-
         <div>
             {{ $vacations->links('vendor.pagination.custom')}}
         </div>
-
     </div>
-
-
-
+    @if($message)
+        @if($message["type"] == 1)
+        <script>
+            console.log("object");
+            Swal.fire({
+            title: "success",
+            text: "{{ "$message[msg]" }}",
+            icon: "success"
+        });
+        </script>
+        @else
+        <script>
+            Swal.fire({
+            title: "The operation failed",
+            text: "{{ "$message[msg]" }}",
+            icon: "error",
+            showCancelButton: true,
+            confirmButtonText:"dedction"
+        }).then((result) => {
+      if (result.isConfirmed) {
+        $(".dedc").click();
+      }
+    });
+        </script>
+        @endif
+        @else
+    @endif
 </div>
