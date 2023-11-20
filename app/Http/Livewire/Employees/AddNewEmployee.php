@@ -35,23 +35,16 @@ class AddNewEmployee extends Component
     public $email = '';
     public $birth = '';
     public $address = '';
-
-
-
+    PUBLIC $Duration_contract = "";
+    PUBLIC $social_security = "";
     public $contract;
     public $sign_date="";
-
-
-
     public $image;
     public $ID_image;
     public $license_image;
-
     public $password = '';
     public $passwordConfirmation = '';
-
     public $status = 0;
-
     public $salary = '';
     public $part_time = '';
     public $bank = '';

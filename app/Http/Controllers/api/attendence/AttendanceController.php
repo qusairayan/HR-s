@@ -43,12 +43,12 @@ class AttendanceController extends Controller
             if ($type == 0) {
                 // check if user made Attendance  
                 $isChecked = Attendence::where('user_id', $id)->whereDate('date', '=', Carbon::now()->toDateString())->first();
-                if ($isChecked) {
-                    return response()->json([
-                        'success' => false,
-                        'message' => 'User has attendence for today',
-                    ], 400);
-                }
+                // if ($isChecked) {
+                //     return response()->json([
+                //         'success' => false,
+                //         'message' => 'User has attendence for today',
+                //     ], 400);
+                // }
                 // make new Attendance
                 $attendence = new Attendence();
                 $attendence->user_id = $id;
