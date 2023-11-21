@@ -64,7 +64,7 @@ class Latenesses extends Component
 
         Deductions::create([
             'user_id'=>$this->user_id,
-            'type'=>1,
+            'type'=>7,
             'date'=>$this->date,
             'amount'=>$this->deduction,
             'lateness'=>$this->lateId,
