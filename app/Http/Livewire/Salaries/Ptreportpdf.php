@@ -14,8 +14,7 @@ use stdClass;
 
 use function PHPSTORM_META\map;
 
-class Ptreportpdf extends Component
-{
+class Ptreportpdf extends Component{
     public $user ;
     private $partTime;
     private $checks;

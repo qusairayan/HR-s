@@ -55,6 +55,7 @@ use App\Http\Livewire\Auth\Login;
 use App\Http\Livewire\Profile;
 use App\Http\Livewire\Auth\Register;
 use App\Http\Livewire\Employees\Banks;
+use App\Http\Livewire\Employees\SocialSecurety;
 use App\Http\Livewire\ForgotPasswordExample;
 use App\Http\Livewire\Index;
 use App\Http\Livewire\LoginExample;
@@ -109,6 +110,7 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('employees')->group(function () {
         Route::get("/banks",Banks::class)->name("employee.banks");
+        Route::get("/social-securety",SocialSecurety::class)->name("employee.socialSecurety");
         Route::get('/', Employees::class)->name('employees'); //->middleware('permission:viewAllEmployees');
         Route::get('/addEmployee', AddNewEmployee::class)->name('employees.addNew'); //->middleware('permission:addEmployees');
         Route::get('/{user}/edit', Edit::class)->name('employees.edit');

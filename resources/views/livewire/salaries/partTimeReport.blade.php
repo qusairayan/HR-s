@@ -158,45 +158,9 @@
         <td style="text-align: center;padding-top: 8px; width: 10%">{{$row["type"] ==="allownce" ||$row["type"] ==="salary" ?$row["amount"] : "-"}}</td>
         <td style="text-align: center;padding-top: 8px; width: 10%">{{$row["type"] ==="dedction" || $row["type"] == "check" ? $row["amount"] ?? $row["Value"] : "-"}}</td>
         <td style="text-align: center;padding-top: 8px; width: 10%">{{ $reBalance }}</td>
-        <td style="text-align: center;padding-top: 8px; width: 10%">{{$row["type"]}}</td>
+        <td style="text-align: center;padding-top: 8px; width: 10%">{{$row["type"] == "allownce" ||$row["type"] == "dedction" ? $row["detail"] :$row["type"] }}</td>
     </tr>
     @endforeach
-    {{-- @php($total += $row["amount"] ?? 0 +$reBalance)  --}}
-        {{-- <tr>
-            <td style="text-align: center;padding-top: 8px; width: 10%">{{ $from ?? "" }}</td>
-            <td style="text-align: center;padding-top: 8px; width: 10%"></td>
-            <td style="text-align: center;padding-top: 8px; width: 10%">{{ $row['amount'] ?? ""}}</td>
-            <td style="text-align: center;padding-top: 8px; width: 10%"></td>
-            <td style="text-align: center;padding-top: 8px; width: 10%">{{ $total }}</td>
-            <td style="text-align: center;padding-top: 8px; width: 10%; ">salary</td>
-        </tr> --}}
-
-        {{-- @for ($i = 0; $i < count($row)-1; $i++)
-            @if(isset($row[$i]))
-                <tr>
-                    <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{ $row[$i]["date"] }}</td>
-                    <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{ $row[$i]["type"] }}</td>
-                    @if($row[$i]["transaction"] =="checks" || $row[$i]["transaction"] =="dedction")
-                    {{$total-=$row[$i]["amount"] }}
-                    @php($totalCredit +=$row[$i]["amount"])
-                    <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">0</td>
-                    <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$row[$i]["amount"]}}</td>
-                    <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$total}}</td>
-                    @endif
-                    @if($row[$i]["transaction"] =="allownce")
-                    {{$total+=$row[$i]["amount"] }}
-                    @php($totalDebit +=$row[$i]["amount"])
-                    <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$row[$i]["amount"]}}</td>
-                    <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">0</td>
-                    <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$total}}</td>
-                    @endif
-                    <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{ $row[$i]["detail"] }}</td>
-                    </td>
-                </tr>
-            @else @break 
-            @endif
-        @endfor --}}
-    {{-- @endforeach --}}
     @if ( count($partTime) > 0)
     <tr>
         <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 22%"

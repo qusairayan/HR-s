@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Employees;
 
+use App\Models\deduction_allowances_types;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Lateness;
@@ -61,15 +62,16 @@ class Latenesses extends Component
         $this->validate([
             'deduction' => 'required|numeric'
         ]);
-
-        Deductions::create([
+        $tt = deduction_allowances_types::find(7);
+        $ded = Deductions::create([
             'user_id'=>$this->user_id,
             'type'=>7,
-            'date'=>$this->date,
             'amount'=>$this->deduction,
+            'date'=>$this->date,
             'lateness'=>$this->lateId,
         ]);
-
+        $ded->detail = $tt->name;
+        $ded->save();
 
         $lateness=Lateness::findOrFail($this->lateId);
         $lateness->deduction=1;

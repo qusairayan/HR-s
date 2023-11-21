@@ -11,13 +11,15 @@ use App\Models\Role;
 use App\Models\Salary;
 use App\Models\SocialSecurity;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 class Edit extends Component{
     use WithFileUploads;
-    private static $COMPANY_SOCIAL_SECURIT_DEDUCTION_RATE = 11;
-    private static $EMPLOYEE_SOCIAL_SECURIT_DEDUCTION_RATE = 5.5;
+    private static $COMPANY_SOCIAL_SECURIT_DEDUCTION_RATE = 14.25;
+    private static $EMPLOYEE_SOCIAL_SECURIT_DEDUCTION_RATE = 7.5;
     public $user;
+    public $password;
     public $showSavedAlert = false;
     public $showDemoNotification = false;
     public $username;
@@ -49,6 +51,8 @@ class Edit extends Component{
     public $newImage;
     public $newID_image;
     public $newLicense_image;
+    public $Duration_contract = "";
+    public $social_security = "";
     public $rules = [
         'name' => 'required',
         'username' => 'required',
@@ -67,6 +71,9 @@ class Edit extends Component{
         'phone' => 'required',
         'address' => 'required',
         'ID_no' => 'required|integer|digits:10',
+        "Duration_contract"=>'required|boolean',
+        "social_security"=>'required|boolean',
+        "password"=>'required|min:6|string',
     ];
     public function mount(User $user){
         $this->user = $user;
@@ -92,6 +99,8 @@ class Edit extends Component{
         $this->image = $user->image;
         $this->ID_image = $user->ID_image;
         $this->license_image = $user->license_image;
+        $this->social_security = $user->social_security;
+        $this->Duration_contract = $user->duration_contract;
         $this->role = $user->getRoleNames();
         $getContract = EmployeesContract::where('user_id', '=', $user->id)->first();
         if ($getContract) {
@@ -299,6 +308,9 @@ class Edit extends Component{
             'ID_no' => $this->ID_no,
             'status' => $this->status,
             'unemployment_date' => $this->unemployment,
+            'Duration_contract' => $this->Duration_contract ?? $this->user->Duration_contract,
+            'social_security' => $this->social_security ?? $this->user->social_security,
+            "password"=>  $this->password ? Hash::make($this->password) : $this->user->password,
         ]);
         if ($this->type == 'part-time' ) {
             $partTime = PartTime::where('user_id', $this->user->id)->first();

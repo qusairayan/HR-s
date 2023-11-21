@@ -103,6 +103,12 @@
                                     <span class="sidebar-text">Add Bank</span>
                                 </a>
                             </li>
+                            <li
+                                class="nav-item {{ Route::currentRouteName() == 'employee.socialSecurety' || Route::currentRouteName() == 'employee.socialSecurety' ? 'active' : '' }}">
+                                <a href="/employees/social-securety" class="nav-link">
+                                    <span class="sidebar-text">Social Securety</span>
+                                </a>
+                            </li>
 
 
 

@@ -186,7 +186,7 @@
                         
                         <td class="border-0 fw-bold">
                             <span class="fw-normal">
-                                {{ $deduction->details ? $deduction->details : $deduction->violation_reason }}
+                                {{ $deduction->detail ? $deduction->detail : $deduction->violation_reason }}
                             </span>
                         </td>
                         <td class="border-0 fw-bold">

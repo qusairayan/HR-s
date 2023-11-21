@@ -19,8 +19,8 @@ use Livewire\Component;
 class SocialSecurityController extends Component
 {
     use WithPagination;
-    private static $COMPANY_SOCIAL_SECURIT_DEDUCTION_RATE = 11;
-    private static $EMPLOYEE_SOCIAL_SECURIT_DEDUCTION_RATE = 5.5;
+    private static $COMPANY_SOCIAL_SECURIT_DEDUCTION_RATE = 14.25;
+    private static $EMPLOYEE_SOCIAL_SECURIT_DEDUCTION_RATE = 7.5;
     public $paginator = 10;
     public $search = '';
     public $company = '';
