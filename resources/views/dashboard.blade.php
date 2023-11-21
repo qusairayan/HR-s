@@ -42,7 +42,7 @@
                         <td>{{$item->name}}</td>
                         <td>{{$item->company}}</td>
                         <td>{{$item->position}}</td>
-                        <td>{{$item->checkin}}</td>
+                        <td>{{$item->check_in}}</td>
                     </tr>    
                 @endforeach                
             </tbody>
