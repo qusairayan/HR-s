@@ -2,12 +2,19 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Attendence;
+use App\Models\User;
 use Livewire\Component;
 
 class Dashboard extends Component
 {
-    public function render()
-    {
-        return view('dashboard');
+    public function render(){
+        $users = User::join("company","users.company_id","company.id")
+        ->leftJoin("attendence",function($join){
+            $join->on("users.id","attendence.user_id")
+            ->where("date",date("Y-m-d"));
+        })
+        ->where("users.status",1)->orderBy("id","DESC")->select("users.*","company.name as company","attendence.check_in")->get();
+        return view('dashboard',compact("users"));
     }
 }
