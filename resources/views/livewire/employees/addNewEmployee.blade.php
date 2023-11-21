@@ -390,15 +390,6 @@
 
                             </div>
                         </div>
-                        <div class="col-md-6 mb-3">
-                            <div class="form-group">
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" id="status" wire:model="social_security" checked="">
-                                    <label class="form-check-label" for="user-notification-1"></label>
-                                </div>
-
-                            </div>
-                        </div>
                     </div>
                     <h2 class="h5 my-4">Location</h2>
                     <div class="row">
@@ -411,6 +402,15 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
 
+                            </div>
+                        </div>
+                        <div class="col-md-7 mb-3">
+                            <h2 class="h5 my-4">He wants to participate in Social Security</h2>
+                            <div class="form-group">
+                                <label class="form-check-label" for="user-notification-1"></label>
+                                <div class="form-check form-switch">
+                                    <input style="width:40px" class="form-check-input" type="checkbox" id="status" wire:model="social_security" checked="false">
+                                </div>
                             </div>
                         </div>
                     </div>

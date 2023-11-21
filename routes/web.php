@@ -92,8 +92,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/register-example', RegisterExample::class)->name('register-example');
     Route::get('/forgot-password-example', ForgotPasswordExample::class)->name('forgot-password-example');
     Route::get('/reset-password-example', ResetPasswordExample::class)->name('reset-password-example');
-    // Route::get('/dashboard', Dashboard::class)->name('dashboard');
-    Route::get('/dashboard', Employees::class)->name('dashboard');
+    Route::get('/dashboard', Dashboard::class)->name('dashboard');
 
 
     Route::get('/transactions', Transactions::class)->name('transactions');

@@ -78,7 +78,8 @@ class AddNewEmployee extends Component
         'image' => 'nullable|mimes:jpg,png,jpeg',
         'ID_image' => 'nullable|mimes:jpg,png,jpeg',
         'license_image' => 'nullable|mimes:jpg,png,jpeg',
-
+        "Duration_contract"=>'required|boolean',
+        "social_security"=>'required|boolean',
     ];
 
 
@@ -103,9 +104,7 @@ class AddNewEmployee extends Component
     }
 
 
-    public function add()
-    {
-
+    public function add(){
         $this->validate([
             'password' => 'required|same:passwordConfirmation|min:6',
             'username' => ['required', 'unique:users', 'max:255'],
@@ -124,13 +123,9 @@ class AddNewEmployee extends Component
             'image' => 'nullable|mimes:jpg,png,jpeg',
             'ID_image' => 'nullable|mimes:jpg,png,jpeg',
             'license_image' => 'nullable|mimes:jpg,png,jpeg',
-
+            "Duration_contract"=>'required|boolean',
+            "social_security"=>'required|boolean',
         ]);
-
-
-        
-
-        
         if ($this->contract ||$this->sign_date) {
             $this->validate([
                 'contract' => 'mimes:pdf',
@@ -171,6 +166,8 @@ class AddNewEmployee extends Component
             'start_date' => $this->start_date,
             'ID_no' => $this->ID_no,
             'birthday' => $this->birth,
+            'Duration_contract' => $this->Duration_contract,
+            'social_security' => $this->social_security,
         ]);
 
         if($this->type =='part-time'){
