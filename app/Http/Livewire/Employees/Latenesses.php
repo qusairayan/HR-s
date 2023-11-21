@@ -66,7 +66,7 @@ class Latenesses extends Component
             'user_id'=>$this->user_id,
             'type'=>1,
             'date'=>$this->date,
-            'amount'=>$this->amount,
+            'amount'=>$this->deduction,
             'lateness'=>$this->lateId,
         ]);
 
