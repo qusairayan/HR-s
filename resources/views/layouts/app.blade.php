@@ -52,7 +52,7 @@
                 'payroll.depositSalarypdf',
                 "attendence.Report",
                 'employee.banks',
-                'employee.socialSecurety',
+                'employee.VacationBalance',
             ]))
         {{-- Nav --}}
         @include('layouts.nav')

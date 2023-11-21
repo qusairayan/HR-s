@@ -104,9 +104,9 @@
                                 </a>
                             </li>
                             <li
-                                class="nav-item {{ Route::currentRouteName() == 'employee.socialSecurety' || Route::currentRouteName() == 'employee.socialSecurety' ? 'active' : '' }}">
-                                <a href="/employees/social-securety" class="nav-link">
-                                    <span class="sidebar-text">Social Securety</span>
+                                class="nav-item {{ Route::currentRouteName() == 'employee.VacationBalance' || Route::currentRouteName() == 'employee.socialSecurety' ? 'active' : '' }}">
+                                <a href="/employees/vacation-balance" class="nav-link">
+                                    <span class="sidebar-text">Vacation Balance</span>
                                 </a>
                             </li>
 

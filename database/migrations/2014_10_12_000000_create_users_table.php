@@ -22,8 +22,8 @@ class CreateUsersTable extends Migration
             $table->unsignedBigInteger('bank');
             $table->string('IBAN');
             $table->enum('part_time',['daily','period','weekly'])->nullable();
-            $table->unsignedTinyInteger('sick_vacation')->default(14);
-            $table->unsignedTinyInteger('annual_vacation')->default(14);
+            $table->unsignedTinyInteger('sick_vacation')->nullable();
+            $table->unsignedTinyInteger('annual_vacation')->nullable();
             $table->boolean("Duration_contract")->comment("false mean 3 month , true mean 1 year");
             $table->boolean("social_security")->comment("He wishes to subscribe to Social Security");
             $table->enum('type', ['full-time', 'part-time']);
