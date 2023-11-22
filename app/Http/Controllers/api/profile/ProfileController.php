@@ -43,7 +43,26 @@ class ProfileController extends Controller
             $name = $request->input('name');
             $email = $request->input('email');
 
-            
+            if (request()->has('image')) {
+
+
+                $prevImg = $user->image;
+                if ($prevImg != '') {
+                    Storage::delete('public/profile/' . $prevImg);
+                }
+
+
+
+                $image = $request->file('image');
+
+                $filename = uniqid() . '.' . $image->getClientOriginalExtension();
+
+                $path = $image->storeAs('public/profile', $filename);
+                $path2 = explode("/",$path)[2];
+                if ($path) {
+                    $user->image = $path2;
+                }
+            }
             if ($email != $user->email) {
                 $userEmail = User::where('email', $email)->exists();
             if($userEmail){
@@ -60,26 +79,7 @@ class ProfileController extends Controller
                     $message->to($email)
                         ->subject('One-Time Password (OTP)');
                 });
-                if (request()->has('image')) {
-
-
-                    $prevImg = $user->image;
-                    if ($prevImg != '') {
-                        Storage::delete('public/profile/' . $prevImg);
-                    }
-
-
-
-                    $image = $request->file('image');
-
-                    $filename = uniqid() . '.' . $image->getClientOriginalExtension();
-
-                    $path = $image->storeAs('public/profile', $filename);
-                    $path2 = explode("/",$path)[2];
-                    if ($path) {
-                        $user->image = $path2;
-                    }
-                }
+                
                 $user->name = $name;
                 $user->otp = $otp;
                 $user->save();
