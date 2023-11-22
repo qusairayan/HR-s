@@ -217,12 +217,13 @@ class ProfileController extends Controller
             $id = request()->input('id');
 
             $user = User::where('id', $id)->first();
-            return response($user->image,200);
+            
             if ($user) {
 
                 if ($user->image){
                 $user->image='https://'.request()->getHttpHost().'/storage/profile/'.$user->image;
                 }
+                return response($user->image,200);
                 return response()->json([
                     'success' => true,
                     'data' => $user,
