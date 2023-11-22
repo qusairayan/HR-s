@@ -1,6 +1,6 @@
 <title>Dashboard</title>
 <div class="py-4">
-    <h2>Employees List Active</h2>
+    <h2 style="background-color: #aeb3cc;padding:1rem">Employees List Active</h2>
     <div style="overflow: auto;max-height:300px" class="card card-body border-0 shadow table-wrapper table-responsive">
         <table class="table table-hover">
             <thead>
@@ -23,7 +23,7 @@
             </tbody>
         </table>
     </div>
-    <h2 style="margin:1rem 0">Attendance List</h2>
+    <h2 style="background-color: #aeb3cc;padding:1rem;margin:1rem">Attendance List</h2>
     <div style="overflow: auto;max-height:300px" class="card card-body border-0 shadow table-wrapper table-responsive">
         <table class="table table-hover">
             <thead>

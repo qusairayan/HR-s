@@ -325,9 +325,17 @@ class Edit extends Component{
         }
         if ($this->signedDate) {
         $contract = EmployeesContract::where('user_id', '=', $this->user->id)->first();
-        $contract->update([
-            'date' => $this->signedDate,
-        ]);
+        if($contract){
+            $contract->update([
+                'date' => $this->signedDate,
+            ]);
+        }else{
+            EmployeesContract::create([
+                "date"=>$this->signedDate,
+                "user_id"=>$this->user->id,
+                "image"=>""
+            ]);
+        }
     }
         $this->user->syncRoles($this->role);
         session()->flash('message', 'Profile updated successfully.');
