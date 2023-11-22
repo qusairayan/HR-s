@@ -10,7 +10,9 @@ use Mpdf\Mpdf;
 class VacationPdf extends Component
 {
     public $user ="" ;
-    public function mount($id){
+    public $date ="" ;
+    public function mount($id,$date){
+        $this->date = explode("-",$date)[0];
         $this->user = User::find($id);
         $this->user->department = $this->user->department->name;
         $this->user->company = $this->user->company->name;
@@ -18,7 +20,7 @@ class VacationPdf extends Component
     public function render(){
 
         $id =$this->user->id;
-        $vacations = Vacation::where("user_id",$id)->orderBy("date",'DESC')->get();
+        $vacations = Vacation::where("user_id",$id)->where("date","LIKE",$this->date."-%")->orderBy("date",'DESC')->get();
         $mpdf = new Mpdf([
         'mode' => 'utf-8',
         'format' => 'A4-L',

@@ -11,7 +11,7 @@
     
     
     
-                <div class="col col-md-6 col-lg-3 col-xl-4">
+                <div class="col col-md-3 col-lg-3 col-xl-3 col-12">
                     <div class="input-group me-2 me-lg-3 fmxw-400">
                         <span class="input-group-text">
                             <svg class="icon icon-xs" x-description="Heroicon name: solid/search"
@@ -27,7 +27,7 @@
                 </div>
     
     
-                <div class="col col-md-6 col-lg-3 col-xl-4">
+                <div class="col col-md-3 col-lg-3 col-xl-3 col-12">
                     <div class="input-group me-2 me-lg-3 fmxw-400">
                         <select class="form-select mb-0" id="user" aria-label="user select example"
                             wire:model="employee" autofocus required>
@@ -40,6 +40,14 @@
 
                         </select>
 
+                    </div>
+                </div>
+                <div class="col col-md-3 col-lg-3 col-xl-3 col-12">
+                    <div class="input-group me-2 me-lg-3 fmxw-400">
+                        <input type="month" class="form-control" wire:model="date">
+                        @error('date')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
                 </div>
     
@@ -94,7 +102,8 @@
                         <td>{{$user->sick_vacation}}</td>
                         <td><button class="btn btn-info" wire:click="addVacation({{$user->id}})">Add Vacation</button></td>
                         <td><button class="btn btn-success" wire:click="resetVacation({{$user->id}})">reset Vacation</button></td>
-                        <td><a class="btn btn-primary" href="{{route('vacations.report',$user->id)}}">view report</a></td>
+                        {{-- <td><a wire:click="validDate()" class="btn btn-primary" href="{{route('vacations.report',[$user->id,$date])}}">view report</a></td> --}}
+                        <td><button wire:click="validDate({{$user->id}})" class="btn btn-primary">view report</button></td>
                     </tr>
                     @endforeach
                    

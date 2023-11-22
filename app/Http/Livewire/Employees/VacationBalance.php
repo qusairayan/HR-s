@@ -15,6 +15,7 @@ class VacationBalance extends Component
     public $search ="";
     public $message = "";
     public $employee = "";
+    public $date = "";
     public function render(){
         $users = User::where("status",1)->where("Duration_contract",1)->get();
         if($this->search)$users = User::where("name", "LIKE", $this->search . "%")->where("status",1)->where("Duration_contract",1)->get();
@@ -48,5 +49,11 @@ class VacationBalance extends Component
             return $this->message = ["type"=>1,'msg'=>"The employee's vacations have been reset for".$user->name];
         }
         else return $this->message = ["type"=>0,'msg'=>"Vacations are reset every beginning of the year"];
+    }
+    function validDate($id){
+        $err =  $this->validate([
+            "date"=>"required|date",
+        ]);
+        return redirect()->route("vacations.report",[$id,$this->date]);
     }
 }
