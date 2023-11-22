@@ -29,7 +29,7 @@ class VacationPdf extends Component
         'margin_top' => 10, 
         'margin_bottom' => 10, 
     ]);
-    $mpdf->WriteHTML(view('livewire.vacation-pdf', ["vacations"=>$vacations,"user"=>$this->user]));
+    $mpdf->WriteHTML(view('livewire.vacation-pdf', ["vacations"=>$vacations,"user"=>$this->user,"date"=>$this->date]));
     $mpdf->Output('document.pdf', 'I');
     }
 }

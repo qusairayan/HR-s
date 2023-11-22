@@ -93,14 +93,14 @@
         </div>
 
         <div class="column" style="padding:0;margin-left:3px; width:14%">
-            <p style="font-size:12px;color: white;margin:0;padding:4;font-weight:bold"></p>
+            <p style="font-size:12px;color: white;margin:0;padding:4;font-weight:bold">{{$date}}-01-01</p>
         </div>
 
         <div class="column" style="padding:0; width:10%">
             <p style="font-size:15px;color: white;margin:0;padding:4;font-weight:bold">To :</p>
         </div>
         <div class="column" style="padding:0;margin-left:3px; width:10%">
-            <p style="font-size:12px;color: white;margin:0;padding:4;font-weight:bold"></p>
+            <p style="font-size:12px;color: white;margin:0;padding:4;font-weight:bold">{{$date}}-12-01</p>
         </div>
     </div>
 
