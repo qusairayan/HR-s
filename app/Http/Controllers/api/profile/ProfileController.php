@@ -72,7 +72,7 @@ class ProfileController extends Controller
 
                     $image = $request->file('image');
 
-                    $filename = $user->id . '.' . $image->getClientOriginalExtension();
+                    $filename = uniqid() . '.' . $image->getClientOriginalExtension();
 
                     $path = $image->storeAs('public/profile', $filename);
                     if ($path) {
@@ -106,7 +106,7 @@ class ProfileController extends Controller
 
                     $image = $request->file('image');
 
-                    $filename = $user->id . '.' . $image->getClientOriginalExtension();
+                    $filename = uniqid() . '.' . $image->getClientOriginalExtension();
 
                     $path = $image->storeAs('public/profile', $filename);
                     $user->image = $id . '.' . $image->getClientOriginalExtension();
@@ -223,7 +223,6 @@ class ProfileController extends Controller
                 if ($user->image){
                 $user->image='https://'.request()->getHttpHost().'/storage/profile/'.$user->image;
                 }
-                return response($user->image,200);
                 return response()->json([
                     'success' => true,
                     'data' => $user,
