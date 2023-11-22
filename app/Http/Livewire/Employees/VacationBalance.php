@@ -37,13 +37,13 @@ class VacationBalance extends Component
     public function addVacation($id){
         $user = User::find($id);
         if(!$user->sick_vacation && !$user->annual_vacation){
-            $startWork = Carbon::parse($user->start_work);
+            $startWork = Carbon::parse($user->start_date);
             if($startWork->format("y") == date(("y")) && $startWork->format("m") < 12){
                 $month =12 -  $startWork->format("m");
                 $user->sick_vacation = floor(1.16 * $month) ;
                 $user->annual_vacation = floor(1.16 * $month);
             }else{
-                $user->sick_vacation = 14;
+                $user->sick_vacation  = 14;
                 $user->annual_vacation = 14;
             }
             $user->save();
