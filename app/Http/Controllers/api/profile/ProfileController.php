@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User;
+use Exception;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Spatie\FlareClient\Http\Exceptions\InvalidData;
@@ -20,6 +21,41 @@ class ProfileController extends Controller
         $this->middleware('api');
     }
 
+    public function editProfile(Request $request){
+        $validator = Validator::make($request->all(), [
+            'name'  => 'required|string',
+            'email' => 'required|email',
+        ]);
+        if($validator->fails())return response($validator->messages()->first(),400);
+        $id = $request->input("id");
+        $email = $request->input("email");
+        $name = $request->input("name");
+        $user = User::where("id",$id)->first();
+        if($user->name != $name)$user->name = $name;
+        if($user->email != $email){
+            $user->email = $email;
+            $otp = mt_rand(100000,999999);
+            Mail::raw("Your OTP is: $otp", function ($message) use ($email) {
+                $message->to($email)
+                    ->subject('One-Time Password (OTP)');
+            });
+            $user->otp = $otp;
+        }
+        if($request->has("image")){
+            $image =$request->file("image");
+            if($user->image)Storage::delete('public/profile/' . $user->image);
+            $filename = uniqid() . '.' . $image->getClientOriginalExtension();
+            $path = $image->storeAs('public/profile', $filename);
+            $user->image = explode("/",$path)[2];
+        }
+        try {
+            $user->save();
+            return response(["message"=>"user updated successfuly"],200);
+        } catch (Exception $e) {
+            return response(["message"=>$e->getMessage()],500);//"user updated faield"
+        }
+        $user->save();
+    }
     public function updateProfile(Request $request)
     {
         if (request()->has('id')) {
@@ -44,19 +80,12 @@ class ProfileController extends Controller
             $email = $request->input('email');
 
             if (request()->has('image')) {
-
-
                 $prevImg = $user->image;
                 if ($prevImg != '') {
                     Storage::delete('public/profile/' . $prevImg);
                 }
-
-
-
                 $image = $request->file('image');
-
                 $filename = uniqid() . '.' . $image->getClientOriginalExtension();
-
                 $path = $image->storeAs('public/profile', $filename);
                 $path2 = explode("/",$path)[2];
                 if ($path) {

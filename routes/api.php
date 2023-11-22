@@ -52,7 +52,7 @@ Route::post('/getLeave', [GetLeaveController::class, 'getLeaves']);
 
 Route::post('/getProfile', [ProfileController::class, 'getProfile']);
 Route::post('/profileOTP', [ProfileController::class, 'profileOTP']);
-Route::post('/updateProfile', [ProfileController::class, 'updateProfile']);
+Route::post('/updateProfile', [ProfileController::class, 'editProfile']);
 Route::post('/profilePassword', [ProfileController::class, 'profilePassword']);
 
 Route::post('/profileIMG/{filename}', [showProfileImageController::class, 'showProfileImage']);
