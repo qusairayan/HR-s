@@ -21,7 +21,7 @@ class VacationReqController extends Controller
         $validator = Validator::make($request->all(), [
             'user_id' => 'required|integer',
             'period' => 'required|integer',
-            'type' => 'required|boolean',
+            'type' => 'required|boolean', // 0 mean sick 1 annual
             'date' => 'required',
 
         ]);

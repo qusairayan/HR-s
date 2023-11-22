@@ -114,50 +114,33 @@
     
                         </div>
                     </div>
-    
-                   
-    
-    
-    
-    
             </div>
         </div>
-    
-        <div class="card card-body border-0 shadow table-wrapper table-responsive">
-    
-            <div class="col col-md-6 col-lg-3 col-xl-4">
-                <div class="input-group me-2 me-lg-3 fmxw-400">
-                    <span class="input-group-text">
-                        <svg class="icon icon-xs" x-description="Heroicon name: solid/search"
-                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
-                            aria-hidden="true">
-                            <path fill-rule="evenodd"
-                                d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                                clip-rule="evenodd"></path>
-                        </svg>
-                    </span>
-                    <input wire:model="search" type="text" class="form-control" placeholder="Search Employee">
-    
-                </div>
-            </div>
-    
-            
+        <div class="card card-body border-0 shadow table-wrapper table-responsive" >
             <table class="table table-hover">
                 <thead>
                     <tr>
-    
                         <th class="border-gray-200">ID</th>
-                        <th class="border-gray-200">Name</th>
-                        <th class="border-gray-200">Company</th>
-                        <th class="border-gray-200">Department</th>
-                        <th class="border-gray-200">Position</th>
-                        <th class="border-gray-200">Salary</th>
-                        <th class="border-gray-200">Date</th>
-                        {{-- <th class="border-gray-200">Action</th> --}}
+                        <th class="border-gray-200">Name</th>>
+                        <th class="border-gray-200">annual vacation</th>
+                        <th class="border-gray-200">sick vacation</th>
+                        <th class="border-gray-200">Action</th>
+                        <th class="border-gray-200">Action</th>
+                        <th class="border-gray-200">Action</th>
                     </tr>
                 </thead>
                 <tbody>
-    
+                    @foreach ($users as $user)
+                    <tr>
+                        <td>{{$user->id}}</td>
+                        <td>{{$user->name}}</td>
+                        <td>{{$user->annual_vacation}}</td>
+                        <td>{{$user->sick_vacation}}</td>
+                        <td><button class="btn btn-info" wire:click="addVacation({{$user->id}})">Add Vacation</button></td>
+                        <td><button class="btn btn-success" wire:click="resetVacation({{$user->id}})">reset Vacation</button></td>
+                        <td><button class="btn btn-primary" wire:click="viewPdf({{$user->id}})">view report</button></td>
+                    </tr>
+                    @endforeach
                    
          </table>
             <div>
@@ -165,5 +148,23 @@
             </div>
         </div>
     </div>
-    
+    @if($message)
+    @if($message["type"] == 1)
+        <script>
+            Swal.fire({
+            title: "success",
+            text: "{{ "$message[msg]" }}",
+            icon: "success"
+        });
+        </script>
+    @else
+        <script>
+            Swal.fire({
+                title: "error",
+                text: "{{ "$message[msg]" }}",
+                icon: "error"
+            });
+        </script>    
+    @endif
+@endif
 </div>
