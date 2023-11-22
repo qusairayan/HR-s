@@ -14,12 +14,13 @@ class VacationBalance extends Component
 {
     public $search ="";
     public $message = "";
+    public $employee = "";
     public function render(){
-        $companies = Company::all();
-        $departments = Department::all();
-        $departments = Department::all();
         $users = User::where("status",1)->where("Duration_contract",1)->get();
-        return view('livewire.employees.vacation-balance',["users"=>$users, "companies"=> $companies,"departments"=> $departments]);
+        if($this->search)$users = User::where("name", "LIKE", $this->search . "%")->where("status",1)->where("Duration_contract",1)->get();
+        
+        if($this->employee)$users = User::where("id",$this->employee)->get();
+        return view('livewire.employees.vacation-balance',["users"=>$users]);
     }
     public function viewPdf($id){
         $vacations = Vacation::where("user_id",$id)->orderBy("date",'DESC')->get();
@@ -31,7 +32,7 @@ class VacationBalance extends Component
             'margin_top' => 10, 
             'margin_bottom' => 10, 
         ]);
-        $mpdf->WriteHTML(view('livewire.salaries.partTimeReport', ["vacations"=>$vacations,]));
+        $mpdf->WriteHTML(view('livewire.salaries.partTimeReport', ["vacations"=>$vacations]));
         $mpdf->Output('document.pdf', 'I');   
     }
     public function addVacation($id){

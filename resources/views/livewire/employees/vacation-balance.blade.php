@@ -27,7 +27,21 @@
                 </div>
     
     
-    
+                <div class="col col-md-6 col-lg-3 col-xl-4">
+                    <div class="input-group me-2 me-lg-3 fmxw-400">
+                        <select class="form-select mb-0" id="user" aria-label="user select example"
+                            wire:model="employee" autofocus required>
+                            @foreach ($users as $user)
+                                <option value="{{ $user->id }}">
+                                    {{ $user->name }} </option>
+                            @endforeach
+                            <option value="" disabled selected hidden>Select Employee
+                            </option>
+
+                        </select>
+
+                    </div>
+                </div>
     
                 <div class="col-4 col-md-2 col-xl-1 ps-md-0 text-end">
                     <div class="dropdown">
@@ -55,65 +69,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
-    
-    
-            <div class="row align-items-center justify-content-between mt-4">
-    
-                <div class="col col-md-6 col-lg-3 col-xl-4">
-                    <div class="input-group me-2 me-lg-3 fmxw-400">
-    
-                        <select class="form-select mb-0" id="company" aria-label="company select example"
-                            wire:model="company" autofocus required>
-                            @foreach ($companies as $comp)
-                                <option value="{{ $comp->id }}">
-                                    {{ $comp->name }} </option>
-                            @endforeach
-                            <option value="" disabled selected hidden>Select Employee's Company
-                            </option>
-    
-                        </select>
-    
-    
-                    </div>
-                </div>
-    
-    
-                <div class="col col-md-6 col-lg-3 col-xl-4">
-                    <div class="input-group me-2 me-lg-3 fmxw-400">
-    
-                        <select class="form-select mb-0" id="department" aria-label="department select example"
-                            wire:model="department" autofocus required>
-                            @foreach ($departments as $dep)
-                                <option value="{{ $dep->id }}">
-                                    {{ $dep->name }} </option>
-                            @endforeach
-                            <option value="" disabled selected hidden>Select Employee's Department
-                            </option>
-    
-                        </select>
-    
-    
-                    </div>
-                </div>
-    
-    
-    
-                    <div class="col col-md-6 col-lg-3 col-xl-4">
-                        <div class="input-group me-2 me-lg-3 fmxw-400">
-                            <select class="form-select mb-0" id="user" aria-label="user select example"
-                                wire:model="user" autofocus required>
-                                @foreach ($users as $user)
-                                    <option value="{{ $user->id }}">
-                                        {{ $user->name }} </option>
-                                @endforeach
-                                <option value="" disabled selected hidden>Select Employee
-                                </option>
-    
-                            </select>
-    
-                        </div>
-                    </div>
+                
             </div>
         </div>
         <div class="card card-body border-0 shadow table-wrapper table-responsive" >
