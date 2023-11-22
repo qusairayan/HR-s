@@ -75,8 +75,9 @@ class ProfileController extends Controller
                     $filename = uniqid() . '.' . $image->getClientOriginalExtension();
 
                     $path = $image->storeAs('public/profile', $filename);
+                    $path2 = explode("/",$path)[2];
                     if ($path) {
-                        $user->image = $id . '.' . $image->getClientOriginalExtension();
+                        $user->image = $path2;
                     }
                 }
                 $user->name = $name;
