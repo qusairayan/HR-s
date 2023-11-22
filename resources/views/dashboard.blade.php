@@ -9,15 +9,18 @@
                     <th class="border-gray-200">Name</th>
                     <th class="border-gray-200">Company</th>
                     <th class="border-gray-200">Position</th>
+                    <th class="border-gray-200">expire contract</th>
                 </tr>
             </thead>
             <tbody>
+                
                 @foreach ($users as $item)
                     <tr>
                         <td>{{$item->id}}</td>
                         <td>{{$item->name}}</td>
                         <td>{{$item->company}}</td>
                         <td>{{$item->position}}</td>
+                        <td>{{$item->contract}}</td>
                     </tr>    
                 @endforeach                
             </tbody>
