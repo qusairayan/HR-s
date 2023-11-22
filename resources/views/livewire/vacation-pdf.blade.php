@@ -126,17 +126,26 @@
         <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px; width: 11%">date</th>
         <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 22%">reason</th>
         <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 14%">period</th>
+        <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 14%">total</th>
+        <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 14%">detailes</th>
     </tr>
     <tr>
         <td style="text-align: center;padding-top: 8px; width: 10%"></td>
         <td style="text-align: center;padding-top: 8px; width: 10%">-</td>
+        <td style="text-align: center;padding-top: 8px; width: 10%; "></td>
+        <td style="text-align: center;padding-top: 8px; width: 10%">{{$user->annual_vacation + $user->sick_vacation}}</td>
+        
         <td style="text-align: center;padding-top: 8px; width: 10%; ">PRE Balance</td>
     </tr>
+    @php($balance =$user->annual_vacation + $user->sick_vacation)
     @foreach ($vacations as $item)
+        @php($balance -= $item->period)
     <tr>
         <td>{{$item->date}}</td>
         <td>{{$item->type == 0 ? "sick vacation" : "annual vacation"}}</td>
         <td>{{$item->period}}</td>
+        <td>{{$balance}}</td>
+        <td></td>
     </tr>
     @endforeach
 
