@@ -69,6 +69,7 @@ use App\Http\Livewire\Salaries\DepositSalaryPdf;
 use App\Http\Livewire\Salaries\NewSalary;
 use App\Http\Livewire\UpgradeToPro;
 use App\Http\Livewire\Users;
+use App\Http\Livewire\VacationPdf;
 use App\Models\Leave;
 Route::redirect('/', '/login');
 Route::get('/login', Login::class)->name('login');
@@ -135,6 +136,7 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('vacations')->group(function () {
         Route::get('/', Vacations::class)->name('vacations');
+        Route::get("/report/{id}",VacationPdf::class)->name("vacations.report");
         // Route::get('/{vacation}/{type}/{user_id}/approve', [Vacations::class, 'approve'])->name('vacations.approve'); //->middleware('permission:vactionReqAction');
         // Route::get('/{vacation}/reject', [Vacations::class, 'reject'])->name('vacations.reject'); //->middleware('permission:vactionReqAction');
     });

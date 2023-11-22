@@ -53,6 +53,7 @@
                 "attendence.Report",
                 'employee.banks',
                 'employee.VacationBalance',
+                "vacations.report",
             ]))
         {{-- Nav --}}
         @include('layouts.nav')

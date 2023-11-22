@@ -18,22 +18,8 @@ class VacationBalance extends Component
     public function render(){
         $users = User::where("status",1)->where("Duration_contract",1)->get();
         if($this->search)$users = User::where("name", "LIKE", $this->search . "%")->where("status",1)->where("Duration_contract",1)->get();
-        
         if($this->employee)$users = User::where("id",$this->employee)->get();
         return view('livewire.employees.vacation-balance',["users"=>$users]);
-    }
-    public function viewPdf($id){
-        $vacations = Vacation::where("user_id",$id)->orderBy("date",'DESC')->get();
-        $mpdf = new Mpdf([
-            'mode' => 'utf-8',
-            'format' => 'A4-L',
-            'margin_left' => 10, 
-            'margin_right' => 10, 
-            'margin_top' => 10, 
-            'margin_bottom' => 10, 
-        ]);
-        $mpdf->WriteHTML(view('livewire.salaries.partTimeReport', ["vacations"=>$vacations]));
-        $mpdf->Output('document.pdf', 'I');   
     }
     public function addVacation($id){
         $user = User::find($id);

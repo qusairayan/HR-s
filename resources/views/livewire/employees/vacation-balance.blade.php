@@ -94,7 +94,7 @@
                         <td>{{$user->sick_vacation}}</td>
                         <td><button class="btn btn-info" wire:click="addVacation({{$user->id}})">Add Vacation</button></td>
                         <td><button class="btn btn-success" wire:click="resetVacation({{$user->id}})">reset Vacation</button></td>
-                        <td><button class="btn btn-primary" wire:click="viewPdf({{$user->id}})">view report</button></td>
+                        <td><a class="btn btn-primary" href="{{route('vacations.report',$user->id)}}">view report</a></td>
                     </tr>
                     @endforeach
                    
