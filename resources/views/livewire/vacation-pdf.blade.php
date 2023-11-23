@@ -72,7 +72,7 @@
     </div>
     <div style="color: white;background-color: #03415F;" class="row">
         <div class="column" style="padding:4px;width: 100%">
-            <p style="text-align: center; font-size:18px;color: #fff;margin:0;padding:5;"><b>Part Times Report</b>
+            <p style="text-align: center; font-size:18px;color: #fff;margin:0;padding:5;"><b>Vacation Report</b>
             </p>
         </div>
     </div>
@@ -113,42 +113,44 @@
                 {{ $user["position"] }}</p>
         </div>
 
-        <div class="column" style="padding:0; width:10%">
-            <p style="font-size:15px;color: white;margin:0;padding:4;font-weight:bold">Salary :</p>
+        <div class="column" style="padding:0; width:20%">
+            <p style="font-size:15px;color: white;margin:0;padding:4;font-weight:bold">Annual Vacation :{{ $user->annual_vacation }}</p>
         </div>
-        <div class="column" style="padding:0;margin-left:3px; width:10%">
-            <p style="font-size:12px;color: white;margin:0;padding:4;font-weight:bold">{{ $user['salary'] }} JD -  {{$user["part_time"]}}</p>
+        <div class="column" style="padding:0; width:20%">
+            <p style="font-size:15px;color: white;margin:0;padding:4;font-weight:bold">Sick Vacation :{{ $user->sick_vacation }}</p>
         </div>
     </div>
     <br>
 <table id="account">
     <tr>
-        <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px; width: 11%">date</th>
-        <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 22%">reason</th>
-        <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 14%">period</th>
-        <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 14%">total</th>
-        <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 14%">detailes</th>
+        <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px; width: 11%">Vacation Date</th>
+        <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px; width: 11%">Vacation End Date</th>
+        <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 14%">Period</th>
+        <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 22%">Annual Vacation</th>
+        <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 22%">Sick Vacation</th>
     </tr>
-    <tr>
-        <td style="text-align: center;padding-top: 8px; width: 10%"></td>
-        <td style="text-align: center;padding-top: 8px; width: 10%">-</td>
-        <td style="text-align: center;padding-top: 8px; width: 10%; "></td>
-        <td style="text-align: center;padding-top: 8px; width: 10%">{{$user->annual_vacation + $user->sick_vacation}}</td>
-        
-        <td style="text-align: center;padding-top: 8px; width: 10%; ">PRE Balance</td>
-    </tr>
-    @php($balance =$user->annual_vacation + $user->sick_vacation)
+    @php($total_annual = 0)
+    @php($total_sick = 0)
     @foreach ($vacations as $item)
-        @php($balance -= $item->period)
+        @php($total_annual += $item->type == 1 ?  $item->period : 0)
+        @php($total_sick += $item->type == 0 ?  $item->period : 0)
     <tr>
         <td>{{$item->date}}</td>
-        <td>{{$item->type == 0 ? "sick vacation" : "annual vacation"}}</td>
+        <td>{{$item->endDate}}</td>
         <td>{{$item->period}}</td>
-        <td>{{$balance}}</td>
-        <td></td>
+        <td>{{$item->type == 1 ? $item->period : ""}}</td>
+        <td>{{$item->type == 0 ? $item->period : ""}}</td>
     </tr>
     @endforeach
-
+    <tfoot>
+        <tr>
+            <td style="background-color: #327ea3;color:white">Total</td>
+            <td style="background-color: #327ea3;color:white">-</td>
+            <td style="background-color: #327ea3;color:white">{{$total_annual + $total_sick}}</td>
+            <td style="background-color: #327ea3;color:white">{{$total_annual}}</td>
+            <td style="background-color: #327ea3;color:white">{{$total_sick}}</td>
+        </tr>
+    </tfoot>
 </table>
 </body>
 </html>

@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\User;
 use App\Models\Vacation;
+use Carbon\Carbon;
 use Livewire\Component;
 use Mpdf\Mpdf;
 
@@ -18,9 +19,15 @@ class VacationPdf extends Component
         $this->user->company = $this->user->company->name;
     }
     public function render(){
-
         $id =$this->user->id;
         $vacations = Vacation::where("user_id",$id)->where("date","LIKE",$this->date."-%")->orderBy("date",'DESC')->get();
+        $vacations = $vacations->map(function($vacation){
+            if($vacation->period > 1){
+                $carbonDate = Carbon::parse($vacation->date);
+                $vacation->endDate = $carbonDate->addDays(2)->format("Y-m-d");
+                return $vacation;
+            }
+        });
         $mpdf = new Mpdf([
         'mode' => 'utf-8',
         'format' => 'A4-L',
