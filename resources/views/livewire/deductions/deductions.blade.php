@@ -118,6 +118,7 @@
                     <th class="border-gray-200">Amount <small>JD</small></th>
                     <th class="border-gray-200">Details</th>
                     <th class="border-gray-200">Action</th>
+                    <th class="border-gray-200">Action</th>
                 </tr>
             </thead>
             <tbody>
