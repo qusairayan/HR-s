@@ -113,6 +113,7 @@ class DeductionsController extends Component
                 10
             );
             $types = deduction_allowances_types::where("type",0)->get();
+            dd($mergedPaginatedResults);
             return view('livewire.deductions.deductions', compact('mergedPaginatedResults','users',"types"));
     }
     public function addDeduction(){
