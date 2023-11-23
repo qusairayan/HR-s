@@ -20,7 +20,7 @@ class VacationPdf extends Component
     }
     public function render(){
         $id =$this->user->id;
-        $vacations = Vacation::where("user_id",$id)->where("date","LIKE",$this->date."-%")->orderBy("date",'DESC')->get();
+        $vacations = Vacation::where("user_id",$id)->where("credit",0)->where("status",1)->where("date","LIKE",$this->date."-%")->orderBy("date",'DESC')->get();
         $vacations = $vacations->map(function($vacation){
             if($vacation->period > 1){
                 $carbonDate = Carbon::parse($vacation->date);

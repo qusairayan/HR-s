@@ -17,6 +17,7 @@ return new class extends Migration
             $table->boolean('type');
             $table->integer('status')->default(0);
             $table->text('asset') ->nullable();
+            $table->boolean("credit")->default(0);
             $table->timestamps();
 
 

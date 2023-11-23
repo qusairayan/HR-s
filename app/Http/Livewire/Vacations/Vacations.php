@@ -72,6 +72,7 @@ class Vacations extends Component{
         if($dedction){
             $vacation = Vacation::find($vacation["id"]);
             $vacation->status = 1;
+            $vacation->credit = 1;
             $vacation->save();
             return  $this->message = ["type"=>1,"msg"=>"dedction was successful!"];
         }
