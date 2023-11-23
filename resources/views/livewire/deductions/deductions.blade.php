@@ -201,6 +201,16 @@
                         @endif
 
                         </td>
+                        
+                        <td class="border-0 fw-bold">
+                            @if($deduction->status == 0)
+                            <div class="btn-group">
+                                <button class="btn btn-danger" data-bs-toggle="modal"
+                                    wire:click="delete({{ $deduction->id }})" type="button">Delete</button>
+                            </div>
+                        @endif
+
+                        </td>
 
 
                     </tr>

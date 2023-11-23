@@ -136,4 +136,8 @@ class DeductionsController extends Component
         ]);
         return redirect()->route("deductions");
     }
+    public function delete($id){
+        Deductions::destroy($id);
+        return redirect()->route("deductions");
+    }
 }
