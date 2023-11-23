@@ -18,7 +18,7 @@ class Dashboard extends Component
         })->leftJoin("employees_contracts",function($join){
             $join->on("users.id","employees_contracts.user_id");
         })
-        ->where("users.status",1)->orderBy("id","DESC")->select("users.*","company.name as company","attendence.check_in","employees_contracts.date as contract")->get();
+        ->whereNotNull("attendence.check_in")->where("users.status",1)->orderBy("id","DESC")->select("users.*","company.name as company","attendence.check_in","employees_contracts.date as contract")->get();
        
         $users= $users->map(function($user){
             $time = new DateTime();
