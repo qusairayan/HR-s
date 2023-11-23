@@ -100,9 +100,10 @@ class Edit extends Component{
         $this->ID_image = $user->ID_image;
         $this->license_image = $user->license_image;
         $this->social_security = $user->social_security;
-        $this->Duration_contract = $user->duration_contract;
+        $this->Duration_contract = $user->Duration_contract;
         $this->role = $user->getRoleNames();
         $getContract = EmployeesContract::where('user_id', '=', $user->id)->first();
+        
         if ($getContract) {
             $this->contract = $getContract->image;
             $this->signedDate = $getContract->date;
