@@ -20,7 +20,7 @@
                         <td>{{$item->name}}</td>
                         <td>{{$item->company}}</td>
                         <td>{{$item->position}}</td>
-                        <td>{{$item->contract}}</td>
+                        <td>{{$item->expire_contract ?? ""}}</td>
                     </tr>    
                 @endforeach                
             </tbody>

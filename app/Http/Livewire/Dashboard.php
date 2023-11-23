@@ -4,6 +4,8 @@ namespace App\Http\Livewire;
 
 use App\Models\Attendence;
 use App\Models\User;
+use DateInterval;
+use DateTime;
 use Livewire\Component;
 
 class Dashboard extends Component
@@ -17,6 +19,12 @@ class Dashboard extends Component
             $join->on("users.id","employees_contracts.user_id");
         })
         ->where("users.status",1)->orderBy("id","DESC")->select("users.*","company.name as company","attendence.check_in","employees_contracts.date as contract")->get();
+       
+        $users= $users->map(function($user){
+            $time = new DateTime();
+            if($user->contract)$user->expire_contract =  date("Y-m-d", strtotime(date("Y-m-d", strtotime($user->contract)) . " + 1 year"));
+            return $user;
+        });
         return view('dashboard',compact("users"));
     }
 }
