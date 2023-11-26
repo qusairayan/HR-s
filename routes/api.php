@@ -21,17 +21,17 @@ use App\Http\Controllers\api\profile\showProfileImageController;
 Route::middleware(['api'])->group(function () {
 Route::post('/profile', [ProfileController::class, 'profile']); 
 });
-Route::middleware(["guest"])->prefix("auth")->name("auth.")->group(function(){
-    Route::post("login"          , [AuthLoginController::class          ,'login' ])->name("login");
-    Route::post("register"       , [RegisterController::class           ,"create"])->name("register");
-    Route::post('forget-password', [AuthForgetPasswordController::class ,'forgetPassword'])->name("forgetPassword");
-    Route::post('verfy-otp'      , [VerfyOtpController::class, 'verifyOtp'])->name("verfyOtp");
-    Route::post('reset-password' , [ResetPassword::class, 'ResetPassword'])->name("resetPassword");
-});
+// Route::middleware(["guest"])->prefix("auth")->name("auth.")->group(function(){
+//     Route::post("login"          , [AuthLoginController::class          ,'login' ])->name("login");
+//     Route::post("register"       , [RegisterController::class           ,"create"])->name("register");
+//     Route::post('forget-password', [AuthForgetPasswordController::class ,'forgetPassword'])->name("forgetPassword");
+//     Route::post('verfy-otp'      , [VerfyOtpController::class, 'verifyOtp'])->name("verfyOtp");
+//     Route::post('reset-password' , [ResetPassword::class, 'ResetPassword'])->name("resetPassword");
+// });
 
-// Route::post('/login', [LoginController::class, 'login']);
-// Route::post('/ActivateOtp', [LoginController::class, 'sendOtp']);
-// Route::post('/ActivateVerifyOtp', [LoginController::class, 'verifyOtp']);
+Route::post('/login', [LoginController::class, 'login']);
+Route::post('/ActivateOtp', [LoginController::class, 'sendOtp']);
+Route::post('/ActivateVerifyOtp', [LoginController::class, 'verifyOtp']);
 
 Route::post('/attendence', [AttendanceController::class, 'attendence']);
 Route::post("attendence/record",[attendenceRecord::class,"recordApi"])->name("attendence.record.api");
@@ -48,14 +48,15 @@ Route::post('/updateProfile', [ProfileController::class, 'editProfile']);
 Route::post('/profilePassword', [ProfileController::class, 'profilePassword']);
 Route::post('/profileIMG/{filename}', [showProfileImageController::class, 'showProfileImage']);
 
-// Route::post("/register",[Register::class,"create"])->name("register");
-// Route::post("/delete",[Register::class,"destroy"])->name("delete");
-// Route::post('forget-password', [ForgetPasswordController::class, 'forget']);
-// Route::post('forget-password-otp', [ForgetPasswordController::class, 'verifyOtp']);
-// Route::post('reset-password', [ForgetPasswordController::class, 'resetPassword']);
-Route::middleware(["auth:sanctum"])->group(function(){
+Route::post("/register",[Register::class,"create"])->name("register");
+Route::post("/delete",[Register::class,"destroy"])->name("delete");
+Route::post('forget-password', [ForgetPasswordController::class, 'forget']);
+Route::post('forget-password-otp', [ForgetPasswordController::class, 'verifyOtp']);
+Route::post('reset-password', [ForgetPasswordController::class, 'resetPassword']);
+
+// Route::middleware(["auth:sanctum"])->group(function(){
     Route::get("attendence/today",[AttendenceToday::class,"AttendenceToday"])->name("today");
-    Route::get("auth/logout",[AuthLoginController::class,"logout"])->name("logout");
+    // Route::get("auth/logout",[AuthLoginController::class,"logout"])->name("logout");
     // Route::prefix("profile")->name("profile.")->group(function(){
     //     Route::put("edit",[ProfileController::class, 'editProfile'])->name("edit");
     //     Route::put("password",[ProfileController::class, 'editProfile'])->name("password");
@@ -71,4 +72,4 @@ Route::middleware(["auth:sanctum"])->group(function(){
     //     Route::post("attendence/record",[attendenceRecord::class,"recordApi"])->name("attendence.record.api");
     //     Route::post("attendence/schedule",[attendenceRecord::class,"getSchedule"])->name("attendence.getSchedule.api");
     // });
-});
+// });
