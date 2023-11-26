@@ -54,6 +54,7 @@ Route::post('/profileIMG/{filename}', [showProfileImageController::class, 'showP
 // Route::post('forget-password-otp', [ForgetPasswordController::class, 'verifyOtp']);
 // Route::post('reset-password', [ForgetPasswordController::class, 'resetPassword']);
 Route::middleware(["auth:sanctum"])->group(function(){
+    Route::get("attendence/today",[AttendenceToday::class,"AttendenceToday"])->name("today");
     Route::get("auth/logout",[AuthLoginController::class,"logout"])->name("logout");
     // Route::prefix("profile")->name("profile.")->group(function(){
     //     Route::put("edit",[ProfileController::class, 'editProfile'])->name("edit");
@@ -71,4 +72,3 @@ Route::middleware(["auth:sanctum"])->group(function(){
     //     Route::post("attendence/schedule",[attendenceRecord::class,"getSchedule"])->name("attendence.getSchedule.api");
     // });
 });
-Route::get("attendence/today",[AttendenceToday::class,"AttendenceToday"])->name("today");
