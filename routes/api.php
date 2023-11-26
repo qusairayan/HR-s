@@ -6,6 +6,7 @@ use App\Http\Controllers\api\login\ForgetPasswordController;
 use App\Http\Controllers\api\attendence\AttendanceController;
 use App\Http\Controllers\api\attendence\attendenceRecord;
 use App\Http\Controllers\api\Attendence\AttendenceToday;
+use App\Http\Controllers\Api\Attendence\MakeAttendence;
 use App\Http\Controllers\Api\Auth\ForgetPasswordController as AuthForgetPasswordController;
 use App\Http\Controllers\api\Auth\LoginController as AuthLoginController;
 use App\Http\Controllers\api\Auth\RegisterController;
@@ -48,7 +49,6 @@ Route::post('reset-password', [ForgetPasswordController::class, 'resetPassword']
 
 
 
-
 // new api
 Route::middleware(["guest"])->prefix("auth")->name("auth.")->group(function(){
     Route::post("login"          , [AuthLoginController::class          ,'login' ])->name("login");
@@ -58,8 +58,11 @@ Route::middleware(["guest"])->prefix("auth")->name("auth.")->group(function(){
     Route::post('reset-password' , [ResetPassword::class, 'ResetPassword'])->name("resetPassword");
 });
 Route::middleware(["auth:sanctum"])->group(function(){
-    Route::get("attendence/today",[AttendenceToday::class,"AttendenceToday"])->name("today");
     Route::get("auth/logout",[AuthLoginController::class,"logout"])->name("logout");
+    Route::prefix("attendence")->name("attendence.")->group(function(){
+        Route::post("/make"    ,[MakeAttendence::class,"attendence"])->name("attendenceMAke");
+        Route::get("today",[AttendenceToday::class,"AttendenceToday"])->name("today");
+    });
     // Route::prefix("profile")->name("profile.")->group(function(){
     //     Route::put("edit",[ProfileController::class, 'editProfile'])->name("edit");
     //     Route::put("password",[ProfileController::class, 'editProfile'])->name("password");

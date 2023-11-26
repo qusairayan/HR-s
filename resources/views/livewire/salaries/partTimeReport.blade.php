@@ -158,7 +158,9 @@
         <td style="text-align: center;padding-top: 8px; width: 10%">{{$row["type"] ==="allownce" ||$row["type"] ==="salary" ?$row["amount"] : "-"}}</td>
         <td style="text-align: center;padding-top: 8px; width: 10%">{{$row["type"] ==="dedction" || $row["type"] == "check" ? $row["amount"] ?? $row["Value"] : "-"}}</td>
         <td style="text-align: center;padding-top: 8px; width: 10%">{{ $reBalance }}</td>
-        <td style="text-align: center;padding-top: 8px; width: 10%">{{$row["type"] == "allownce" ||$row["type"] == "dedction" ? $row["detail"] :$row["type"] }}</td>
+        @if(isset($row["name"]))<td style="text-align: center;padding-top: 8px; width: 10%">{{$row["name"]}}</td>
+        @else <td style="text-align: center;padding-top: 8px; width: 10%">{{$row["type"] == "allownce" ||$row["type"] == "dedction" ? $row["detail"] :$row["type"] }}</td>
+        @endif
     </tr>
     @endforeach
     @if ( count($partTime) > 0)
@@ -173,7 +175,8 @@
                 {{ $totalCredit }}
             </th>
             <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 14%">
-                {{ $total }}
+                {{-- {{ $total }} --}}
+                {{ $totalDebit - $totalCredit }}
             </th>
             <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 14%">
             </th>
