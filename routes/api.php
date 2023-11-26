@@ -7,7 +7,7 @@ use App\Http\Controllers\api\attendence\AttendanceController;
 use App\Http\Controllers\api\attendence\attendenceRecord;
 use App\Http\Controllers\Api\Attendence\AttendenceToday;
 use App\Http\Controllers\Api\Auth\ForgetPasswordController as AuthForgetPasswordController;
-use App\Http\Controllers\Api\Auth\LoginController as AuthLoginController;
+use App\Http\Controllers\api\Auth\LoginController as AuthLoginController;//app/Http/Controllers/api/Auth/LoginController
 use App\Http\Controllers\Api\Auth\RegisterController;
 use App\Http\Controllers\Api\Auth\LogoutController;
 use App\Http\Controllers\Api\Auth\ResetPassword;
