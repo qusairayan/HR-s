@@ -244,7 +244,7 @@
                 <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 14%">التاريخ</th>
                 <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px; width: 11%">نوع الخصم</th>
             </tr>
-            @php($totalDeduction=0)
+            @php($totalDeduction= $social ?? 0)
             @foreach ($deduction as $item)
             @php($totalDeduction+=$item["amount"])
                 <tr>
@@ -253,7 +253,11 @@
                     <td style="text-align: center;padding-top: 8px;  background:#a5a5a5;">{{$item["name"]}}</td>
                 </tr>
             @endforeach
-            
+            <tr>
+                <td style="text-align: center;padding-top: 8px; background:#a5a5a5;">{{$social}}</td>
+                <td style="text-align: center;padding-top: 8px; background:#a5a5a5;">{{$date}}</td>
+                <td style="text-align: center;padding-top: 8px;  background:#a5a5a5;">الضمان الاجتماعي</td>
+            </tr>
             @foreach ($deductionTypes as $item)
             <tr>
                 <td style="text-align: center;padding-top: 8px; background:#a5a5a5;">0</td>
@@ -282,7 +286,7 @@
 
 
 
-    @php( $sum =(float)  $user["salary"] +(float)$totalAllownce - (float)$totalDeduction  - $user["SocialSecurity"]) 
+    @php( $sum =(float)  $user["salary"] +(float)$totalAllownce - (float)$totalDeduction ) 
         <div class="tables row"> 
         <div class="salary-total p-3 d-flex align-item-center justify-content-center total col-md-6 col-12 text-center">
             <h2 class="text-right align-self-end">صافي الراتب : <span class="border p-2 border-info rounded">{{$sum}}</span></h2>

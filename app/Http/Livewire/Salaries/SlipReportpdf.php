@@ -27,19 +27,19 @@ class SlipReportpdf extends Component{
         $allownce = Allownce::leftJoin("deduction_allowances_types","allownces.type","deduction_allowances_types.id")->where("date","LIKE",$date."-%")->where("user_id",$id)->get()->toArray();
         $names = array_column($allownce,"name");
         $allownceTypes = deduction_allowances_types::where("type",1)->whereNotIn("name", $names)->get()->toArray();
-        // dd($deductionTypes,$deduction);
         $checks = DB::connection('LYONDB')
         ->table($this->user["checkComp"])
         ->where('NAME_TO', $this->user["name"])
         ->where("date","LIKE",$date."-%")
         ->select("Payment_Method","Value","Date","check_details")
         ->get()->toArray();
-
-        // $promotion = Promotion::where('from', '<=', $date."-01")->where(function ($query) use ($date){
-        //     $query->where('to', '>=', $date."-01")->orWhereNull("to");
-        // })->pluck("salary")->first();
-        // if($promotion)if($promotion)$this->user["salary"] = $promotion;
-        $this->runPdf('livewire.salaries.SlipReport',["user"=>$this->user,"allownce"=>$allownce,"deduction"=>$deduction,'checks' => $checks,'date'=>$date,"deductionTypes"=>$deductionTypes,"allownceTypes"=>$allownceTypes]);
+        $promotion = Promotion::where("user_id",$this->user["id"])->where('from', '<=', $date."-01")->where(function ($query) use ($date){
+            $query->where('to', '>=', $date."-01")->orWhereNull("to");
+        })->pluck("salary")->first();
+        if($promotion)if($promotion)$this->user["salary"] = $promotion;
+        $social = SocialSecurity::where("date","Like",date("Y-m")."-%")->where("user_id",$id)->first();
+        if($social) $social = $this->user["salary"] * 0.075;
+        $this->runPdf('livewire.salaries.SlipReport',["social"=>$social, "user"=>$this->user,"allownce"=>$allownce,"deduction"=>$deduction,'checks' => $checks,'date'=>$date,"deductionTypes"=>$deductionTypes,"allownceTypes"=>$allownceTypes]);
     }
     public function FullTimegeneratePDF($id, $from ,$to){
         $this->getUser($id);

@@ -45,13 +45,8 @@ class SocialSecurityController extends Component
 
     }
 
-    public function addSocialSecurity()
-    {
-
-
-
-
-        $exist=SocialSecurity::where('user_id','=',$this->user)->first();
+    public function addSocialSecurity(){
+        $exist=SocialSecurity::where('user_id','=',$this->user)->where("date","Like",date("Y-m")."-%")->first();
         if(!$exist){
             $userSalary = User::where('id',$this->user)->first()->only("salary");
             $userSalary = $userSalary["salary"];
@@ -70,6 +65,7 @@ class SocialSecurityController extends Component
 
         }
         
+        
     }
     public function render()
     {
@@ -84,7 +80,7 @@ class SocialSecurityController extends Component
 
 
 
-        $usersQuery = User::select('*');
+        $usersQuery = User::where('social_security',1);
         if($this->company){
             $usersQuery->Where('department_id', '=', $this->department);
         }
@@ -124,5 +120,7 @@ foreach ($socialsecurity as $soc) {
     }
 
 
-    
+    public function add(){
+
+    }
 }
