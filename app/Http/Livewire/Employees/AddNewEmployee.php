@@ -141,7 +141,6 @@ class AddNewEmployee extends Component
             $this->email = null;
         }
 
-        dd("xsaxsaxsa2");
         if($this->type =='part-time'){
             $this->validate(['part_time' => 'required']);
         }
