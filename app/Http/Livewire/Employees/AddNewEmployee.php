@@ -126,6 +126,7 @@ class AddNewEmployee extends Component
             "Duration_contract"=>'required|boolean',
             // "social_security"=>'required|boolean',
         ]);
+        dd("xsaxsaxsa4");
         // dd($this->sign_date);
         if ($this->contract ||$this->sign_date) {
             $this->validate([
@@ -137,15 +138,16 @@ class AddNewEmployee extends Component
            
 
 
-
+            dd("xsaxsaxsa1");
         if ($this->email == '') {
             $this->email = null;
         }
 
-
+        dd("xsaxsaxsa2");
         if($this->type =='part-time'){
             $this->validate(['part_time' => 'required']);
         }
+        dd("xsaxsaxsa3");
         $user = User::create([
             'name' => $this->name,
             'email' => $this->email,

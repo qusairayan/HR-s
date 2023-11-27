@@ -224,7 +224,7 @@
                 <tr>
                     <td style="text-align: center;padding-top: 8px; background:#a5a5a5;">0</td>
                     <td style="text-align: center;padding-top: 8px; background:#a5a5a5;">0</td>
-                    <td style="text-align: center;padding-top: 8px;  background:#a5a5a5;">{{$item->name}}</td>
+                    <td style="text-align: center;padding-top: 8px;  background:#a5a5a5;">{{$item["name"]}}</td>
                 </tr>
                 @endforeach
                 <tfoot>
@@ -258,7 +258,7 @@
             <tr>
                 <td style="text-align: center;padding-top: 8px; background:#a5a5a5;">0</td>
                 <td style="text-align: center;padding-top: 8px; background:#a5a5a5;">0</td>
-                <td style="text-align: center;padding-top: 8px;  background:#a5a5a5;">{{$item->name}}</td>
+                <td style="text-align: center;padding-top: 8px;  background:#a5a5a5;">{{$item["name"]}}</td>
             </tr>
             @endforeach
             
