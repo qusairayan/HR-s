@@ -144,7 +144,6 @@ class AddNewEmployee extends Component
         if($this->type =='part-time'){
             $this->validate(['part_time' => 'required']);
         }
-        dd("xsaxsaxsa3");
         $user = User::create([
             'name' => $this->name,
             'email' => $this->email,
