@@ -60,7 +60,7 @@ Route::middleware(["guest"])->prefix("auth")->name("auth.")->group(function(){
 Route::middleware(["auth:sanctum"])->group(function(){
     Route::get("auth/logout",[AuthLoginController::class,"logout"])->name("logout");
     Route::prefix("attendence")->name("attendence.")->group(function(){
-        Route::post("/make"    ,[MakeAttendence::class,"attendence"])->name("attendenceMAke");
+        Route::post("/make"    ,[MakeAttendence::class,"scheduale"])->name("attendenceMAke");
         Route::get("today",[AttendenceToday::class,"AttendenceToday"])->name("today");
     });
     // Route::prefix("profile")->name("profile.")->group(function(){

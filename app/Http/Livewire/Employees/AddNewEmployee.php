@@ -36,7 +36,7 @@ class AddNewEmployee extends Component
     public $birth = '';
     public $address = '';
     public $Duration_contract = "";
-    public $social_security = "";
+    public $social_security =false;
     public $contract;
     public $sign_date="";
     public $image;
@@ -124,17 +124,17 @@ class AddNewEmployee extends Component
             'ID_image' => 'nullable|mimes:jpg,png,jpeg',
             'license_image' => 'nullable|mimes:jpg,png,jpeg',
             "Duration_contract"=>'required|boolean',
-            "social_security"=>'required|boolean',
+            // "social_security"=>'required|boolean',
         ]);
+        // dd($this->sign_date);
         if ($this->contract ||$this->sign_date) {
             $this->validate([
-                'contract' => 'mimes:pdf',
+                // 'contract' => 'mimes:pdf',
                 'sign_date' => 'required|date',
               ]);
             
             }
-
-
+           
 
 
 
@@ -167,7 +167,7 @@ class AddNewEmployee extends Component
             'ID_no' => $this->ID_no,
             'birthday' => $this->birth,
             'Duration_contract' => $this->Duration_contract,
-            'social_security' => $this->social_security,
+            'social_security' => 0,
         ]);
 
         if($this->type =='part-time'){

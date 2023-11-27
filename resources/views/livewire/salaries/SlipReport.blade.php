@@ -137,7 +137,7 @@
     <div style="padding:5mm; margin: bottom 25px;">
         <div class="row">
             <div class="column" style="width:20%">
-                <img src="/storage/company/{{ $user['image'] }}" height="70" width="160" />
+                {{-- <img src="/storage/company/{{ $user['image'] }}" height="70" width="160" /> --}}
 
             </div>
             <div class="column" style="width:70%">
@@ -207,25 +207,30 @@
             <h2 class="text-center">العلاوات</h2>
             <table class="allownce">
                 <tr>
-                    <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px; width: 11%">نوع العلاوة</th>
                     <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 22%">المبلغ</th>
                     <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 14%">التاريخ</th>
+                    <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px; width: 11%">نوع العلاوة</th>
                 </tr>
                 @php($totalAllownce=0)
                 @foreach ($allownce as $item)
                 @php($totalAllownce+=$item["amount"])
                     <tr>
-                        <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">
-                            {{$item["name"]}}
-                                </td>
                         <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$item["amount"]}}</td>
                         <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$item["date"]}}</td>
+                        <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$item["name"]}}</td>
                     </tr>
+                @endforeach
+                @foreach ($allownceTypes as $item)
+                <tr>
+                    <td style="text-align: center;padding-top: 8px; background:#a5a5a5;">0</td>
+                    <td style="text-align: center;padding-top: 8px; background:#a5a5a5;">0</td>
+                    <td style="text-align: center;padding-top: 8px;  background:#a5a5a5;">{{$item->name}}</td>
+                </tr>
                 @endforeach
                 <tfoot>
                     <tr>
-                        <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px; width: 11%"></th>
                         <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px; width: 11%">{{$totalAllownce}}</th>
+                        <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px; width: 11%"></th>
                         <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px; width: 11%">المجموع</th>
                     </tr>
                 </tfoot>
@@ -235,25 +240,32 @@
             <h2 class="text-center">الخصومات</h2>
             <table class="deduction">        
             <tr>
-                <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px; width: 11%">نوع الخصم</th>
                 <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 22%">المبلغ</th>
                 <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 14%">التاريخ</th>
+                <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px; width: 11%">نوع الخصم</th>
             </tr>
             @php($totalDeduction=0)
             @foreach ($deduction as $item)
             @php($totalDeduction+=$item["amount"])
                 <tr>
-                    <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">
-                        {{$item["name"]}}
-                    </td>
-                    <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$item["amount"]}}</td>
-                    <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$item["date"]}}</td>
+                    <td style="text-align: center;padding-top: 8px; background:#a5a5a5;">{{$item["amount"]}}</td>
+                    <td style="text-align: center;padding-top: 8px; background:#a5a5a5;">{{$item["date"]}}</td>
+                    <td style="text-align: center;padding-top: 8px;  background:#a5a5a5;">{{$item["name"]}}</td>
                 </tr>
             @endforeach
+            
+            @foreach ($deductionTypes as $item)
+            <tr>
+                <td style="text-align: center;padding-top: 8px; background:#a5a5a5;">0</td>
+                <td style="text-align: center;padding-top: 8px; background:#a5a5a5;">0</td>
+                <td style="text-align: center;padding-top: 8px;  background:#a5a5a5;">{{$item->name}}</td>
+            </tr>
+            @endforeach
+            
             <tfoot>
                 <tr>
-                    <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px; width: 11%"></th>
                     <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px; width: 11%">{{$totalDeduction}}</th>
+                    <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px; width: 11%"></th>
                     <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px; width: 11%">المجموع</th>
                 </tr>
             </tfoot>
@@ -262,11 +274,11 @@
     </div>
 
 
-    <div class="totalDA">
+    {{-- <div class="totalDA">
         <div class="col-5 allownce-line"><span></span></div>
         <div class="col-2 d-flex align-item-center justify-content-center"><h4 class="m-0 align-self-end">المجموع = <span class="border p-1">{{$totalAllownce - $totalDeduction}}</span></h4></div>
         <div class="col-5 deduction-line"><span></span></div>
-    </div>
+    </div> --}}
 
 
 
@@ -279,26 +291,22 @@
             <h2 class="text-center">الرواتب</h2>
             <table class="checks">        
             <tr>
-                <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px; width: 11%"> التفاصيل</th>
-                <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 22%">المبلغ</th>
+                <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px; width: 11%"> القيمة</th>
+                <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 22%">التاريخ</th>
                 <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 14%">التاريخ</th>
             </tr>
-            @php($totalChecks=0)
-            @foreach ($checks as $item)
-            @php($totalChecks+=$item->Value)
+            {{-- @php($totalChecks=0) --}}
+            {{-- @foreach ($checks as $item) --}}
+            {{-- @php($totalChecks+=$item->Value) --}}
                 <tr>
-                    <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$item->check_details ?? "assaas" }}</td>
+                    <td>{{$user["salary"]}}</td>
+                    <td>{{$date}}</td>
+                    <td>الراتب</td>
+                    {{-- <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$item->check_details ?? "assaas" }}</td>
                     <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$item->Value}}</td>
-                    <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$item->Date}}</td>
+                    <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$item->Date}}</td> --}}
                 </tr>
-            @endforeach
-            <tfoot>
-                <tr>
-                    <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px; width: 11%"></th>
-                    <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px; width: 11%">{{$totalChecks}}</th>
-                    <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px; width: 11%">المجموع</th>
-                </tr>
-            </tfoot>
+            {{-- @endforeach --}}
             </table>
         </div>
         </div>
