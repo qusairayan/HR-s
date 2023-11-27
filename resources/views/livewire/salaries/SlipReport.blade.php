@@ -283,9 +283,6 @@
         <div class="col-2 d-flex align-item-center justify-content-center"><h4 class="m-0 align-self-end">المجموع = <span class="border p-1">{{$totalAllownce - $totalDeduction}}</span></h4></div>
         <div class="col-5 deduction-line"><span></span></div>
     </div> --}}
-
-
-
     @php( $sum =(float)  $user["salary"] +(float)$totalAllownce - (float)$totalDeduction ) 
         <div class="tables row"> 
         <div class="salary-total p-3 d-flex align-item-center justify-content-center total col-md-6 col-12 text-center">

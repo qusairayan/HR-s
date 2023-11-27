@@ -18,7 +18,10 @@ class LoginController extends Controller{
                 $user->tokens()->delete();
                 $user = $user->makeHidden("password","email_verified_at","created_at","updated_at");
                 $user->token = $user->createToken($request->userAgent())->plainTextToken;
-                return response()->json(["message"=>"success","user"=>$user],200);
+                $user = collect($user)->map(function ($value, $key) {
+                    return is_null($value) ? '' : $value;
+                })->toArray();
+                return response()->json(["success"=>true,"user"=>$user],200);
             }
         }else{
             return response()->json(["message"=>"The username or password is incorrect please try again"],401);

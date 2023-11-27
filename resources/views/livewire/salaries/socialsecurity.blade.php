@@ -16,7 +16,17 @@
             </div>
             <div class="col col-md-6 col-lg-3 col-xl-4">
                 <div class="input-group me-2 me-lg-3 fmxw-400">
-                    <button class="btn btn-primary" wire:click="addSocialSecurity">Add New Social Securety</button>
+                    <a data-bs-toggle="modal" data-bs-target="#modal-notification"
+                    class="btn btn-sm btn-gray-800 d-inline-flex align-items-center">
+                    <svg class="icon icon-xs me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 6v6m0 0v6m0-6h6m-6 0H6">
+                        </path>
+                    </svg>
+                    Add New Social Securety
+
+                </a>
                 </div>
             </div>
         </div>
@@ -143,25 +153,29 @@
             </tbody>
 
         </table>
-
-
-        {{-- <div class="col col-md-112 col-lg-12 col-xl-12" style="display: flex; margin-top: 33px; justify-content:center">
-
-            <div class="btn-toolbar mb-2 mb-md-0 float-end ">
-                @if ($this->add)
-                    <a wire:click="addSocialSecurity" class="btn btn-sm btn-gray-800 d-inline-flex align-items-center">
-                        <svg class="icon icon-xs me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M12 6v6m0 0v6m0-6h6m-6 0H6">
-                            </path>
-                        </svg>
-                        Add Socialsecurity to selected Employee
-                    </a>
-                @endif
-            </div>
-        </div> --}}
         <div>
+
+            <div wire:ignore.self class="modal fade" id="modal-notification" tabindex="-1" role="dialog"
+            aria-labelledby="modal-notification" aria-hidden="true" wire:ignore>
+            <div class="modal-dialog modal-info modal-dialog-centered" role="document">
+                <div class="modal-content bg-gradient-secondary" style="background: #13223d">
+                    <button type="button" class="btn-close theme-settings-close fs-6 ms-auto" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                    <div class="modal-header">
+                        <p class="modal-title text-gray-200" id="modal-title-notification">
+                            Add New Social Securety
+                        </p>
+                    </div>
+                    {{-- wire:click="addSocialSecurity" --}}
+                    <div class="modal-body">
+                        <form wire:submit.prevent="addSocialSecurity">
+                            
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
             {{-- {{ $users->links('vendor.pagination.custom') }} --}}
         </div>
     </div>
