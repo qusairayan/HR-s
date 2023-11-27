@@ -58,12 +58,12 @@ class SocialSecurityController extends Component
 
             $userSalary = User::where('id',$this->user)->first()->only("salary");
             $userSalary = $userSalary["salary"];
-            $Salary_percentage = $userSalary / 100;
+            $Salary_percentage = $this->salary / 100;
             $currentMonth = date('Y-m-d');
             $socialsecurity=new SocialSecurity(
                 [
                     'user_id'=>$this->user,
-                    'date'=>$currentMonth,
+                    'date'=>$this->date,
                     'onEmployee'=> $Salary_percentage * SocialSecurityController::$EMPLOYEE_SOCIAL_SECURIT_DEDUCTION_RATE,
                     'onCompany'=>$Salary_percentage* SocialSecurityController::$COMPANY_SOCIAL_SECURIT_DEDUCTION_RATE,
                     "salary"=>$this->salary,
