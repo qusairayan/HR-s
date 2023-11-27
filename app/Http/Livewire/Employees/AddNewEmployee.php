@@ -126,7 +126,6 @@ class AddNewEmployee extends Component
             "Duration_contract"=>'required|boolean',
             // "social_security"=>'required|boolean',
         ]);
-        dd("xsaxsaxsa4");
         // dd($this->sign_date);
         if ($this->contract ||$this->sign_date) {
             $this->validate([
