@@ -18,8 +18,8 @@ class SlipReportpdf extends Component{
     public $user;
     public function generatePDF($id, $date){
         $this->getUser($id,$date);
-        $deduction = Deductions::where("date","LIKE",$date."-%")->get()->toArray();
-        $allownce = Allownce::where("date","LIKE",$date."-%")->get()->toArray();
+        $deduction = Deductions::leftJoin("deduction_allowances_types","deductions.type","deduction_allowances_types.id")->where("date","LIKE",$date."-%")->where("user_id",$id)->get()->toArray();
+        $allownce = Allownce::leftJoin("deduction_allowances_types","allownces.type","deduction_allowances_types.id")->where("date","LIKE",$date."-%")->where("user_id",$id)->get()->toArray();
         $checks = DB::connection('LYONDB')
         ->table($this->user["checkComp"])
         ->where('NAME_TO', $this->user["name"])

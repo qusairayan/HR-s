@@ -216,7 +216,7 @@
                 @php($totalAllownce+=$item["amount"])
                     <tr>
                         <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">
-                            {{$item["type"]}}
+                            {{$item["name"]}}
                                 </td>
                         <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$item["amount"]}}</td>
                         <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$item["date"]}}</td>
@@ -244,7 +244,7 @@
             @php($totalDeduction+=$item["amount"])
                 <tr>
                     <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">
-                        {{$item["type"]}}
+                        {{$item["name"]}}
                     </td>
                     <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$item["amount"]}}</td>
                     <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">{{$item["date"]}}</td>
@@ -302,7 +302,7 @@
             </table>
         </div>
         </div>
-        <h2 class="userSocialSecurity">{{$user["SocialSecurity"]  ? "اقتطاع الضمان الاجتماعي".$user["SocialSecurity"] : "لا يوجد بيانات ضمات اجتماعي للموظف : ".$user["name"]   }}</h2>
+        <h5 class="userSocialSecurity">{{$user["SocialSecurity"]  ? "اقتطاع الضمان الاجتماعي".$user["SocialSecurity"] : "لا يوجد بيانات ضمات اجتماعي للموظف : ".$user["name"]   }}</h5>
 
 </body>
 </html>
