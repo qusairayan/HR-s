@@ -17,6 +17,8 @@ return new class extends Migration
             $table->date('date');
             $table->float('onEmployee',8,2);
             $table->float('onCompany',8,2);
+            $table->unsignedSmallInteger("salary");
+            $table->unsignedSmallInteger("net_salary");
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate("cascade");
             

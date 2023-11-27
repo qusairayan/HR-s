@@ -27,7 +27,14 @@ class SocialSecurityController extends Component
     public $department = '';
     public $user='';
     public $add=false;
-
+    public $salary="";
+    public $Netsalary="";
+    public $date="";
+   protected $rules = [
+        "salary"=>"required|integer",
+        "date"=>"required|date",
+        "user"=>"required"
+    ];
     public function updated()
     {
         if ($this->user) {
@@ -48,6 +55,7 @@ class SocialSecurityController extends Component
     public function addSocialSecurity(){
         $exist=SocialSecurity::where('user_id','=',$this->user)->where("date","Like",date("Y-m")."-%")->first();
         if(!$exist){
+
             $userSalary = User::where('id',$this->user)->first()->only("salary");
             $userSalary = $userSalary["salary"];
             $Salary_percentage = $userSalary / 100;
@@ -58,14 +66,13 @@ class SocialSecurityController extends Component
                     'date'=>$currentMonth,
                     'onEmployee'=> $Salary_percentage * SocialSecurityController::$EMPLOYEE_SOCIAL_SECURIT_DEDUCTION_RATE,
                     'onCompany'=>$Salary_percentage* SocialSecurityController::$COMPANY_SOCIAL_SECURIT_DEDUCTION_RATE,
+                    "salary"=>$this->salary,
+                    "net_salary"=>$this->Netsalary
                 ]
     );
         $socialsecurity->save();
-
-
+        return redirect()->route("payroll.socialsecurity");
         }
-        
-        
     }
     public function render()
     {
@@ -121,6 +128,7 @@ foreach ($socialsecurity as $soc) {
 
 
     public function add(){
-
+        $this->validate();
+        $this->Netsalary = $this->salary - ($this->salary * 0.075);
     }
 }

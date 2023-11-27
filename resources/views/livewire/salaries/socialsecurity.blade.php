@@ -169,8 +169,29 @@
                     {{-- wire:click="addSocialSecurity" --}}
                     <div class="modal-body">
                         <form wire:submit.prevent="addSocialSecurity">
-                            
+                            <label style="color: white" for="employee">Select Employee</label>
+                            <div class="" style="display: flex;align-items: center;">
+                                <select wire:model="user" id="employee" type="text" class="form-control mt-3 mb-3">
+                                    <option value="" disabled selected hidden>Select Employee </option>
+                                    @foreach ($users as $user)
+                                    <option value="{{$user->id}}">{{$user->name}}</option>
+                                    @endforeach
+                                </select>
+                                <svg style="position: absolute;right: 1.5rem;" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="m18.707 12.707-1.414-1.414L13 15.586V6h-2v9.586l-4.293-4.293-1.414 1.414L12 19.414z"></path></svg>
+                            </div>
+                            @error('user') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                            <div class="date"><label style="color: white" for="date">Select Date</label> <input wire:model="date" type="date" id="date" class="form-control mt-3 mb-3">@error('date') <div class="invalid-feedback">{{ $message }}</div> @enderror </div>
+                            <div class="salary"> <label style="color: white" for="salary">Select salary</label> <input wire:model="salary" type="text" class="form-control mt-3 mb-3">@error('salary') <div class="invalid-feedback">{{ $message }}</div> @enderror </div>
+                            <div class="row">
+                                <div class="sspfte col-4">   <label style="color: white" for="sspfte">on Employee</label>   <input type="text" disabled value="7.5"  class="form-control mt-3 mb-3"></div>
+                                <div class="sspfte col-4">   <label style="color: white" for="sspfte">on Company</label>    <input type="text" disabled value="14.25"  class="form-control mt-3 mb-3"> </div>
+                                <div class="Netsalary col-4"><label style="color: white" for="Netsalary">Net salary</label> <input wire:model="Netsalary" type="text" disabled  class="form-control mt-3 mb-3">@error('Netsalary') <div class="invalid-feedback">{{ $message }}</div> @enderror  </div>
+                            </div>
+                                
+                                    <div class="save"> <button type="submit" class="w-100 btn btn-success mt-2 mt-2"> save </div>
+
                         </form>
+                        <div class="check"> <button wire:click="add" class="btn btn-primary w-100 mt-2 mt-2"> check </div>
                     </div>
                 </div>
             </div>

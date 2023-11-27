@@ -16,6 +16,7 @@ class SocialSecurity extends Model
         'date',        
         'onEmployee',
         'onCompany',
-
+        "salary",
+        "net_salary"
     ];
 }
