@@ -137,7 +137,6 @@ class AddNewEmployee extends Component
            
 
 
-            dd("xsaxsaxsa1");
         if ($this->email == '') {
             $this->email = null;
         }
