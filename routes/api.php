@@ -13,12 +13,14 @@ use App\Http\Controllers\api\Auth\RegisterController;
 use App\Http\Controllers\api\Auth\LogoutController;
 use App\Http\Controllers\api\Auth\ResetPassword;
 use App\Http\Controllers\api\Auth\VerfyOtpController;
+use App\Http\Controllers\api\Leave\LeaveController;
 use App\Http\Controllers\api\leaves\LeaveReqController;
 use App\Http\Controllers\api\leaves\GetLeaveController;
 use App\Http\Controllers\api\vacations\VacationReqController;
 use App\Http\Controllers\api\vacations\GetVacationController;
 use App\Http\Controllers\api\profile\ProfileController;
 use App\Http\Controllers\api\profile\showProfileImageController;
+
 Route::middleware(['api'])->group(function () {
 Route::post('/profile', [ProfileController::class, 'profile']); 
 });
@@ -41,8 +43,8 @@ Route::post('/updateProfile', [ProfileController::class, 'editProfile']);
 Route::post('/profilePassword', [ProfileController::class, 'profilePassword']);
 Route::post('/profileIMG/{filename}', [showProfileImageController::class, 'showProfileImage']);
 
-Route::post("/register",[Register::class,"create"])->name("register");
-Route::post("/delete",[Register::class,"destroy"])->name("delete");
+Route::post("/register",[RegisterController::class,"create"])->name("register");
+Route::post("/delete",[RegisterController::class,"destroy"])->name("delete");
 Route::post('forget-password', [ForgetPasswordController::class, 'forget']);
 Route::post('forget-password-otp', [ForgetPasswordController::class, 'verifyOtp']);
 Route::post('reset-password', [ForgetPasswordController::class, 'resetPassword']);
@@ -60,8 +62,11 @@ Route::middleware(["guest"])->prefix("auth")->name("auth.")->group(function(){
 Route::middleware(["auth:sanctum"])->group(function(){
     Route::get("auth/logout",[AuthLoginController::class,"logout"])->name("logout");
     Route::prefix("attendence")->name("attendence.")->group(function(){
-        Route::post("/make"    ,[MakeAttendence::class,"scheduale"])->name("attendenceMAke");
+        Route::post("/make"    ,[MakeAttendence::class,"attendence"])->name("make");
         Route::get("today",[AttendenceToday::class,"AttendenceToday"])->name("today");
+    });
+    Route::prefix("leave")->name("leave.")->group(function(){
+        Route::post("/make"    ,[LeaveController::class,"leave"])->name("make");
     });
     // Route::prefix("profile")->name("profile.")->group(function(){
     //     Route::put("edit",[ProfileController::class, 'editProfile'])->name("edit");

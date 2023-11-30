@@ -107,6 +107,7 @@ class AttendanceController extends Controller
 
                     $attendence->check_out = $currentTime;
                     $success = $attendence->save();
+                    
                     $scheduale = Schedules::select('*')
                         ->where('user_id', '=', $id)
                         ->where('date', '=', $currentDate)

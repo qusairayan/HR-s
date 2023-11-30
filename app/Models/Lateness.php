@@ -9,7 +9,5 @@ class Lateness extends Model
 {
     use HasFactory;
     protected $table = 'lateness';
-     
-
-
+     protected $fillable = ["user_id","attendence_id","amount","on"];
 }
