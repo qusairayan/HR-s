@@ -2,6 +2,7 @@
 namespace App\Http\Livewire\Leaves;
 
 use App\Models\Leave;
+use App\Models\Schedules;
 use Illuminate\Support\Facades\Redirect;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -27,6 +28,8 @@ class Leaves extends Component
 
     public function approve(Leave $leave)
     {
+        $schedule = Schedules::where("user_id",$leave->user_id)->where("date",$leave->date)->first();
+        if($leave->time)
         $leave->status = 1;
         $leave->save();
 

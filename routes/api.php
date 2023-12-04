@@ -52,7 +52,7 @@ Route::post('reset-password', [ForgetPasswordController::class, 'resetPassword']
 
 
 // new api
-Route::middleware(["guest"])->prefix("auth")->name("auth.")->group(function(){
+Route::middleware(["guest:sanctum"])->prefix("auth")->name("auth.")->group(function(){
     Route::post("login"          , [AuthLoginController::class          ,'login' ])->name("login");
     Route::post("register"       , [RegisterController::class           ,"create"])->name("register");
     Route::post('forget-password', [AuthForgetPasswordController::class ,'forgetPassword'])->name("forgetPassword");
@@ -62,11 +62,17 @@ Route::middleware(["guest"])->prefix("auth")->name("auth.")->group(function(){
 Route::middleware(["auth:sanctum"])->group(function(){
     Route::get("auth/logout",[AuthLoginController::class,"logout"])->name("logout");
     Route::prefix("attendence")->name("attendence.")->group(function(){
-        Route::post("/make"    ,[MakeAttendence::class,"attendence"])->name("make");
+    Route::post("/make"    ,[MakeAttendence::class,"attendence"])->name("make");
         Route::get("today",[AttendenceToday::class,"AttendenceToday"])->name("today");
     });
     Route::prefix("leave")->name("leave.")->group(function(){
-        Route::post("/make"    ,[LeaveController::class,"leave"])->name("make");
+        Route::get("/"    ,[LeaveController::class,"get"])->name("get");
+        Route::post("create"    ,[LeaveController::class,"create"])->name("create");
+        Route::put("edit/{id}"    ,[LeaveController::class,"edit"])->name("edit");
+        Route::delete("delete/{id}"    ,[LeaveController::class,"delete"])->name("delete");
+        Route::get("checkin"    ,[LeaveController::class,"checkin"])->name("checkin");
+        Route::get("checkout"    ,[LeaveController::class,"checkout"])->name("checkout");
+        Route::get("leave-control"    ,[LeaveController::class,"control"])->name("control");
     });
     // Route::prefix("profile")->name("profile.")->group(function(){
     //     Route::put("edit",[ProfileController::class, 'editProfile'])->name("edit");

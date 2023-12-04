@@ -38,7 +38,6 @@ class DepositSalary extends Component
         else{
             $this->image='marvellLogo.png';
         }
-        dd(dirname(__DIR__,3) );
         $this->username = $user->name;
         $this->userbank = $user->bank;
     }

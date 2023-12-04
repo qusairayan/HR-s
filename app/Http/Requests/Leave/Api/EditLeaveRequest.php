@@ -4,7 +4,7 @@ namespace App\Http\Requests\Leave\Api;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class makeLeaveRequest extends FormRequest
+class EditLeaveRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,9 +22,9 @@ class makeLeaveRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "time"=>"required|date_format:H:i",
-            "date"=>"required|date|date_format:Y-m-d",
-            "period"=>"required|date_format:H:i",
+            "time"=>"date_format:H:i",
+            "date"=>"date|date_format:Y-m-d",
+            "period"=>"date_format:H:i",
             "reason"=>"string|max:255|min3"
         ];
     }

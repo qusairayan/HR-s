@@ -18,10 +18,8 @@ return new class extends Migration
             $table->integer('amount');            
             $table->string('on'); 
             $table->integer('deduction')->default(0);
-            
-            
+            $table->string("detailes",255)->nullable();
             $table->timestamps();
-
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('attendence_id')->references('id')->on('attendence');
 

@@ -18,12 +18,12 @@ return new class extends Migration
             $table->time('period');
             $table->string('reason')->nullable();
             $table->integer('status')->default(0);
+            $table->time("checkin")->nullable();
+            $table->time("checkout")->nullable();
+            $table->time("total_leave")->nullable();
+            $table->boolean("discount")->default(0)->comment("discount from annual vacation");
             $table->timestamps();
-
-
-
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-
         });
     }
 

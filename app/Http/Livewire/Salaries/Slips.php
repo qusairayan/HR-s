@@ -72,10 +72,6 @@ public function fullTimeReport(){
         leftJoin("users","monthly_payrolls.user_id","users.id")
         ->leftJoin("salary_deposits","monthly_payrolls.id","salary_deposits.salary_id")
         ->select("monthly_payrolls.*","users.name as name","salary_deposits.id as salaryDepositId");
-
-
-        // ->get()->toArray();
-        // dd($monthlyPayrollQuery);
    
         $companies = Company::all();
 

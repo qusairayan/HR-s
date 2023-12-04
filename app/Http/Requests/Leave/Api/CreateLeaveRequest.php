@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Auth\Api;
+namespace App\Http\Requests\Leave\Api;
 
-use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
-class RegisterRequest extends FormRequest
+
+class CreateLeaveRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,9 +22,10 @@ class RegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'username' => 'required|string|max:40|min:3|unique:users,username',
-            'email'    => 'required|email|max:100|min:7|unique:users,email',
-            'password' => 'required|min:8|string',
+            "time"=>"required|date_format:H:i",
+            "date"=>"required|date|date_format:Y-m-d",
+            "period"=>"required|date_format:H:i",
+            "reason"=>"string|max:255|min3"
         ];
     }
 }

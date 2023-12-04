@@ -184,6 +184,7 @@
                     <th class="border-gray-200">date</th>
                     <th class="border-gray-200">On</th>
                     <th class="border-gray-200">Late</th>
+                    <th class="border-gray-200">Detailes</th>
                     <th class="border-gray-200">Action</th>
                 </tr>
             </thead>
@@ -234,6 +235,11 @@
                         <td class="border-0 fw-bold">
                             <span class="fw-normal">
                                 {{ $late->amount }}
+                            </span>
+                        </td>
+                        <td class="border-0 fw-bold">
+                            <span class="fw-normal">
+                                {{ $late->detailes }}
                             </span>
                         </td>
 
