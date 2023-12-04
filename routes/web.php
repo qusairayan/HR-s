@@ -201,7 +201,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/socialsecurity', SocialSecurityController::class)->name('payroll.socialsecurity'); //->middleware('role:viewroles')
         Route::get('/new-salary', NewSalary::class)->name('payroll.newSalary'); //->middleware('role:viewroles')
         Route::any('/depositsalary/{id_salary}/{id}/{salary}', DepositSalary::class)->name('payroll.depositsalary'); //->middleware('role:viewroles')
-        Route::get('/deposit-salarypdf/{id}', DepositSalaryPdf::class)->name('payroll.depositSalarypdf'); //->middleware('role:viewroles')
+        Route::get('/deposit-salarypdff/{id}', DepositSalaryPdf::class)->name('payroll.depositSalarypdf'); //->middleware('role:viewroles')
     });
 
 
