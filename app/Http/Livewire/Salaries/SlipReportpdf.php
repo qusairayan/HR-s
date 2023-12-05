@@ -38,6 +38,7 @@ class SlipReportpdf extends Component{
             $query->where('to', '>=', $date."-01")->orWhereNull("to");
         })->pluck("salary")->first();
         // if($promotion)if($promotion)$this->user["salary"] = $promotion;
+        dd($monthly_payroll);
         $this->user["salary"] = $monthly_payroll ?? $promotion ?? $this->user["salary"];
         $social = SocialSecurity::where("date","Like",date("Y-m")."-%")->where("user_id",$id)->first();
         if($social) $social = $this->user["salary"] * 0.075;
