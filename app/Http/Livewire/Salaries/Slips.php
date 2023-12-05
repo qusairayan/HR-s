@@ -50,7 +50,7 @@ public function report(){
         'employee' => 'required',
         'date' => 'required|date',
     ]);
-    return redirect()->route('payroll.slip_report',['id' => $this->employee, 'month' => $this->date])
+    return redirect()->route('payroll.slip_report',['id' => $this->employee, 'month' => $this->date]);
 }
 public function fullTimeReport(){
     $this->validate([
