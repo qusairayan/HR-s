@@ -194,7 +194,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/addParttime', AddPartTimes::class)->name('payroll.add_part_time'); //->middleware('role:viewroles')
         Route::get('/{parttime}/editParttime', EditPartTimes::class)->name('payroll.edit_part_time'); //->middleware('role:viewroles')
         Route::get('/{parttime}/viewParttime', ViewPartTimes::class)->name('payroll.view_part_time'); //->middleware('role:viewroles')
-        Route::get('slip-reprt/{id}/{date}', [SlipReportpdf::class,'generatePDF'])->name('payroll.slip_report'); //->middleware('role:viewroles')
+        Route::get('slip-report/{id}/{date}', [SlipReportpdf::class,'generatePDF'])->name('payroll.slip_report'); //->middleware('role:viewroles')
         Route::get('/FullTimeReport/{id}/{from}/{to}', [SlipReportpdf::class,'FullTimegeneratePDF'])->name('payroll.fullTimeReport'); //->middleware('role:viewroles')
         Route::get('/PartTime_Reports/{id}/{from}/{to}', [Ptreportpdf::class,'generatePDF'])->name('payroll.part_time_report'); //->middleware('role:viewroles')
         Route::get('/addSalary', AddSalaries::class)->name('payroll.addSalary'); //->middleware('role:viewroles')
