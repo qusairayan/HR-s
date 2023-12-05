@@ -187,7 +187,7 @@ Route::middleware('auth')->group(function () {
     });
 
 
-    Route::prefix('payroll')->group(function () {
+    Route::prefix('payrol')->group(function () {
         Route::get('/salaries', Salaries::class)->name('payroll.salaries'); //->middleware('role:viewroles')
         Route::get('/slips', Slips::class)->name('payroll.slips'); //->middleware('role:viewroles')
         Route::get('/parttime', PartTimes::class)->name('payroll.part_time'); //->middleware('role:viewroles')
