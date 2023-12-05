@@ -189,7 +189,7 @@
             </tr>
             <tbody>
                 @php($i=0)
-                @foreach($payrollss as $item)
+                @foreach($payrolls as $item)
                 @php($i++)
                 <tr>
                     <td class="border-0 fw-bold"><span class="fw-normal">{{$i}}</span></td>
