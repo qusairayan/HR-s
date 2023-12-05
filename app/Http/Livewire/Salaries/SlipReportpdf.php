@@ -17,7 +17,7 @@ use Mpdf\Mpdf;
 use PhpParser\Node\Stmt\Return_;
 class SlipReportpdf extends Component{
     public $user;
-    public function generatePDF($id, $date){
+    public function generatePDF($id, $month){
         // $this->getUser($id,$date);
         // $deduction = Deductions::leftJoin("deduction_allowances_types","deductions.type","deduction_allowances_types.id")
         // ->where("date","LIKE",$date."-%")->where("user_id",$id)
