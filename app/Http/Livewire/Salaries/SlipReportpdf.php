@@ -38,7 +38,6 @@ $dateTime = new DateTime($currentDate);
 $dateTime->modify("-1 month");
 $newDate = $dateTime->format("Y-m");
         $monthly_payroll = MonthlyPayroll::where("month","LIKE",$newDate."-%")->where("user_id",$this->user["id"])->pluck("salary")->first();
-        dd($monthly_payroll);
         $promotion = Promotion::where("user_id",$this->user["id"])->where('from', '<=', $date."-01")->where(function ($query) use ($date){
             $query->where('to', '>=', $date."-01")->orWhereNull("to");
         })->pluck("salary")->first();
