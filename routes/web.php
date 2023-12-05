@@ -73,7 +73,7 @@ use App\Http\Livewire\VacationPdf;
 use App\Models\Leave;
 Route::redirect('/', '/login');
 Route::get('/login', Login::class)->name('login');
-Route::get('/register', Register::class)->name('register');
+// Route::get('/register', Register::class)->name('register');
 Route::post('/update-year', [Updateyear::class,'year'])->name('update.year');
 
 
