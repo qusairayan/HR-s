@@ -21,28 +21,31 @@ class MakeAttendence extends Controller{
         $this->user = Auth::user();
         $attendece = Attendence::where("user_id",$this->user->id)->where("date",date("Y-m-d"))->first();
         if($request->type == 0){
-            if($attendece)return response()->json(["success"=>false,"message"=>"The user has previously registered attendance"],400);
+            // case 1 : the user logged in before
+            if($attendece)return response()->json(["success"=>false,"message"=>"The user has already registered for attendance"],400);
+            // case 2 : The user has to leave at the beginning of the shift
             $leave = Leave::where("user_id",$this->user->id)->where("date",date("Y-m-d"))->where('status', '=', 1)->first();
             if($leave){
                 $schedule =  Schedules::where("date",$this->day)->where("user_id",$this->user->id)->first();
                 if($leave->time == $schedule->from){
-
-                }
-                $time =  $leave->time;
-                $time = Carbon::createFromFormat("H:i:s",$time,"Asia/Amman");
-                if($time->format("H:i:s") === $schedule->from){
+                    if(!$leave->checkout)$leave->checkout = $this->time;
                     Attendence::create([
                         "type"=>0,
                         "user_id"=>$this->user->id,
                         "date"=>$this->day,
-                        "check_in"=>$schedule->from
+                        "check_in"=>$this->time
                     ]);
-                    $period =  $leave->period;
-                    list ($hour,$minute)=explode(":",$leave->period);
-                    $fullTime = ($hour * 60) + $minute;
-                    $time = $time->addMinutes($fullTime);
+                    $timeDifference = $this->timeDifference("checkIn"); 
+                    if($timeDifference > 5){
+                        Lateness::create([
+                            "user_id"=>$this->user->id,
+                            "attendence_id"=>$attendece->id,
+                            "amount"=>$timeDifference,
+                            "on"=>"checkIn",
+                            "detailes"=>"leave on time ".$this->time->format("Y-m-d H:i:s")
+                        ]);
+                    }
                 }
-                $timeDifference = $time->diffInMinutes($this->time);
             }
             else{
                 $attendece = Attendence::create([
@@ -52,8 +55,8 @@ class MakeAttendence extends Controller{
                     "check_in"=>$this->time
                 ]);
                 $timeDifference = $this->timeDifference("checkIn");
+                if($timeDifference > 5)$this->late($attendece,$on = "checkIn" , $timeDifference);
             }
-            if($timeDifference > 5)$this->late($attendece,$on = "cehckIn" , $timeDifference);
         }else{
             if($attendece){
                 if($attendece->check_out)return response()->json(["success"=>false,"message"=>"The user has previously cehcked out"],400);
@@ -76,44 +79,18 @@ class MakeAttendence extends Controller{
                     $timeEndLeave->addHours($hours)->addMinutes($minutes);
                     // before
                     if($this->time->format("Y-m-d H:i:s") < $timeStartLeave->format("Y-m-d H:i:s")){
-                        // if($leave->to === $timeEndLeave->format("H:i:s") && !$leave->checkin){
-                            return response()->json(["success"=>false,"message"=>"You have leave you cannot check out"]);
+                            return response()->json(["success"=>false,"message"=>"You have leave you cannot check out"],400);
                         }
-                        else{
+                    else{
+                        if($this->time->format("Y-m-d H:i:s") > $timeEndLeave->format("Y-m-d H:i:s")){
                             if($timeDifference <= 30)$this->overTime($attendece);
                             else if($timeDifference > 6)$this->late($attendece,$on = "checkOut" ,$timeDifference);
-                            if($this->time->format("Y-m-d H:i:s") > $timeEndLeave->format("Y-m-d H:i:s")){
-                                $this->late($attendece,$on = "cehckOut" , $timeDifference);
-                            }else{
-                                $timeDifference  = $this->timeDifference("checkout", $timeEndLeave);
-                                $this->late($attendece,$on = "cehckOut" , $timeDifference);
-                            }
-                        }
-                }
-                $timeDifference = $this->timeDifference("checkOut");
-                if($timeDifference <= 30)$this->overTime($attendece);
-                elseif($timeDifference > 6){
-                    $leave = Leave::where('user_id', '=', $this->user->id)->where('date', '=', $this->day)->where('status', '=', 1)->first();
-                    if(!$leave)$this->late($attendece,$on = "checkOut" ,$timeDifference);
-                    else{
-                        $timeStartLeave = Carbon::createFromTimeString($leave->time, "Asia/Amman");
-                        $timeEndLeave = Carbon::createFromTimeString($leave->time, "Asia/Amman");
-                        list($hours, $minutes) = explode(":", $leave->period);
-                        $timeEndLeave->addHours($hours)->addMinutes($minutes);
-                        if($this->time->format("Y-m-d H:i:s") < $timeStartLeave->format("Y-m-d H:i:s")){
-                            $timeDifference1  = $this->timeDifference("checkout", $timeEndLeave);
-                            $timeDifference2  = $this->time->diffInMinutes($timeStartLeave);
-                            $time = $timeDifference1 + $timeDifference2;
-                            $this->late($attendece,$on = "checkOut" ,$time);
                         }else{
-                            if($this->time->format("Y-m-d H:i:s") > $timeEndLeave->format("Y-m-d H:i:s")){
-                                $this->late($attendece,$on = "cehckOut" , $timeDifference);
-                            }else{
-                                $timeDifference  = $this->timeDifference("checkout", $timeEndLeave);
-                                $this->late($attendece,$on = "cehckOut" , $timeDifference);
-                            }
+                            if(!$leave->checkout)return response()->json(["success"=>false,"message"=>"You must end leave first"],400);
+                            $timeDifference  = $this->timeDifference("checkout", $timeEndLeave);
+                            $this->late($attendece,$on = "checkOut" , $timeDifference);
                         }
-                    }                    
+                    }
                 }
             }else{
                 return response()->json(["success"=>false,"message"=>"There is no check in record for this day please check in first"],400);        

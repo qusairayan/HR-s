@@ -26,10 +26,11 @@ class Leaves extends Component
         return view('livewire.leaves.leaves', compact('leaves'));
     }
 
-    public function approve(Leave $leave)
-    {
+    public function approve(Leave $leave){
         $schedule = Schedules::where("user_id",$leave->user_id)->where("date",$leave->date)->first();
-        if($leave->time)
+        if($schedule && ($leave->time == $schedule->from)){
+            $leave->checkin = $schedule->from;
+        }
         $leave->status = 1;
         $leave->save();
 
