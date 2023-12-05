@@ -137,7 +137,7 @@
     <div style="padding:5mm; margin: bottom 25px;">
         <div class="row">
             <div class="column" style="width:20%">
-                {{-- <img src="/storage/company/{{ $user['image'] }}" height="70" width="160" /> --}}
+                <img src="/storage/company/{{ $user['image'] }}" height="70" width="160" />
 
             </div>
             <div class="column" style="width:70%">
