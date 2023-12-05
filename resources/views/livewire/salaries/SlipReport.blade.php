@@ -211,6 +211,7 @@
                     <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 14%">التاريخ</th>
                     <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px; width: 11%">نوع العلاوة</th>
                 </tr>
+                @dd($allownceTypes)
                 @php($totalAllownce=0)
                 @foreach ($allownce as $item)
                 @php($totalAllownce+=$item["amount"])
