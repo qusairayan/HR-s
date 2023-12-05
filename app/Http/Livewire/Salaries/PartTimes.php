@@ -55,7 +55,7 @@ public function report(){
         'to' => 'required|date',
     ]);
 
-    return redirect()->route('payroll.part_time_report',['id' => $this->employee, 'from' => $this->from, 'to' => $this->to])
+    return redirect()->route('payrolls.part_time_report',['id' => $this->employee, 'from' => $this->from, 'to' => $this->to])
     ->with(['newTab' => true]);
 
 }

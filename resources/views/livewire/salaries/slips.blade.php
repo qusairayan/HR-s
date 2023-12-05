@@ -24,7 +24,7 @@
         </div>
         {{-- new salary --}}
         <div class="btn-toolbar mb-2 mb-md-0">
-            <a href="{{ route('payroll.newSalary') }}" class="btn btn-sm btn-gray-800 d-inline-flex align-items-center">
+            <a href="{{ route('payrolls.newSalary') }}" class="btn btn-sm btn-gray-800 d-inline-flex align-items-center">
                 <svg class="icon icon-xs me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -189,7 +189,7 @@
             </tr>
             <tbody>
                 @php($i=0)
-                @foreach($payrolls as $item)
+                @foreach($payrollss as $item)
                 @php($i++)
                 <tr>
                     <td class="border-0 fw-bold"><span class="fw-normal">{{$i}}</span></td>
@@ -197,9 +197,9 @@
                     <td class="border-0 fw-bold"><span class="fw-normal">{{$item["month"]}}</span></td>
                     <td class="border-0 fw-bold"><span class="fw-normal">{{$item["salary"]}}</span></td>
                    @if ($item["salaryDepositId"])
-                   <td class="border-0 fw-bold"><span class="fw-normal"><a href="{{route ("payroll.depositSalarypdf",["id"=>$item["salaryDepositId"]])}}" class="btn btn-info">View Salary Pdf</a></span></td>   
+                   <td class="border-0 fw-bold"><span class="fw-normal"><a href="{{route ("payrolls.depositSalarypdf",["id"=>$item["salaryDepositId"]])}}" class="btn btn-info">View Salary Pdf</a></span></td>   
                    @else
-                   <td class="border-0 fw-bold"><span class="fw-normal"><a href="{{route ("payroll.depositsalary",["id_salary"=>$item["id"],"id"=> $item["user_id"],"salary"=>$item["salary"]])}}" class="btn btn-primary">Deposit Salary</a></span></td>   
+                   <td class="border-0 fw-bold"><span class="fw-normal"><a href="{{route ("payrolls.depositsalary",["id_salary"=>$item["id"],"id"=> $item["user_id"],"salary"=>$item["salary"]])}}" class="btn btn-primary">Deposit Salary</a></span></td>   
                    @endif                    
                 </tr>
                 @endforeach

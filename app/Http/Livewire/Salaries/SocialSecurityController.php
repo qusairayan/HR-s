@@ -71,7 +71,7 @@ class SocialSecurityController extends Component
                 ]
     );
         $socialsecurity->save();
-        return redirect()->route("payroll.socialsecurity");
+        return redirect()->route("payrolls.socialsecurity");
         }
     }
     public function render()

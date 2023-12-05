@@ -187,21 +187,21 @@ Route::middleware('auth')->group(function () {
     });
 
 
-    Route::prefix('payroll')->group(function () {
-        Route::get('/salaries', Salaries::class)->name('payroll.salaries'); //->middleware('role:viewroles')
-        Route::get('/slips', Slips::class)->name('payroll.slips'); //->middleware('role:viewroles')
-        Route::get('/parttime', PartTimes::class)->name('payroll.part_time'); //->middleware('role:viewroles')
-        Route::get('/addParttime', AddPartTimes::class)->name('payroll.add_part_time'); //->middleware('role:viewroles')
-        Route::get('/{parttime}/editParttime', EditPartTimes::class)->name('payroll.edit_part_time'); //->middleware('role:viewroles')
-        Route::get('/{parttime}/viewParttime', ViewPartTimes::class)->name('payroll.view_part_time'); //->middleware('role:viewroles')
-        Route::get('slip-report/{id}/{month}', [SlipReportpdf::class,'generatePDF'])->name('payroll.slip_report'); //->middleware('role:viewroles')
-        Route::get('/FullTimeReport/{id}/{from}/{to}', [SlipReportpdf::class,'FullTimegeneratePDF'])->name('payroll.fullTimeReport'); //->middleware('role:viewroles')
-        Route::get('/PartTime_Reports/{id}/{from}/{to}', [Ptreportpdf::class,'generatePDF'])->name('payroll.part_time_report'); //->middleware('role:viewroles')
-        Route::get('/addSalary', AddSalaries::class)->name('payroll.addSalary'); //->middleware('role:viewroles')
-        Route::get('/socialsecurity', SocialSecurityController::class)->name('payroll.socialsecurity'); //->middleware('role:viewroles')
-        Route::get('/new-salary', NewSalary::class)->name('payroll.newSalary'); //->middleware('role:viewroles')
-        Route::any('/depositsalary/{id_salary}/{id}/{salary}', DepositSalary::class)->name('payroll.depositsalary'); //->middleware('role:viewroles')
-        Route::get('/deposit-salarypdff/{id}', DepositSalaryPdf::class)->name('payroll.depositSalarypdf'); //->middleware('role:viewroles')
+    Route::prefix('payrollss')->group(function () {
+        Route::get('/salaries', Salaries::class)->name('payrolls.salaries'); //->middleware('role:viewroles')
+        Route::get('/slips', Slips::class)->name('payrolls.slips'); //->middleware('role:viewroles')
+        Route::get('/parttime', PartTimes::class)->name('payrolls.part_time'); //->middleware('role:viewroles')
+        Route::get('/addParttime', AddPartTimes::class)->name('payrolls.add_part_time'); //->middleware('role:viewroles')
+        Route::get('/{parttime}/editParttime', EditPartTimes::class)->name('payrolls.edit_part_time'); //->middleware('role:viewroles')
+        Route::get('/{parttime}/viewParttime', ViewPartTimes::class)->name('payrolls.view_part_time'); //->middleware('role:viewroles')
+        Route::get('slip-report/{id}/{month}', [SlipReportpdf::class,'generatePDF'])->name('payrolls.slip_report'); //->middleware('role:viewroles')
+        Route::get('/FullTimeReport/{id}/{from}/{to}', [SlipReportpdf::class,'FullTimegeneratePDF'])->name('payrolls.fullTimeReport'); //->middleware('role:viewroles')
+        Route::get('/PartTime_Reports/{id}/{from}/{to}', [Ptreportpdf::class,'generatePDF'])->name('payrolls.part_time_report'); //->middleware('role:viewroles')
+        Route::get('/addSalary', AddSalaries::class)->name('payrolls.addSalary'); //->middleware('role:viewroles')
+        Route::get('/socialsecurity', SocialSecurityController::class)->name('payrolls.socialsecurity'); //->middleware('role:viewroles')
+        Route::get('/new-salary', NewSalary::class)->name('payrolls.newSalary'); //->middleware('role:viewroles')
+        Route::any('/depositsalary/{id_salary}/{id}/{salary}', DepositSalary::class)->name('payrolls.depositsalary'); //->middleware('role:viewroles')
+        Route::get('/deposit-salarypdff/{id}', DepositSalaryPdf::class)->name('payrolls.depositSalarypdf'); //->middleware('role:viewroles')
     });
 
 

@@ -385,13 +385,13 @@
 
             <li class="nav-item">
                 <span class="nav-link collapsed d-flex justify-content-between align-items-center"
-                    data-bs-toggle="collapse" data-bs-target="#submenu-payroll" aria-expanded="true">
+                    data-bs-toggle="collapse" data-bs-target="#submenu-payrolls" aria-expanded="true">
                     <span>
                         <span class="sidebar-icon"
-                            style="{{ in_array(Request::segment(1), ['payroll', 'payroll.salaries']) ? 'color: #fb503b !important' : '' }} ">
+                            style="{{ in_array(Request::segment(1), ['payrolls', 'payrolls.salaries']) ? 'color: #fb503b !important' : '' }} ">
                             <i class="fas fa-file-invoice-dollar"></i>
                         </span>
-                        <span class="sidebar-text">payroll</span>
+                        <span class="sidebar-text">payrolls</span>
                     </span>
                     <span class="link-arrow"><svg class="icon icon-sm" fill="currentColor" viewBox="0 0 20 20"
                             xmlns="http://www.w3.org/2000/svg">
@@ -400,18 +400,18 @@
                                 clip-rule="evenodd"></path>
                         </svg></span>
                 </span>
-                <div class="multi-level collapse {{ in_array(Request::segment(1), ['payroll', 'payroll.salaries', 'payroll.addSalaries']) ? 'show' : '' }}"
-                    role="list" id="submenu-payroll" aria-expanded="false">
+                <div class="multi-level collapse {{ in_array(Request::segment(1), ['payrolls', 'payrolls.salaries', 'payrolls.addSalaries']) ? 'show' : '' }}"
+                    role="list" id="submenu-payrolls" aria-expanded="false">
                     <ul class="flex-column nav">
                         <li
-                        class="nav-item {{ in_array(request()->route()->getName(), ['payroll.slips']) ? 'active' : '' }}">
-                        <a href="/payroll/slips" class="nav-link">
+                        class="nav-item {{ in_array(request()->route()->getName(), ['payrolls.slips']) ? 'active' : '' }}">
+                        <a href="/payrolls/slips" class="nav-link">
                             <span class="sidebar-text">Salary Slips</span>
                         </a>
                     </li>
                         <li
-                            class="nav-item {{ in_array(request()->route()->getName(), ['payroll.add_part_time','payroll.edit_part_time','payroll.part_time']) ? 'active' : '' }}">
-                            <a href="/payroll/parttime" class="nav-link">
+                            class="nav-item {{ in_array(request()->route()->getName(), ['payrolls.add_part_time','payrolls.edit_part_time','payrolls.part_time']) ? 'active' : '' }}">
+                            <a href="/payrolls/parttime" class="nav-link">
                                 <span class="sidebar-text">Part times</span>
                             </a>
                         </li>
@@ -420,16 +420,16 @@
 
 
                         <li
-                            class="nav-item {{ in_array(Request::segment(1), ['payroll.salaries', 'payroll.addSalary']) ? 'active' : '' }}">
-                            <a href="/payroll/salaries" class="nav-link">
+                            class="nav-item {{ in_array(Request::segment(1), ['payrolls.salaries', 'payrolls.addSalary']) ? 'active' : '' }}">
+                            <a href="/payrolls/salaries" class="nav-link">
                                 <span class="sidebar-text">Salaries</span>
                             </a>
                         </li>
 
 
                         <li
-                            class="nav-item {{ request()->route()->getName() == 'payroll.socialsecurity'? 'active': '' }}">
-                            <a href="/payroll/socialsecurity" class="nav-link">
+                            class="nav-item {{ request()->route()->getName() == 'payrolls.socialsecurity'? 'active': '' }}">
+                            <a href="/payrolls/socialsecurity" class="nav-link">
                                 <span class="sidebar-text">Social security</span>
                             </a>
                         </li>

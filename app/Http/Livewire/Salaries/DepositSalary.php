@@ -64,12 +64,12 @@ class DepositSalary extends Component
         $data->amount_written  = $this->amount_written;
         $data->signatures  =json_encode($this->signatures);
         $data = $data->save();
-        return redirect()->route("payroll.slips");
+        return redirect()->route("payrolls.slips");
     }
     public function addsignatures(){
         $data = new Signature();
         $data->signature = $this->addseg;
         $data->save();
-        return redirect()->route("payroll.slips");
+        return redirect()->route("payrolls.slips");
     }
 }

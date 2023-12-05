@@ -24,7 +24,7 @@
             {{-- <p class="mb-0">Your web analytics dashboard template.</p> --}}
         </div>
         <div class="btn-toolbar mb-2 mb-md-0">
-            <a href="{{ route('payroll.add_part_time') }}" class="btn btn-sm btn-gray-800 d-inline-flex align-items-center">
+            <a href="{{ route('payrolls.add_part_time') }}" class="btn btn-sm btn-gray-800 d-inline-flex align-items-center">
                 <svg class="icon icon-xs me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -305,11 +305,11 @@
 
                         <td class="border-0 fw-bold">
                             <div style="display: flex">
-                                <a class="dropdown-item p-sm-2" href="{{ route('payroll.view_part_time', ['parttime' => $pt->id]) }}">
+                                <a class="dropdown-item p-sm-2" href="{{ route('payrolls.view_part_time', ['parttime' => $pt->id]) }}">
                                     <span class="fas fa-eye me-2"></span>
                                 </a>
                         @if($pt->status == 0)
-                                <a class="dropdown-item p-sm-2" href="{{ route('payroll.edit_part_time', ['parttime' => $pt->id]) }}">
+                                <a class="dropdown-item p-sm-2" href="{{ route('payrolls.edit_part_time', ['parttime' => $pt->id]) }}">
                                     <span class="fas fa-edit me-2"></span>
                                 </a>
                                 
@@ -334,6 +334,6 @@
 </div>
 {{-- <script>
     @if(session('newTab'))
-        window.open('{{ route("payroll.part_time_report", ["id" => $this->employee, "from" => $this->from, "to" => $this->to]) }}', '_blank');
+        window.open('{{ route("payrolls.part_time_report", ["id" => $this->employee, "from" => $this->from, "to" => $this->to]) }}', '_blank');
     @endif
 </script> --}}

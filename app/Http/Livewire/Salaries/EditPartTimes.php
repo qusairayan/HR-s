@@ -173,7 +173,7 @@ class EditPartTimes extends Component
 
 
         $this->showSavedAlert = true;
-        redirect(route('payroll.part_time'));
+        redirect(route('payrolls.part_time'));
     }
 
     public function render()

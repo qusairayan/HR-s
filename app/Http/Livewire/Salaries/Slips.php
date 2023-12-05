@@ -50,7 +50,7 @@ public function report(){
         'employee' => 'required',
         'date' => 'required|date',
     ]);
-    return redirect()->route('payroll.slip_report',['id' => $this->employee, 'month' => $this->date]);
+    return redirect()->route('payrolls.slip_report',['id' => $this->employee, 'month' => $this->date]);
 }
 public function fullTimeReport(){
     $this->validate([
@@ -58,7 +58,7 @@ public function fullTimeReport(){
         'from' => 'required|date',
         'to' => 'required|date',
     ]);
-    return redirect()->route('payroll.fullTimeReport',['id' => $this->employee, 'from' => $this->from,"to"=>$this->to])
+    return redirect()->route('payrolls.fullTimeReport',['id' => $this->employee, 'from' => $this->from,"to"=>$this->to])
     ->with(['newTab' => true]);
 }
 

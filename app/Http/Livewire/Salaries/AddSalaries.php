@@ -125,7 +125,7 @@ class AddSalaries extends Component
 
 
         $this->showSavedAlert = true;
-        redirect(route('payroll.salaries'));
+        redirect(route('payrolls.salaries'));
     }
 
 
