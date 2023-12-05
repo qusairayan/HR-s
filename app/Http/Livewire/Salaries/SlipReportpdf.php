@@ -39,7 +39,7 @@ class SlipReportpdf extends Component{
         })->pluck("salary")->first();
         // if($promotion)if($promotion)$this->user["salary"] = $promotion;
         dd($monthly_payroll);
-        $this->user["salary"] = $monthly_payroll ?? $promotion ?? $this->user["salary"];
+        $this->user["salary"] = $monthly_payroll->salary ?? $promotion ?? $this->user["salary"];
         $social = SocialSecurity::where("date","Like",date("Y-m")."-%")->where("user_id",$id)->first();
         if($social) $social = $this->user["salary"] * 0.075;
         $this->runPdf('livewire.salaries.SlipReport',["social"=>$social, "user"=>$this->user,"allownce"=>$allownce,"deduction"=>$deduction,'checks' => $checks,'date'=>$date,"deductionTypes"=>$deductionTypes,"allownceTypes"=>$allownceTypes]);
