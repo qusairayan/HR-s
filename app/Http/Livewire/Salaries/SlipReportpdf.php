@@ -33,12 +33,12 @@ class SlipReportpdf extends Component{
         ->where("date","LIKE",$date."-%")
         ->select("Payment_Method","Value","Date","check_details")
         ->get()->toArray();
-        $monthly_payroll = MonthlyPayroll::where("month","LIKE",date("Y-m")."-%")->where("user_id",$this->user["id"])->first();
+        $monthly_payroll = MonthlyPayroll::where("month","LIKE",date("Y-m")."-%")->where("user_id",$this->user["id"])->pluck("salary")->first();
+        dd($monthly_payroll);
         $promotion = Promotion::where("user_id",$this->user["id"])->where('from', '<=', $date."-01")->where(function ($query) use ($date){
             $query->where('to', '>=', $date."-01")->orWhereNull("to");
         })->pluck("salary")->first();
         // if($promotion)if($promotion)$this->user["salary"] = $promotion;
-        dd($monthly_payroll);
         $this->user["salary"] = $monthly_payroll->salary ?? $promotion ?? $this->user["salary"];
         $social = SocialSecurity::where("date","Like",date("Y-m")."-%")->where("user_id",$id)->first();
         if($social) $social = $this->user["salary"] * 0.075;
