@@ -1,5 +1,6 @@
 <?php
 namespace App\Http\Controllers\Api\Attendence;
+use App\Http\Controllers\api\Leave\LeaveController;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Attendedence\Api\CreateAttendenceRequest;
 use App\Models\Attendence;
@@ -19,84 +20,58 @@ class MakeAttendence extends Controller{
     public function create(CreateAttendenceRequest $request){
         $request->validated();
         $this->user = Auth::user();
-        $attendece = Attendence::where("user_id",$this->user->id)->where("date",date("Y-m-d"))->first();
-        if($request->type == 0){
-            // case 1 : the user logged in before
-            if($attendece)return response()->json(["success"=>false,"message"=>"The user has already registered for attendance"],400);
-            // case 2 : The user has to leave at the beginning of the shift
-            $leave = Leave::where("user_id",$this->user->id)->where("date",date("Y-m-d"))->where('status', '=', 1)->first();
-            if($leave){
-                $schedule =  Schedules::where("date",$this->day)->where("user_id",$this->user->id)->first();
-                if($leave->time == $schedule->from){
-                    if(!$leave->checkout)$leave->checkout = $this->time;
-                    Attendence::create([
-                        "type"=>0,
-                        "user_id"=>$this->user->id,
-                        "date"=>$this->day,
-                        "check_in"=>$this->time
-                    ]);
-                    $timeDifference = $this->timeDifference("checkIn"); 
-                    if($timeDifference > 5){
-                        Lateness::create([
-                            "user_id"=>$this->user->id,
-                            "attendence_id"=>$attendece->id,
-                            "amount"=>$timeDifference,
-                            "on"=>"checkIn",
-                            "detailes"=>"leave on time ".$this->time->format("Y-m-d H:i:s")
-                        ]);
-                    }
-                }
-            }
-            else{
-                $attendece = Attendence::create([
+        $attendance = Attendence::where("user_id",$this->user->id)->where("date",date("Y-m-d"))->first();
+        $leave = Leave::where("user_id",$this->user->id)->where("date",date("Y-m-d"))->where('status', '=', 1)->first();
+        if($request->type === 0){ //checkin
+            if($attendance)return response()->json(["success"=>false,"message"=>"You have registered your attendance for today"],400);
+            if(!$leave || !$leave->checkin){//checkin
+                $attendance = 
+                Attendence::create([
                     "type"=>0,
                     "user_id"=>$this->user->id,
                     "date"=>$this->day,
                     "check_in"=>$this->time
                 ]);
                 $timeDifference = $this->timeDifference("checkIn");
-                if($timeDifference > 5)$this->late($attendece,$on = "checkIn" , $timeDifference);
-            }
-        }else{
-            if($attendece){
-                if($attendece->check_out)return response()->json(["success"=>false,"message"=>"The user has previously cehcked out"],400);
-                $leave = Leave::leftJoin("schedule", "leaves.user_id", "=", "schedule.user_id")
-                ->where('leaves.user_id', '=', $this->user->id)
-                ->where('leaves.date', '=', $this->day)
-                ->where('leaves.status', '=', 1)
-                ->first();
-                $attendece->check_out = $this->time;
-                $attendece->save();
-                $timeDifference = $this->timeDifference("checkOut");
-                if(!$leave){
-                    if($timeDifference <= 30)$this->overTime($attendece);
-                    else if($timeDifference > 6)$this->late($attendece,$on = "checkOut" ,$timeDifference);
-                }else{
-                    // before
-                    $timeStartLeave = Carbon::createFromTimeString($leave->time, "Asia/Amman");
-                    $timeEndLeave = Carbon::createFromTimeString($leave->time, "Asia/Amman");
-                    list($hours, $minutes) = explode(":", $leave->period);
-                    $timeEndLeave->addHours($hours)->addMinutes($minutes);
-                    // before
-                    if($this->time->format("Y-m-d H:i:s") < $timeStartLeave->format("Y-m-d H:i:s")){
-                            return response()->json(["success"=>false,"message"=>"You have leave you cannot check out"],400);
-                        }
-                    else{
-                        if($this->time->format("Y-m-d H:i:s") > $timeEndLeave->format("Y-m-d H:i:s")){
-                            if($timeDifference <= 30)$this->overTime($attendece);
-                            else if($timeDifference > 6)$this->late($attendece,$on = "checkOut" ,$timeDifference);
-                        }else{
-                            if(!$leave->checkout)return response()->json(["success"=>false,"message"=>"You must end leave first"],400);
-                            $timeDifference  = $this->timeDifference("checkout", $timeEndLeave);
-                            $this->late($attendece,$on = "checkOut" , $timeDifference);
-                        }
-                    }
-                }
+                if($timeDifference > 5)$this->late($attendance,"checkIn",$timeDifference);
+                return response()->json(["success"=>true,"message"=>"attendance checkin successfully"],201);
             }else{
-                return response()->json(["success"=>false,"message"=>"There is no check in record for this day please check in first"],400);        
+                if(!$leave->checkout){//checkout leave then checkin attendance
+                    $leave->checkout = $this->time;
+                    $leave->save();
+                    $status = new LeaveController();
+                    $status->checkoutt($leave);
+                    $attendance = Attendence::create([
+                        "type"=>0,
+                        "user_id"=>$this->user->id,
+                        "date"=>$this->day,
+                        "check_in"=>$this->time
+                    ]);
+                    $timeDifference = $this->timeDifference("checkIn");
+                    Lateness::create([
+                        "user_id"=>$this->user->id,
+                        "attendence_id"=>$attendance->id,
+                        "amount"=>$timeDifference,
+                        "on"=>"checkIn",
+                        "detailes"=>"leave on time ".$this->time->format("Y-m-d H:i:s")
+                    ]);
+                    return response()->json(["success"=>true,"message"=>"attendance checkin successfully"],201);
+                }
             }
+        }else{//checkout
+            if(!$attendance || $attendance?->check_out)return response()->json(["success"=>false,"message"=>"You have registered your attendance for today"],400);
+            if($leave && !$leave->checkin )return response()->json(["success"=>false,"message"=>"You cannot check out before leave"],400);
+            if($leave && !$leave->checkout){
+                $status = new LeaveController();
+                $status->checkoutt($leave);
+            }
+            $attendance->check_out = $this->time;
+            $attendance->save();
+            $timeDifference = $this->timeDifference("checkOut");
+            if($timeDifference > 6)$this->late($attendance,"checkOut",$timeDifference);
+            elseif($timeDifference <= 30)$this->overTime($attendance);
+            return response()->json(["success"=>true,"message"=>"attendance checkout successfully"],201);
         }
-        return response()->json(["success"=>true,"message"=>"attendance taken successfully"],201);
     }
     private function timeDifference($on , $time = NULL) :string {
         if(!$time)$time = $this->time;
@@ -120,6 +95,32 @@ class MakeAttendence extends Controller{
             "attendence_id"=>$attendece->id,
             "user_id"=>$this->user->id,
         ]);
+    }
+    public function AttendenceToday(){
+        $user = Auth::user();
+        $data = Attendence::where("user_id",$user->id)->where("date",date("Y-m-d"))->select("date","check_in","check_out")->first();
+        if(!$data)return response()->json(["success"=>true,"data"=>0],200);
+        if($data->check_in && $data->check_out)return response()->json(["success"=>true,"data"=>2],200);
+        if($data->check_in)return response()->json(["success"=>true,"data"=>1],200);
+    }
+    public function recordApi(Request $request){
+        $id = $request->input("id");
+        $attendanceList = Attendence::leftJoin("leaves","attendence.date","=","leaves.date")
+        ->select(
+            "attendence.date as attendence_date",
+            "attendence.check_in as check_in",
+            "attendence.check_out as check_out",
+            "leaves.date as leaves_date",
+            )->where('attendence.user_id',$id)
+            ->where("attendence.date","LIKE",date("Y-m")."-%")
+            ->orderBy("attendence.date")
+            ->get();
+            return response($attendanceList,200);
+    }
+    public function getSchedule(Request $request){
+        // $user = User::where("id",$id)->select("annual_vacation","sick_vacation")->first();
+        // $schedule =Schedules::where("user_id","=",$id)->where("date",">=",date("Y-m-d"))->orderBy("date")->get();
+        // return response(["schedule"=>$schedule,"vacations"=>$user],200);
     }
     public function __destruct(){
         $this->day = NULL;

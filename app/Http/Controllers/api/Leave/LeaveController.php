@@ -23,8 +23,17 @@ class LeaveController extends Controller{
             if(!$leave->checkout)return response()->json(["success"=>true,"data"=>2],200);
         }
     }
+    public function minTime(string $time =""){
+        $time1 = strtotime($this->schedule->from) - strtotime("00:00:00");
+        $time3 = strtotime($this->schedule->to) - strtotime("00:00:00");
+        $time2 = strtotime($time) - strtotime("00:00:00");
+        if($time2 < $time1 || $time2 > $time3) return false;
+        else return true;
+    }
     public function create(CreateLeaveRequest $request){
         $request->validated();
+        $this->user  = Auth::user();
+        if($request->date < date("Y-m-d"))return response()->json(["success"=>false,"message"=>"Choose a valid date"],400);
         //allow to user one leave per day
         if($this->user->annual_vacation < 1)return response()->json(["success"=>false,"message"=>"You do not have any vacation leave"],400);
         $leave = Leave::where("date",$request->only("date"))->where("user_id",$this->user->id)->first();
@@ -32,6 +41,7 @@ class LeaveController extends Controller{
         $this->schedule = Schedules::where("user_id",$this->user->id)->where("date",$request->only("date"))->select("schedule.off-day as off","schedule.*")->first();
         //Make sure there is a Schedules
         if(!$this->schedule)return response()->json(["success"=>false,"message"=>"Please set a work schedule for today first"],400);
+        if(!$this->minTime($request->time))return response()->json(["success"=>false,"message"=>"the time out of range"],400);
         //Verify holidays
         if($this->schedule->off)return response()->json(["success"=>false,"message"=>"You cannot take a leave on this day"],400);
         //Ensure that the departure time is within official working hours
@@ -62,7 +72,7 @@ class LeaveController extends Controller{
         $leave = Leave::find($id);
         if(!$leave)return response()->json(["success"=>false,"message"=>"there are no leave"],404);
         if($leave->status != 0)return response()->json(["success"=>false,"message"=>"leave has been accepted and you cannot modify it"],401);
-        $$leave->delete();
+        $leave->delete();
         return response()->json(["success"=>true,"message"=>"Leave has been successfully deleted"],200);
     }
     public function get(){
@@ -102,6 +112,7 @@ class LeaveController extends Controller{
         }else  return response()->json(["success"=>false,"message"=>"You have fieald checked out"],404);
     }
     private function vacationDiscount(){
+        if(!$this->user)        $this->user  = Auth::user();
         $time = Leave::where("user_id",$this->user->id)->where("discount",0)
         ->select(DB::raw('SUM(TIME_TO_SEC(total_leave)) as total_seconds'))
         ->first();
@@ -152,5 +163,12 @@ class LeaveController extends Controller{
     public function __destruct(){
         $this->user = NULL;
         $this->schedule = NULL;
+    }
+    public function checkoutt($leave){
+        $time = Carbon::now()->format("H:i:s");
+        $leave->checkout = $time;
+        $leave->total_leave = gmdate("H:i:s",(strtotime($leave->checkout) - strtotime("00:00:00"))   - (strtotime($leave->checkin) - strtotime("00:00:00")));
+        $leave =  $leave->save();
+        $this->vacationDiscount();
     }
 }

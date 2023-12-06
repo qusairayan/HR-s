@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\Leave\Api;
 
+use App\Models\Schedules;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class CreateLeaveRequest extends FormRequest
 {
