@@ -18,7 +18,6 @@ use App\Notifications\ForgetPasswordNotification;
 class ForgetPasswordController extends Controller
 {
     public function forgetPassword(ForgetPasswordRequest $request){
-        return response()->json("xsaxasxsa",200);
         $request->validated();
         $user = User::where("email",$request->only("email"))->first();
         $user->notify(new ForgetPasswordNotification());
