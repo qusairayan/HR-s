@@ -10,6 +10,6 @@ class Vacation extends Model
     use HasFactory;
     protected $table = 'vacations';
      
-
+    protected $fillable =["date","user_id","period","type","asset"];
 
 }

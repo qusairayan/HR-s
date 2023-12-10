@@ -2,12 +2,12 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\login\LoginController;
-use App\Http\Controllers\api\login\ForgetPasswordController;
+// use App\Http\Controllers\api\login\ForgetPasswordController;
 use App\Http\Controllers\api\attendence\AttendanceController;
 use App\Http\Controllers\api\attendence\attendenceRecord;
 use App\Http\Controllers\api\Attendence\AttendenceToday;
 use App\Http\Controllers\Api\Attendence\MakeAttendence;
-use App\Http\Controllers\Api\Auth\ForgetPasswordController as AuthForgetPasswordController;
+use App\Http\Controllers\Api\Auth\ForgetPasswordController;
 use App\Http\Controllers\api\Auth\LoginController as AuthLoginController;
 use App\Http\Controllers\api\Auth\RegisterController;
 use App\Http\Controllers\api\Auth\LogoutController;
@@ -20,6 +20,7 @@ use App\Http\Controllers\api\vacations\VacationReqController;
 use App\Http\Controllers\api\vacations\GetVacationController;
 use App\Http\Controllers\api\profile\ProfileController;
 use App\Http\Controllers\api\profile\showProfileImageController;
+use App\Http\Controllers\api\vacations\VacationController;
 
 Route::middleware(['api'])->group(function () {
 Route::post('/profile', [ProfileController::class, 'profile']); 
@@ -55,7 +56,7 @@ Route::post('reset-password', [ForgetPasswordController::class, 'resetPassword']
 Route::middleware(["guest:sanctum"])->prefix("auth")->name("auth.")->group(function(){
     Route::post("login"          , [AuthLoginController::class          ,'login' ])->name("login");
     Route::post("register"       , [RegisterController::class           ,"create"])->name("register");
-    Route::post('forget-password', [AuthForgetPasswordController::class ,'forgetPassword'])->name("forgetPassword");
+    Route::post('forget-password', [ForgetPasswordController::class ,'forgetPassword'])->name("forgetPassword");
     Route::post('verfy-otp'      , [VerfyOtpController::class, 'verifyOtp'])->name("verfyOtp");
     Route::post('reset-password' , [ResetPassword::class, 'ResetPassword'])->name("resetPassword");
 });
@@ -74,10 +75,19 @@ Route::middleware(["auth:sanctum"])->group(function(){
         Route::get("checkout"    ,[LeaveController::class,"checkout"])->name("checkout");
         Route::get("leave-control"    ,[LeaveController::class,"control"])->name("control");
     });
-    // Route::prefix("profile")->name("profile.")->group(function(){
-    //     Route::put("edit",[ProfileController::class, 'editProfile'])->name("edit");
-    //     Route::put("password",[ProfileController::class, 'editProfile'])->name("password");
-    // });
+    Route::prefix("vacation")->name("vacation.")->group(function(){
+        // Route::get("/"    ,[LeaveController::class,"get"])->name("get");
+        Route::post("create"    ,[VacationController::class,"create"])->name("create");
+        Route::post("edit/{id}"    ,[VacationController::class,"edit"])->name("edit");
+        Route::delete("delete/{id}"    ,[VacationController::class,"delete"])->name("delete");
+        // Route::put("edit/{id}"    ,[LeaveController::class,"edit"])->name("edit");
+        // Route::delete("delete/{id}"    ,[LeaveController::class,"delete"])->name("delete");
+    });
+    Route::prefix("profile")->name("profile.")->group(function(){
+        Route::post('updateProfileInfo',[ProfileController::class,"updateProfileInfo"]);
+        // Route::put("edit",[ProfileController::class, 'editProfile'])->name("edit");
+        // Route::put("password",[ProfileController::class, 'editProfile'])->name("password");
+    });
     // Route::prefix("attendence")->name("attendence.")->group(function(){
     //     Route::get("/today",[AttendenceToday::class,"AttendenceToday"])->name("today");
     //     Route::post('/', [AttendanceController::class, 'attendence']);

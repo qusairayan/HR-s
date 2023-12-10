@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\api\profile;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Profile\ProfileRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User;
 use Exception;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Spatie\FlareClient\Http\Exceptions\InvalidData;
@@ -16,6 +18,28 @@ use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends Controller
 {
+    public function updateProfileInfo(ProfileRequest $request)
+    {
+        // $user = Auth::user();
+        $user = User::find(Auth::id());
+        if($request->hasFile("image")){
+            $image =$request->file("image");
+            if($user->image)Storage::delete('public/profile/' . $user->image);
+            $filename = uniqid() . '.' . $image->getClientOriginalExtension();
+            $path = $image->storeAs('public/profile', $filename);
+            $user->image = explode("/",$path)[2];
+            $user->save();
+        }
+        if($request->has("old_password") && $request->has("new_password")){
+            $newPassword = Hash::make(request()->input('new_password'));
+            $password = Hash::make(request()->input('old_password'));
+            if (Hash::check($password, $user->password)) {
+                $user->password = $newPassword;
+                $user->save();
+            }else return response()->json(["success">false,"message"=>"Old password isn`t correct"],400);
+        }
+        return response(["message"=>"user updated successfuly"],200);
+    }
     public function __construct()
     {
         $this->middleware('api');
