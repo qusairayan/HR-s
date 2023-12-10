@@ -2,7 +2,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\login\LoginController;
-use App\Http\Controllers\api\login\ForgetPasswordController;
+// use App\Http\Controllers\api\login\ForgetPasswordController;
 use App\Http\Controllers\api\attendence\AttendanceController;
 use App\Http\Controllers\api\attendence\attendenceRecord;
 use App\Http\Controllers\api\Attendence\AttendenceToday;
@@ -46,11 +46,9 @@ Route::post('/profileIMG/{filename}', [showProfileImageController::class, 'showP
 
 Route::post("/register",[RegisterController::class,"create"])->name("register");
 Route::post("/delete",[RegisterController::class,"destroy"])->name("delete");
-Route::post('forget-password', [ForgetPasswordController::class, 'forget']);
-Route::post('forget-password-otp', [ForgetPasswordController::class, 'verifyOtp']);
-Route::post('reset-password', [ForgetPasswordController::class, 'resetPassword']);
-
-
+// Route::post('forget-password', [ForgetPasswordController::class, 'forget']);
+// Route::post('forget-password-otp', [ForgetPasswordController::class, 'verifyOtp']);
+// Route::post('reset-password', [ForgetPasswordController::class, 'resetPassword']);
 
 // new api
 Route::middleware(["guest:sanctum"])->prefix("auth")->name("auth.")->group(function(){
