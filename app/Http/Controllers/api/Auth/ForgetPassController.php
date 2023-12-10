@@ -8,7 +8,7 @@ use App\Models\User;
 use App\Notifications\ForgetPasswordNotification;
 use Illuminate\Http\Request;
 
-class ForgetPasswordController extends Controller
+class ForgetPassController extends Controller
 {
     public function forgetPassword(ForgetPasswordRequest $request){
         return response()->json("xsaxasxsa",200);

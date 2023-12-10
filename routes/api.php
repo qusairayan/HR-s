@@ -2,12 +2,12 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\login\LoginController;
-// use App\Http\Controllers\api\login\ForgetPasswordController;
+use App\Http\Controllers\api\login\ForgetPasswordController;
 use App\Http\Controllers\api\attendence\AttendanceController;
 use App\Http\Controllers\api\attendence\attendenceRecord;
 use App\Http\Controllers\api\Attendence\AttendenceToday;
 use App\Http\Controllers\Api\Attendence\MakeAttendence;
-use App\Http\Controllers\Api\Auth\ForgetPasswordController as AuthForgetPasswordController;
+use App\Http\Controllers\Api\Auth\ForgetPassController;
 use App\Http\Controllers\api\Auth\LoginController as AuthLoginController;
 use App\Http\Controllers\api\Auth\RegisterController;
 use App\Http\Controllers\api\Auth\LogoutController;
@@ -46,15 +46,15 @@ Route::post('/profileIMG/{filename}', [showProfileImageController::class, 'showP
 
 Route::post("/register",[RegisterController::class,"create"])->name("register");
 Route::post("/delete",[RegisterController::class,"destroy"])->name("delete");
-// Route::post('forget-password', [ForgetPasswordController::class, 'forget']);
-// Route::post('forget-password-otp', [ForgetPasswordController::class, 'verifyOtp']);
-// Route::post('reset-password', [ForgetPasswordController::class, 'resetPassword']);
+Route::post('forget-password', [ForgetPasswordController::class, 'forget']);
+Route::post('forget-password-otp', [ForgetPasswordController::class, 'verifyOtp']);
+Route::post('reset-password', [ForgetPasswordController::class, 'resetPassword']);
 
 // new api
 Route::middleware(["guest:sanctum"])->prefix("auth")->name("auth.")->group(function(){
     Route::post("login"          , [AuthLoginController::class          ,'login' ])->name("login");
     Route::post("register"       , [RegisterController::class           ,"create"])->name("register");
-    Route::post('forget-password', [AuthForgetPasswordController::class ,'forgetPassword'])->name("forgetPassword");
+    Route::post('forget-passwords', [ForgetPassController::class ,'forgetPassword'])->name("forgetPassword");
     Route::post('verfy-otp'      , [VerfyOtpController::class, 'verifyOtp'])->name("verfyOtp");
     Route::post('reset-password' , [ResetPassword::class, 'ResetPassword'])->name("resetPassword");
 });
