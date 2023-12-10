@@ -12,7 +12,7 @@ class ResetPassword extends Controller{
         if($user){
             $user->password = Hash::make($request->password);
             $user->save();
-            return response()->json(["success"=>true,"message"=>"The password has been modified successfully"],204);
+            return response()->json(["success"=>true,"message"=>"The password has been modified successfully"],200);
         }else{
             return response()->json(["success"=>false,"message"=>"the user not found"],404);
         }
