@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api\login;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\Api\ForgetPasswordRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
@@ -12,11 +13,17 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 
 use App\Models\User;
-
+use App\Notifications\ForgetPasswordNotification;
 
 class ForgetPasswordController extends Controller
 {
-
+    public function forgetPassword(ForgetPasswordRequest $request){
+        return response()->json("xsaxasxsa",200);
+        $request->validated();
+        $user = User::where("email",$request->only("email"))->first();
+        $user->notify(new ForgetPasswordNotification());
+        return response()->json(["success"=>true,'message'=>"A code has been sent to the requested email"],200);
+    }
     public function forget(Request $request)
     {
 

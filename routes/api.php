@@ -54,7 +54,7 @@ Route::post('reset-password', [ForgetPasswordController::class, 'resetPassword']
 Route::middleware(["guest:sanctum"])->prefix("auth")->name("auth.")->group(function(){
     Route::post("login"          , [AuthLoginController::class          ,'login' ])->name("login");
     Route::post("register"       , [RegisterController::class           ,"create"])->name("register");
-    Route::post('forget-password', "App\Http\Controllers\Api\Auth\ForgetPassController@forgetPassword" )->name("forgetPassword");
+    Route::post('forget-password', [ForgetPasswordController::class,"forgetPassword"] )->name("forgetPassword");
     Route::post('verfy-otp'      , [VerfyOtpController::class, 'verifyOtp'])->name("verfyOtp");
     Route::post('reset-password' , [ResetPassword::class, 'ResetPassword'])->name("resetPassword");
 });
