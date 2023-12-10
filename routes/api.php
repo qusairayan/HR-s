@@ -21,7 +21,6 @@ use App\Http\Controllers\api\vacations\GetVacationController;
 use App\Http\Controllers\api\profile\ProfileController;
 use App\Http\Controllers\api\profile\showProfileImageController;
 use App\Http\Controllers\api\vacations\VacationController;
-
 Route::middleware(['api'])->group(function () {
 Route::post('/profile', [ProfileController::class, 'profile']); 
 });
@@ -46,9 +45,9 @@ Route::post('/profileIMG/{filename}', [showProfileImageController::class, 'showP
 
 Route::post("/register",[RegisterController::class,"create"])->name("register");
 Route::post("/delete",[RegisterController::class,"destroy"])->name("delete");
-Route::post('forget-password', [ForgetPasswordController::class, 'forget']);
-Route::post('forget-password-otp', [ForgetPasswordController::class, 'verifyOtp']);
-Route::post('reset-password', [ForgetPasswordController::class, 'resetPassword']);
+// Route::post('forget-password', [ForgetPasswordController::class, 'forget']);
+// Route::post('forget-password-otp', [ForgetPasswordController::class, 'verifyOtp']);
+// Route::post('reset-password', [ForgetPasswordController::class, 'resetPassword']);
 
 
 
