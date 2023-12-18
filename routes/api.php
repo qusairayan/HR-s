@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\login\LoginController;
 use App\Http\Controllers\api\login\ForgetPasswordController;
 use App\Http\Controllers\api\attendence\AttendanceController;
+use App\Http\Controllers\api\attendence\AttendenceDay;
 use App\Http\Controllers\api\attendence\attendenceRecord;
 use App\Http\Controllers\api\Attendence\AttendenceToday;
 use App\Http\Controllers\Api\Attendence\MakeAttendence;
@@ -62,7 +63,7 @@ Route::middleware(["auth:sanctum"])->group(function(){
     Route::get("auth/logout",[AuthLoginController::class,"logout"])->name("logout");
     Route::prefix("attendence")->name("attendence.")->group(function(){
         Route::post("create"    ,[MakeAttendence::class,"create"])->name("create");
-        Route::get("day",[AttendenceToday::class,"AttendenceToday"])->name("today");
+        Route::get("day",[AttendenceDay::class,"AttendenceToday"])->name("today");
     });
     Route::prefix("leave")->name("leave.")->group(function(){
         Route::get("/"    ,[LeaveController::class,"get"])->name("get");
