@@ -105,7 +105,7 @@ class EditPartTimes extends Component
             $to = Carbon::parse($this->to);
 
 
-            If($to <= $from ){
+            If($to < $from ){
                 $this->date_incorrect = true;
             return false;
 
