@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 class AttendenceDay extends Controller
 {
-    public function AttendenceToday(){
+    public function Attendenceday(){
         $user = Auth::user();
         $data = Attendence::where("user_id",$user->id)->where("date",date("Y-m-d"))->select("date","check_in","check_out")->first();
         if(!$data)return response()->json(["success"=>true,"data"=>0],200);
