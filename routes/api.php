@@ -6,8 +6,7 @@ use App\Http\Controllers\api\login\ForgetPasswordController;
 use App\Http\Controllers\api\attendence\AttendanceController;
 use App\Http\Controllers\api\attendence\AttendenceDay;
 use App\Http\Controllers\api\attendence\attendenceRecord;
-// use App\Http\Controllers\api\Attendence\AttendenceToday;
-use App\Http\Controllers\Api\Attendence\MakeAttendence;
+use App\Http\Controllers\Api\Attendence\createAttendence;
 use App\Http\Controllers\Api\Auth\ForgetPassController;
 use App\Http\Controllers\api\Auth\LoginController as AuthLoginController;
 use App\Http\Controllers\api\Auth\RegisterController;
@@ -62,7 +61,7 @@ Route::middleware(["guest:sanctum"])->prefix("auth")->name("auth.")->group(funct
 Route::middleware(["auth:sanctum"])->group(function(){
     Route::get("auth/logout",[AuthLoginController::class,"logout"])->name("logout");
     Route::prefix("attendence")->name("attendence.")->group(function(){
-        Route::post("create"    ,[MakeAttendence::class,"create"])->name("create");
+        Route::post("create"    ,[createAttendence::class,"create"])->name("create");
         Route::get("day",[AttendenceDay::class,"Attendenceday"])->name("today");
     });
     Route::prefix("leave")->name("leave.")->group(function(){

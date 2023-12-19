@@ -11,7 +11,7 @@ use App\Models\Schedules;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-class MakeAttendence extends Controller{
+class createAttendence extends Controller{
     private $day , $time ,$user;
     public function __construct(){
         $this->day = Carbon::today("Asia/Amman")->isoFormat("YYYY-MM-DD");
