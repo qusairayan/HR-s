@@ -36,7 +36,9 @@ class AttendanceController extends Controller
                     "check_in"=>$this->time
                 ]);
                 $timeDifference = $this->timeDifference("checkIn");
-                if($timeDifference > 5)$this->late($attendance,"checkIn",$timeDifference);
+                if($timeDifference){
+                    if($timeDifference > 5)$this->late($attendance,"checkIn",$timeDifference);
+                }
                 return response()->json(["success"=>true,"message"=>"checked-in successfully"],201);
             }else{
                 if(!$leave->checkout){//checkout leave then checkin attendance
@@ -51,6 +53,7 @@ class AttendanceController extends Controller
                         "check_in"=>$this->time
                     ]);
                     $timeDifference = $this->timeDifference("checkIn");
+                    if(!$timeDifference)$timeDifference =0;
                     Lateness::create([
                         "user_id"=>$this->user->id,
                         "attendence_id"=>$attendance->id,
@@ -71,8 +74,10 @@ class AttendanceController extends Controller
             $attendance->check_out = $this->time;
             $attendance->save();
             $timeDifference = $this->timeDifference("checkOut");
-            if($timeDifference > 6)$this->late($attendance,"checkOut",$timeDifference);
-            elseif($timeDifference <= 30)$this->overTime($attendance);
+            if($timeDifference){
+                if($timeDifference > 6)$this->late($attendance,"checkOut",$timeDifference);
+                elseif($timeDifference <= 30)$this->overTime($attendance);
+            }
             return response()->json(["success"=>true,"message"=>"checked-out successfully"],201);
         }
     }
@@ -82,7 +87,7 @@ class AttendanceController extends Controller
         if($scheduale){
             if($on == "checkIn")return $time->diffInMinutes($scheduale->from);
             else return $time->diffInMinutes($scheduale->to);
-        }
+        }else return false;
     }
     private function late($attendece , $on , $timeDifference){
         Lateness::create([
