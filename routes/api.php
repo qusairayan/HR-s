@@ -61,7 +61,7 @@ Route::middleware(["guest:sanctum"])->prefix("auth")->name("auth.")->group(funct
 Route::middleware(["auth:sanctum"])->group(function(){
     Route::get("auth/logout",[AuthLoginController::class,"logout"])->name("logout");
     Route::prefix("attendence")->name("attendence.")->group(function(){
-        Route::post("create"    ,[createAttendence::class,"create"])->name("create");
+        Route::post("create"    ,[AttendanceController::class,"create"])->name("create");
         Route::get("day",[AttendenceDay::class,"Attendenceday"])->name("today");
     });
     Route::prefix("leave")->name("leave.")->group(function(){
