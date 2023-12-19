@@ -25,7 +25,7 @@ class AttendanceController extends Controller
         $this->user = Auth::user();
         $attendance = Attendence::where("user_id",$this->user->id)->where("date",date("Y-m-d"))->first();
         $leave = Leave::where("user_id",$this->user->id)->where("date",date("Y-m-d"))->where('status', '=', 1)->first();
-        if($request->type === 0){ //checkin
+        if($request->type == 0){ //checkin
             if($attendance)return response()->json(["success"=>false,"message"=>"You have already checked-in for today"],400);
             if(!$leave || !$leave->checkin){//checkin
                 $attendance = 
