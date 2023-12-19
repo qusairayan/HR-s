@@ -26,7 +26,7 @@ class AttendanceController extends Controller
         $attendance = Attendence::where("user_id",$this->user->id)->where("date",date("Y-m-d"))->first();
         $leave = Leave::where("user_id",$this->user->id)->where("date",date("Y-m-d"))->where('status', '=', 1)->first();
         if($request->type === 0){ //checkin
-            if($attendance)return response()->json(["success"=>false,"message"=>"You have registered your attendance for today"],400);
+            if($attendance)return response()->json(["success"=>false,"message"=>"You have already checked-in for today"],400);
             if(!$leave || !$leave->checkin){//checkin
                 $attendance = 
                 Attendence::create([
@@ -37,7 +37,7 @@ class AttendanceController extends Controller
                 ]);
                 $timeDifference = $this->timeDifference("checkIn");
                 if($timeDifference > 5)$this->late($attendance,"checkIn",$timeDifference);
-                return response()->json(["success"=>true,"message"=>"attendance checkin successfully"],201);
+                return response()->json(["success"=>true,"message"=>"checked-in successfully"],201);
             }else{
                 if(!$leave->checkout){//checkout leave then checkin attendance
                     $leave->checkout = $this->time;
@@ -58,11 +58,11 @@ class AttendanceController extends Controller
                         "on"=>"checkIn",
                         "detailes"=>"leave on time ".$this->time->format("Y-m-d H:i:s")
                     ]);
-                    return response()->json(["success"=>true,"message"=>"attendance checkin successfully"],201);
+                    return response()->json(["success"=>true,"message"=>"checked-in successfully"],201);
                 }
             }
         }else{//checkout
-            if(!$attendance || $attendance?->check_out)return response()->json(["success"=>false,"message"=>"You have registered your attendance for today"],400);
+            if(!$attendance || $attendance?->check_out)return response()->json(["success"=>false,"message"=>"You have already checked-out for today"],400);
             if($leave && !$leave->checkin )return response()->json(["success"=>false,"message"=>"You cannot check out before leave"],400);
             if($leave && !$leave->checkout){
                 $status = new LeaveController();
@@ -73,7 +73,7 @@ class AttendanceController extends Controller
             $timeDifference = $this->timeDifference("checkOut");
             if($timeDifference > 6)$this->late($attendance,"checkOut",$timeDifference);
             elseif($timeDifference <= 30)$this->overTime($attendance);
-            return response()->json(["success"=>true,"message"=>"attendance checkout successfully"],201);
+            return response()->json(["success"=>true,"message"=>"checked-out successfully"],201);
         }
     }
     private function timeDifference($on , $time = NULL) :string {
