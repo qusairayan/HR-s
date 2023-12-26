@@ -162,7 +162,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/', Permissions::class)->name('permissions'); //->middleware('permission:viewPermissions')
         Route::get('/{user}/edit', PermissionEdit::class)->name('permissions.edit'); //->middleware('permission:editPermissions')
         Route::get('/roles', PermissionRoles::class)->name('permissions.roles'); //->middleware('permission:editPermissions')
-        Route::get('/roles/{role}/edit', PermissionRolesEdit::class)->name('permissions.role.edit'); //->middleware('permission:editPermissions')
+        Route::get('/roles/{role}/edit', PermissionRolesEdit::class);//->name('permissions.role.edit'); //->middleware('permission:editPermissions')
 
     });
 
