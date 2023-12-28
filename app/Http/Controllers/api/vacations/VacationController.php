@@ -33,7 +33,7 @@ class VacationController extends Controller
         }
         $request->merge(['user_id' => $user->id]);
         Vacation::create($request->all());
-        return response()->json(["success",true,"message","Your leave request has been completed successfully"],200);
+        return response()->json(["success"=>true,"message"=>"Your leave request has been completed successfully"],201);
     }
     public function edit(EditVacationRequest $request,$id)
     {

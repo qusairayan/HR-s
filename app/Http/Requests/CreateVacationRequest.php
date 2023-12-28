@@ -10,6 +10,11 @@ class CreateVacationRequest extends FormRequest{
             'date'=>"required|date|date_format:Y-m-d|after:today",
             "type"=>"required|boolean",
             "period"=>"required|integer|digits_between:1,2",
+            "image"=>"image",
         ];
+    }
+    public function messages(): array
+    {
+        return  ["image"=>"the attached file should be an image"];
     }
 }
