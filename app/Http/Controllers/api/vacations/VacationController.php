@@ -77,6 +77,9 @@ class VacationController extends Controller
     {
         $user = Auth::user();
         $vacation = Vacation::where('user_id', $user->id)->whereYear('date', '=', date('Y'))->get();
+        foreach ($vacation as $item) {
+            $item->asset == NULL ? $item->asset ="": $item->asset;   
+        }
         return response()->json(["success"=>true,"data"=>$vacation],200);
     }
 }
