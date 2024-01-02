@@ -17,9 +17,9 @@ class VacationController extends Controller
         $request->validated();
         $user = Auth::user();
         if($request->type){
-            if($user->annual_vacation < $request->period)return response()->json(["success"=>false,"message"=>"You do not have enough vacation leave"],400);
+            if($user->annual_vacation < $request->period)return response()->json(["success"=>false,"message"=>"You do not have enough vacations"],400);
         }else{
-            if($user->sick_vacation < $request->period)return response()->json(["success"=>false,"message"=>"You do not have enough vacation leave"],400);
+            if($user->sick_vacation < $request->period)return response()->json(["success"=>false,"message"=>"You do not have enough vacations"],400);
         }
         $period = Carbon::createFromFormat("Y-m-d",$request->date,"Asia/Amman");
         $period->addDays($request->period);
@@ -33,7 +33,7 @@ class VacationController extends Controller
         }
         $request->merge(['user_id' => $user->id]);
         Vacation::create($request->all());
-        return response()->json(["success"=>true,"message"=>"Your leave request has been completed successfully"],201);
+        return response()->json(["success"=>true,"message"=>"Your vacation has been completed successfully"],201);
     }
     public function edit(EditVacationRequest $request,$id)
     {
@@ -68,9 +68,15 @@ class VacationController extends Controller
                 Storage::delete($path);
             }
             $vacation->delete();
-            return response()->json(["success"=>true,"message"=>"deleted successfulf"],200);
+            return response()->json(["success"=>true,"message"=>"vacation deleted successfuly"],200);
         }else{
-            return response()->json(["success"=>false,"message"=>"deleted failed"],200);
+            return response()->json(["success"=>false,"message"=>"vacation deleted failed"],200);
         }
+    }
+    public function get()
+    {
+        $user = Auth::user();
+        $vacation = Vacation::where('user_id', $user->id)->whereYear('date', '=', date('Y'))->get();
+        return response()->json(["success"=>true,"data"=>$vacation],200);
     }
 }
