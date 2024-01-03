@@ -22,6 +22,7 @@ class LoginController extends Controller{
                 if ($user->image)$user->image = 'https://'.request()->getHttpHost().'/storage/profile/'.$user->image;
                 $user->token = $user->createToken($request->userAgent())->plainTextToken;
                 $user = collect($user)->map(function ($value, $key) {
+                    if($key == "sick_vacation"|| $key == "annual_vacation")$value =0;
                     return is_null($value) ? '' : $value;
                 })->toArray();
                 return response()->json(["success"=>true,"user"=>$user],200);
