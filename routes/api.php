@@ -75,7 +75,7 @@ Route::middleware(["auth:sanctum"])->group(function(){
     });
     Route::prefix("vacation")->name("vacation.")->group(function(){
         // Route::get("/"    ,[LeaveController::class,"get"])->name("get");
-        Route::get("/"    ,[VacationController::class,"get"])->name("get");
+        Route::post("/"    ,[VacationController::class,"get"])->name("get");
         Route::post("create"    ,[VacationController::class,"create"])->name("create");
         Route::post("edit/{id}"    ,[VacationController::class,"edit"])->name("edit");
         Route::delete("delete/{id}"    ,[VacationController::class,"delete"])->name("delete");
