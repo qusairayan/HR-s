@@ -52,7 +52,7 @@ class VacationController extends Controller
             if($vacation->status == 0){
                 $vacation->update($request->all());
             }
-            return response()->json(["success"=>false,"message"=>"updated successfuly"],200);
+            return response()->json(["success"=>true,"message"=>"updated successfuly"],200);
         }else{
             return response()->json(["success"=>false,"message"=>"there are not vacation"],200);
         }

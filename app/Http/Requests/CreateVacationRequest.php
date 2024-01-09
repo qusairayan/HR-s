@@ -7,9 +7,9 @@ class CreateVacationRequest extends FormRequest{
     }
     public function rules(): array{
         return [
-            'date'=>"required|date|date_format:Y-m-d|after:today",
-            "type"=>"required|boolean",
-            "period"=>"required|integer|digits_between:1,2",
+            'date'=>"date|date_format:Y-m-d|after:today",
+            "type"=>"boolean",
+            "period"=>"integer|digits_between:1,2",
             "image"=>"image",
         ];
     }
