@@ -9,7 +9,7 @@ class Leave extends Model
 {
     use HasFactory;
     protected $table = 'leaves';
-    protected $fillable =["time","date","period","user_id"];
+    protected $fillable =["time","date","period","user_id","reason"];
 
 
 }
