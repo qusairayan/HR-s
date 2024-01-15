@@ -27,7 +27,7 @@ class CreateLeaveRequest extends FormRequest
             "time"=>"required|date_format:H:i",
             "date"=>"required|date|date_format:Y-m-d",
             "period"=>"required|date_format:H:i",
-            "reason"=>"string|max:255|min3"
+            "reason"=>"string|max:255|min:3"
         ];
     }
 }
