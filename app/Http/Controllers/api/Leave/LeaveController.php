@@ -78,6 +78,9 @@ class LeaveController extends Controller{
     public function get(){
         $this->user  = Auth::user();
         $leaves = Leave::where("user_id",$this->user->id)->where("date","LIKE",date("Y-m")."-%")->get();
+        foreach ($leaves as $key => $value) {
+            if($value->reason == "null")$value->reason = "";
+        }
         return response()->json(["success"=>true,"data"=>$leaves],200);
     }
     public function getAll(){
