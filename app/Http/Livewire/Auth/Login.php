@@ -24,10 +24,10 @@ class Login extends Component
         if (auth()->user()) {
             return redirect()->intended('/dashboard');
         }
-        $this->fill([
-            'username' => 'qusai',
-            'password' => 'test1234',
-        ]);
+        // $this->fill([
+        //     'username' => 'qusai',
+        //     'password' => 'test1234',
+        // ]);
     }
 
     public function login()
