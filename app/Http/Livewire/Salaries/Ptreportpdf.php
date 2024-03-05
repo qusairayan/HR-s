@@ -100,9 +100,8 @@ class Ptreportpdf extends Component{
         // get parttime
         $this->partTime = PartTime::where('user_id', $this->user['id'])->where('from',">=",$from)->where("to","<=",$to)->select("part_times.*","from as date")->get()->toArray();
         $this->pending = PartTime::where('user_id', $this->user['id'])->where('from',">=",$from)->where("status",0)->select("part_times.*","from as date")->get()->toArray();
-        $this->checks = DB::connection('LYONDB')->table($this->checkComp)->where('Name_To','LIKE',$this->user["name"])->whereBetween('Date',[$from,$to])->orderBy("date")->select("$this->checkComp.*","Date as date")->get()->toArray();
+        $this->checks = DB::connection('LYONDB')->table($this->checkComp)->where('Name_To','LIKE' ,"%".$this->user["name"]."%")->whereBetween('Date',[$from,$to])->orderBy("date")->select("$this->checkComp.*","Date as date")->get()->toArray();
         $this->dedction = Deductions::leftJoin("deduction_allowances_types","deductions.type","deduction_allowances_types.id")->where("user_id",$this->user['id'])->whereBetween('Date',[$from,$to])->orderBy("date")->get()->toArray();
-        // dd($this->dedction);
         $this->allownce = Allownce::where("user_id",$this->user['id'])->whereBetween('Date',[$from,$to])->orderBy("date")->get()->toArray();
     }
 }   
