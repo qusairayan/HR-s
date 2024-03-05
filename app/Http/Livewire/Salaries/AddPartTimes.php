@@ -132,12 +132,12 @@ class AddPartTimes extends Component
         $from = Carbon::parse($this->from);
         $to = Carbon::parse($this->to);
 
-        // if ($to && $to <= $from) {
-        //     $this->date_incorrect = true;
-        //     return false;
-        // } else {
-        //     $this->date_incorrect = false;
-        // }
+        if ($to && $to < $from) {
+            $this->date_incorrect = true;
+            return false;
+        } else {
+            $this->date_incorrect = false;
+        }
 
 
         $check = PartTime::where('user_id', '=', $this->employee)
