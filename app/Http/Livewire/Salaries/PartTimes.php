@@ -29,7 +29,7 @@ class PartTimes extends Component
     public $showSavedAlert = false;
     public $showDemoNotification = false;
 
-    public $paginator = 10;
+    public $paginator = 50;
     public $search = '';
 
     public $company = '';
