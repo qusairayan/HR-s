@@ -114,9 +114,8 @@ class AddPartTimes extends Component
             } else if ($this->period == 'weekly') {
                 $this->total =  round($this->salary / 7 * $daysDifference, 1);
             } else if ($this->period == 'monthly') {
-
-                if($daysDifference == ($countOfDays -1))$this->total =$this->salary;
-                $this->total = round($this->salary / 30 * $daysDifference , 1);
+                if(($daysDifference +1) == $countOfDays)$this->total =$this->salary;
+                else $this->total = round($this->salary / 30 * $daysDifference , 1);
             }
         }
     }
