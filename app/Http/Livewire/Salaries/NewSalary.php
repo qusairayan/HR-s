@@ -43,7 +43,8 @@ class NewSalary extends Component{
         }elseif($startDate->format("Y-m") === $this->date ){
             $countDays  = 31;
             if(explode("-",$this->date)[1] == 2){
-                $countDays  = date("t");
+                $countDays  = $startDate->format("t");
+                $countDays++;
             }
             $countDays = $countDays - $startDate->format("d");
             $salaryPerDay = $this->userSalary /30;
