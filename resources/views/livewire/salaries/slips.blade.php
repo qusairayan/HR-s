@@ -181,16 +181,16 @@
     <table class="table table-hover">
         <thead>
             <tr>
-                <th class="border-gray-200">#</th>
+                <th class="border-gray-200">NO</th>
                 <th class="border-gray-200">name</th>
                 <th class="border-gray-200">month</th>
                 <th class="border-gray-200">salary</th>
                 <th class="border-gray-200">action</th>
             </tr>
             <tbody>
-                @php($i=0)
+                @php($i=count($payrolls)+1)
                 @foreach($payrolls as $item)
-                @php($i++)
+                @php($i--)
                 <tr>
                     <td class="border-0 fw-bold"><span class="fw-normal">{{$i}}</span></td>
                     <td class="border-0 fw-bold"><span class="fw-normal">{{$item["name"]}}</span></td>
