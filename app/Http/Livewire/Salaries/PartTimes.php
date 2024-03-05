@@ -83,7 +83,6 @@ public function report(){
                 $employeesQuery ->where('department_id','=',$this->department);
                 }
         $employees= $employeesQuery ->get();
-
         
 
         $partimeQuery = PartTime::select(
@@ -120,12 +119,12 @@ public function report(){
         }
 
         $partimeQuery->orderBy('part_times.status', 'asc');
+        $partimeQuery->orderBy('part_times.from', 'desc');
 
 
 
 
         $partime = $partimeQuery->paginate( $this->paginator );
-        
 
         return view('livewire.salaries.partTime', compact('companies', 'departments','employees','partime'));
     }
