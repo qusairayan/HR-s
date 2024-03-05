@@ -23,6 +23,7 @@ class Ptreportpdf extends Component{
     public $checkComp;
     public $image;
     public $reBalance;
+    public $pending;
     public function generatePDF($id, $from, $to) {
         $from = $from."-01";
         $to = $to."-31";
@@ -66,7 +67,8 @@ class Ptreportpdf extends Component{
             'margin_top' => 10, 
             'margin_bottom' => 10, 
         ]);
-        $mpdf->WriteHTML(view('livewire.salaries.partTimeReport', ["data"=>$data, "reBalance" =>$this->reBalance,"user"=>$this->user,'partTime'=>$this->partTime,'from'=>$from,'to'=>$to]));
+
+        $mpdf->WriteHTML(view('livewire.salaries.partTimeReport',  ["pending"=>$this->pending, "data"=>$data, "reBalance" =>$this->reBalance,"user"=>$this->user,'partTime'=>$this->partTime,'from'=>$from,'to'=>$to]));
         $mpdf->Output('document.pdf', 'I');
     }
     private function reBalance($from,$to){
@@ -97,6 +99,7 @@ class Ptreportpdf extends Component{
         }
         // get parttime
         $this->partTime = PartTime::where('user_id', $this->user['id'])->where('from',">=",$from)->where("to","<=",$to)->select("part_times.*","from as date")->get()->toArray();
+        $this->pending = PartTime::where('user_id', $this->user['id'])->where('from',">=",$from)->where("status",0)->select("part_times.*","from as date")->get()->toArray();
         $this->checks = DB::connection('LYONDB')->table($this->checkComp)->where('Name_To','LIKE',$this->user["name"])->whereBetween('Date',[$from,$to])->orderBy("date")->select("$this->checkComp.*","Date as date")->get()->toArray();
         $this->dedction = Deductions::leftJoin("deduction_allowances_types","deductions.type","deduction_allowances_types.id")->where("user_id",$this->user['id'])->whereBetween('Date',[$from,$to])->orderBy("date")->get()->toArray();
         // dd($this->dedction);
