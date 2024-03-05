@@ -105,7 +105,9 @@ class AddPartTimes extends Component
             }
 
             $daysDifference = $from->diffInDays($to);
-
+            $year = "20".$from->format("y");
+            $month =$from->format("m");
+            $countOfDays = cal_days_in_month(CAL_GREGORIAN,$month,$year);
 
             if ($this->period == 'daily') {
                 $this->total =  round($this->salary * ($daysDifference + 1), 1)  ;
@@ -113,6 +115,7 @@ class AddPartTimes extends Component
                 $this->total =  round($this->salary / 7 * $daysDifference, 1);
             } else if ($this->period == 'monthly') {
 
+                if($daysDifference == ($countOfDays -1))$this->total =$this->salary;
                 $this->total = round($this->salary / 30 * $daysDifference , 1);
             }
         }
@@ -125,7 +128,6 @@ class AddPartTimes extends Component
         $this->validate([
             'employee' => 'required|exists:users,id',
             'from' => 'required',
-
         ]);
 
         $from = Carbon::parse($this->from);
