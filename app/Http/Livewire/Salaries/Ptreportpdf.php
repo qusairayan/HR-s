@@ -75,7 +75,6 @@ class Ptreportpdf extends Component{
         $sum = PartTime::where('user_id', $this->user['id'])->where('from',"<",$from)->sum("amount");
         $sum += Allownce::where("user_id",$this->user['id'])->where('Date',"<",$from)->sum("amount");
         $sum -= Deductions::where("user_id",$this->user['id'])->where('Date',"<",$from)->sum("amount");
-        $sum += DB::connection('LYONDB')->table($this->checkComp)->where('Name_To','LIKE',$this->user["name"])->where('Date',"<",$from)->sum("Value");
         return $sum;
     }
     private function getDate($id,$from,$to){
