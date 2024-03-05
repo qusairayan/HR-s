@@ -206,7 +206,7 @@
                 </th>
                 <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 14%">
                     {{-- {{ $total }} --}}
-                    {{ $totalDebit - $totalCredit }}
+                    {{  $totalDebit - $totalCredit + $reBalance}}
                 </th>
                 <th style="text-align: center; background-color:#03415F;color: #fff; font-size: 12px;width: 14%">
                 </th>
