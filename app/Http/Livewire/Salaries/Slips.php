@@ -70,8 +70,8 @@ public function fullTimeReport(){
         $monthlyPayrollQuery= MonthlyPayroll::
         leftJoin("users","monthly_payrolls.user_id","users.id")
         ->leftJoin("salary_deposits","monthly_payrolls.id","salary_deposits.salary_id")
-        ->select("monthly_payrolls.*","users.name as name","salary_deposits.id as salaryDepositId");
-   
+        ->select("monthly_payrolls.*","users.name as name","salary_deposits.id as salaryDepositId")
+        ->orderby("month","desc");
         $companies = Company::all();
 
         $departmentsQuery = Department::select('*');
@@ -96,7 +96,6 @@ public function fullTimeReport(){
                 }
                 $payrolls = $monthlyPayrollQuery->get()->toArray();
         
-
         
 
         return view('livewire.salaries.slips', compact('companies', 'departments','employees',"payrolls"));
