@@ -14,7 +14,7 @@
             </thead>
             <tbody>
                 
-                @foreach ($users as $item)
+                @foreach ($activeUser as $item)
                     <tr>
                         <td>{{$item->id}}</td>
                         <td>{{$item->name}}</td>
