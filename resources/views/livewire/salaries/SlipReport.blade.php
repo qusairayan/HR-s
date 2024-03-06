@@ -138,7 +138,6 @@
         <div class="row">
             <div class="column" style="width:20%">
                 <img src="/storage/company/{{ $user['image'] }}" height="70" width="160" />
-
             </div>
             <div class="column" style="width:70%">
                 <p style="font-size:18px;text-align:center"><b>{{ $user["company"] }}</b></p>

@@ -24,7 +24,8 @@
         </div>
         {{-- new salary --}}
         <div class="btn-toolbar mb-2 mb-md-0">
-            <a href="{{ route('payrolls.newSalary') }}" class="btn btn-sm btn-gray-800 d-inline-flex align-items-center">
+            <a href="{{ route('payrolls.newSalary') }}"
+                class="btn btn-sm btn-gray-800 d-inline-flex align-items-center">
                 <svg class="icon icon-xs me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -41,12 +42,8 @@
         {{-- new salary --}}
     </div>
     <div class="table-settings mb-4">
-
-
-
         <div class="row">
-
-            <div class="col-md-3 mb-3">
+            <div class="col-md-4 mb-3">
                 <div>
                     <label for="comapny">Company</label>
                     <select class="form-select mb-0" id="company" aria-label="company select example"
@@ -66,12 +63,7 @@
 
                 </div>
             </div>
-
-
-
-
-            <div class="col-md-3 mb-3">
-
+            <div class="col-md-4 mb-3">
                 <div>
                     <label for="department">Department</label>
                     <select class="form-select mb-0" id="department" aria-label="department select example"
@@ -82,21 +74,13 @@
                             <option value="{{ $dep->id }}">
                                 {{ $dep->name }} </option>
                         @endforeach
-
-
                     </select>
-
                     @error('department')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
             </div>
-
-
-
-
             <div class="col-md-4 mb-4">
-
                 <div>
                     <label for="employee">Employee</label>
                     <select class="form-select mb-0" id="employee" aria-label="employee select example"
@@ -107,110 +91,118 @@
                             <option value="{{ $emp->id }}">
                                 {{ $emp->name }} </option>
                         @endforeach
-
-
                     </select>
-
                     @error('employee')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="full-time-report">
+        <h3>Full Time Report</h3>
+        <div class="row">
+            <div class="col-md-4 col-12"><input wire:model="from" class="form-control datepicker-input" type="month">
+            </div>
+            <div class="col-md-4 col-12"><input wire:model="to" class="form-control datepicker-input" type="month">
+            </div>
+            <div class="col-md-4 col-12"><button class="btn btn-success" style="width: 100%;" type="button"
+                    wire:click="fullTimeReport()">View Full Time Report</button></div>
+        </div>
+    </div>
 
 
-            <div class="col-md-4 mb-3">
 
-                <div>
-                    <label for="date">Date</label>
-                    <input  class="form-control datepicker-input" type="month" id="date"
-                        placeholder="Select Month and Year" wire:model="date">
+    <div class="row align-items-center justify-content-between mt-5">
+        <div class="col col-md-6 col-lg-3 col-xl-4">
+            <div class="input-group me-2 me-lg-3 fmxw-400">
+                <span class="input-group-text">
+                    <svg class="icon icon-xs" x-description="Heroicon name: solid/search"
+                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <path fill-rule="evenodd"
+                            d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                            clip-rule="evenodd"></path>
+                    </svg>
+                </span>
+                <input wire:model="search" type="text" class="form-control" placeholder="Search Employee">
 
-
-                    @error('date')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
+            </div>
+        </div>
+        <div class="col-4 col-md-2 col-xl-1 ps-md-0 text-end">
+            <div class="dropdown">
+                <button class="btn btn-link text-dark dropdown-toggle dropdown-toggle-split m-0 p-1"
+                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <svg class="icon icon-sm" fill="currentColor" viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                            d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z"
+                            clip-rule="evenodd"></path>
+                    </svg>
+                    <span class="visually-hidden">Toggle Dropdown</span>
+                </button>
+                <div class="dropdown-menu dropdown-menu-xs dropdown-menu-end pb-0">
+                    <span class="small ps-3 fw-bold text-dark">Show</span>
+                    <a class="dropdown-item d-flex align-items-center fw-bold" href="#">10 <svg
+                            class="icon icon-xxs ms-auto" fill="currentColor" viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                clip-rule="evenodd"></path>
+                        </svg></a>
+                    <a class="dropdown-item fw-bold" href="#">20</a>
+                    <a class="dropdown-item fw-bold rounded-bottom" href="#">30</a>
                 </div>
             </div>
-
-
-
-
-            <div class="col-md-4 d-flex align-items-center justify-content-center">
-
-
-                <button class="btn btn-success" style="width: 100%; margin:0 5px;" type="button" wire:click="report()">View  Slip</button>
-                
-
-            </div>
-
-
         </div>
-
-
-
-
-
-
-
-
     </div>
 
 
 
-
-
-
-
-
-
-<div class="full-time-report">
-    <h3>Full Time Report</h3>
-    <div class="row">
-        <div class="col-md-4 col-12"><input wire:model="from" class="form-control datepicker-input" type="month"></div>
-        <div class="col-md-4 col-12"><input wire:model="to" class="form-control datepicker-input" type="month"></div>
-        <div class="col-md-4 col-12"><button class="btn btn-success" style="width: 100%;" type="button" wire:click="fullTimeReport()">View  Full Time Report</button></div>
-        
-    </div>
-    
-</div>
-
-
-
-
-<div class="card card-body border-0 shadow table-wrapper table-responsive mt-5">
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th class="border-gray-200">NO</th>
-                <th class="border-gray-200">name</th>
-                <th class="border-gray-200">month</th>
-                <th class="border-gray-200">salary</th>
-                <th class="border-gray-200">action</th>
-            </tr>
-            <tbody>
-                @php($i=count($payrolls)+1)
-                @foreach($payrolls as $item)
-                @php($i--)
+    <div class="card card-body border-0 shadow table-wrapper table-responsive mt-5">
+        <table class="table table-hover">
+            <thead>
                 <tr>
-                    <td class="border-0 fw-bold"><span class="fw-normal">{{$i}}</span></td>
-                    <td class="border-0 fw-bold"><span class="fw-normal">{{$item["name"]}}</span></td>
-                    <td class="border-0 fw-bold"><span class="fw-normal">{{$item["month"]}}</span></td>
-                    <td class="border-0 fw-bold"><span class="fw-normal">{{$item["salary"]}}</span></td>
-                   @if ($item["salaryDepositId"])
-                   <td class="border-0 fw-bold"><span class="fw-normal"><a href="{{route ("payrolls.depositSalarypdf",["id"=>$item["salaryDepositId"]])}}" class="btn btn-info">View Salary Pdf</a></span></td>   
-                   @else
-                   <td class="border-0 fw-bold"><span class="fw-normal"><a href="{{route ("payrolls.depositsalary",["id_salary"=>$item["id"],"id"=> $item["user_id"],"salary"=>$item["salary"]])}}" class="btn btn-primary">Deposit Salary</a></span></td>   
-                   @endif                    
+                    <th class="border-gray-200">NO</th>
+                    <th class="border-gray-200">name</th>
+                    <th class="border-gray-200">month</th>
+                    <th class="border-gray-200">salary</th>
+                    <th class="border-gray-200">action</th>
+                    <th class="border-gray-200">action</th>
                 </tr>
+            <tbody>
+                @php($i = count($payrolls) + 1)
+                @foreach ($payrolls as $item)
+                    @php($i--)
+                    <tr>
+                        <td class="border-0 fw-bold"><span class="fw-normal">{{ $i }}</span></td>
+                        <td class="border-0 fw-bold"><span class="fw-normal">{{ $item['name'] }}</span></td>
+                        <td class="border-0 fw-bold"><span class="fw-normal">{{ $item['month'] }}</span></td>
+                        <td class="border-0 fw-bold"><span class="fw-normal">{{ $item['salary'] }}</span></td>
+                        @if ($item['salaryDepositId'])
+                            <td class="border-0 fw-bold"><span class="fw-normal"><a
+                                        href="{{ route('payrolls.depositSalarypdf', ['id' => $item['salaryDepositId']]) }}"
+                                        class="btn btn-info">View Salary Pdf</a></span></td>
+                        @else
+                            <td class="border-0 fw-bold"><span class="fw-normal"><a
+                                        href="{{ route('payrolls.depositsalary', ['id_salary' => $item['id'], 'id' => $item['user_id'], 'salary' => $item['salary']]) }}"
+                                        class="btn btn-primary">Deposit Salary</a></span></td>
+                        @endif
+                        <td class="border-0 fw-bold">
+                            <span class="fw-normal">
+                                <button class="btn btn-success" style="width: 100%; margin:0 5px;" type="button"
+                                    wire:click="report({{ $item['id'] }})">View Slip</button>
+                            </span>
+                        </td>
+                    </tr>
                 @endforeach
             </tbody>
-        </thead>
-    </table>
-</div>
+            </thead>
+        </table>
+    </div>
 </div>
 <script>
     const dss = new Date();
-    let month = dss.getMonth()+1;
+    let month = dss.getMonth() + 1;
     let year = dss.getFullYear();
     document.getElementById("date").setAttribute("max", `${year}-${month}`);
 </script>
