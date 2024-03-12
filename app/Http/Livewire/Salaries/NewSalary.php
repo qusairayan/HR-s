@@ -25,9 +25,9 @@ class NewSalary extends Component
     public function add()
     {
         $this->userSalary = Promotion::where("user_id", $this->user)->where("from", "<=", $this->date . "-01")->orderBy("from", "desc")->pluck("salary")->first();
-        $this->userDeduction = Deductions::where("user_id", $this->user)->where("date", "LIKE", $this->date . '-%')->sum("amount");
         $this->userAllownces = Allownce::where("user_id", $this->user)->where("date", "LIKE", $this->date . '-%')->sum("amount");
         $socilaSecurety = SocialSecurity::where("user_id", $this->user)->where("date", "LIKE", $this->date . '-%')->pluck("onEmployee")->first() ?? 0;
+        $this->userDeduction = Deductions::where("user_id", $this->user)->where("date", "LIKE", $this->date . '-%')->sum("amount") + $socilaSecurety;
         $user = User::where("id", $this->user)->select("salary", "start_date", "unemployment_date")->get()->toArray();
         if ($user[0]["unemployment_date"]) $unemployment = Carbon::parse($user[0]["unemployment_date"]);
         else $unemployment = null;
@@ -58,7 +58,7 @@ class NewSalary extends Component
             $this->userSalary = $salaryPerDay * $countDays;
             $this->userSalary = number_format($this->userSalary, 2, ".", " ");
         }
-        $this->netSalary = $this->userSalary - $this->userDeduction + $this->userAllownces - $socilaSecurety;
+        $this->netSalary = $this->userSalary - $this->userDeduction + $this->userAllownces;
     }
     public function approve()
     {

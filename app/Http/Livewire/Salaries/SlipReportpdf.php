@@ -46,10 +46,8 @@ class SlipReportpdf extends Component
         $promotion = Promotion::where("user_id", $this->user["id"])->where('from', '<=', $date . "-01")->where(function ($query) use ($date) {
             $query->where('to', '>=', $date . "-01")->orWhereNull("to");
         })->pluck("salary")->first();
-        // if($promotion)if($promotion)$this->user["salary"] = $promotion;
         $this->user["salary"] = $monthly_payroll ?? $promotion ?? $this->user["salary"];
-        $social = SocialSecurity::where("date", "Like", date("Y-m") . "-%")->where("user_id", $id)->first();
-        if ($social) $social = $this->user["salary"] * 0.075;
+        $social = SocialSecurity::where("date", "Like", date($date) . "-%")->where("user_id", $id)->pluck("onEmployee")->first();
         $this->runPdf('livewire.salaries.SlipReport', ["social" => $social, "user" => $this->user, "allownce" => $allownce, "deduction" => $deduction, 'checks' => $checks, 'date' => $date, "deductionTypes" => $deductionTypes, "allownceTypes" => $allownceTypes]);
     }
     public function FullTimegeneratePDF($id, $from, $to)
