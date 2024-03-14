@@ -175,28 +175,28 @@
                 @foreach ($payrolls as $item)
                     @php($i--)
                     <tr>
-                        <td class="border-0 fw-bold"><span class="fw-normal">{{ $i }}</span></td>
-                        <td class="border-0 fw-bold"><span class="fw-normal">{{ $item['name'] }}</span></td>
-                        <td class="border-0 fw-bold"><span class="fw-normal">{{ $item['month'] }}</span></td>
-                        <td class="border-0 fw-bold"><span class="fw-normal">{{ $item['salary'] }}</span></td>
+                        <td style="width: 15%" class="border-0 fw-bold"><span class="fw-normal">{{ $i }}</span></td>
+                        <td style="width: 30%" class="border-0 fw-bold"><span class="fw-normal">{{ $item['name'] }}</span></td>
+                        <td style="width: 15%" class="border-0 fw-bold"><span class="fw-normal">{{ $item['month'] }}</span></td>
+                        <td style="width: 15%" class="border-0 fw-bold"><span class="fw-normal">{{ $item['salary'] }}</span></td>
                             @if ($item['salaryDepositId'])
-                                <td class="border-0 fw-bold"><span class="fw-normal"><a
+                                <td style="width: 8%" class="border-0 fw-bold"><span class="fw-normal"><a
                                             href="{{ route('payrolls.depositSalarypdf', ['id' => $item['salaryDepositId']]) }}"
                                             class="btn btn-info">View Salary Pdf</a></span></td>
                             @else
-                                <td class="border-0 fw-bold"><span class="fw-normal"><a
+                                <td style="width: 8%" class="border-0 fw-bold"><span class="fw-normal"><a
                                             href="{{ route('payrolls.depositsalary', ['id_salary' => $item['id'], 'id' => $item['user_id'], 'salary' => $item['salary']]) }}"
                                             class="btn btn-primary">Deposit Salary</a></span></td>
                             @endif
-                            <td class="border-0 fw-bold">
+                            <td style="width: 8%" class="border-0 fw-bold">
                                 <span class="fw-normal">
-                                    <button class="btn btn-success" style="width: 100%; margin:0 5px;" type="button"
+                                    <button class="btn btn-success" class="col-1" type="button"
                                         wire:click="report({{ $item['id'] }})">View Slip</button>
                                 </span>
                             </td>
-                            <td class="border-0 fw-bold">
+                            <td style="width: 8%" class="border-0 fw-bold">
                                 <span class="fw-normal">
-                                    <button class="btn btn-danger" style="width: 100%; margin:0 5px;" type="button"
+                                    <button class="btn btn-danger"  type="button"
                                         wire:click="delete({{ $item['id'] }})">DELETE</button>
                                 </span>
                             </td>
