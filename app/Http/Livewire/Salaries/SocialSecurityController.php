@@ -129,4 +129,7 @@ class SocialSecurityController extends Component
         $this->validate();
         $this->Netsalary = $this->salary - ($this->salary * 0.075);
     }
+    public function delete($id){
+        SocialSecurity::destroy($id);
+    }
 }

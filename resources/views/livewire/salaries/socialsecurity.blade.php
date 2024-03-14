@@ -63,7 +63,7 @@
                     <th class="border-gray-200">On comp</th>
                     <th class="border-gray-200">Amount</th>
                     <th class="border-gray-200">Date</th>
-                    {{-- <th class="border-gray-200">Action</th> --}}
+                    <th class="border-gray-200">Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -133,6 +133,12 @@
                             <td class="border-0 fw-bold">
                                 {{ $soc->date}}
 
+                            </td>
+                            <td class="border-0 fw-bold">
+                                <span class="fw-normal">
+                                    <button class="btn btn-danger" style="width: 100%; margin:0 5px;" type="button"
+                                        wire:click="delete({{ $soc->id }})">DELETE</button>
+                                </span>
                             </td>
 
                             {{-- <td class="border-0 fw-bold">

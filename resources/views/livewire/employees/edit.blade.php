@@ -141,29 +141,32 @@
 
 
                         @if ($this->type == 'part-time')
-                        <div class="col-md-5 mb-3">
-                            <label for="position">Part Time Period</label>
-                            <div class="input-group">
+                            <div class="col-md-5 mb-3">
+                                <label for="position">Part Time Period</label>
+                                <div class="input-group">
 
 
-                                <select class="form-select mb-0" id="part_time"
-                                    aria-label="part_time select example" wire:model="part_time"  >
-                                    <option value=""  selected >Select Employee's part time period</option>
+                                    <select class="form-select mb-0" id="part_time"
+                                        aria-label="part_time select example" wire:model="part_time">
+                                        <option value="" selected>Select Employee's part time period</option>
 
-                                    <option value="daily" {{ $user->part_time == 'daily' ? 'selected' : '' }} >Daily</option>
-                                    <option value="weekly" {{ $user->part_time == 'weekly' ? 'selected' : '' }}>Weekly</option>
-                                    <option value="monthly" {{ $user->part_time == 'monthly' ? 'selected' : '' }}>Monthly</option>
+                                        <option value="daily" {{ $user->part_time == 'daily' ? 'selected' : '' }}>
+                                            Daily</option>
+                                        <option value="weekly" {{ $user->part_time == 'weekly' ? 'selected' : '' }}>
+                                            Weekly</option>
+                                        <option value="monthly" {{ $user->part_time == 'monthly' ? 'selected' : '' }}>
+                                            Monthly</option>
 
-                                </select>
+                                    </select>
 
 
-                                @error('part_time')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
+                                    @error('part_time')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
 
+                                </div>
                             </div>
-                        </div>
-                    @endif
+                        @endif
 
 
 
@@ -210,7 +213,7 @@
                         </div>
 
 
-                        
+
 
                     </div>
 
@@ -283,13 +286,14 @@
                             <div class="input-group">
 
                                 <select class="form-select mb-0" id="bank" aaria-label="bank select example"
-                                wire:model="bank" autofocus required>
-                                <option value="" disabled selected hidden>Select Bank</option>
-                                @foreach($banks as $bank )
-                                <option value="{{$bank->id}}" {{$this->bank == $bank->id ? 'checked':''}}>{{$bank->name}}</option>
-                            
-                                @endforeach
-                            </select>
+                                    wire:model="bank" autofocus required>
+                                    <option value="" disabled selected hidden>Select Bank</option>
+                                    @foreach ($banks as $bank)
+                                        <option value="{{ $bank->id }}"
+                                            {{ $this->bank == $bank->id ? 'checked' : '' }}>{{ $bank->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
                                 @error('bank')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -311,7 +315,7 @@
                         </div>
 
 
-                        
+
 
                     </div>
 
@@ -371,7 +375,8 @@
                             <div class="form-group">
                                 <label class="form-check-label" for="user-notification-1"></label>
                                 <div class="form-check form-switch">
-                                    <input style="width:40px" class="form-check-input" type="checkbox" id="status" wire:model="social_security" checked="false">
+                                    <input style="width:40px" class="form-check-input" type="checkbox"
+                                        id="status" wire:model="social_security" checked="false">
                                 </div>
                             </div>
                         </div>
@@ -384,7 +389,7 @@
                             <h2 class="h5 mb-4">Employment</h2>
 
 
-                            
+
                             <ul class="list-group list-group-flush">
                                 <li
                                     class="list-group-item d-flex align-items-center justify-content-between px-0 border-bottom">
@@ -393,12 +398,12 @@
                                         <p class="small pe-4">Employment / Unemployment</p>
                                     </div>
 
-                                    
+
 
                                     <div>
                                         <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" id="status" wire:model="status"
-                                                {{ $user->status == 1 ? 'checked' : '' }}>
+                                            <input class="form-check-input" type="checkbox" id="status"
+                                                wire:model="status" {{ $user->status == 1 ? 'checked' : '' }}>
                                             <label class="form-check-label" for="user-notification-1"></label>
                                         </div>
                                     </div>
@@ -408,21 +413,21 @@
                             </ul>
 
 
-                            @if($this->status != 1)
-                                    <div class="form-group">
-                                        <label for="unemployment">End date</label>
-                                        <input class="form-control" id="unemployment" type="date"
-                                            placeholder="Enter Employee's home unemployment Date" wire:initial="unemployment" wire:model="unemployment">
-                                        @error('unemployment')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
+                            @if ($this->status != 1)
+                                <div class="form-group">
+                                    <label for="unemployment">End date</label>
+                                    <input class="form-control" id="unemployment" type="date"
+                                        placeholder="Enter Employee's home unemployment Date"
+                                        wire:initial="unemployment" wire:model="unemployment">
+                                    @error('unemployment')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
 
-                                    </div>
-
-                                    @endif
+                                </div>
+                            @endif
                         </div>
                     </div>
-                    
+
                     <div class="mt-3">
                         <button type="submit" class="btn btn-gray-800 mt-2 animate-up-2">Save All</button>
                     </div>
@@ -473,15 +478,19 @@
                                 <h4 class="h3">Contract</h4>
 
                                 @if ($this->contract)
-                                <embed src="{{ route('viewContract', ['filename' => $this->contract]) }}" type="application/pdf" width="100%" height="600px" class="avatar-xxl mx-auto" />
-                                        <a class="mb-4"style="color: #3892ff;" href="{{ route('viewContract', ['filename' => $this->contract]) }}" target="_blank">open Contract in new tab</a>
+                                    <embed src="{{ route('viewContract', ['filename' => $this->contract]) }}"
+                                        type="application/pdf" width="100%" height="600px"
+                                        class="avatar-xxl mx-auto" />
+                                    <a class="mb-4"style="color: #3892ff;"
+                                        href="{{ route('viewContract', ['filename' => $this->contract]) }}"
+                                        target="_blank">open Contract in new tab</a>
                                 @endif
 
 
-                                
 
 
-                            
+
+
 
 
                                 <div class="col-sm-12 mb-3">
@@ -507,13 +516,17 @@
                                 <div class="row flex-column">
                                     <h1>Duration of the Contract</h1>
                                     <div class="" style="display: flex;justify-content: space-evenly;">
-                                    <h5 class="">3 month
-                                    <input class="form-check-input" wire:model="Duration_contract" value="0"  type="radio" id="contrctYear"  name="Duration_contract">
-                                    </h5>
-                                    <h5 class="">1 year
-                                    <input class="form-check-input" wire:model="Duration_contract" value="1" id="contrctMonth" type="radio" name="Duration_contract">
-                                    </h5>
-                                </div>
+                                        <h5 class="">3 month
+                                            <input class="form-check-input" wire:model="Duration_contract"
+                                                value="0" type="radio" id="contrctYear"
+                                                name="Duration_contract">
+                                        </h5>
+                                        <h5 class="">1 year
+                                            <input class="form-check-input" wire:model="Duration_contract"
+                                                value="1" id="contrctMonth" type="radio"
+                                                name="Duration_contract">
+                                        </h5>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -530,8 +543,8 @@
                                 @elseif($user->ID_image)
                                     <img src="/storage/profile/{{ $user->ID_image }}" class="avatar-xxl mx-auto mb-4"
                                         alt="ID Image">
-                                        <a href="/storage/profile/{{ $user->ID_image }}" target="_blangk"
-                                            class="mb-4"style="color: #3892ff;"> open Image in new tab </a>
+                                    <a href="/storage/profile/{{ $user->ID_image }}" target="_blangk"
+                                        class="mb-4"style="color: #3892ff;"> open Image in new tab </a>
                                 @endif
 
 
@@ -559,13 +572,12 @@
                             <div class="card-body pb-5">
 
                                 @if ($newLicense_image)
-                                    <img src="{{ $newLicense_image }}" class="avatar-xxl  mx-auto "
-                                        alt="ID Image">
+                                    <img src="{{ $newLicense_image }}" class="avatar-xxl  mx-auto " alt="ID Image">
                                 @elseif($user->license_image)
                                     <img src="/storage/profile/{{ $user->license_image }}"
                                         class="avatar-xxl mx-auto mb-4" alt="License Image">
-                                        <a href="/storage/profile/{{ $user->license_image }}" target="_blangk"
-                                            class="mb-4"style="color: #3892ff;"> open Image in new tab </a>
+                                    <a href="/storage/profile/{{ $user->license_image }}" target="_blangk"
+                                        class="mb-4"style="color: #3892ff;"> open Image in new tab </a>
                                 @endif
 
                                 <h4 class="h3">Employee's License image</h4>
@@ -584,7 +596,7 @@
                         </div>
                     </div>
 
-                    
+
                 </div>
             </div>
             @if ($showSavedAlert)

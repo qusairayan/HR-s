@@ -168,6 +168,7 @@
                     <th class="border-gray-200">salary</th>
                     <th class="border-gray-200">action</th>
                     <th class="border-gray-200">action</th>
+                    <th class="border-gray-200">action</th>
                 </tr>
             <tbody>
                 @php($i = count($payrolls) + 1)
@@ -178,21 +179,27 @@
                         <td class="border-0 fw-bold"><span class="fw-normal">{{ $item['name'] }}</span></td>
                         <td class="border-0 fw-bold"><span class="fw-normal">{{ $item['month'] }}</span></td>
                         <td class="border-0 fw-bold"><span class="fw-normal">{{ $item['salary'] }}</span></td>
-                        @if ($item['salaryDepositId'])
-                            <td class="border-0 fw-bold"><span class="fw-normal"><a
-                                        href="{{ route('payrolls.depositSalarypdf', ['id' => $item['salaryDepositId']]) }}"
-                                        class="btn btn-info">View Salary Pdf</a></span></td>
-                        @else
-                            <td class="border-0 fw-bold"><span class="fw-normal"><a
-                                        href="{{ route('payrolls.depositsalary', ['id_salary' => $item['id'], 'id' => $item['user_id'], 'salary' => $item['salary']]) }}"
-                                        class="btn btn-primary">Deposit Salary</a></span></td>
-                        @endif
-                        <td class="border-0 fw-bold">
-                            <span class="fw-normal">
-                                <button class="btn btn-success" style="width: 100%; margin:0 5px;" type="button"
-                                    wire:click="report({{ $item['id'] }})">View Slip</button>
-                            </span>
-                        </td>
+                            @if ($item['salaryDepositId'])
+                                <td class="border-0 fw-bold"><span class="fw-normal"><a
+                                            href="{{ route('payrolls.depositSalarypdf', ['id' => $item['salaryDepositId']]) }}"
+                                            class="btn btn-info">View Salary Pdf</a></span></td>
+                            @else
+                                <td class="border-0 fw-bold"><span class="fw-normal"><a
+                                            href="{{ route('payrolls.depositsalary', ['id_salary' => $item['id'], 'id' => $item['user_id'], 'salary' => $item['salary']]) }}"
+                                            class="btn btn-primary">Deposit Salary</a></span></td>
+                            @endif
+                            <td class="border-0 fw-bold">
+                                <span class="fw-normal">
+                                    <button class="btn btn-success" style="width: 100%; margin:0 5px;" type="button"
+                                        wire:click="report({{ $item['id'] }})">View Slip</button>
+                                </span>
+                            </td>
+                            <td class="border-0 fw-bold">
+                                <span class="fw-normal">
+                                    <button class="btn btn-danger" style="width: 100%; margin:0 5px;" type="button"
+                                        wire:click="delete({{ $item['id'] }})">DELETE</button>
+                                </span>
+                            </td>
                     </tr>
                 @endforeach
             </tbody>

@@ -1,4 +1,5 @@
 <?php
+
 use App\Http\Livewire\BootstrapTables;
 use App\Http\Livewire\Components\Buttons;
 use App\Http\Livewire\Components\Forms;
@@ -71,6 +72,7 @@ use App\Http\Livewire\UpgradeToPro;
 use App\Http\Livewire\Users;
 use App\Http\Livewire\VacationPdf;
 use App\Models\Leave;
+
 Route::redirect('/', '/login');
 Route::get('/login', Login::class)->name('login');
 // Route::get('/register', Register::class)->name('register');
@@ -110,8 +112,8 @@ Route::middleware('auth')->group(function () {
 
 
     Route::prefix('employees')->group(function () {
-        Route::get("/banks",Banks::class)->name("employee.banks");
-        Route::get("/vacation-balance",VacationBalance::class)->name("employee.VacationBalance");
+        Route::get("/banks", Banks::class)->name("employee.banks");
+        Route::get("/vacation-balance", VacationBalance::class)->name("employee.VacationBalance");
         Route::get('/', Employees::class)->name('employees'); //->middleware('permission:viewAllEmployees');
         Route::get('/addEmployee', AddNewEmployee::class)->name('employees.addNew'); //->middleware('permission:addEmployees');
         Route::get('/{user}/edit', Edit::class)->name('employees.edit');
@@ -122,7 +124,7 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/promotions', Promotions::class)->name('promotions'); //->middleware('permission:viewAllEmployees');
         Route::get('/promotions.add', AddPromotions::class)->name('promotions.add'); //->middleware('permission:viewAllEmployees');
-        Route::get('/promotions/{promotion}/edit', [PromotionEdit::class,'render'])->name('promotions.edit'); //->middleware('permission:viewAllEmployees');
+        Route::get('/promotions/{promotion}/edit', [PromotionEdit::class, 'render'])->name('promotions.edit'); //->middleware('permission:viewAllEmployees');
 
     });
 
@@ -136,7 +138,7 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('vacations')->group(function () {
         Route::get('/', Vacations::class)->name('vacations');
-        Route::get("/report/{id}/{date}",VacationPdf::class)->name("vacations.report");
+        Route::get("/report/{id}/{date}", VacationPdf::class)->name("vacations.report");
         // Route::get('/{vacation}/{type}/{user_id}/approve', [Vacations::class, 'approve'])->name('vacations.approve'); //->middleware('permission:vactionReqAction');
         // Route::get('/{vacation}/reject', [Vacations::class, 'reject'])->name('vacations.reject'); //->middleware('permission:vactionReqAction');
     });
@@ -145,9 +147,8 @@ Route::middleware('auth')->group(function () {
     Route::prefix('attendence')->group(function () {
         Route::get('/', Attendences::class)->name('attendences'); //->middleware('permission:viewAttendence');
         // Route::get("/report_Attendence/{id}/{date}",ReportAttendance::class)->name("reportAttendence");
-        Route::get("/report",ReportAttendance::class)->name("attendence.Report");
-        Route::get("/reportPdf/{id}/{date}",ReportAttendecePdf::class)->name("attendence.Report.pdf");
-        
+        Route::get("/report", ReportAttendance::class)->name("attendence.Report");
+        Route::get("/reportPdf/{id}/{date}", ReportAttendecePdf::class)->name("attendence.Report.pdf");
     });
 
 
@@ -162,7 +163,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/', Permissions::class)->name('permissions'); //->middleware('permission:viewPermissions')
         Route::get('/{user}/edit', PermissionEdit::class)->name('permissions.edit'); //->middleware('permission:editPermissions')
         Route::get('/roles', PermissionRoles::class)->name('permissions.roles'); //->middleware('permission:editPermissions')
-        Route::get('/roles/{role}/edit', PermissionRolesEdit::class);//->name('permissions.role.edit'); //->middleware('permission:editPermissions')
+        Route::get('/roles/{role}/edit', PermissionRolesEdit::class); //->name('permissions.role.edit'); //->middleware('permission:editPermissions')
 
     });
 
@@ -186,7 +187,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/', AllowncesController::class)->name('allownces'); //->middleware('role:viewroles')
     });
 
-    Route::get('slip-report/{id}/{month}', [SlipReportpdf::class,'generatePDF'])->name('payrolls.slip_report'); //->middleware('role:viewroles')
+    Route::get('slip-report/{id}/{month}', [SlipReportpdf::class, 'generatePDF'])->name('payrolls.slip_report'); //->middleware('role:viewroles')
     Route::prefix('payrolls')->group(function () {
         Route::get('/salaries', Salaries::class)->name('payrolls.salaries'); //->middleware('role:viewroles')
         Route::get('/slips', Slips::class)->name('payrolls.slips'); //->middleware('role:viewroles')
@@ -194,8 +195,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/addParttime', AddPartTimes::class)->name('payrolls.add_part_time'); //->middleware('role:viewroles')
         Route::get('/{parttime}/editParttime', EditPartTimes::class)->name('payrolls.edit_part_time'); //->middleware('role:viewroles')
         Route::get('/{parttime}/viewParttime', ViewPartTimes::class)->name('payrolls.view_part_time'); //->middleware('role:viewroles')
-        Route::get('/FullTimeReport/{id}/{from}/{to}', [SlipReportpdf::class,'FullTimegeneratePDF'])->name('payrolls.fullTimeReport'); //->middleware('role:viewroles')
-        Route::get('/PartTime_Reports/{id}/{from}/{to}', [Ptreportpdf::class,'generatePDF'])->name('payrolls.part_time_report'); //->middleware('role:viewroles')
+        Route::get('/FullTimeReport/{id}/{from}/{to}', [SlipReportpdf::class, 'FullTimegeneratePDF'])->name('payrolls.fullTimeReport'); //->middleware('role:viewroles')
+        Route::get('/PartTime_Reports/{id}/{from}/{to}', [Ptreportpdf::class, 'generatePDF'])->name('payrolls.part_time_report'); //->middleware('role:viewroles')
         Route::get('/addSalary', AddSalaries::class)->name('payrolls.addSalary'); //->middleware('role:viewroles')
         Route::get('/socialsecurity', SocialSecurityController::class)->name('payrolls.socialsecurity'); //->middleware('role:viewroles')
         Route::get('/new-salary', NewSalary::class)->name('payrolls.newSalary'); //->middleware('role:viewroles')
@@ -208,18 +209,17 @@ Route::middleware('auth')->group(function () {
         Route::get('/', Departments::class)->name('departments'); //->middleware('role:viewroles')
 
     });
-
 });
 
 
 
 
-Route::get('/transfer', [TransferController::class,'transfer'])->name('transfer'); //->middleware('role:viewroles')
+Route::get('/transfer', [TransferController::class, 'transfer'])->name('transfer'); //->middleware('role:viewroles')
 
 
 
 
 
-Route::get('/privay_policy', [PrivacyPolicyController::class,'privacy'])->name('privacy_policy'); 
-Route::get('/description', [PrivacyPolicyController::class,'description'])->name('description'); 
-Route::get("/storage/app/public/contracts/{filename}",[showPdf::class,"pdfView"])->name("viewContract");
+Route::get('/privay_policy', [PrivacyPolicyController::class, 'privacy'])->name('privacy_policy');
+Route::get('/description', [PrivacyPolicyController::class, 'description'])->name('description');
+Route::get("/storage/app/public/contracts/{filename}", [showPdf::class, "pdfView"])->name("viewContract");

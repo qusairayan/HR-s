@@ -38,7 +38,7 @@ class Slips extends Component
     {
         $res = MonthlyPayroll::find($id);
         $userId = $res->user_id;
-        $month = explode("-",$res->month);
+        $month = explode("-", $res->month);
         $month = $month[0] . '-' . $month[1];
         return redirect()->route('payrolls.slip_report', ['id' => $userId, 'month' => $month]);
     }
@@ -83,9 +83,13 @@ class Slips extends Component
             $monthlyPayrollQuery->employee = $this->employee;
         }
         if ($this->search) {
-            $monthlyPayrollQuery->where('users.name', 'LIKE', '%'.$this->search.'%');
+            $monthlyPayrollQuery->where('users.name', 'LIKE', '%' . $this->search . '%');
         }
         $payrolls = $monthlyPayrollQuery->get()->toArray();
         return view('livewire.salaries.slips', compact('companies', 'departments', 'employees', "payrolls"));
+    }
+    public function delete($id)
+    {
+        MonthlyPayroll::destroy($id);
     }
 }

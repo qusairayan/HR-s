@@ -20,14 +20,10 @@ use Livewire\WithFileUploads;
 class AddNewEmployee extends Component
 {
     use WithFileUploads;
-
     public $user;
-
     public $showSavedAlert = false;
     public $showDemoNotification = false;
-
     public $username = '';
-
     public $name = '';
     public $ID_no = '';
     public $gender = '';
@@ -52,15 +48,10 @@ class AddNewEmployee extends Component
     public $company = '';
     public $department = '';
     public $departmentName = '';
-
-
     public $position = '';
     public $type = '';
     public $role = '';
     public $start_date = '';
-
-
-
     protected $rules = [
         'password' => 'required|same:passwordConfirmation|min:6',
         'email' => 'email:rfc,dns|unique:users',
@@ -81,29 +72,18 @@ class AddNewEmployee extends Component
         "Duration_contract"=>'required|boolean',
         "social_security"=>'required|boolean',
     ];
-
-
-
     public function updatedUsername()
     {
         $this->validate(['username' => 'required|unique:users']);
     }
-
-
-
     public function updatedDepartment()
     {
-
         $this->departmentName = Department::find($this->department)->name;
     }
-
-
     public function updated($propertyName)
     {
         // $this->validateOnly($propertyName);
     }
-
-
     public function add(){
         $this->validate([
             'password' => 'required|same:passwordConfirmation|min:6',
@@ -134,9 +114,6 @@ class AddNewEmployee extends Component
               ]);
             
             }
-           
-
-
         if ($this->email == '') {
             $this->email = null;
         }

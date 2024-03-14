@@ -35,11 +35,13 @@ class SetSchedule extends Component
     public $totalDays;
 
 
-    public $search ="";
+    public $search = "";
 
-    protected $rules = ['user' => 'required',
-    'shift.*.from' => 'required|date_format:H:i',
-    'shift.*.to' => 'required|date_format:H:i|after:shift.*.from',];
+    protected $rules = [
+        'user' => 'required',
+        'shift.*.from' => 'required|date_format:H:i',
+        'shift.*.to' => 'required|date_format:H:i|after:shift.*.from',
+    ];
     protected $messages = [
         'shift.*.from.required' => 'Please enter a from time for :attribute',
         'shift.*.from.date_format' => 'The :attribute must be in the format HH:MM',
@@ -51,64 +53,60 @@ class SetSchedule extends Component
 
 
     public function updated()
-{
+    {
 
-    $this->showSavedAlert = false;
+        $this->showSavedAlert = false;
+    }
 
-}
+    public function updatedUser()
+    {
 
-public function updatedUser()
-{
-
-    $this->week = 1;
-
-}
+        $this->week = 1;
+    }
 
     public function updatedShift()
-{
-    foreach ($this->shift as $date => $shiftId) {
-        if(isset($shiftId['off'])){
-            $this->offs[$date]=true;
-        }else{
-            if(isset( $this->offs[$date])){
-                unset($this->offs[$date]);
+    {
+        foreach ($this->shift as $date => $shiftId) {
+            if (isset($shiftId['off'])) {
+                $this->offs[$date] = true;
+            } else {
+                if (isset($this->offs[$date])) {
+                    unset($this->offs[$date]);
+                }
             }
         }
     }
-}
     public function save()
-    {        
+    {
         $this->resetErrorBag('user');
         $this->resetErrorBag('shift');
         session()->forget("success");
 
-        if(!$this->user){ $this->addError('user', 'Select the user');
-            return;}
-       
+        if (!$this->user) {
+            $this->addError('user', 'Select the user');
+            return;
+        }
+
         if (count($this->shift) == $this->totalDays) {
 
             foreach ($this->shift as $date => $shiftId) {
-            if(!isset($shiftId["off"])){
-                
-                    if(!isset($shiftId["from"]) || !isset($shiftId["to"])){
+                if (!isset($shiftId["off"])) {
 
-            $this->addError('shift', 'From and To selections must be filled.');
-            return;
+                    if (!isset($shiftId["from"]) || !isset($shiftId["to"])) {
 
+                        $this->addError('shift', 'From and To selections must be filled.');
+                        return;
                     }
                 }
             }
-
-        }
-
-        else{
+        } else {
             $this->addError('shift', 'Set one week schedule at least');
-            return; 
+            return;
         }
         foreach ($this->shift as $date => $shiftId) {
 
-            $dateTem = new DateTime($date); 
-            $dayName = $dateTem->format('l'); 
+            $dateTem = new DateTime($date);
+            $dayName = $dateTem->format('l');
 
             Schedules::create([
                 'user_id' => $this->user,
@@ -121,8 +119,6 @@ public function updatedUser()
             $this->showSavedAlert = true;
             session()->flash("success", "Shift schedule created successfully.");
             $this->render();
-            
-
         }
     }
 
@@ -132,95 +128,84 @@ public function updatedUser()
     public function render()
     {
 
-if($this->user != null){
-        $preSchedule = Schedules::where('user_id', '=', $this->user)
-        ->whereDate('date', '>', date('Y-m-d'))
-        ->latest('id') // Order the records by date in descending order
-        ->first();      // Retrieve the first (latest) record that matches the conditions
+        if ($this->user != null) {
+            $preSchedule = Schedules::where('user_id', '=', $this->user)
+                ->whereDate('date', '>', date('Y-m-d'))
+                ->latest('id') // Order the records by date in descending order
+                ->first();      // Retrieve the first (latest) record that matches the conditions
 
-    if ($preSchedule) {
-        $this->today = new \DateTime($preSchedule->date);
-    } else {
-        $this->today = new \DateTime();
-    }
-           $this->today->modify('+1 day');
+            if ($preSchedule) {
+                $this->today = new \DateTime($preSchedule->date);
+            } else {
+                $this->today = new \DateTime();
+            }
+            $this->today->modify('+1 day');
 
-           $this->endOfWeek = clone $this->today; 
-           $this->endOfWeek->modify('next Saturday');
-
-      
-        if (auth()->user()->hasPermissionTo('setSchedule')) {
-
-            $departments = Department::all();
-            $companies = Company::all();
-
-            $users = User::leftJoin('department', 'department.id', '=', 'users.department_id')
-                ->select('users.*', 'users.name as user_name', 'department.name as department_name')
-                ->where('users.status', '=', 1)
-                // ->where('users.department_id', '=', $this->department)
-                ->where('users.name', 'LIKE', '%' . $this->search . '%')->get();
-
-            return view('livewire.schedule.setSchedule', compact('users','departments',"companies",));
-        } else if (auth()->user()->hasPermissionTo('setDepSchedule')) {
-
-                $this->department = auth()->user()->department_id;
-            
-    
-            $users = User::leftJoin('department', 'department.id', '=', 'users.department_id')
-                ->select('users.*', 'users.name as user_name', 'department.name as department_name')
-                ->where('users.status', '=', 1)
-                // ->where('users.department_id', '=', $this->department)
-                ->where('users.name', 'LIKE', '%' . $this->search . '%')->get();
-            return view('livewire.schedule.setSchedule', compact('users'));
-        }
-        else{
-            return view('404');
-
-        }
-    }
-
-    else{
-
-        $this->today = new \DateTime();
-    
-           $this->today->modify('+1 day');
-
-           $this->endOfWeek = clone $this->today; 
-           $this->endOfWeek->modify('next Saturday');
+            $this->endOfWeek = clone $this->today;
+            $this->endOfWeek->modify('next Saturday');
 
 
+            if (auth()->user()->hasPermissionTo('setSchedule')) {
 
-        if (auth()->user()->hasPermissionTo('setSchedule')) {
-            $departments = Department::all();
+                $departments = Department::all();
+                $companies = Company::all();
 
-            $users = User::leftJoin('department', 'department.id', '=', 'users.department_id')
-                ->select('users.*', 'users.name as user_name', 'department.name as department_name')
-                ->where('users.status', '=', 1)
-                // ->where('users.department_id', '=', $this->department)
-                ->where('users.name', 'LIKE', '%' . $this->search . '%')->get();
+                $users = User::leftJoin('department', 'department.id', '=', 'users.department_id')
+                    ->select('users.*', 'users.name as user_name', 'department.name as department_name')
+                    ->where('users.status', '=', 1)
+                    // ->where('users.department_id', '=', $this->department)
+                    ->where('users.name', 'LIKE', '%' . $this->search . '%')->get();
 
-            return view('livewire.schedule.setSchedule', compact('users','departments'));
-        } else if (auth()->user()->hasPermissionTo('setDepSchedule')) {
+                return view('livewire.schedule.setSchedule', compact('users', 'departments', "companies",));
+            } else if (auth()->user()->hasPermissionTo('setDepSchedule')) {
 
                 $this->department = auth()->user()->department_id;
-            
-    
-            $users = User::leftJoin('department', 'department.id', '=', 'users.department_id')
-                ->select('users.*', 'users.name as user_name', 'department.name as department_name')
-                ->where('users.status', '=', 1)
-                // ->where('users.department_id', '=', $this->department)
-                ->where('users.name', 'LIKE', '%' . $this->search . '%')->get();
-            return view('livewire.schedule.setSchedule', compact('users'));
+
+
+                $users = User::leftJoin('department', 'department.id', '=', 'users.department_id')
+                    ->select('users.*', 'users.name as user_name', 'department.name as department_name')
+                    ->where('users.status', '=', 1)
+                    // ->where('users.department_id', '=', $this->department)
+                    ->where('users.name', 'LIKE', '%' . $this->search . '%')->get();
+                return view('livewire.schedule.setSchedule', compact('users'));
+            } else {
+                return view('404');
+            }
+        } else {
+
+            $this->today = new \DateTime();
+
+            $this->today->modify('+1 day');
+
+            $this->endOfWeek = clone $this->today;
+            $this->endOfWeek->modify('next Saturday');
+
+
+
+            if (auth()->user()->hasPermissionTo('setSchedule')) {
+                $departments = Department::all();
+
+                $users = User::leftJoin('department', 'department.id', '=', 'users.department_id')
+                    ->select('users.*', 'users.name as user_name', 'department.name as department_name')
+                    ->where('users.status', '=', 1)
+                    // ->where('users.department_id', '=', $this->department)
+                    ->where('users.name', 'LIKE', '%' . $this->search . '%')->get();
+
+                return view('livewire.schedule.setSchedule', compact('users', 'departments'));
+            } else if (auth()->user()->hasPermissionTo('setDepSchedule')) {
+
+                $this->department = auth()->user()->department_id;
+
+
+                $users = User::leftJoin('department', 'department.id', '=', 'users.department_id')
+                    ->select('users.*', 'users.name as user_name', 'department.name as department_name')
+                    ->where('users.status', '=', 1)
+                    // ->where('users.department_id', '=', $this->department)
+                    ->where('users.name', 'LIKE', '%' . $this->search . '%')->get();
+                return view('livewire.schedule.setSchedule', compact('users'));
+            } else {
+                return view('404');
+            }
         }
-        else{
-            return view('404');
-        }
-    }
-
-
-    
-
-
-
     }
 }
