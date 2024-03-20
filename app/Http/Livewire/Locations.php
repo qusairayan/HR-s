@@ -10,15 +10,25 @@ class Locations extends Component
     public $lan, $lat, $dis, $location;
     public function render()
     {
-        return view('livewire.locations');
+        $locations = Location::all();
+        return view('livewire.locations', compact("locations"));
     }
     public function create()
     {
-       Location::create([
+        Location::create([
             'longitude' => $this->lan,
             'latitude' => $this->lat,
             'distance' => $this->dis,
             'location' => $this->location
         ]);
+    }
+    public function delete($id)
+    {
+        Location::destroy($id);
+    }
+    public function setDots($x, $y)
+    {
+        $this->lan = $x;
+        $this->lat =$y;
     }
 }

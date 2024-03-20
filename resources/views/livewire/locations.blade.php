@@ -51,4 +51,51 @@
                 height: 440px !important;
             }
         </style>
+
     </div>
+    <div class="card card-body border-0 shadow table-wrapper table-responsive mt-5">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th class="border-gray-200">NO</th>
+                    <th class="border-gray-200">name</th>
+                    <th class="border-gray-200">month</th>
+                    <th class="border-gray-200">salary</th>
+                    <th class="border-gray-200">action</th>
+                    <th class="border-gray-200">action</th>
+                    <th class="border-gray-200">action</th>
+                </tr>
+            <tbody>
+                @php($i = count($locations) + 1)
+                @foreach ($locations as $item)
+                    @php($i--)
+                    <tr>
+                        <td style="width: 15%" class="border-0 fw-bold"><span
+                                class="fw-normal">{{ $i }}</span></td>
+                        <td style="width: 30%" class="border-0 fw-bold"><span
+                                class="fw-normal">{{ $item->location }}</span></td>
+                        <td style="width: 15%" class="border-0 fw-bold"><span
+                                class="fw-normal">{{ $item->longitude }}</span></td>
+                        <td style="width: 15%" class="border-0 fw-bold"><span
+                                class="fw-normal">{{ $item->latitude }}</span></td>
+                        <td style="width: 15%" class="border-0 fw-bold"><span
+                                class="fw-normal">{{ $item->distance }}</span></td>
+                        <td style="width: 8%" class="border-0 fw-bold">
+                            <span class="fw-normal">
+                                <button class="btn btn-success" class="col-1" type="button"
+                                    wire:click="setDots('{{ $item->longitude }}', '{{ $item->latitude }}')">View Map</button>
+                            </span>
+                        </td>
+                        <td style="width: 8%" class="border-0 fw-bold">
+                            <span class="fw-normal">
+                                <button class="btn btn-danger" type="button"
+                                    wire:click="delete({{ $item->id }})">DELETE</button>
+                            </span>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+            </thead>
+        </table>
+    </div>
+</div>
