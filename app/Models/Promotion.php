@@ -12,6 +12,10 @@ class Promotion extends Model
      
     protected $fillable = [
         'user_id',
+        'company_id',
+        'department_id',
+        'type',
+        'part_time',
         'salary',        
         'from',
         'to',

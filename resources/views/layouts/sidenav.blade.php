@@ -451,6 +451,13 @@
                     <span class="sidebar-text">Departments</span>
                 </a>
             </li>
+            
+            <li class="nav-item {{ request()->route()->getName() == 'locations'? 'active': '' }}">
+                <a href="/locations" class="nav-link">
+                    <i class="fas fa-users me-2"></i>
+                    <span class="sidebar-text">Locations</span>
+                </a>
+            </li>
 
 
             <li class="nav-item">

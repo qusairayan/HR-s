@@ -23,8 +23,6 @@
         </div>
 
     </div>
-
-
     <div class="card card-body border-0 shadow table-wrapper table-responsive">
         <div class="row">
             @if (auth()->user()->hasPermissionTo('setSchedule'))
@@ -154,7 +152,7 @@
                     </table>
 
                     <div>
-                        {{ $schdules->links('vendor.pagination.custom')}}
+                        {{ $schdules->links('vendor.pagination.custom') }}
                     </div>
                 </div>
 
@@ -173,5 +171,3 @@
 
     </div>
 </div>
-
-

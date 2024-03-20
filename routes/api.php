@@ -21,6 +21,7 @@ use App\Http\Controllers\api\vacations\GetVacationController;
 use App\Http\Controllers\api\profile\ProfileController;
 use App\Http\Controllers\api\profile\showProfileImageController;
 use App\Http\Controllers\api\vacations\VacationController;
+use App\Http\Controllers\LocationController;
 
 Route::middleware(['api'])->group(function () {
 Route::post('/profile', [ProfileController::class, 'profile']); 
@@ -60,6 +61,7 @@ Route::middleware(["guest:sanctum"])->prefix("auth")->name("auth.")->group(funct
 });
 Route::middleware(["auth:sanctum"])->group(function(){
     Route::get("auth/logout",[AuthLoginController::class,"logout"])->name("logout");
+    Route::get("locations",[LocationController::class,"get"])->name("locations.get");
     Route::prefix("attendence")->name("attendence.")->group(function(){
         Route::post("create"    ,[AttendanceController::class,"create"])->name("create");
         Route::post("check",[AttendanceController::class,"checkAttendance"])->name("today");

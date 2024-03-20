@@ -54,6 +54,7 @@
                 'employee.banks',
                 'employee.VacationBalance',
                 "vacations.report",
+                "locations"
             ]))
         {{-- Nav --}}
         @include('layouts.nav')
