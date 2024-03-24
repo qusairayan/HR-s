@@ -31,7 +31,6 @@ class Ptreportpdf extends Component
         $to = $to . "-31";
         $this->getDate($id, $from, $to);
         $this->reBalance = $this->reBalance($from, $to);
-        dd($this->reBalance);
         $checks = [];
         if ($this->checks) {
             for ($i = 0; $i < count($this->checks); $i++) {
@@ -61,7 +60,6 @@ class Ptreportpdf extends Component
         $data = array_merge($checks, $this->dedction, $this->allownce, $this->partTime);
         $date = array_column($data, 'date');
         array_multisort($date, SORT_ASC, $data);
-        //   dd($data);
         $mpdf = new Mpdf([
             'mode' => 'utf-8',
             'format' => 'A4-L',
@@ -70,7 +68,6 @@ class Ptreportpdf extends Component
             'margin_top' => 10,
             'margin_bottom' => 10,
         ]);
-        dd($data);
         $mpdf->WriteHTML(view('livewire.salaries.partTimeReport',  ["pending" => $this->pending, "data" => $data, "reBalance" => $this->reBalance, "user" => $this->user, 'partTime' => $this->partTime, 'from' => $from, 'to' => $to]));
         $mpdf->Output('document.pdf', 'I');
     }
