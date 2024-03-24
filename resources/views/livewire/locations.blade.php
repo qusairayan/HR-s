@@ -58,10 +58,10 @@
             <thead>
                 <tr>
                     <th class="border-gray-200">NO</th>
-                    <th class="border-gray-200">name</th>
-                    <th class="border-gray-200">month</th>
-                    <th class="border-gray-200">salary</th>
-                    <th class="border-gray-200">action</th>
+                    <th class="border-gray-200">Location</th>
+                    <th class="border-gray-200">location</th>
+                    <th class="border-gray-200">longitude</th>
+                    <th class="border-gray-200">distance</th>
                     <th class="border-gray-200">action</th>
                     <th class="border-gray-200">action</th>
                 </tr>
@@ -83,7 +83,8 @@
                         <td style="width: 8%" class="border-0 fw-bold">
                             <span class="fw-normal">
                                 <button class="btn btn-success" class="col-1" type="button"
-                                    wire:click="setDots('{{ $item->longitude }}', '{{ $item->latitude }}')">View Map</button>
+                                    wire:click="setDots('{{ $item->longitude }}', '{{ $item->latitude }}')">View
+                                    Map</button>
                             </span>
                         </td>
                         <td style="width: 8%" class="border-0 fw-bold">

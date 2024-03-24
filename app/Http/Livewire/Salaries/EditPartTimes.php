@@ -105,27 +105,49 @@ class EditPartTimes extends Component
             $to = Carbon::parse($this->to);
 
 
-            If($to < $from ){
+            if ($to < $from) {
                 $this->date_incorrect = true;
-            return false;
-
-            }
-            else{
+                return false;
+            } else {
                 $this->date_incorrect = false;
             }
             $daysDifference = $from->diffInDays($to);
-
+            $daysDifference = $from->diffInDays($to);
+            $year = "20" . $from->format("y");
+            $month = $from->format("m");
+            $countOfDays = cal_days_in_month(CAL_GREGORIAN, $month, $year);
 
 
             if ($this->period == 'daily') {
-                $this->total =  round($this->salary * ($daysDifference + 1), 1)  ;
+                if (($daysDifference + 1) == $countOfDays)$this->total =round($this->salary * 30, 1);
+                else $this->total =  round($this->salary * ($daysDifference + 1), 1);
             } else if ($this->period == 'weekly') {
                 $this->total =  round($this->salary / 7 * $daysDifference, 1);
             } else if ($this->period == 'monthly') {
-                $this->total = round($this->salary / 30 * $daysDifference , 1);
+                if (($daysDifference + 1) == $countOfDays) $this->total = $this->salary;
+                else $this->total = round($this->salary / 30 * $daysDifference, 1);
             }
-        }
 
+
+
+            // if ($this->period == 'daily') {
+            //     $this->total =  round($this->salary * ($daysDifference + 1), 1);
+            // } else if ($this->period == 'weekly') {
+            //     $this->total =  round($this->salary / 7 * $daysDifference, 1);
+            // } else if ($this->period == 'monthly') {
+            //     if (($daysDifference + 1) == $countOfDays) $this->total = $this->salary;
+            //     else $this->total = round($this->salary / 30 * $daysDifference, 1);
+            // }
+
+
+            // if ($this->period == 'daily') {
+            //     $this->total =  round($this->salary * ($daysDifference + 1), 1);
+            // } else if ($this->period == 'weekly') {
+            //     $this->total =  round($this->salary / 7 * $daysDifference, 1);
+            // } else if ($this->period == 'monthly') {
+            //     $this->total = round($this->salary / 30 * $daysDifference, 1);
+            // }
+        }
     }
 
 
@@ -154,7 +176,7 @@ class EditPartTimes extends Component
 
         $from = Carbon::parse($this->from);
         $to = Carbon::parse($this->to);
-        If($to < $from ){
+        if ($to < $from) {
             $this->date_incorrect = true;
             return false;
         }
@@ -179,7 +201,7 @@ class EditPartTimes extends Component
     public function render()
     {
 
-        
+
 
         return view('livewire.salaries.editPartTime');
     }
