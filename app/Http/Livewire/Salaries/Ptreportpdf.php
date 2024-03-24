@@ -27,6 +27,11 @@ class Ptreportpdf extends Component
     public $pending;
     public function generatePDF($id, $from, $to)
     {
+        // $this->validate([
+        //     'id' => 'required',
+        //     'from' => 'required|date',
+        //     'to' => 'required|date',
+        // ]);
         $from = $from . "-01";
         $to = $to . "-31";
         $this->getDate($id, $from, $to);
@@ -68,7 +73,7 @@ class Ptreportpdf extends Component
             'margin_top' => 10,
             'margin_bottom' => 10,
         ]);
-        $mpdf->WriteHTML(view('livewire.salaries.partTimeReport',  ["pending" => $this->pending, "data" => $data, "reBalance" => $this->reBalance, "user" => $this->user, 'partTime' => $this->partTime, 'from' => $from, 'to' => $to,"image"=>$this->image]));
+        $mpdf->WriteHTML(view('livewire.salaries.partTimeReport',  ["pending" => $this->pending, "data" => $data, "reBalance" => $this->reBalance, "user" => $this->user, 'partTime' => $this->partTime, 'from' => $from, 'to' => $to, "image" => $this->image]));
         $mpdf->Output('document.pdf', 'I');
     }
     private function reBalance($from, $to)

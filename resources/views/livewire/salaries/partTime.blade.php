@@ -24,7 +24,8 @@
             {{-- <p class="mb-0">Your web analytics dashboard template.</p> --}}
         </div>
         <div class="btn-toolbar mb-2 mb-md-0">
-            <a href="{{ route('payrolls.add_part_time') }}" class="btn btn-sm btn-gray-800 d-inline-flex align-items-center">
+            <a href="{{ route('payrolls.add_part_time') }}"
+                class="btn btn-sm btn-gray-800 d-inline-flex align-items-center">
                 <svg class="icon icon-xs me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -56,7 +57,7 @@
                             <option value="{{ $comp->id }}">
                                 {{ $comp->name }} </option>
                         @endforeach
-                        
+
 
                     </select>
                     @error('company')
@@ -73,25 +74,24 @@
 
                 <div>
                     <label for="department">Department</label>
-                    <select class="form-select mb-0"
-                        id="department" aria-label="department select example" wire:model="department" autofocus
-                        required>
+                    <select class="form-select mb-0" id="department" aria-label="department select example"
+                        wire:model="department" autofocus required>
                         <option value="" selected>Select department's Department
                         </option>
                         @foreach ($departments as $dep)
                             <option value="{{ $dep->id }}">
                                 {{ $dep->name }} </option>
                         @endforeach
-                        
+
 
                     </select>
-                  
+
                     @error('department')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
             </div>
-           
+
 
 
 
@@ -99,19 +99,18 @@
 
                 <div>
                     <label for="employee">Employee</label>
-                    <select class="form-select mb-0"
-                        id="employee" aria-label="employee select example" wire:model="employee" autofocus
-                        required>
+                    <select class="form-select mb-0" id="employee" aria-label="employee select example"
+                        wire:model="employee" autofocus required>
                         <option value="" selected>Select employee
                         </option>
                         @foreach ($employees as $emp)
                             <option value="{{ $emp->id }}">
                                 {{ $emp->name }} </option>
                         @endforeach
-                        
+
 
                     </select>
-                  
+
                     @error('employee')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -123,15 +122,15 @@
 
                 <div>
                     <label for="from">From</label>
-                    <input  class="form-control datepicker-input" type="month" id="from"
-                        placeholder="From date" wire:model="from">
+                    <input class="form-control datepicker-input" type="month" id="from" placeholder="From date"
+                        wire:model="from">
 
 
                     {{-- <input class="form-control datepicker-input" type="date" id="from"
                      placeholder="From date"
                     wire:model="from"> --}}
 
-                  
+
                     @error('from')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -143,35 +142,37 @@
 
                 <div>
                     <label for="to">To</label>
-                    <input  class="form-control datepicker-input" type="month" id="to"
-                        placeholder="To date" wire:model="to">
+                    <input class="form-control datepicker-input" type="month" id="to" placeholder="To date"
+                        wire:model="to">
 
 
                     {{-- <input class="form-control datepicker-input" type="date" id="to"
                      placeholder="To date"
                     wire:model="to"> --}}
 
-                  
+
                     @error('from')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
             </div>
-           
+
 
             <div class="col-md-4 d-flex align-items-center justify-content-center">
                 <div style="width: 58%;">
 
-                <button class="btn btn-success" type="button" wire:click="report()">View Report</button>
-              
+                    {{-- <button  type="button" wire:click="report()">View Report</button> --}}
+                    <a class="btn btn-success" href="{{ url('payrolls/PartTime_Reports', ['id' => $employee, 'from' => $from, 'to' => $to]) }}" target="_blank">View Report</a>
+
+
+                </div>
             </div>
-        </div>
 
 
         </div>
 
 
-        
+
         <div class="row align-items-center justify-content-between">
             <div class="col col-md-6 col-lg-3 col-xl-4">
                 <div class="input-group me-2 me-lg-3 fmxw-400">
@@ -218,13 +219,13 @@
 
 
 
-        
+
     </div>
 
 
 
 
-    
+
 
 
 
@@ -248,18 +249,17 @@
 
 
                 @foreach ($partime as $pt)
-
                     <tr>
 
 
                         <td class="border-0 fw-bold">
                             <span class="fw-normal">
-                                {{$pt->user_name}}
+                                {{ $pt->user_name }}
                             </span>
                         </td>
-                        
 
-                       
+
+
                         <td class="border-0 fw-bold">
                             <span class="fw-normal">
                                 {{ $pt->dep_name }}
@@ -271,32 +271,32 @@
 
                         <td class="border-0 fw-bold">
                             <span class="fw-normal">
-                                {{$pt->from}}
+                                {{ $pt->from }}
                             </span>
                         </td>
 
 
                         <td class="border-0 fw-bold">
                             <span class="fw-normal">
-                                {{$pt->to}}
+                                {{ $pt->to }}
                             </span>
                         </td>
                         <td class="border-0 fw-bold">
                             <span class="fw-normal">
-                                {{$pt->amount}}
+                                {{ $pt->amount }}
                             </span>
                         </td>
 
 
                         <td class="border-0 fw-bold">
-                        @if($pt->status == 1)
-                            <span class="fw-bold text-success">
-                                 Ready
-                            </span>
+                            @if ($pt->status == 1)
+                                <span class="fw-bold text-success">
+                                    Ready
+                                </span>
                             @else
-                              <span class="fw-bold text-danger">
-                                 Pending
-                            </span>
+                                <span class="fw-bold text-danger">
+                                    Pending
+                                </span>
                             @endif
                         </td>
 
@@ -305,19 +305,19 @@
 
                         <td class="border-0 fw-bold">
                             <div style="display: flex">
-                                <a class="dropdown-item p-sm-2" href="{{ route('payrolls.view_part_time', ['parttime' => $pt->id]) }}">
+                                <a class="dropdown-item p-sm-2"
+                                    href="{{ route('payrolls.view_part_time', ['parttime' => $pt->id]) }}">
                                     <span class="fas fa-eye me-2"></span>
                                 </a>
-                        @if($pt->status == 0)
-                                <a class="dropdown-item p-sm-2" href="{{ route('payrolls.edit_part_time', ['parttime' => $pt->id]) }}">
-                                    <span class="fas fa-edit me-2"></span>
+                                @if ($pt->status == 0)
+                                    <a class="dropdown-item p-sm-2"
+                                        href="{{ route('payrolls.edit_part_time', ['parttime' => $pt->id]) }}">
+                                        <span class="fas fa-edit me-2"></span>
+                                    </a>
+                                @endif
+                                <a class="dropdown-item p-sm-2" wire:click="delete({{ $pt->id }})">
+                                    <span class="fas fa-trash me-2"></span>
                                 </a>
-                                
-
-                            @endif
-                            <a class="dropdown-item p-sm-2" wire:click="delete({{$pt->id}})">
-                                <span class="fas fa-trash me-2"></span>
-                            </a>
                             </div>
                         </td>
 
@@ -332,8 +332,3 @@
         </div>
     </div>
 </div>
-{{-- <script>
-    @if(session('newTab'))
-        window.open('{{ route("payrolls.part_time_report", ["id" => $this->employee, "from" => $this->from, "to" => $this->to]) }}', '_blank');
-    @endif
-</script> --}}

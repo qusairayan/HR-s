@@ -1,71 +1,40 @@
 <?php
-
-
-
 namespace App\Http\Livewire\Salaries;
-
 use App\Http\Livewire\Departments\Departments;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
-
 use App\Models\Department;
 use App\Models\Salary;
 use App\Models\Promotion;
 use App\Models\Company;
 use App\Models\PartTime;
-
 use App\Models\User;
 use Livewire\WithPagination;
 use Carbon\Carbon;
-
 use Livewire\Component;
-
-
 class PartTimes extends Component
 {
     use WithPagination;
-
     public $showSavedAlert = false;
     public $showDemoNotification = false;
-
     public $paginator = 50;
     public $search = '';
-
     public $company = '';
     public $department = '';
     public $employee = '';
-
-
     public $from = '';
     public $to = '';
-
-
-  
-
-
-
-
 public function report(){
-    
-
     $this->validate([
         'employee' => 'required',
         'from' => 'required|date',
         'to' => 'required|date',
     ]);
-
-    return redirect()->route('payrolls.part_time_report',['id' => $this->employee, 'from' => $this->from, 'to' => $this->to])
-    ->with(['newTab' => true]);
-
+    return redirect()->route('payrolls.part_time_report',['id' => $this->employee, 'from' => $this->from, 'to' => $this->to]);
 }
-
-
-
     public function render()
     {
-
-
         $companies = Company::all();
 
         $departmentsQuery = Department::select('*');
@@ -125,8 +94,10 @@ public function report(){
 
 
         $partime = $partimeQuery->paginate( $this->paginator);
-
-        return view('livewire.salaries.partTime', compact('companies', 'departments','employees','partime'));
+        $employee = $this->employee;
+        $from = $this->from;
+        $to = $this->to;
+        return view('livewire.salaries.partTime', compact('companies', 'departments','employees','partime','employee','from','to'));
     }
     public function delete($id){
         PartTime::destroy($id);
