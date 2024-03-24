@@ -77,6 +77,7 @@ class Ptreportpdf extends Component
         $sum += Allownce::where("user_id", $this->user['id'])->where('Date', "<", $from)->sum("amount");
         $sum -= Deductions::where("user_id", $this->user['id'])->where('Date', "<", $from)->sum("amount");
         $sum -= DB::connection('LYONDB')->table($this->checkComp)->where('Name_To', 'LIKE', '%' . $this->user["name"] . '%')->where('Date', "<", $from)->sum("Value");
+        return $sum;
     }
     private function getDate($id, $from, $to)
     {
@@ -91,7 +92,8 @@ class Ptreportpdf extends Component
             $this->image = 'lyontravell.png';
         } elseif ($this->user["company"] == 'Lyon Rental Car') {
             $this->checkComp = 'check_lyon_rental';
-            $this->image = 'lyonrentall.png';
+            // $this->image = 'lyonrentall.png';
+            $this->image = 'lyontravell.png';
         } else {
             $this->checkComp = 'check_marvell';
             $this->image = 'marvellLogo.png';
