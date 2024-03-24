@@ -101,7 +101,7 @@ class SlipReportpdf extends Component
                 break;
             case 'Lyon Rental Car':
                 $this->user['checkComp'] = 'check_lyon';
-                $this->user['image'] = 'lyontravell.png';
+                $this->user['image'] = 'lyonrental.png';
                 break;
             default:
                 $this->user['checkComp'] = 'check_marvell';

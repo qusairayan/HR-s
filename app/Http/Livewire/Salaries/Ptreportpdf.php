@@ -92,8 +92,7 @@ class Ptreportpdf extends Component
             $this->image = 'lyontravell.png';
         } elseif ($this->user["company"] == 'Lyon Rental Car') {
             $this->checkComp = 'check_lyon_rental';
-            // $this->image = 'lyonrentall.png';
-            $this->image = 'lyontravell.png';
+            $this->image = 'lyonrental.png';
         } else {
             $this->checkComp = 'check_marvell';
             $this->image = 'marvellLogo.png';
