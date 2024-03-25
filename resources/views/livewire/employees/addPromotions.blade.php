@@ -43,21 +43,20 @@
                             <option value="" disabled selected hidden>Select Employee's Postion
                             <option value="employee">Employee</option>
                             <option value="manager">Manager</option>
-                            <option value="manager">Chief financial officer (CFO)</option>
-                            <option value="manager">Chief operating officer (COO)</option>
-                            <option value="manager">Chief information officer (CIO)</option>
-                            <option value="manager">Chief technology officer (CTO)</option>
-                            <option value="manager">Chief marketing officer (CMO)</option>
-                            <option value="manager">Chief administrative officer (CAO)</option>
-                            <option value="manager">Chief risk officer (CRO)</option>
-                            <option value="manager">Team lead</option>
-                            <option value="manager">Coordinator</option>
-                            <option value="manager">Senior</option>
-                            <option value="manager">Supervisor</option>
-                            <option value="manager">Assistant manager</option>
-                            <option value="manager">Manager</option>
-                            <option value="manager">Senior manager</option>
-                            <option value="manager">HR Director</option>
+                            <option value="Chief financial officer (CFO)">Chief financial officer (CFO)</option>
+                            <option value="Chief operating officer (COO)">Chief operating officer (COO)</option>
+                            <option value="Chief information officer (CIO)">Chief information officer (CIO)</option>
+                            <option value="Chief technology officer (CTO)">Chief technology officer (CTO)</option>
+                            <option value="Chief marketing officer (CMO)">Chief marketing officer (CMO)</option>
+                            <option value="Chief administrative officer (CAO)">Chief administrative officer (CAO)</option>
+                            <option value="Chief risk officer (CRO)">Chief risk officer (CRO)</option>
+                            <option value="Team lead">Team lead</option>
+                            <option value="Coordinator">Coordinator</option>
+                            <option value="Senior">Senior</option>
+                            <option value="Supervisor">Supervisor</option>
+                            <option value="Assistant manager">Assistant manager</option>
+                            <option value="Senior manager">Senior manager</option>
+                            <option value="HR Director">HR Director</option>
                         </select>
                         @error('position')
                             <div class="invalid-feedback">{{ $message }}</div>

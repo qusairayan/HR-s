@@ -3,8 +3,10 @@
 namespace App\Http\Livewire\Salaries;
 
 use App\Models\Allownce;
+use App\Models\Company;
 use App\Models\deduction_allowances_types;
 use App\Models\Deductions;
+use App\Models\Department;
 use App\Models\MonthlyPayroll;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
@@ -52,7 +54,7 @@ class SlipReportpdf extends Component
     }
     public function FullTimegeneratePDF($id, $from, $to)
     {
-        $this->getUser($id);
+        $this->getUser($id . null, $from, $to);
         $check = $this->getChecks($from . "-01", $to . "-01");
         $preBalance = $this->PreBalance($from . "-30");
         $salaries = $this->calcSalary($from . "-01", $to . "-01");
@@ -77,7 +79,7 @@ class SlipReportpdf extends Component
         $mpdf->Output('document.pdf', 'I');
         exit;
     }
-    private function getUser($id, $date = null)
+    private function getUser($id, $date = null, $from = null, $to = null)
     {
         $this->user = User::where("id", $id)->first();
         $this->user->company;
@@ -85,15 +87,27 @@ class SlipReportpdf extends Component
         $this->user = $this->user->toArray();
         $this->user["company"] = $this->user["company"]["name"];
         $this->user["department"] = $this->user["department"]["name"];
-        if (!$date) {
-            $promotion = Promotion::where("user_id", $this->user["id"])->orderBy("from", "desc")->pluck("salary")->first();
-            if ($promotion) $this->user["salary"] = $promotion;
-            if ($promotion) $this->user["salary"] = $promotion;
-        }
+        $promotion = Promotion::where("user_id", $this->user["id"])
+            ->where('from', '>=', $from . "-01")
+            ->where(function ($query) use ($to) {
+                $query->where('to', '<=', $to . "-01")
+                    ->orWhereNull('to');
+            })
+            ->get()[0];
+            if($promotion){
+                $this->user["salary"] = $promotion->pluck("salary")->first();
+                $this->user["company"] = Company::find($promotion->company_id)->pluck("name")->first();
+                $this->user["department"] = Department::find($promotion->department_id)->pluck("name")->first();
+            }
+        // if (!$date) {
+        //     $promotion = Promotion::where("user_id", $this->user["id"])->orderBy("from", "desc")->pluck("salary")->first();
+        //     if ($promotion) $this->user["salary"] = $promotion;
+        // }
         return $this->IdentifyCompany();
     }
     private function IdentifyCompany()
     {
+        // based promotion
         switch ($this->user['company']) {
             case 'Lyon Travel':
                 $this->user['checkComp'] = 'check_lyon';
@@ -121,7 +135,6 @@ class SlipReportpdf extends Component
     }
     private function getChecks(string $from, $to = NULL)
     {
-
         if (!$to) {
             $checks = DB::connection('LYONDB')
                 ->table($this->user["checkComp"])
