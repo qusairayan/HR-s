@@ -93,9 +93,9 @@ class SlipReportpdf extends Component
                 $query->where('to', '<=', $to . "-01")
                     ->orWhereNull('to');
             })
-            ->get()[0];
+            ->get();
             if($promotion){
-                
+                $promotion = $promotion[0];
                 $this->user["salary"] = $promotion->pluck("salary")->first();
                 $this->user["company"] = Company::where("id",$promotion->company_id)->pluck("name")->first();
                 $this->user["department"] = Department::where("id",$promotion->department_id)->pluck("name")->first();
