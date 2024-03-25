@@ -122,6 +122,7 @@ class SlipReportpdf extends Component
                 $this->user['image'] = 'marvellLogo.png';
                 break;
         }
+        dd($this->user);
         return $this->getSocialSecurity();
     }
     private function getSocialSecurity()
