@@ -95,9 +95,10 @@ class SlipReportpdf extends Component
             })
             ->get()[0];
             if($promotion){
+                
                 $this->user["salary"] = $promotion->pluck("salary")->first();
-                $this->user["company"] = Company::find($promotion->company_id)->pluck("name")->first();
-                $this->user["department"] = Department::find($promotion->department_id)->pluck("name")->first();
+                $this->user["company"] = Company::where("id",$promotion->company_id)->pluck("name")->first();
+                $this->user["department"] = Department::where("id",$promotion->department_id)->pluck("name")->first();
             }
         // if (!$date) {
         //     $promotion = Promotion::where("user_id", $this->user["id"])->orderBy("from", "desc")->pluck("salary")->first();
@@ -122,7 +123,6 @@ class SlipReportpdf extends Component
                 $this->user['image'] = 'marvellLogo.png';
                 break;
         }
-        dd($this->user);
         return $this->getSocialSecurity();
     }
     private function getSocialSecurity()
