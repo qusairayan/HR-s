@@ -95,7 +95,7 @@ class SlipReportpdf extends Component
             })
             ->get();
             if($promotion){
-                $promotion = $promotion[0];
+                $promotion = $promotion;
                 $this->user["salary"] = $promotion->pluck("salary")->first();
                 $this->user["company"] = Company::where("id",$promotion->company_id)->pluck("name")->first();
                 $this->user["department"] = Department::where("id",$promotion->department_id)->pluck("name")->first();
