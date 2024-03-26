@@ -94,7 +94,7 @@ class SlipReportpdf extends Component
                     ->orWhereNull('to');
             })
             ->first();
-            if($promotion->count()){
+            if($promotion){
                 $this->user["salary"] = $promotion->salary;
                 $this->user["company"] = Company::where("id",$promotion->company_id)->pluck("name")->first();
                 $this->user["department"] = Department::where("id",$promotion->department_id)->pluck("name")->first();
