@@ -116,63 +116,41 @@
                     @enderror
                 </div>
             </div>
-
-
             <div class="col-md-3 mb-3">
-
                 <div>
                     <label for="from">From</label>
                     <input class="form-control datepicker-input" type="month" id="from" placeholder="From date"
                         wire:model="from">
-
-
                     {{-- <input class="form-control datepicker-input" type="date" id="from"
                      placeholder="From date"
                     wire:model="from"> --}}
-
-
                     @error('from')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
             </div>
-
-
             <div class="col-md-3 mb-3">
-
                 <div>
                     <label for="to">To</label>
                     <input class="form-control datepicker-input" type="month" id="to" placeholder="To date"
                         wire:model="to">
-
-
                     {{-- <input class="form-control datepicker-input" type="date" id="to"
                      placeholder="To date"
                     wire:model="to"> --}}
-
-
                     @error('from')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
             </div>
-
-
             <div class="col-md-4 d-flex align-items-center justify-content-center">
                 <div style="width: 58%;">
-
                     {{-- <button  type="button" wire:click="report()">View Report</button> --}}
-                    <a class="btn btn-success" href="{{ url('payrolls/PartTime_Reports', ['id' => $employee, 'from' => $from, 'to' => $to]) }}" target="_blank">View Report</a>
-
-
+                    <a class="btn btn-success"
+                        href="{{ url('payrolls/PartTime_Reports', ['id' => $employee, 'from' => $from, 'to' => $to]) }}"
+                        target="_blank">View Report</a>
                 </div>
             </div>
-
-
         </div>
-
-
-
         <div class="row align-items-center justify-content-between">
             <div class="col col-md-6 col-lg-3 col-xl-4">
                 <div class="input-group me-2 me-lg-3 fmxw-400">

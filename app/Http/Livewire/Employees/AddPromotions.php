@@ -24,6 +24,7 @@ class AddPromotions extends Component
     public $from = '';
     public $end = '';
     public $position = '';
+    public $part_time = '';
     protected $rules = [
         'company' => 'required|numeric|exists:company,id',
         'department' => 'required|numeric|exists:department,id',
@@ -53,14 +54,17 @@ class AddPromotions extends Component
             $prevPromo->to = $this->from;
             $prevPromo->save();
         }
+     
+        $type = $this->part_time !== "" ? 0 : 1;
         $promotion = Promotion::create([
             'user_id' => $this->user,
             'department_id' => $this->department,
             'company_id' => $this->company,
             'salary' => $this->salary,
-            'type' => 1,
+            'type' => $type,
             'from' => $this->from,
             'position' => $this->position,
+            'part_time'=>$this->part_time
         ]);
         $promotion->save();
         return redirect(route('promotions'));

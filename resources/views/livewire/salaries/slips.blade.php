@@ -106,8 +106,11 @@
             </div>
             <div class="col-md-4 col-12"><input wire:model="to" class="form-control datepicker-input" type="month">
             </div>
-            <div class="col-md-4 col-12"><button class="btn btn-success" style="width: 100%;" type="button"
-                    wire:click="fullTimeReport()">View Full Time Report</button></div>
+            <div class="col-md-4 col-12">
+                <a class="btn btn-success"
+                href="{{ url('payrolls/FullTimeReport', ['id' => $employee, 'from' => $from, 'to' => $to]) }}"
+                target="_blank">View Full Time Report</a>
+                </div>
         </div>
     </div>
 
@@ -194,8 +197,9 @@
                         @endif
                         <td style="width: 8%" class="border-0 fw-bold">
                             <span class="fw-normal">
-                                <button class="btn btn-success" class="col-1" type="button"
-                                    wire:click="report({{ $item['id'] }})">View Slip</button>
+                                <a class="btn btn-success"
+                                href="{{ url('slip-report', ['id' => $item['id'] ]) }}"
+                                target="_blank">View Slip</a>
                             </span>
                         </td>
                         <td style="width: 8%" class="border-0 fw-bold">

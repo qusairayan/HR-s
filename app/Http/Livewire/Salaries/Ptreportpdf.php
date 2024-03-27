@@ -3,11 +3,14 @@
 namespace App\Http\Livewire\Salaries;
 
 use App\Models\Allownce;
+use App\Models\Company;
 use App\Models\Deductions;
+use App\Models\Department;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Livewire\Component;
 use App\Models\PartTime;
+use App\Models\Promotion;
 use App\Models\User;
 use Mpdf\Mpdf;
 use stdClass;
@@ -87,11 +90,26 @@ class Ptreportpdf extends Component
     private function getDate($id, $from, $to)
     {
         $this->user = User::where('id', $id)->first();
-        $this->user->company;
-        $this->user->department->name;
-        $this->user = $this->user->toArray();
-        $this->user["company"] = $this->user["company"]["name"];
-        $this->user["department"] = $this->user["department"]["name"];
+        // get promotion
+        $promotion = Promotion::where("user_id", $id)
+            ->where('from', '>=', $from)
+            ->where(function ($query) use ($to) {
+                $query->where('to', '<=', $to)
+                    ->orWhereNull('to');
+            })
+            ->first();
+            dd($promotion);
+        if ($promotion) {
+            $this->user["salary"] = $promotion->salary;
+            $this->user["company"] = Company::where("id", $promotion->company_id)->pluck("name")->first();
+            $this->user["department"] = Department::where("id", $promotion->department_id)->pluck("name")->first();
+        } else {
+            $this->user->company;
+            $this->user->department->name;
+            $this->user = $this->user->toArray();
+            $this->user["company"] = $this->user["company"]["name"];
+            $this->user["department"] = $this->user["department"]["name"];
+        }
         if ($this->user["company"] == 'Lyon Travel') {
             $this->checkComp = 'check_lyon';
             $this->image = 'lyontravell.png';

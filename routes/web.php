@@ -189,7 +189,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/', AllowncesController::class)->name('allownces'); //->middleware('role:viewroles')
     });
 
-    Route::get('slip-report/{id}/{month}', [SlipReportpdf::class, 'generatePDF'])->name('payrolls.slip_report'); //->middleware('role:viewroles')
+    Route::get('slip-report/{id}', [SlipReportpdf::class, 'generatePDF'])->name('payrolls.slip_report'); //->middleware('role:viewroles')
     Route::prefix('payrolls')->group(function () {
         Route::get('/salaries', Salaries::class)->name('payrolls.salaries'); //->middleware('role:viewroles')
         Route::get('/slips', Slips::class)->name('payrolls.slips'); //->middleware('role:viewroles')

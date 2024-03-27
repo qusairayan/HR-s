@@ -68,32 +68,36 @@ class AddPartTimes extends Component
 
 
         if ($this->employee) {
-            $salary = User::where('id', '=', intval($this->employee))->first();
-            $this->noSalary = true;
-
-            if ($salary) {
-                if ($salary->salary &&  $salary->part_time) {
-                    $this->period = $salary->part_time;
-                    $this->salary = $salary->salary;
+            $promo = Promotion::where('user_id', $this->employee)->where('from', '<', $this->from)->orderBy('from', 'desc')->first();
+            if ($promo) {
+                if ($promo->salary &&  $promo->part_time) {
+                    $this->period = $promo->part_time;
+                    $this->salary = $promo->salary;
                     $this->noSalary = false;
+                } else {
+                    $this->period = '';
+                    $this->noSalary = true;
                 }
             } else {
-                $this->period = '';
+                $salary = User::where('id', '=', intval($this->employee))->first();
                 $this->noSalary = true;
+
+
+                if ($salary) {
+                    if ($salary->salary &&  $salary->part_time) {
+                        $this->period = $salary->part_time;
+                        $this->salary = $salary->salary;
+                        $this->noSalary = false;
+                    }
+                } else {
+                    $this->period = '';
+                    $this->noSalary = true;
+                }
             }
         }
-
-
-
-
-
-
         // Assuming you have two date values as Carbon objects
         if ($this->from && $this->to) {
             $this->dateSet = false;
-
-
-
             $from = Carbon::parse($this->from);
             $to = Carbon::parse($this->to);
 
@@ -105,16 +109,11 @@ class AddPartTimes extends Component
             }
 
             $daysDifference = $from->diffInDays($to);
-            $year = "20".$from->format("y");
-            $month =$from->format("m");
-            $countOfDays = cal_days_in_month(CAL_GREGORIAN,$month,$year);
-
-
-
-
-
+            $year = "20" . $from->format("y");
+            $month = $from->format("m");
+            $countOfDays = cal_days_in_month(CAL_GREGORIAN, $month, $year);
             if ($this->period == 'daily') {
-                if (($daysDifference + 1) == $countOfDays)$this->total =round($this->salary * 30, 1);
+                if (($daysDifference + 1) == $countOfDays) $this->total = round($this->salary * 30, 1);
                 else $this->total =  round($this->salary * ($daysDifference + 1), 1);
             } else if ($this->period == 'weekly') {
                 $this->total =  round($this->salary / 7 * $daysDifference, 1);
@@ -167,7 +166,7 @@ class AddPartTimes extends Component
         $PartTime = PartTime::create([
             'user_id' => $this->employee,
             'from' => $this->from,
-            'to' => $this->to==''?null:$this->to,
+            'to' => $this->to == '' ? null : $this->to,
             'status' => $status,
             'amount' => $this->total,
 

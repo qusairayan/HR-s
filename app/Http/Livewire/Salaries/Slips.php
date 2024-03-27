@@ -34,24 +34,23 @@ class Slips extends Component
     public $to;
     public $MonthlyPayroll;
     public $search = '';
-    public function report($id)
-    {
-        $res = MonthlyPayroll::find($id);
-        $userId = $res->user_id;
-        $month = explode("-", $res->month);
-        $month = $month[0] . '-' . $month[1];
-        return redirect()->route('payrolls.slip_report', ['id' => $userId, 'month' => $month]);
-    }
-    public function fullTimeReport()
-    {
-        $this->validate([
-            'employee' => 'required',
-            'from' => 'required|date',
-            'to' => 'required|date',
-        ]);
-        return redirect()->route('payrolls.fullTimeReport', ['id' => $this->employee, 'from' => $this->from, "to" => $this->to])
-            ->with(['newTab' => true]);
-    }
+    // public function report($id)
+    // {
+    //     $res = MonthlyPayroll::find($id);
+    //     $userId = $res->user_id;
+    //     $month = explode("-", $res->month);
+    //     $month = $month[0] . '-' . $month[1];
+    //     return redirect()->route('payrolls.slip_report', ['id' => $userId, 'month' => $month]);
+    // }
+    // public function fullTimeReport()
+    // {
+    //     $this->validate([
+    //         'employee' => 'required',
+    //         'from' => 'required|date',
+    //         'to' => 'required|date',
+    //     ]);
+    //     return redirect()->route('payrolls.fullTimeReport', ['id' => $this->employee, 'from' => $this->from, "to" => $this->to]);
+    // }
 
 
 

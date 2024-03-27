@@ -16,6 +16,7 @@ use App\Models\Promotion;
 use App\Models\Salary;
 use App\Models\SocialSecurity;
 use App\Models\User;
+use Carbon\Carbon;
 use DateTime;
 use Mpdf\Mpdf;
 use PhpParser\Node\Stmt\Return_;
@@ -23,12 +24,66 @@ use PhpParser\Node\Stmt\Return_;
 class SlipReportpdf extends Component
 {
     public $user;
-    public function generatePDF($id, $date)
+    public function generatePDF($id)
     {
-        $this->getUser($id, $date);
+        $res = MonthlyPayroll::find($id);
+        $userId = $res->user_id;
+        $id = $userId;
+        $month = explode("-", $res->month);
+        $date = $month[0] . '-' . $month[1];
+        // $this->getUser($id, $date);
+        $this->user = User::where("id", $id)->first();
+        $this->user->company;
+        $this->user->department->name;
+        $this->user = $this->user->toArray();
+        $this->user["company"] = $this->user["company"]["name"];
+        $this->user["department"] = $this->user["department"]["name"];
+        // $promotion = Promotion::where("user_id", $this->user["id"])->orderBy("from", "desc")->where("from","<=",$date."-01")->first();
+        $promotion = Promotion::where("user_id", $this->user["id"])->where('from', '<=', $date . "-01")->where(function ($query) use ($date) {
+            $query->where('to', '>=', $date . "-01")->orWhereNull("to");
+        })->first();
+        if ($promotion) {
+            $this->user["salary"] = $promotion->salary;
+            $this->user["company"] = Company::where("id", $promotion->company_id)->pluck("name")->first();
+            $this->user["department"] = Department::where("id", $promotion->department_id)->pluck("name")->first();
+        }
+        $this->IdentifyCompany();
         $deduction = Deductions::leftJoin("deduction_allowances_types", "deductions.type", "deduction_allowances_types.id")
             ->where("date", "LIKE", $date . "-%")->where("user_id", $id)
             ->get()->toArray();
+
+
+
+
+
+        $userSalary = $this->user["salary"];
+        $user = User::where("id", $this->user)->select("salary", "start_date", "unemployment_date")->get()->toArray();
+        if ($user[0]["unemployment_date"]) $unemployment = Carbon::parse($user[0]["unemployment_date"]);
+        else $unemployment = null;
+        $startDate = Carbon::parse($user[0]["start_date"]);
+        if ($unemployment && $unemployment->format("Y-m") == $date) {
+            $monthdays = 30;
+            if (explode("-", $date)[1] == 2) {
+                $monthdays  = date("t") - 1;
+            }
+            $countDays = (int) $unemployment->format("d");
+            if ($unemployment->format("Y-m")  == $startDate->format("Y-m")) {
+                $countDays =  (int) $unemployment->format("d") - (int) $startDate->format("d") + 1;
+            }
+            $salaryPerDay = $userSalary / $monthdays;
+            $userSalary = $salaryPerDay * $countDays;
+            $userSalary = number_format($userSalary, 2, ".", " ");
+        } elseif ($startDate->format("Y-m") === $date) {
+            $countDays  = 31;
+            if (explode("-", $date)[1] == 2) {
+                $countDays  = $startDate->format("t");
+                $countDays++;
+            }
+            $countDays = $countDays - $startDate->format("d");
+            $salaryPerDay = $userSalary / 30;
+            $userSalary = $salaryPerDay * $countDays;
+            $userSalary = number_format($userSalary, 2, ".", " ");
+        }
         $names = array_column($deduction, "name");
         $deductionTypes = deduction_allowances_types::where("type", 0)->whereNotIn("name", $names)->get()->toArray();
         $allownce = Allownce::leftJoin("deduction_allowances_types", "allownces.type", "deduction_allowances_types.id")->where("date", "LIKE", $date . "-%")->where("user_id", $id)->get()->toArray();
@@ -44,13 +99,11 @@ class SlipReportpdf extends Component
         $dateTime = new DateTime($currentDate);
         $dateTime->modify("-1 month");
         $newDate = $dateTime->format("Y-m");
-        $monthly_payroll = MonthlyPayroll::where("month", "LIKE", $newDate . "-%")->where("user_id", $this->user["id"])->pluck("salary")->first();
-        $promotion = Promotion::where("user_id", $this->user["id"])->where('from', '<=', $date . "-01")->where(function ($query) use ($date) {
-            $query->where('to', '>=', $date . "-01")->orWhereNull("to");
-        })->pluck("salary")->first();
-        $this->user["salary"] = $monthly_payroll ?? $promotion ?? $this->user["salary"];
+        $monthly_payroll = MonthlyPayroll::where("month", "=", $date . "-01")->where("user_id", $this->user["id"])->pluck("salary")->first();
+        // $this->user["salary"] = $monthly_payroll ?? $promotion ?? $this->user["salary"];
         $social = SocialSecurity::where("date", "Like", date($date) . "-%")->where("user_id", $id)->pluck("onEmployee")->first();
-        $this->runPdf('livewire.salaries.SlipReport', ["social" => $social, "user" => $this->user, "allownce" => $allownce, "deduction" => $deduction, 'checks' => $checks, 'date' => $date, "deductionTypes" => $deductionTypes, "allownceTypes" => $allownceTypes]);
+        $this->user["SocialSecurity"] = $social;
+        $this->runPdf('livewire.salaries.SlipReport', ["userSalary"=>$userSalary, "monthly_payroll" => $monthly_payroll, "social" => $social, "user" => $this->user, "allownce" => $allownce, "deduction" => $deduction, 'checks' => $checks, 'date' => $date, "deductionTypes" => $deductionTypes, "allownceTypes" => $allownceTypes]);
     }
     public function FullTimegeneratePDF($id, $from, $to)
     {
@@ -94,11 +147,11 @@ class SlipReportpdf extends Component
                     ->orWhereNull('to');
             })
             ->first();
-            if($promotion){
-                $this->user["salary"] = $promotion->salary;
-                $this->user["company"] = Company::where("id",$promotion->company_id)->pluck("name")->first();
-                $this->user["department"] = Department::where("id",$promotion->department_id)->pluck("name")->first();
-            }
+        if ($promotion) {
+            $this->user["salary"] = $promotion->salary;
+            $this->user["company"] = Company::where("id", $promotion->company_id)->pluck("name")->first();
+            $this->user["department"] = Department::where("id", $promotion->department_id)->pluck("name")->first();
+        }
         // if (!$date) {
         //     $promotion = Promotion::where("user_id", $this->user["id"])->orderBy("from", "desc")->pluck("salary")->first();
         //     if ($promotion) $this->user["salary"] = $promotion;
