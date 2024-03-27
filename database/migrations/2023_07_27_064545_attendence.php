@@ -15,7 +15,6 @@ return new class extends Migration
             $table->time('check_in');
             $table->time('check_out')->null;
             $table->timestamps();
-
             $table->foreign('user_id')->references('id')->on('users');
 
         });

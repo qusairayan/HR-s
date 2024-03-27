@@ -22,7 +22,8 @@ class CreateAttendenceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "type"=>"required|boolean"
+            "type"=>"required|boolean",
+            "location"=>"required|exists:locations,id"
         ];
     }
 }
