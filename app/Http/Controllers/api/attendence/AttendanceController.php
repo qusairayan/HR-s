@@ -39,7 +39,7 @@ class AttendanceController extends Controller
                         "user_id" => $this->user->id,
                         "date" => $this->day,
                         "check_in" => $this->time,
-                        "location"=>$request->location
+                        "location_id"=>$request->location
                     ]);
                 $timeDifference = $this->timeDifference("checkIn");
                 if ($timeDifference) {
