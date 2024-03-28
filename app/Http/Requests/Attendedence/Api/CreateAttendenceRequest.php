@@ -23,7 +23,7 @@ class CreateAttendenceRequest extends FormRequest
     {
         return [
             "type"=>"required|boolean",
-            "location"=>"required|exists:locations,id"
+            "location"=>"required|string"
         ];
     }
 }
