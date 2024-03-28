@@ -79,6 +79,9 @@ class AttendanceController extends Controller
                 $status->checkoutt($leave);
             }
             $attendance->check_out = $this->time;
+            $locations = [$attendance->location_id];
+            $locations[] = $request->location;
+            $attendance->location_id = json_encode($locations);
             $attendance->save();
             $timeDifference = $this->timeDifference("checkOut");
             if ($timeDifference) {
