@@ -45,6 +45,7 @@ public function render(){
             ->leftJoin('department', 'department.id', '=', 'users.department_id')
             ->select('allownces.*', 'users.name as user_name', 'users.image as user_image', 'department.name as department_name', )          
             ->where('users.name', 'LIKE', '%' . $this->search . '%')
+            ->orderBy("allownces.date", "desc")
             ->paginate($this->paginator ); 
             $types = deduction_allowances_types::where("type",1)->pluck("name")->toArray();
     return view('livewire.allownces.allownces',compact('allownces',"users","types"));
