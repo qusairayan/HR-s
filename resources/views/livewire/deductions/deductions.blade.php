@@ -116,7 +116,6 @@
                     <th class="border-gray-200">type</th>
                     <th class="border-gray-200">date</th>
                     <th class="border-gray-200">Amount <small>JD</small></th>
-                    <th class="border-gray-200">Details</th>
                     <th class="border-gray-200">Action</th>
                     <th class="border-gray-200">Action</th>
                 </tr>
@@ -125,45 +124,24 @@
 
 
 
-                @foreach ($mergedPaginatedResults as $deduction)
+                @foreach ($deductions as $deduction)
                     <tr>
-
-
-
-
                         <td>
                             <a href="#" class="d-flex align-items-center">
                                 
                                 <div class="d-block">
-                                    <span class="fw-bold">{{ $deduction->user_name ? $deduction->user_name : $deduction->name }}</span>
+                                    <span class="fw-bold">{{ $deduction->name }}</span>
                                 </div>
                             </a>
                         </td>
-
-
-
-
-
-
                         <td class="border-0 fw-bold">
                             <span class="fw-normal">
-                                {{ $deduction->department_name }}
+                                {{ $deduction->department }}
                             </span>
                         </td>
-
-
                         <td class="border-0 fw-bold">
                             <span class="fw-normal">
                                @if ($deduction->type ){{$deduction->type }}
-                                    {{-- @if($deduction->type ===1) {{'lateness'}}
-                                        @elseif($deduction->type ===2){{"Social Security"}}
-                                        @elseif($deduction->type ===3){{"Tax"}}
-                                        @elseif($deduction->type ===4){{"Loans"}}
-                                        @else {{'other'}}
-                                    @endif --}}
-
-                               @else
-                               Traffic Violation
                                @endif
                             </span>
                         </td>
@@ -171,30 +149,19 @@
 
                         <td class="border-0 fw-bold">
                             <span class="fw-normal">
-                                {{ $deduction->date }} 
-                                {{-- {{ $deduction->time ? ' - '.$deduction->time:'' }} --}}
+                                {{ $deduction->date }}
                             </span>
                         </td>
-
-             
-
                         <td class="border-0 fw-bold">
                             <span class="fw-normal">
                                 {{ $deduction->amount }}
-                            </span>
-                        </td>
-
-                        
-                        <td class="border-0 fw-bold">
-                            <span class="fw-normal">
-                                {{ $deduction->detail ? $deduction->detail : $deduction->violation_reason }}
                             </span>
                         </td>
                         <td class="border-0 fw-bold">
                             @if($deduction->status == 0)
                             <div class="btn-group">
                                 <button class="btn btn-success" data-bs-toggle="modal"
-                                    wire:click="approve({{ $deduction }})" type="button">Approve</button>
+                                    wire:click="approve({{ $deduction->id }})" type="button">Approve</button>
                             </div>
 
                             @else
@@ -204,13 +171,14 @@
                         </td>
                         
                         <td class="border-0 fw-bold">
-                            {{-- @if($deduction->status == 0) --}}
+                            @if($deduction->status == 0)
                             <div class="btn-group">
                                 <button class="btn btn-danger" data-bs-toggle="modal"
                                     wire:click="delete({{ $deduction->id }})" type="button">Delete</button>
                             </div>
-                        {{-- @endif --}}
-
+                            @else
+                            <span wire:click="delete({{ $deduction->id }})" type="button" class="badge text-white bg-danger">delete</span>
+                            @endif
                         </td>
 
 
@@ -223,7 +191,7 @@
             </tbody>
         </table>
         <div>
-            {{ $mergedPaginatedResults->links('vendor.pagination.custom') }}
+            {{ $deductions->links('vendor.pagination.custom') }}
         </div>
     </div>
 
@@ -239,18 +207,7 @@
                     Add Deductions
                 </p>
             </div>
-
-
-
-
-
-
-
-
-
-
             <form wire:submit.prevent="addDeduction">
-
                 <div class="row p-md text-white">
 
                 </div>

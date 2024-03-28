@@ -48,72 +48,44 @@ class DeductionsController extends Component
 
 
 
-    public function approve($deduction)
+    public function approve($deductionId)
     {
-        if(isset($deduction['violation_number'])){
-            Deductions::create([
-                "user_id"=>$deduction["user_id"],
-                "type"=>1 ,
-                 "amount"=>$deduction["amount"],
-                 "date"=>$deduction["date"],
-                 "detail"=>$deduction["violation_reason"],
-                 "status"=>1,
-            ]);
-            $deduction = TrafficViolations::findOrFail($deduction["id"]);
+        // if(isset($deduction['violation_number'])){
+        //     Deductions::create([
+        //         "user_id"=>$deduction["user_id"],
+        //         "type"=>1 ,
+        //          "amount"=>$deduction["amount"],
+        //          "date"=>$deduction["date"],
+        //          "detail"=>$deduction["violation_reason"],
+        //          "status"=>1,
+        //     ]);
+        //     $deduction = TrafficViolations::findOrFail($deduction["id"]);
+        //     $deduction->status = 1;
+        //     $deduction->save();
+        // }
+        // else {
+            $deduction = Deductions::findOrFail($deductionId);
             $deduction->status = 1;
             $deduction->save();
-        }
-        else {
-            $deduction = Deductions::findOrFail($deduction["id"]);
-            $deduction->status = 1;
-            $deduction->save();
-        }
+        // }
 
     }
 
     public function render()
     {
         $users = User::all()->where('status', '=', 1);
-        $violationQuery = TrafficViolations::leftJoin('users', 'users.name', '=', 'traffic_violations.name')
-        ->leftJoin('department', 'department.id', '=', 'users.department_id')
-        ->where("traffic_violations.status","=",false)
-        ->select('traffic_violations.*','department.name as department_name');
 
-        if($this->from){
-            $violationQuery = $violationQuery->where('traffic_violations.from','>=',$this->from);
-        }
-        if($this->to){
-            $violationQuery = $violationQuery->where('traffic_violations.to','<=',$this->to);
-        }
-
-        $violations = $violationQuery->paginate(10);
+        $deductions = Deductions::leftJoin("users", function ($join) {
+            $join->on("users.id", "=", "deductions.user_id")
+            ->leftJoin("department","department.id","=","users.department_id");
+        })
+        ->orderBy("deductions.date", "desc")
+        ->select('deductions.*', 'users.name', 'users.department_id', 'users.company_id', 'department.name as department')
+        ->paginate(10);
 
 
-
-        $deductionsQuery = Deductions::leftJoin('users', 'deductions.user_id', '=', 'users.id')
-            ->leftJoin('department', 'department.id', '=', 'users.department_id')
-            ->select('deductions.*', 'users.name as user_name', 'users.image as user_image', 'department.name as department_name',)
-            ->where('users.name', 'LIKE', '%' . $this->search . '%');
-            
-        
-            if($this->from){
-                $violationQuery = $violationQuery->where('deductions.from','>=',$this->from);
-            }
-            if($this->to){
-                $violationQuery = $violationQuery->where('deductions.to','<=',$this->to);
-            }
-    
-            $deductions = $deductionsQuery->paginate(10);
-    
-            $mergedResults = $violations->concat($deductions);
-
-            $mergedPaginatedResults = new \Illuminate\Pagination\LengthAwarePaginator(
-                $mergedResults,
-                $mergedResults->count(),
-                10
-            );
             $types = deduction_allowances_types::where("type",0)->get();
-            return view('livewire.deductions.deductions', compact('mergedPaginatedResults','users',"types"));
+            return view('livewire.deductions.deductions', compact('deductions',"types","users"));
     }
     public function addDeduction(){
         $err = $this->validate();
