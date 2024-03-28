@@ -118,6 +118,7 @@
                     <th class="border-gray-200">date</th>
                     <th class="border-gray-200">Amount <small>JD</small></th>
                     <th class="border-gray-200">Action</th>
+                    <th class="border-gray-200">Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -195,7 +196,16 @@
 
                         </td>
 
-
+                        <td class="border-0 fw-bold">
+                            @if($allownce->status == 0)
+                            <div class="btn-group">
+                                <button class="btn btn-danger" data-bs-toggle="modal"
+                                    wire:click="delete({{ $allownce->id }})" type="button">Delete</button>
+                            </div>
+                            @else
+                            <span wire:click="delete({{ $allownce->id }})" type="button" class="badge text-white bg-danger">delete</span>
+                            @endif
+                        </td>
                     </tr>
                 @endforeach
 

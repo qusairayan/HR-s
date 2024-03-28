@@ -79,11 +79,10 @@ class DeductionsController extends Component
             $join->on("users.id", "=", "deductions.user_id")
             ->leftJoin("department","department.id","=","users.department_id");
         })
+        ->where('users.name','LIKE','%'.$this->search.'%')
         ->orderBy("deductions.date", "desc")
         ->select('deductions.*', 'users.name', 'users.department_id', 'users.company_id', 'department.name as department')
-        ->paginate(10);
-
-
+        ->paginate(50);
             $types = deduction_allowances_types::where("type",0)->get();
             return view('livewire.deductions.deductions', compact('deductions',"types","users"));
     }

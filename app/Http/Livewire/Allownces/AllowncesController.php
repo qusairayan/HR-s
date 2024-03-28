@@ -19,7 +19,7 @@ class AllowncesController extends Component
 {
 use WithPagination;
 
-public $paginator=10;
+public $paginator=50;
 public $search ='';
 public $amount;
 public $userId;
@@ -73,5 +73,8 @@ public function addTypeAllownces(){
     ]);
     return redirect()->route("allownces");
 }
-
+public function delete($id){
+    Allownce::destroy($id);
+    return redirect()->route("deductions");
+}
 }
