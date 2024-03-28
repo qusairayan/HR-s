@@ -48,7 +48,7 @@ class SlipReportpdf extends Component
             $this->user["department"] = Department::where("id", $promotion->department_id)->pluck("name")->first();
         }
         $this->IdentifyCompany();
-        $deduction = Deductions::where("date", "LIKE", $date . "-%")->where("user_id", $id)->get()->toArray();
+        $deduction = Deductions::where("date", "LIKE", $date . "-%")->where("user_id", $id)->where("status",1)->get()->toArray();
         $userSalary = $this->user["salary"];
         $user = User::where("id", $this->user)->select("salary", "start_date", "unemployment_date")->get()->toArray();
         if ($user[0]["unemployment_date"]) $unemployment = Carbon::parse($user[0]["unemployment_date"]);
@@ -79,7 +79,7 @@ class SlipReportpdf extends Component
         }
         $names = array_column($deduction, "type");
         $deductionTypes = deduction_allowances_types::where("type", 0)->whereNotIn("name", $names)->get()->toArray();
-        $allownce = Allownce::where("date", "LIKE", $date . "-%")->where("user_id", $id)->get()->toArray();
+        $allownce = Allownce::where("date", "LIKE", $date . "-%")->where("user_id", $id)->where("status",1)->get()->toArray();
         $names = array_column($allownce, "type");
         $allownceTypes = deduction_allowances_types::where("type", 1)->whereNotIn("name", $names)->get()->toArray();
         $checks = DB::connection('LYONDB')
@@ -205,13 +205,13 @@ class SlipReportpdf extends Component
     }
     private function getDeductions(string $from, $to = NULL)
     {
-        if (!$to) return Deductions::where('user_id', $this->user['id'])->where("date", ">=", $from)->orderBy("date")->get()->toArray();
-        return Deductions::where('user_id', $this->user['id'])->whereBetween("date", [$from, $to])->get()->toArray();
+        if (!$to) return Deductions::where('user_id', $this->user['id'])->where("status",1)->where("date", ">=", $from)->orderBy("date")->get()->toArray();
+        return Deductions::where('user_id', $this->user['id'])->where("status",1)->whereBetween("date", [$from, $to])->get()->toArray();
     }
     private function getAllownce(string $from, $to = NULL)
     {
-        if (!$to) return Allownce::where('user_id', $this->user['id'])->where("date", ">=", $from)->orderBy("date")->get()->toArray();
-        return Allownce::where('user_id', '=', $this->user['id'])->whereBetween("date", [$from, $to])->get()->toArray();
+        if (!$to) return Allownce::where('user_id', $this->user['id'])->where("status",1)->where("date", ">=", $from)->orderBy("date")->get()->toArray();
+        return Allownce::where('user_id', '=', $this->user['id'])->where("status",1)->whereBetween("date", [$from, $to])->get()->toArray();
     }
     private function PreBalance($from)
     {
