@@ -228,9 +228,9 @@
                 </tr>
                 <tr>
                     <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">
-                        {{$userSalary}}</td>
+                        {{ $userSalary }}</td>
                     <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">
-                       {{date("Y-m-d")}}</td>
+                        {{ $date }}</td>
                     <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">
                         الراتب</td>
                 </tr>
@@ -243,7 +243,7 @@
                         <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">
                             {{ $item['date'] }}</td>
                         <td style="text-align: center;padding-top: 8px; width: 10%; background:#a5a5a5;">
-                            {{ $item['name'] }}</td>
+                            {{ $item['type'] }}</td>
                     </tr>
                 @endforeach
                 @foreach ($allownceTypes as $item)
@@ -285,11 +285,11 @@
                     <tr>
                         <td style="text-align: center;padding-top: 8px; background:#a5a5a5;">{{ $item['amount'] }}</td>
                         <td style="text-align: center;padding-top: 8px; background:#a5a5a5;">{{ $item['date'] }}</td>
-                        <td style="text-align: center;padding-top: 8px;  background:#a5a5a5;">{{ $item['name'] }}</td>
+                        <td style="text-align: center;padding-top: 8px;  background:#a5a5a5;">{{ $item['type'] }}</td>
                     </tr>
                 @endforeach
                 <tr>
-                    <td style="text-align: center;padding-top: 8px; background:#a5a5a5;">{{ $social }}</td>
+                    <td style="text-align: center;padding-top: 8px; background:#a5a5a5;">{{ $social ?? 0 }}</td>
                     <td style="text-align: center;padding-top: 8px; background:#a5a5a5;">{{ $date }}</td>
                     <td style="text-align: center;padding-top: 8px;  background:#a5a5a5;">الضمان الاجتماعي</td>
                 </tr>
@@ -324,7 +324,9 @@
                     class="border p-2 border-info rounded text-center">{{ $sum }}</span></h3>
         </div>
         <div class="salary-total p-3 d-flex align-item-center justify-content-center total col-md-6 col-12 text-center">
-            <h3 class="userSocialSecurity align-self-center text-center"> {{ $user['SocialSecurity'] ? 'اقتطاع الضمان الاجتماعي' . $user['SocialSecurity'] : 'لا يوجد بيانات ضمان اجتماعي للموظف : ' . $user['name'] }}</h3>
+            <h3 class="userSocialSecurity align-self-center text-center">
+                {{ $user['SocialSecurity'] ? 'اقتطاع الضمان الاجتماعي' . $user['SocialSecurity'] : 'لا يوجد بيانات ضمان اجتماعي للموظف : ' . $user['name'] }}
+            </h3>
         </div>
     </div>
 </body>

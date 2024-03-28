@@ -48,14 +48,7 @@ class SlipReportpdf extends Component
             $this->user["department"] = Department::where("id", $promotion->department_id)->pluck("name")->first();
         }
         $this->IdentifyCompany();
-        $deduction = Deductions::leftJoin("deduction_allowances_types", "deductions.type", "deduction_allowances_types.id")
-            ->where("date", "LIKE", $date . "-%")->where("user_id", $id)
-            ->get()->toArray();
-
-
-
-
-
+        $deduction = Deductions::where("date", "LIKE", $date . "-%")->where("user_id", $id)->get()->toArray();
         $userSalary = $this->user["salary"];
         $user = User::where("id", $this->user)->select("salary", "start_date", "unemployment_date")->get()->toArray();
         if ($user[0]["unemployment_date"]) $unemployment = Carbon::parse($user[0]["unemployment_date"]);
@@ -84,10 +77,10 @@ class SlipReportpdf extends Component
             $userSalary = $salaryPerDay * $countDays;
             $userSalary = number_format($userSalary, 2, ".", " ");
         }
-        $names = array_column($deduction, "name");
+        $names = array_column($deduction, "type");
         $deductionTypes = deduction_allowances_types::where("type", 0)->whereNotIn("name", $names)->get()->toArray();
-        $allownce = Allownce::leftJoin("deduction_allowances_types", "allownces.type", "deduction_allowances_types.id")->where("date", "LIKE", $date . "-%")->where("user_id", $id)->get()->toArray();
-        $names = array_column($allownce, "name");
+        $allownce = Allownce::where("date", "LIKE", $date . "-%")->where("user_id", $id)->get()->toArray();
+        $names = array_column($allownce, "type");
         $allownceTypes = deduction_allowances_types::where("type", 1)->whereNotIn("name", $names)->get()->toArray();
         $checks = DB::connection('LYONDB')
             ->table($this->user["checkComp"])

@@ -25,7 +25,7 @@ class Attendences extends Component
             ->leftJoin('department', 'users.department_id', '=', 'department.id')
             ->select('attendence.*', 'department.name as department_name', 'users.name as user_name')
             ->where('users.name', 'LIKE', '%' . $this->search . '%')->orderBy("attendence.date","DESC")
-            ->paginate(10); 
+            ->paginate(10);
             return view('livewire.attendence.attendence', compact('attendances'));
 
         }

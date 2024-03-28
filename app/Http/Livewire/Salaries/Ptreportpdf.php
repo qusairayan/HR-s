@@ -98,7 +98,6 @@ class Ptreportpdf extends Component
                     ->orWhereNull('to');
             })
             ->first();
-            dd($promotion);
         if ($promotion) {
             $this->user["salary"] = $promotion->salary;
             $this->user["company"] = Company::where("id", $promotion->company_id)->pluck("name")->first();

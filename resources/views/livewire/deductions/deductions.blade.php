@@ -313,7 +313,7 @@
                                 <option value=""  hidden selected>Deductions type</option>
 
                                 @foreach($types as $item)
-                                <option value="{{$item->id}}">{{$item->name}}</option>
+                                <option value="{{$item->name}}">{{$item->name}}</option>
                                 @endforeach
                             </select>
                         </div>
