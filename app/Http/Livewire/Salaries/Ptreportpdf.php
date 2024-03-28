@@ -49,13 +49,14 @@ class Ptreportpdf extends Component
         if ($this->dedction) {
             for ($i = 0; $i < count($this->dedction); $i++) {
                 $this->dedction[$i] = (array) $this->dedction[$i];
-                // if($this->dedction[$i]["name"])$this->dedction[$i]["type"] =$this->dedction[$i]["name"];
+                $this->dedction[$i]["name"] = $this->dedction[$i]["type"];
                 $this->dedction[$i]["type"] = "dedction";
             }
         }
         if ($this->allownce) {
             for ($i = 0; $i < count($this->allownce); $i++) {
                 $this->allownce[$i] = (array) $this->allownce[$i];
+                $this->allownce[$i]["name"] = $this->allownce[$i]["type"];
                 $this->allownce[$i]["type"] = "allownce";
             }
         }
@@ -123,7 +124,7 @@ class Ptreportpdf extends Component
         $this->partTime = PartTime::where('user_id', $this->user['id'])->where('from', ">=", $from)->where("to", "<=", $to)->select("part_times.*", "from as date")->get()->toArray();
         $this->pending = PartTime::where('user_id', $this->user['id'])->where('from', ">=", $from)->where("status", 0)->select("part_times.*", "from as date")->get()->toArray();
         $this->checks = DB::connection('LYONDB')->table($this->checkComp)->where('Name_To', 'LIKE', "%" . $this->user["name"] . "%")->whereBetween('Date', [$from, $to])->orderBy("date")->select("$this->checkComp.*", "Date as date")->get()->toArray();
-        $this->dedction = Deductions::leftJoin("deduction_allowances_types", "deductions.type", "deduction_allowances_types.id")->where("user_id", $this->user['id'])->whereBetween('Date', [$from, $to])->orderBy("date")->get()->toArray();
+        $this->dedction = Deductions::where("user_id", $this->user['id'])->whereBetween('Date', [$from, $to])->orderBy("date")->get()->toArray();
         $this->allownce = Allownce::where("user_id", $this->user['id'])->whereBetween('Date', [$from, $to])->orderBy("date")->get()->toArray();
     }
 }
