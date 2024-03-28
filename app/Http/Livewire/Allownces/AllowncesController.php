@@ -76,6 +76,6 @@ public function addTypeAllownces(){
 }
 public function delete($id){
     Allownce::destroy($id);
-    return redirect()->route("deductions");
+    return redirect()->route("allownces");
 }
 }
